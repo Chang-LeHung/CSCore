@@ -13,7 +13,6 @@
 | [数组容器(ArrayList)设计与Java实现，看完这个你不懂ArrayList，你找我！！！](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247483954&idx=1&sn=0671552fd0d33e0b07eab22f698ffaea&chksm=cf0c9e3bf87b172d1e336d7533a79c536600518c085a4104f30667469992e797ff526c732563&mpshare=1&scene=23&srcid=0706NTX8kMWtQryLVoqdqEYC&sharer_sharetime=1657120181327&sharer_shareid=236a49567847c05f78e6b440ce6dabff#rd) | N/A  |
 | [ArrayList源码剖析，从扩容原理，到迭代器和fast-fail机制，你想要的这都有！！！](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484031&idx=1&sn=f5b70f87f97a0a21f3fb88bd7343bb25&chksm=cf0c9e76f87b17608f27ff60da5df43d04939e04b4c771b27bc4283c520ddcf15e114d2872de&token=1767250495&lang=zh_CN#rd) | N/A  |
 
-关注微信公众号，实时了解文章推送！！！
+关注微信公众号，实时了解推送文章！！！
 
 ![](qrcode2.jpg)
-
