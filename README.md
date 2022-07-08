@@ -2,11 +2,11 @@
 
 本项目专注于计算机系统基础，比如算法与数据结构，网络，操作系统等！！！同时将会包含一些机器学习和人工智能的算法！！！夯实好计算机系统基础，学习什么技术都将变得更加轻松，能够更好的理解各种软件的原理！！！
 
-## 容器设计与Java实现
+## 容器设计与Java实现（`更新中...`）
 
 `容器设计与实现`主要是学习常见的容器比如`ArrayList`、`LinkedList`、`Deque`和`HashMap`等容器的原理，并且自己动手使用`Java`实现对应的自己的容器（`MyArrayList`、`MyLinkedList`等等）！！！
 
-| 文章名称`更新中...`                                          | 视频 |
+| 文章名称                                                     | 视频 |
 | ------------------------------------------------------------ | ---- |
 | [链表设计与Java实现](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247483691&idx=1&sn=5f730f9ca5f84aa97a13a730ed6d85df&chksm=cf0c9d22f87b14347aed05fa3c0cd313f278618e43aef37cd4fc078fb124c9845b527ba55d3d&token=917021200&lang=zh_CN#rd) | N/A  |
 | [LinkedList源码深度剖析](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247483907&idx=1&sn=6281a11e6ed1917ecb3a10319474193d&chksm=cf0c9e0af87b171c7193949b5b7eb0b8f813b05b3d3b96ea784df86a3dde4286ad03908122da&token=917021200&lang=zh_CN#rd) | N/A  |
