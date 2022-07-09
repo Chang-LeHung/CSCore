@@ -10,7 +10,7 @@
 
 ## 容器设计与实现及Java集合源码剖析（`更新中...`）
 
-`容器设计与实现`主要是学习常见的容器比如`ArrayList`、`LinkedList`、`Deque`和`HashMap`等容器的原理，并且自己动手使用`Java`实现对应的自己的容器（`MyArrayList`、`MyLinkedList`等等）！！！
+**容器设计与实现**主要是学习常见的容器比如`ArrayList`、`LinkedList`、`Deque`和`HashMap`等容器的原理，并且自己动手使用`Java`实现对应的自己的容器（`MyArrayList`、`MyLinkedList`等等）！！！
 
 - 链表设计与Java实现
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247483691&idx=1&sn=5f730f9ca5f84aa97a13a730ed6d85df&chksm=cf0c9d22f87b14347aed05fa3c0cd313f278618e43aef37cd4fc078fb124c9845b527ba55d3d&token=917021200&lang=zh)
