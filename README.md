@@ -7,7 +7,7 @@
 </div>
 
 
-## 容器设计与Java实现及Java集合源码剖析（`更新中...`）
+## 容器设计与实现及Java集合源码剖析（`更新中...`）
 
 `容器设计与实现`主要是学习常见的容器比如`ArrayList`、`LinkedList`、`Deque`和`HashMap`等容器的原理，并且自己动手使用`Java`实现对应的自己的容器（`MyArrayList`、`MyLinkedList`等等）！！！
 
@@ -24,14 +24,15 @@
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484031&idx=1&sn=f5b70f87f97a0a21f3fb88bd7343bb25&chksm=cf0c9e76f87b17608f27ff60da5df43d04939e04b4c771b27bc4283c520ddcf15e114d2872de&token=1155116583&lang=zh_CN#rd)
   - [github阅读](./container/04-arraylist源码剖析.md)
 
-## 算法
+## 算法（`更新中...`）
 
 - 庖丁解牛斐波拉契数列和背包问题——详细解析两个问题优化过程，带你从最基本的问题看懂动态规划！！
 
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484109&idx=1&sn=4cd2040eacb04710694282192edeafc4&chksm=cf0c9ec4f87b17d2093a429755c0b3177ddeb39a96d77e210b03fe03f5a76968b7062234594a&token=1155116583&lang=zh_CN#rd)
   - [github阅读](./datastructr&algorithm/01-动态规划.md)
 
-  
+
+---
 
 关注微信公众号，实时了解推送文章！！！
 
