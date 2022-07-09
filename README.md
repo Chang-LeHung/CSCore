@@ -12,13 +12,13 @@
 
 **容器设计与实现**主要是学习常见的容器比如`ArrayList`、`LinkedList`、`Deque`和`HashMap`等容器的原理，并且自己动手使用`Java`实现对应的自己的容器（`MyArrayList`、`MyLinkedList`等等）！！！
 
-- 链表设计与Java实现
+- 链表设计与Java实现——自己动手写`LinkedList`
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247483691&idx=1&sn=5f730f9ca5f84aa97a13a730ed6d85df&chksm=cf0c9d22f87b14347aed05fa3c0cd313f278618e43aef37cd4fc078fb124c9845b527ba55d3d&token=917021200&lang=zh)
   - [github阅读](./container/01-链表设计与实现.md)
 - `LinekdList`源码深度剖析
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247483907&idx=1&sn=6281a11e6ed1917ecb3a10319474193d&chksm=cf0c9e0af87b171c7193949b5b7eb0b8f813b05b3d3b96ea784df86a3dde4286ad03908122da&token=917021200&lang=zh)
   - [github阅读](./container/02-linkedlist源码剖析.md)
-- 数组容器(`ArrayList`)设计与`Java`实现，看完这个你不懂`ArrayList`，你找我！！！
+- 数组容器(`ArrayList`)设计与`Java`实现——自己动手写`ArrayList`
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247483954&idx=1&sn=0671552fd0d33e0b07eab22f698ffaea&chksm=cf0c9e3bf87b172d1e336d7533a79c536600518c085a4104f30667469992e797ff526c732563&mpshare=1&scene=23&srcid=0706NTX8kMWtQryLVoqdqEYC&sharer_sharetime=1657120181327&sharer_shareid=236a49567847c05f78e6b440ce6dabff#rd)
   - [github阅读](./container/03-array容器设计与实现.md)
 - `ArrayList`源码剖析，从扩容原理，到迭代器和fast-fail机制，你想要的这都有！！！
