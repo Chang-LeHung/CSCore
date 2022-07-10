@@ -24,6 +24,10 @@
 - `ArrayList`源码剖析，从扩容原理，到迭代器和fast-fail机制，你想要的这都有！！！
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484031&idx=1&sn=f5b70f87f97a0a21f3fb88bd7343bb25&chksm=cf0c9e76f87b17608f27ff60da5df43d04939e04b4c771b27bc4283c520ddcf15e114d2872de&token=1155116583&lang=zh_CN#rd)
   - [github阅读](./container/04-arraylist源码剖析.md)
+- `HashMap`设计原理与实现（上篇）——哈希表的原理，如何从0到1设计一个`HashMap`
+  - [微信公众号阅读]()
+  - [github阅读](./container/05-hashmap设计与实现(上篇).md)
+
 
 ---
 
