@@ -38,7 +38,9 @@ System.out.println(strs[6]);
 
 <img src="../images/hashmap/01-hashmap01.png" style="zoom:80%;" />
 
-但是像这种哈希函数计算出来的数值一般是没有范围的，因此我们通常通过哈希函数计算出来的数值通常会经过一个求余数操作(`%`)，对数组的长度进行求余数，否则求出来的数值将超过数组的长度。
+但是像这种哈希函数计算出来的数值一般是没有范围的，因此我们通常通过哈希函数计算出来的数值通常会经过一个求余数操作(`%`)，对数组的长度进行求余数，否则求出来的数值将超过数组的长度。比如数组的长度是16，计算出来的哈希值为186，那么求余数之后的结果为`186%16=10`，那么我们可以将数据存储在数组当中下标为10的位置，下次我们来取的时候就取出下标为10位置的数据即可。
+
+<img src="../images/hashmap/01-hashmap02.png" style="zoom:80%;" />
 
 ### 如何设计一个哈希函数？
 
@@ -46,5 +48,23 @@ System.out.println(strs[6]);
 
 - 整型的哈希函数
 
-对于整型数据，他本来就是一个数组因此我们
+对于整型数据，他本来就是一个数值，因此我们可以直接将这个值返回作为他的哈希值，而`JDK`中也是这么实现的！
+
+```java
+    /**
+     * Returns a hash code for a {@code int} value; compatible with
+     * {@code Integer.hashCode()}.
+     *
+     * @param value the value to hash
+     * @since 1.8
+     *
+     * @return a hash code value for a {@code int} value.
+     */
+    public static int hashCode(int value) {
+        return value;
+    }
+
+```
+
+
 
