@@ -112,10 +112,26 @@ class Student {
 我们可以根据上面提到的两种哈希函数，仿照他们的设计，设计我们自己的哈希函数，比如像下面这样。
 
 ```java
-@Override
-public int hashCode() {
+class Student {
+  String name;
+  int grade;
+    
+  // 我们自己要实现的哈希函数
+  @Override
+  public int hashCode() {
     return name.hashCode() * 31 + grade;
+  }
+    
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Student student = (Student) o;
+    return grade == student.grade &&
+        Objects.equals(name, student.name);
+  }
 }
+
 ```
 
 事实上`JDK`也贴心的为我们实现了一个类，去计算我们自定义类的哈希函数。
@@ -151,3 +167,19 @@ public static int hashCode(Object a[]) {
 
 ### 集合类型的哈希函数
 
+其实集合类型的哈希函数也可以像字符串那样设计哈希函数，我们来看一下`JDK`内部是如何实现集合类的哈希函数的。
+
+```java
+public int hashCode() {
+    int hashCode = 1;
+    // 遍历集合当中的对象，进行哈希值的计算
+    for (E e : this)
+        hashCode = 31*hashCode + (e==null ? 0 : e.hashCode());
+    return hashCode;
+}
+```
+
+上述代码也可以用之前的公式来表示：
+$$
+s[0]*31^{(n-1)} + s[1]*31^{(n-2)} + ... + s[n-1]
+$$
