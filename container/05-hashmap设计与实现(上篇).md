@@ -42,11 +42,11 @@ System.out.println(strs[6]);
 
 <img src="../images/hashmap/01-hashmap02.png" style="zoom:80%;" />
 
-### 如何设计一个哈希函数？
+## 如何设计一个哈希函数？
 
 首先我们需要了解一个知识，那就是在计算机世界当中我们所含有的两种最基本的数据类型就是，整型(`short`, `int`, `long`)和字符串(`String`)，其他的数据类型可以由这些数据类型组合起来，下面我们来分析一下常见的数据类型的哈希函数设计。
 
-- 整型的哈希函数
+### 整型的哈希函数
 
 对于整型数据，他本来就是一个数值，因此我们可以直接将这个值返回作为他的哈希值，而`JDK`中也是这么实现的！`JDK`中实现整型的哈希函数的方法：
 
@@ -66,7 +66,7 @@ System.out.println(strs[6]);
 
 ```
 
-- 字符串的哈希函数
+### 字符串的哈希函数
 
 我们知道字符串底层存储的还是用整型数据存储的，比说说字符串`hello world`，就可以使用字符数组`['h', 'e', 'l', 'l', 'o' , 'w', 'o', 'r', 'l', 'd']`进行存储，因为我们计算出来的这个哈希值需要尽量不和别的数据计算出来的哈希值冲突（这种现象叫做`哈希冲突`，我们后面会仔细讨论这个问题），因此我们要尽可能的充分利用字符串里面的每个字符信息。我们来看一下`JDK`当中是怎么实现字符串的哈希函数的
 
@@ -97,4 +97,57 @@ public int hashCode() {
 $$
 s[0]*31^{(n-1)} + s[1]*31^{(n-2)} + ... + s[n-1]
 $$
+
+### 自定义类型的哈希函数
+
+比如我们自己定义了一个学生类，我们改设计他的哈希函数，并且计算他的哈希值呢？
+
+```java
+class Student {
+  String name;
+  int grade;
+}
+```
+
+我们可以根据上面提到的两种哈希函数，仿照他们的设计，设计我们自己的哈希函数，比如像下面这样。
+
+```java
+@Override
+public int hashCode() {
+    return name.hashCode() * 31 + grade;
+}
+```
+
+事实上`JDK`也贴心的为我们实现了一个类，去计算我们自定义类的哈希函数。
+
+```java
+// 下面这个函数是我们自己设计的类 Student 的哈希函数
+@Override
+public int hashCode() {
+    return Objects.hash(name, grade);
+}
+
+// 下面这个函数为  Objects.hash 函数
+public static int hash(Object... values) {
+    return Arrays.hashCode(values);
+}
+
+// 下面这个函数为  Arrays.hashCode 函数
+public static int hashCode(Object a[]) {
+    if (a == null)
+        return 0;
+
+    int result = 1;
+
+    for (Object element : a)
+        result = 31 * result + (element == null ? 0 : element.hashCode());
+
+    return result;
+}
+
+```
+
+`JDK`帮助我们实现的哈希函数，本质上就是将类当中所有的字段封装成一个数组，然后像计算字符串的哈希值那样去计算我们自定义类的哈希值。
+
+### 集合类型的哈希函数
 
