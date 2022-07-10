@@ -72,13 +72,17 @@ System.out.println(strs[6]);
 
 ```java
 public int hashCode() {
-    int h = hash; // hash 的值为0，也就是说 h 值为 0
+    // hash 是 String 类当中一个私有的 int 变量，主要作用即存储计算出来的哈希值
+    // 避免哈希值重复计算 节约时间
+    int h = hash; // 如果是第一次调用 hashCode 这个函数 hash 的值为0，也就是说 h 值为 0
+    // value 就是存储字符的字符数组
     if (h == 0 && value.length > 0) {
         char val[] = value;
 
         for (int i = 0; i < value.length; i++) {
             h = 31 * h + val[i];
         }
+        // 更新 hash 的值
         hash = h;
     }
     return h;
