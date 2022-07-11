@@ -132,7 +132,7 @@ $$
 
 <img src="../images/hashmap/01-hashmap17.png" style="zoom:80%;" />
 
-
+<img src="../images/hashmap/01-hashmap18.png" style="zoom:80%;" />
 
 ## 扩容机制
 
