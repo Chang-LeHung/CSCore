@@ -1,5 +1,54 @@
-# HashMap设计原理与实现（下篇）——哈希表的Java实现
+# HashMap设计原理与实现（下篇）——自己动手写HashMap
 
 我们在上篇文章[哈希表的设计原理](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484145&idx=1&sn=362cf64866ace02ac95c0c1a970393e4&chksm=cf0c9ef8f87b17eebb61ea422f58e9e439632783e9faa5a3b2ce55712c1582b140904b60cb17&token=1155116583&lang=zh_CN#rd)当中已经大体说明了哈希表的实现原理，在这篇文章当中我们将自己动手实现我们自己的`HashMap`。
 
-在本篇文章当中
+在本篇文章当中主要通过线性探测法，从最基本的数组再到`HashMap`当中节点的设计，一步一步的实现一个能够实现`Key`、`Value`映射的容器，写出我们自己的哈希表`MyHashMap`，让可以具备`HashMap`最常见的两个功能，`put`和`get`方法。
+
+## 我们的数组当中应该存储什么数据？
+
+在上篇[哈希表的设计原理](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484145&idx=1&sn=362cf64866ace02ac95c0c1a970393e4&chksm=cf0c9ef8f87b17eebb61ea422f58e9e439632783e9faa5a3b2ce55712c1582b140904b60cb17&token=1155116583&lang=zh_CN#rd)当中我们已经仔细说明，在`HashMap`当中我们是使用数组去存储具体的数据的，那么在我们的数组当中应该存储什么样的数据呢？假设在`HashMap`的数组当中存储的数据类型为`Node`，那么这个类需要有哪些字段呢？
+
+- 首先一点我们肯定需要存储`Value`值，因为我们最终需要通过`get`方法从`HashMap`当中取出我们所需要的值。
+- 第二点当我们通过`get`方法去取值的时候是通过`Key`（键值）去取的，当哈希值产生冲突的时候，我们不仅需要通过哈希值确定位置，还需要通过比较通过函数`get`传递的`Key`和数组当当中存储的数据的`key`是否相等，因此
+
+- 第三点为了避免重复计算哈希值（因为有的对象的哈希值计算还是比较费时间），我们可以使用一个字段去存储计算好的哈希值。
+
+根据以上三点我们的`Node`类的设计如下：
+
+```java
+  private static class Node<K, V> {
+    /**
+     * 用于存储我们计算好的 key 的哈希值
+     */
+    final int hash;
+
+    /**
+     * Key Value 中的 Key 对象
+     */
+    final K key;
+
+    /**
+     * Key Value 中的 Value 对象
+     */
+    V value;
+
+    public Node(int hash, K key, V value) {
+      this.hash = hash;
+      this.key = key;
+      this.value = value;
+    }
+
+    public V setValue(V newValue) {
+      V oldValue = newValue;
+      value = newValue;
+      return oldValue;
+    }
+
+    @Override
+    public String toString() {
+      return key + "=" + value;
+    }
+  }
+
+```
+
