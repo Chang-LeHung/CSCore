@@ -4,7 +4,7 @@
 
 在本篇文章当中主要通过线性探测法，从最基本的数组再到`HashMap`当中节点的设计，一步一步的实现一个能够实现`Key`、`Value`映射的容器，写出我们自己的哈希表`MyHashMap`，让可以具备`HashMap`最常见的两个功能，`put`和`get`方法。
 
-## 我们的数组当中应该存储什么数据？
+## 我们的数组当中应该存储什么样数据？
 
 在上篇[哈希表的设计原理](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484145&idx=1&sn=362cf64866ace02ac95c0c1a970393e4&chksm=cf0c9ef8f87b17eebb61ea422f58e9e439632783e9faa5a3b2ce55712c1582b140904b60cb17&token=1155116583&lang=zh_CN#rd)当中我们已经仔细说明，在`HashMap`当中我们是使用数组去存储具体的数据的，那么在我们的数组当中应该存储什么样的数据呢？假设在`HashMap`的数组当中存储的数据类型为`Node`，那么这个类需要有哪些字段呢？
 
@@ -32,6 +32,12 @@
      */
     V value;
 
+    /**
+     * hash 是键值 key 的哈希值  key 是键 value 是值
+     * @param hash
+     * @param key
+     * @param value
+     */
     public Node(int hash, K key, V value) {
       this.hash = hash;
       this.key = key;
