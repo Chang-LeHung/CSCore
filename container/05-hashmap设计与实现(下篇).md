@@ -259,9 +259,13 @@ public void put(K key, V value) {
 
 ```
 
-### 扩容(`resize`函数)代码
+### 扩容(`resize`函数)实现
 
 ```java
+  /**
+   * 如果你已经看懂 put 函数的代码，那这个代码就比较简单了
+   * 因为只是单纯的将原数组的数据重新进行哈希并且加入到新数组
+   */
   private void resize() {
     int n = (hashTable.length << 1);
     threshold = (int) (n * loadFactor);
@@ -279,6 +283,36 @@ public void put(K key, V value) {
   }
 
 ```
+
+### `get`函数实现
+
+```java
+public V get(K key) {
+    if (null == key)
+        throw new RuntimeException("查询的键值不能为空");
+    int hash = hash(key);
+    int n = hashTable.length;
+    int idx = hash & (n - 1);
+    if (null == hashTable[idx])
+        return null;
+    // 这里同样需要进行线性探测
+    for (;;) {
+        // 当数组当中的数据不为空
+        // 且数据当中的哈希值和传入 key
+        // 的哈希值相等 而且键值相等
+        // 就是找到了对应的数据
+        if (null != hashTable[idx]
+            && hash == hashTable[idx].hash
+            && key.equals(hashTable[idx].key))
+            break;
+        idx = (idx + 1) & (n -1);
+    }
+    return hashTable[idx].value;
+}
+
+```
+
+### `remove`函数实现
 
 
 
