@@ -296,6 +296,8 @@ public V get(K key) {
     if (null == hashTable[idx])
         return null;
     // 这里同样需要进行线性探测
+    // 因为哈希值相同时 key 值
+    // 不一定相同 因为会有哈希冲突
     for (;;) {
         // 当数组当中的数据不为空
         // 且数据当中的哈希值和传入 key
@@ -311,10 +313,6 @@ public V get(K key) {
 }
 
 ```
-
-### `remove`函数实现
-
-
 
 ## 完整代码
 
@@ -514,4 +512,84 @@ public class MyHashMap<K, V> {
   }
 }
 ```
+
+## 测试我们自己实现的`HashMap`
+
+测试代码：
+
+```java
+public static void main(String[] args) {
+
+    MyHashMap<String, Integer> map = new MyHashMap<>();
+    Random random = new Random();
+    HashMap<String, Integer> map1 = new HashMap<>();
+    ArrayList<String> strs = new ArrayList<>();
+    ArrayList<Integer> list = new ArrayList<>();
+    for (int i = 0; i < 1000000; i++) {
+        String s = UUID.randomUUID().toString().substring(0, 4);
+        int n = random.nextInt(1000);
+        strs.add(s);
+        list.add(n);
+    }
+    System.out.println("开始测试插入 put 函数");
+    long start = System.currentTimeMillis();
+    for (int i = 0; i < list.size(); i++) {
+        map1.put(strs.get(i), list.get(i));
+    }
+    long end = System.currentTimeMillis();
+    System.out.println("HashMap：花费的时间 = " + (end - start));
+
+    start = System.currentTimeMillis();
+    for (int i = 0; i < list.size(); i++) {
+        map.put(strs.get(i), list.get(i));
+    }
+    end = System.currentTimeMillis();
+    System.out.println("MyHashMap：花费的时间 = " + (end - start));
+
+    System.out.println("开始测试查找 get 函数");
+
+    start = System.currentTimeMillis();
+    for (int i = 0; i < list.size(); i++) {
+        map.get(strs.get(i));
+    }
+    end = System.currentTimeMillis();
+    System.out.println("MyHashMap：花费的时间 = " + (end - start));
+
+    start = System.currentTimeMillis();
+    for (int i = 0; i < list.size(); i++) {
+        map1.get(strs.get(i));
+    }
+    end = System.currentTimeMillis();
+    System.out.println("HashMap：花费的时间 = " + (end - start));
+}
+```
+
+输出结果：
+
+```java
+开始测试插入 put 函数
+HashMap：花费的时间 = 232
+MyHashMap：花费的时间 = 324
+开始测试查找 get 函数
+MyHashMap：花费的时间 = 186
+HashMap：花费的时间 = 222
+```
+
+从上面的结果可以看出来我们自己实现的`HashMap`在插入数据的时候花费的时间比较长，`JDK`的`HashMap`使用的是链地址法，他们扩容的次数肯定会比我们少，因为我们一个位置只能放一个数据，而`JDK`的能放多个。
+
+但是我们查找的时候效率会高一点，因为`JDK`的哈希表还涉及链表的操作（可能还涉及红黑树），因此我们的效率可能会高一点。
+
+## 总结
+
+在本篇文章当中我们自己实现了一个线性探测的哈希表，但是我们并没有实现`remove`函数，大家可以自己去实现这个函数，也不太困难！！！整篇文章的内容主要包含以下内容：
+
+- 节点`Node`的设计。
+- 数组长度的设计。
+- `roundUp`函数设计。
+- 哈希函数的设计。
+- 扩容机制。
+
+本篇还是比较多的，希望大家有所收获，我是LeHung，我们下期再见！！！
+
+更多精彩内容合集可访问：https://github.com/Chang-LeHung/CSCore
 
