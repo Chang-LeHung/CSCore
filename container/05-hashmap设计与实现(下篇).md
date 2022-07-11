@@ -132,7 +132,7 @@ $$
 
 <img src="../images/hashmap/01-hashmap17.png" style="zoom:80%;" />
 
-<img src="../images/hashmap/01-hashmap18.png" style="zoom:80%;" />
+<img src="../images/hashmap/01-hashmap19.png" style="zoom:80%;" />
 
 从上图当中我们会发现，我们咋一个数的二进制数的32位放一个`1`，经过移位之后最终`32`位的比特数字全部变成了`1`。
 
