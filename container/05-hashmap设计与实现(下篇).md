@@ -130,7 +130,7 @@ $$
 
 上面的代码还是很难理解的，让我们一点一点的来分析。首先我们使用一个`2`的整数次幂的数进行上面的操作！
 
-<img src="../images/hashmap/01-hashmap16.png" style="zoom:80%;" />
+<img src="../images/hashmap/01-hashmap17.png" style="zoom:80%;" />
 
 
 
