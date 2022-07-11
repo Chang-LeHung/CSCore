@@ -225,6 +225,63 @@ public class MyHashMap<K, V> {
 
 ### `put`函数的实现
 
+```java
+public void put(K key, V value) {
+
+    if (null == key)
+        throw new RuntimeException("哈希表的键值不能为空");
+    int hash = hash(key);
+    // 这表示使用了空参构造函数 而且是第一次调用 put 函数
+    if (null == hashTable) {
+        hashTable = (Node<K, V>[]) new Node[DEFAULT_CAPACITY];
+        // 计算数组长度对应的扩容阈值
+        threshold = (int)(hashTable.length * loadFactor);
+        // 进行 & 运算得到数据下标
+        hashTable[hash & (DEFAULT_CAPACITY - 1)] = new Node<K, V>(hash, key, value);
+    }else {
+        int n = hashTable.length;
+        int idx = hash & (n - 1);
+        // 如果数组不为空 说明已经有数据存在了
+        // 如果哈希值相同的话说明是同一个对象了
+        // 也可以进行跳出
+        while (null != hashTable[idx] && !key.equals(hashTable[idx].key))
+            idx = (idx + 1) & (n - 1);
+        // 如果是通过 null != hashTable[idx] 条件跳出则是新添加数据
+        // 如果是通过 !key.equals(hashTable[idx].key) 条件跳出
+        // 则是因为 put 函数的 key 已经存在这次操作是更新数据
+        hashTable[idx] = new Node<K, V>(hash, key, value);
+    }
+    // 如果数组当中使用过的数据超过阈值
+    if (++size > threshold) {
+        resize();
+    }
+}
+
+```
+
+### 扩容(`resize`函数)代码
+
+```java
+  private void resize() {
+    int n = (hashTable.length << 1);
+    threshold = (int) (n * loadFactor);
+    Node<K, V>[] oldTable = hashTable;
+    hashTable = (Node<K, V>[]) new Node[n];
+    for (int i = 0; i < oldTable.length; i++)  {
+      if (null == oldTable[i])
+        continue;
+      Node<K, V> node = oldTable[i];
+      int idx = node.hash & (n - 1);
+      while (null != hashTable[idx] && !node.key.equals(hashTable[idx].key))
+        idx = (idx + 1) & (n - 1);
+      hashTable[idx] = node;
+    }
+  }
+
+```
+
+
+
 ## 完整代码
 
 ```java
