@@ -1,6 +1,6 @@
 # HashMap设计原理与实现（下篇）200行带你写HashMap
 
-我们在上篇文章[哈希表的设计原理](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484145&idx=1&sn=362cf64866ace02ac95c0c1a970393e4&chksm=cf0c9ef8f87b17eebb61ea422f58e9e439632783e9faa5a3b2ce55712c1582b140904b60cb17&token=1155116583&lang=zh_CN#rd)当中已经大体说明了哈希表的实现原理，在这篇文章当中我们将自己动手实现我们自己的`HashMap`。
+我们在上篇文章[哈希表的设计原理](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484145&idx=1&sn=362cf64866ace02ac95c0c1a970393e4&chksm=cf0c9ef8f87b17eebb61ea422f58e9e439632783e9faa5a3b2ce55712c1582b140904b60cb17&token=1155116583&lang=zh_CN#rd)当中已经大体说明了哈希表的实现原理，在这篇文章当中我们将自己动手实现我们自己的`HashMap`，完整的代码在文章末尾。
 
 在本篇文章当中主要通过线性探测法，从最基本的数组再到`HashMap`当中节点的设计，一步一步的实现一个能够实现`Key`、`Value`映射的容器，写出我们自己的哈希表`MyHashMap`，让可以具备`HashMap`最常见的两个功能，`put`和`get`方法。
 
@@ -152,6 +152,23 @@ roundUp(3) == 4
 roundUp(5) == 8
 ```
 
+## 哈希函数
+
+```java
+  /**
+   * 这个 key 是 put 函数传进来的 key
+   * @param key
+   * @return
+   */
+  static int hash(Object key) {
+    int h;
+    // 调用对象自己实现的 hashCode 方法
+    return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
+  }
+```
+
+
+
 ## 扩容机制
 
 当我们一直往`HashMap`加入数据的话，数组迟早会被用完，当数组用完之后我们就需要进行扩容，我们要记住一点扩容之后的数组长度也需要满足`2`的整数次幂，因为上面我们已经提到数组的长度需要是`2`的整数次幂，因此扩容之后的长度也需要保持是`2`的整数次幂。
@@ -163,7 +180,7 @@ $$
 
 ## Java代码实现HashMap
 
-先看一下我们需要的字段
+### 先看一下我们需要的字段
 
 ```java
 public class MyHashMap<K, V> {
@@ -203,6 +220,207 @@ public class MyHashMap<K, V> {
    * 当超过这个值的时候进行扩容
    */
   int threshold;
+}
+```
+
+### `put`函数的实现
+
+## 完整代码
+
+```java
+import java.util.*;
+
+public class MyHashMap<K, V> {
+
+  /**
+   * 默认数组的容量
+   */
+  static final int DEFAULT_CAPACITY = 16;
+
+  /**
+   * 默认负载因子
+   */
+  static final float DEFAULT_LOAD_FACTOR = 0.75f;
+
+  /**
+   * 哈希表中数组的最大长度
+   */
+  static final int MAXIMUM_CAPACITY = 1 << 30;
+
+  /**
+   * 真正存储数据的数组
+   */
+  Node<K, V>[] hashTable;
+
+  /**
+   * 哈希表数组当中存储的数据的个数
+   */
+  int size;
+
+  /**
+   * 哈希表当中的负载因子
+   */
+  float loadFactor = 0.75f;
+
+  /**
+   * 哈希表扩容的阈值 = 哈希表的长度 x 负载因子
+   * 当超过这个值的时候进行扩容
+   */
+  int threshold;
+
+  /**
+   * 返回第一个大于或者等于 capacity 且为 2 的整数次幂的那个数
+   * @param capacity
+   * @return
+   */
+  static int roundUp(int capacity) {
+    int n = capacity - 1;
+    n |= n >>> 1;
+    n |= n >>> 2;
+    n |= n >>> 4;
+    n |= n >>> 8;
+    n |= n >>> 16;
+    // 如果最终得到的数据小于 0 则初始长度为 1
+    // 如果长度大于我们所允许的最大的容量 则将初始长度设置为我们
+    // 所允许的最大的容量
+    // MAXIMUM_CAPACITY = 1 << 30;
+    return (n < 0) ? 1 : (n >= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;
+  }
+
+  private static class Node<K, V> {
+    /**
+     * 用于存储我们计算好的 key 的哈希值
+     */
+    final int hash;
+
+    /**
+     * Key Value 中的 Key 对象
+     */
+    final K key;
+
+    /**
+     * Key Value 中的 Value 对象
+     */
+    V value;
+
+    /**
+     * hash 是键值 key 的哈希值  key 是键 value 是值
+     * @param hash
+     * @param key
+     * @param value
+     */
+    public Node(int hash, K key, V value) {
+      this.hash = hash;
+      this.key = key;
+      this.value = value;
+    }
+
+    public V setValue(V newValue) {
+      V oldValue = newValue;
+      value = newValue;
+      return oldValue;
+    }
+
+    @Override
+    public String toString() {
+      return key + "=" + value;
+    }
+  }
+
+  public MyHashMap() {
+    this.loadFactor = DEFAULT_LOAD_FACTOR;
+  }
+
+  public MyHashMap(int initialCapacity, float loadFactor) {
+    if (initialCapacity <= 0) {
+      throw new RuntimeException("初始化长度不能小于0");
+    }
+    if (initialCapacity > MAXIMUM_CAPACITY)
+      initialCapacity = MAXIMUM_CAPACITY;
+
+    initialCapacity = roundUp(initialCapacity);
+    hashTable = (Node<K, V>[]) new Node[initialCapacity];
+    this.loadFactor = loadFactor;
+    threshold = (int) (loadFactor * initialCapacity);
+  }
+
+  public MyHashMap(int capacity) {
+    this(capacity, DEFAULT_LOAD_FACTOR);
+  }
+
+  static int hash(Object key) {
+    int h;
+    return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
+  }
+
+  public void put(K key, V value) {
+
+    if (null == key)
+      throw new RuntimeException("哈希表的键值不能为空");
+    int hash = hash(key);
+
+    if (null == hashTable) {
+      hashTable = (Node<K, V>[]) new Node[DEFAULT_CAPACITY];
+      threshold = (int)(hashTable.length * loadFactor);
+      hashTable[hash & (DEFAULT_CAPACITY - 1)] = new Node<K, V>(hash, key, value);
+    }else {
+      int n = hashTable.length;
+      int idx = hash & (n - 1);
+      while (null != hashTable[idx] && !key.equals(hashTable[idx].key))
+        idx = (idx + 1) & (n - 1);
+      hashTable[idx] = new Node<K, V>(hash, key, value);
+    }
+    if (++size > threshold) {
+      resize();
+    }
+  }
+
+  private void resize() {
+    int n = (hashTable.length << 1);
+    threshold = (int) (n * loadFactor);
+    Node<K, V>[] oldTable = hashTable;
+    hashTable = (Node<K, V>[]) new Node[n];
+    for (int i = 0; i < oldTable.length; i++)  {
+      if (null == oldTable[i])
+        continue;
+      Node<K, V> node = oldTable[i];
+      int idx = node.hash & (n - 1);
+      while (null != hashTable[idx] && !node.key.equals(hashTable[idx].key))
+        idx = (idx + 1) & (n - 1);
+      hashTable[idx] = node;
+    }
+  }
+
+  public V get(K key) {
+    if (null == key)
+      throw new RuntimeException("查询的键值不能为空");
+    int hash = hash(key);
+    int n = hashTable.length;
+    int idx = hash & (n - 1);
+    if (null == hashTable[idx])
+      return null;
+    for (;;) {
+      if (null != hashTable[idx]
+          && hash == hashTable[idx].hash
+          && key.equals(hashTable[idx].key))
+        break;
+      idx = (idx + 1) & (n -1);
+    }
+    return hashTable[idx].value;
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder builder = new StringBuilder();
+    builder.append("[");
+    for (int i = 0; i < hashTable.length; i++) {
+      builder.append(hashTable[i]);
+      builder.append(", ");
+    }
+    builder.delete(builder.length() - 2, builder.length());
+    builder.append("]");
+    return builder.toString();
+  }
 }
 ```
 
