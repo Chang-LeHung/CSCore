@@ -27,6 +27,9 @@
 - `HashMap`设计原理与实现（上篇）——哈希表的原理，如何从0到1设计一个`HashMap`
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484145&idx=1&sn=362cf64866ace02ac95c0c1a970393e4&chksm=cf0c9ef8f87b17eebb61ea422f58e9e439632783e9faa5a3b2ce55712c1582b140904b60cb17&token=1155116583&lang=zh_CN#rd)
   - [github阅读](./container/05-hashmap设计与实现(上篇).md)
+- `HashMap`设计原理与实现（下篇）200行代码带你写自己的`HashMap`！！！
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484235&idx=1&sn=e4fda2cd7520d2d68d7a3c179c8845b3&chksm=cf0c9f42f87b1654e49e21d043fed104ce5fd4839f2eae13cd95c7630fd547e208a1318fd8d3&token=1155116583&lang=zh_CN#rd)
+  - [github阅读](./container/05-hashmap设计与实现(下篇).md)
 
 
 ---
