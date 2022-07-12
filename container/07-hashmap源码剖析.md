@@ -333,21 +333,34 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
             ((k = p.key) == key || (key != null && key.equals(k))))
             e = p;
         else if (p instanceof TreeNode)
+            // 如果 p 是一个红黑树节点，就在红黑树当中放入数据
+            // 在本篇文章当中我们不仔细去讨论这个函数，因为红黑树
+            // 的操作比较复杂，我们之后再专门写一篇关于红黑树的文章来讲解这个问题
             e = ((TreeNode<K,V>)p).putTreeVal(this, tab, hash, key, value);
         else {
+            // 这里就是链表的操作了
             for (int binCount = 0; ; ++binCount) {
+                // 如果 e.next == null 说明已经遍历到最后一个节点了
+                // 需要将新加入的
                 if ((e = p.next) == null) {
                     p.next = newNode(hash, key, value, null);
+                    // 如果节点数超过 TREEIFY_THRESHOLD 就需要进行后续的操作
+                    // 在 treeifyBin 函数当中会有一个判断，如果数组的长度大于
+                    // MIN_TREEIFY_CAPACITY 就将链表变成红黑树，否则直接进行扩容
                     if (binCount >= TREEIFY_THRESHOLD - 1) // -1 for 1st
                         treeifyBin(tab, hash);
                     break;
                 }
+                // 如果找到相同的 key 就跳出去
                 if (e.hash == hash &&
                     ((k = e.key) == key || (key != null && key.equals(k))))
                     break;
                 p = e;
             }
         }
+        // 当存在一个对象的 key 和传进这个函数的 key 相同的话
+        // 就需要进行 value 的更新，相当于将新的 value 替换掉旧的
+        // value
         if (e != null) { // existing mapping for key
             V oldValue = e.value;
             if (!onlyIfAbsent || oldValue == null)
@@ -357,11 +370,11 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
         }
     }
     ++modCount;
+    // 如果容器当中数据的数量大于阈值的话就进行扩容
     if (++size > threshold)
         resize();
-    afterNodeInsertion(evict);
+    afterNodeInsertion(evict); // 这个函数在 HashMap 没啥用，他的函数体为空 
     return null;
 }
-
 ```
 
