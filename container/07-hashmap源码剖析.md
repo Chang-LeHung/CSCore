@@ -305,7 +305,7 @@ static final int hash(Object key) {
 
 在正式阅读这个代码之前我们先分析这个函数的流程：
 
-<img src="../images/hashmap/01-hashmap26.png" style="zoom:80%;" />
+<img src="../images/hashmap/01-hashmap27.png" style="zoom:80%;" />
 
 ```java
 final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
