@@ -63,4 +63,15 @@ $$
 
 ```
 
+- `UNTREEIFY_THRESHOLD`表示当在进行`resize`操作的过程当中，红黑树当中的节点个数小于`UNTREEIFY_THRESHOLD`时，就需要将一颗红黑树重新恢复成链表。
+
+```java
+    /**
+     * The bin count threshold for untreeifying a (split) bin during a
+     * resize operation. Should be less than TREEIFY_THRESHOLD, and at
+     * most 6 to mesh with shrinkage detection under removal.
+     */
+    static final int UNTREEIFY_THRESHOLD = 6;
+```
+
 - 
