@@ -117,7 +117,7 @@ $$
 
 
 
-## 数组当中的节点类
+## `HashMap`底层数组当中的节点类
 
 在上篇[哈希表的设计原理](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484145&idx=1&sn=362cf64866ace02ac95c0c1a970393e4&chksm=cf0c9ef8f87b17eebb61ea422f58e9e439632783e9faa5a3b2ce55712c1582b140904b60cb17&token=1155116583&lang=zh_CN#rd)当中我们已经仔细说明，在`HashMap`当中我们是使用数组去存储具体的数据的，那么在我们的数组当中应该存储什么样的数据呢？假设在`HashMap`的数组当中存储的数据类型为`Node`，那么这个类需要有哪些字段呢？
 
@@ -247,4 +247,6 @@ tableSizeFor(4) == 4 // 就是当传入的数据已经是 2 的整数次幂的�
 tableSizeFor(3) == 4
 tableSizeFor(5) == 8
 ```
+
+## `HashMap`构造函数分析
 
