@@ -387,7 +387,9 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
 ```java
 final Node<K,V>[] resize() {
     Node<K,V>[] oldTab = table;
+    // 旧数组的数组长度
     int oldCap = (oldTab == null) ? 0 : oldTab.length;
+    // 旧的扩容的阈值
     int oldThr = threshold;
     int newCap, newThr = 0;
     if (oldCap > 0) {
@@ -410,20 +412,28 @@ final Node<K,V>[] resize() {
         newThr = (newCap < MAXIMUM_CAPACITY && ft < (float)MAXIMUM_CAPACITY ?
                   (int)ft : Integer.MAX_VALUE);
     }
+    
+    // 上面的代码主要是计算得到新的阈值 newThr 和数组长度 newCap
+    
     threshold = newThr;
     @SuppressWarnings({"rawtypes","unchecked"})
     Node<K,V>[] newTab = (Node<K,V>[])new Node[newCap];
     table = newTab;
+    // 现在需要将旧数组当中的数据加入到新数组
     if (oldTab != null) {
         for (int j = 0; j < oldCap; ++j) {
             Node<K,V> e;
             if ((e = oldTab[j]) != null) {
                 oldTab[j] = null;
+                // e.next == null 表示只有一个数据，并没有形成 2 个
+                // 数据以上的链表，因此可以直接加入到心得数组 当中
                 if (e.next == null)
                     newTab[e.hash & (newCap - 1)] = e;
                 else if (e instanceof TreeNode)
+                    // 如果节点是红黑树节点，则在将红黑树当中的节点加入到新数组当中
                     ((TreeNode<K,V>)e).split(this, newTab, j, oldCap);
                 else { // preserve order
+                    // 链表的代码比较复杂，大家可以看下面的分析
                     Node<K,V> loHead = null, loTail = null;
                     Node<K,V> hiHead = null, hiTail = null;
                     Node<K,V> next;
@@ -458,6 +468,5 @@ final Node<K,V>[] resize() {
     }
     return newTab;
 }
-
 ```
 
