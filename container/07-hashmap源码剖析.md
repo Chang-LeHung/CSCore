@@ -273,11 +273,16 @@ public HashMap(int initialCapacity, float loadFactor) {
         throw new IllegalArgumentException("Illegal load factor: " +
                                            loadFactor);
     this.loadFactor = loadFactor;
-    // 这里本来应该设置为数组长度的，但是在 HashMap 的源代码当中
+    // 这里本来应该将 threshold 的值设置为数组长度的 * load factor，
+    // 但是在 HashMap 的源代码当中
     // 并没有一个变量存储数组的长度，因为数组的长度直接 array.length
-    // 就可以得到，因此也没必要
+    // 就可以得到，因此也没必要，而在 HashMap 当中，使用懒加载
+    // 只有在使用 put 函数的时候才申请数组 因此需要一个变量存储数组的长度
+    // 而此时 threshold 并没有使用，因此可以临时用于存储 数组的长度
+    // 在后面申请数组是，将 threshold 更新为 数组长度 * load factor
     this.threshold = tableSizeFor(initialCapacity);
 }
-
 ```
+
+`HashMap`的构造函数整体来说比较简单，但是上面代码当中最后一行很容易让人迷惑，具体原因在上面的注释当中已经说明了，大家可以阅读一下。
 
