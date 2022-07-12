@@ -606,6 +606,8 @@ final Node<K,V> getNode(int hash, Object key) {
 - 先找到要删除的节点。
 - 删除找到的节点。
 
+大家在理解上面“增改查”三个操作之后，下面的代码很容易理解了，下面代码有注释帮助大家理解。
+
 ```java
 public V remove(Object key) {
     Node<K,V> e;
@@ -615,7 +617,10 @@ public V remove(Object key) {
 
 final Node<K,V> removeNode(int hash, Object key, Object value,
                            boolean matchValue, boolean movable) {
+    // matchValue 这个参数如果为 true 表示传入的参数 value
+    // 和查找到的数据的 value 相等才进行删除
     Node<K,V>[] tab; Node<K,V> p; int n, index;
+    // 先找到节点
     if ((tab = table) != null && (n = tab.length) > 0 &&
         (p = tab[index = (n - 1) & hash]) != null) {
         Node<K,V> node = null, e; K k; V v;
@@ -637,6 +642,7 @@ final Node<K,V> removeNode(int hash, Object key, Object value,
                 } while ((e = e.next) != null);
             }
         }
+        // 删除节点
         if (node != null && (!matchValue || (v = node.value) == value ||
                              (value != null && value.equals(v)))) {
             if (node instanceof TreeNode)
@@ -655,3 +661,12 @@ final Node<K,V> removeNode(int hash, Object key, Object value,
 }
 ```
 
+## 总结
+
+本篇文章主要跟大家一起分析了`HashMap`当中主要的源代码，主要涉及四个操作`增删改查`，但是没有仔细分析关系红黑树的部分，因为红黑树涉及的部分比较多，本篇文章已经比较长了，以后专门写一篇文章仔细分析红黑树的部分。
+
+在`HashMap`当中有很多写的很巧妙的代码，比如说`tableSizeFor`函数，扩容的时候两条链表的操作，这些设计都非常巧妙，希望大家有所收获。我是LeHung，我们下期再见！！！
+
+更多精彩内容合集可访问：https://github.com/Chang-LeHung/CSCore。
+
+关注微信公众号：一无是处的研究僧，了解更多计算机知识~~~~
