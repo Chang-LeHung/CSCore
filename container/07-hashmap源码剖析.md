@@ -250,3 +250,34 @@ tableSizeFor(5) == 8
 
 ## `HashMap`构造函数分析
 
+首先我们先看一下几个构造函数的代码：
+
+```java
+public HashMap(int initialCapacity) {
+    // 指定初始容量的构造函数
+    this(initialCapacity, DEFAULT_LOAD_FACTOR);
+}
+
+public HashMap() {
+    this.loadFactor = DEFAULT_LOAD_FACTOR; // all other fields defaulted
+}
+
+public HashMap(int initialCapacity, float loadFactor) {
+    if (initialCapacity < 0)
+        throw new IllegalArgumentException("Illegal initial capacity: " +
+                                           initialCapacity);
+    // 如果大于允许的最大容量，就将数组的长度这是为最大容量
+    if (initialCapacity > MAXIMUM_CAPACITY)
+        initialCapacity = MAXIMUM_CAPACITY;
+    if (loadFactor <= 0 || Float.isNaN(loadFactor))
+        throw new IllegalArgumentException("Illegal load factor: " +
+                                           loadFactor);
+    this.loadFactor = loadFactor;
+    // 这里本来应该设置为数组长度的，但是在 HashMap 的源代码当中
+    // 并没有一个变量存储数组的长度，因为数组的长度直接 array.length
+    // 就可以得到，因此也没必要
+    this.threshold = tableSizeFor(initialCapacity);
+}
+
+```
+
