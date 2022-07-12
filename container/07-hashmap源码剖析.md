@@ -288,7 +288,7 @@ public HashMap(int initialCapacity, float loadFactor) {
 
 ## `HashMap`的增删改查函数分析
 
-### `put`函数分析
+### `put`函数分析——“增改”
 
 ```java
 public V put(K key, V value) {
@@ -302,6 +302,10 @@ static final int hash(Object key) {
 ```
 
 在`put`函数当中首先计算参数`key`的哈希值，然后调用`putVal`函数真正的将输入插入到数据当中，为了方便大家于都代码，代码解释在代码当中对应的位置。
+
+在正式阅读这个代码之前我们先分析这个函数的流程：
+
+<img src="../images/hashmap/01-hashmap25.png" style="zoom:80%;" />
 
 ```java
 final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
