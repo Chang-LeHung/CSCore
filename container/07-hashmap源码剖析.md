@@ -126,7 +126,7 @@ $$
 
 - 第三点为了避免重复计算哈希值（因为有的对象的哈希值计算还是比较费时间），我们可以使用一个字段去存储计算好的哈希值。
 
-基于以上三点，在`JDK`当中的`HashMap`内部的节点类主要结构如下：
+基于以上三点，在`JDK`当中的`HashMap`内部的节点类主要结构如下。
 
 ```java
 static class Node<K,V> implements Map.Entry<K,V> {
@@ -171,3 +171,11 @@ static class Node<K,V> implements Map.Entry<K,V> {
 
 ```
 
+我们用下面两行代码说明上面类的结构：
+
+```java
+HashMap<String, Integer> map = new HashMap<>();
+map.put("一无是处的研究僧", 888);
+```
+
+在上面的代码当中`put`函数的参数`"一无是处的研究僧"`就是上面`Node`类当中的`key`，`888`就是`Node`类当中的`value`对象。
