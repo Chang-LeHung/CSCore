@@ -74,7 +74,7 @@ $$
     static final int UNTREEIFY_THRESHOLD = 6;
 ```
 
-- 下列代码单重的`table`数组对象就是`HashMap`底层当中真正用于存储数据的数组。
+- 下列代码当中的`table`数组对象就是`HashMap`底层当中真正用于存储数据的数组。
 
 ```java
     /**
