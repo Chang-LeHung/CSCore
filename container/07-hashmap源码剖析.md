@@ -286,3 +286,82 @@ public HashMap(int initialCapacity, float loadFactor) {
 
 `HashMap`的构造函数整体来说比较简单，但是上面代码当中最后一行很容易让人迷惑，具体原因在上面的注释当中已经说明了，大家可以阅读一下。
 
+## `HashMap`的增删改查函数分析
+
+### `put`函数分析
+
+```java
+public V put(K key, V value) {
+    return putVal(hash(key), key, value, false, true);
+}
+
+static final int hash(Object key) {
+    int h;
+    return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
+}
+```
+
+在`put`函数当中首先计算参数`key`的哈希值，然后调用`putVal`函数真正的将输入插入到数据当中，代码解释在代码当中对应的位置，方便大家阅读。
+
+```java
+final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
+               boolean evict) {
+    // 我们先只管前面三个参数，后的参数可以先不管
+    Node<K,V>[] tab; Node<K,V> p; int n, i;
+    
+    // 这里是首次调用函数 putVal 的时候这个 if 条件会通过
+    // 因为第一次调用这个函数的时候还没有申请数组 所以 table == null 
+    if ((tab = table) == null || (n = tab.length) == 0)
+        // 进行扩容
+        n = (tab = resize()).length;
+    // 如果计算出的下标对应数据还没有村数据直接将数据加入到数组
+    // 当中即可
+    // 这行代码不仅会将tab[i = (n - 1) & hash] 的结果赋值给 p 
+    // (p = tab[i = (n - 1) & hash]) 这行代码的返回值也是 tab[i = (n - 1) & hash]
+    if ((p = tab[i = (n - 1) & hash]) == null)
+        tab[i] = newNode(hash, key, value, null);
+    else {
+        // 如果对应位置当中已经存在数据了
+        // 即产生了哈希冲突，要采用链地址法进行解决
+        Node<K,V> e; K k;
+        // 如果传入的哈希值和对应下标的数据的哈希值相等
+        // 而且两个 key 相等，这个 if 语句的条件就满足了
+        // 然后将对应下标的数据赋值给 e 然后在后续的代码当中
+        // 更新 e 当中的 value 为 putVal 函数传入的 value
+        // 即 e.value = value;
+        if (p.hash == hash &&
+            ((k = p.key) == key || (key != null && key.equals(k))))
+            e = p;
+        else if (p instanceof TreeNode)
+            e = ((TreeNode<K,V>)p).putTreeVal(this, tab, hash, key, value);
+        else {
+            for (int binCount = 0; ; ++binCount) {
+                if ((e = p.next) == null) {
+                    p.next = newNode(hash, key, value, null);
+                    if (binCount >= TREEIFY_THRESHOLD - 1) // -1 for 1st
+                        treeifyBin(tab, hash);
+                    break;
+                }
+                if (e.hash == hash &&
+                    ((k = e.key) == key || (key != null && key.equals(k))))
+                    break;
+                p = e;
+            }
+        }
+        if (e != null) { // existing mapping for key
+            V oldValue = e.value;
+            if (!onlyIfAbsent || oldValue == null)
+                e.value = value;
+            afterNodeAccess(e);
+            return oldValue;
+        }
+    }
+    ++modCount;
+    if (++size > threshold)
+        resize();
+    afterNodeInsertion(evict);
+    return null;
+}
+
+```
+
