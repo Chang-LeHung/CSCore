@@ -240,11 +240,11 @@ static final int tableSizeFor(int cap) {
 
 <img src="../images/hashmap/01-hashmap24.png" style="zoom:80%;" />
 
-在`roundUp`函数当中，给初始容量减了个`1`，这样做的原因是让这个函数的返回值大于等于传入的参数`capacity`：
+在`tableSizeFor`函数当中，给初始容量减了个`1`，这样做的原因是让这个函数的返回值大于等于传入的参数`capacity`：
 
 ```java
-roundUp(4) == 4 // 就是当传入的数据已经是 2 的整数次幂的时候也返回传入的值
-roundUp(3) == 4
-roundUp(5) == 8
+tableSizeFor(4) == 4 // 就是当传入的数据已经是 2 的整数次幂的时候也返回传入的值
+tableSizeFor(3) == 4
+tableSizeFor(5) == 8
 ```
 
