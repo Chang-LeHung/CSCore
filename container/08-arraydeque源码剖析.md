@@ -20,4 +20,6 @@
 
 <img src="../images/arraydeque/04.png" alt="01" style="zoom:80%;" />
 
-- <img src="../images/arraydeque/05.png" alt="01" style="zoom:80%;" />
+- 数据从双端队列右侧弹出。
+
+<img src="../images/arraydeque/05.png" alt="01" style="zoom:80%;" />
