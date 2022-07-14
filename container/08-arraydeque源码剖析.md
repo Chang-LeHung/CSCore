@@ -55,3 +55,9 @@ public void test() {
 `ArrayDeque`底层是使用数组实现的。在`ArrayDeque`当中有两个整形变量`head`和`tail`，分别指向右侧的第一个进入队列的数据和左侧第一个进行队列的数据，整个内存布局如下图所示：
 
 <img src="../images/arraydeque/06.png" alt="01" style="zoom:80%;" />
+
+其中`tail`指的位置没有数据，`head`指的位置存在数据。
+
+- 当我们需要从左往右增加数据时，内存当中数据变化情况如下：
+
+<img src="../images/arraydeque/07.png" alt="01" style="zoom:80%;" />
