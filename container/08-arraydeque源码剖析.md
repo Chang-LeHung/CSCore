@@ -137,7 +137,7 @@ private static int calculateSize(int numElements) {
 
 <img src="../images/hashmap/01-hashmap21.png" style="zoom:80%;" />
 
-从上图当中我们会发现，我们咋一个数的二进制数的32位放一个`1`，经过移位之后最终`32`位的比特数字全部变成了`1`。根据上面数字变化的规律我们可以发现，任何一个比特经过上面移位的变化，这个比特后面的`31`个比特位都会变成`1`，像下图那样：
+从上图当中我们会发现，我们在一个数的二进制数的32位放一个`1`，经过移位之后最终`32`位的比特数字全部变成了`1`。根据上面数字变化的规律我们可以发现，任何一个比特经过上面移位的变化，这个比特后面的`31`个比特位都会变成`1`，像下图那样：
 
 <img src="../images/hashmap/01-hashmap23.png" style="zoom:80%;" />
 
@@ -145,3 +145,26 @@ private static int calculateSize(int numElements) {
 
 <img src="../images/hashmap/01-hashmap24.png" style="zoom:80%;" />
 
+经过上述过程分析，我们就可以立即函数`calculateSize`了。
+
+## ArrayDeque关键函数分析
+
+### addLast函数分析
+
+```java
+// tail 的初始值为 0 
+public void addLast(E e) {
+    if (e == null)
+        throw new NullPointerException();
+    elements[tail] = e;
+    // 这里进行的 & 位运算 相当于取余数操作
+    // (tail + 1) & (elements.length - 1) == (tail + 1) % elements.length
+    if ( (tail = (tail + 1) & (elements.length - 1)) == head)
+        doubleCapacity();
+}
+```
+
+代码`(tail + 1) & (elements.length - 1) == (tail + 1) % elements.length`成立的原因是任意一个数$a$对$2^n$进行取余数操作和$a$跟$2^n - 1$进行`&`运算的结果相等，即：
+$$
+a\% 2^n = a \& (2^n - 1)
+$$
