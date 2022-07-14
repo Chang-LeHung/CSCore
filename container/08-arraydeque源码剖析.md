@@ -273,9 +273,9 @@ public E pollFirst() {
 
 ## 总结
 
+在本篇文章当中，主要跟大家分享了`ArrayDeque`的设计原理，和他的底层实现过程
 
-
-以上就是本篇文章的所有内容了，希望大家有所收获，我是LeHung，我们下期再见！！！都看到这里了，给孩子一个赞（start）吧。![qz](../images/qz.png)![qz](../images/qz.png)![qz](../images/qz.png)
+以上就是本篇文章的所有内容了，希望大家有所收获，我是LeHung，我们下期再见！！！都看到这里了，给孩子一个赞（start）吧，![qz](../images/qz.png)![qz](../images/qz.png)![qz](../images/qz.png)免费的哦！！！![qz](../images/qz.png)![qz](../images/qz.png)![qz](../images/qz.png)
 
 ---
 
