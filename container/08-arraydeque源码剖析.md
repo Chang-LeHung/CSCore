@@ -23,3 +23,35 @@
 - 数据从双端队列右侧弹出。
 
 <img src="../images/arraydeque/05.png" alt="01" style="zoom:80%;" />
+
+而在`ArrayDeque`当中也给我们提供了对应的方法去实现，比如下面这个例子就是上图对应的代码操作：
+
+```java
+public void test() {
+    ArrayDeque<Integer> deque = new ArrayDeque<>();
+    deque.addLast(100);
+    System.out.println(deque);
+    deque.addFirst(55);
+    System.out.println(deque);
+    deque.addLast(-55);
+    System.out.println(deque);
+    deque.removeFirst();
+    System.out.println(deque);
+    deque.removeLast();
+    System.out.println(deque);
+}
+// 输出结果
+[100]
+[55, 100]
+[55, 100, -55]
+[100, -55]
+[100]
+```
+
+
+
+## 数组实现ArrayDeque(双端队列)的原理
+
+`ArrayDeque`底层是使用数组实现的。在`ArrayDeque`当中有两个整形变量`head`和`tail`，分别指向右侧的第一个进入队列的数据和左侧第一个进行队列的数据，整个内存布局如下图所示：
+
+<img src="../images/arraydeque/06.png" alt="01" style="zoom:80%;" />
