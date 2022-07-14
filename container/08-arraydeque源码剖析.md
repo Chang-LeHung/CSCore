@@ -74,6 +74,20 @@ public void test() {
 
 <img src="../images/arraydeque/12.png" alt="01" style="zoom:80%;" />
 
+## 底层数据遍历顺序和逻辑顺序
+
+上面主要谈论到的数组在内存当中的布局，但是他是具体的物理存储数据的顺序，这个顺序和我们的逻辑上的顺序是不一样的，根据上面的插入顺序，我们可以画出下面的图，大家可以仔细分析一下这个图的顺序问题。
+
+<img src="../images/arraydeque/16.png" alt="01" style="zoom:80%;" />
+
+上图当中队列左侧的如队顺序是0, 1, 2, 3，右侧入队的顺序为15, 14, 13, 12, 11, 10, 9, 8，因此在逻辑上我们的队列当中的数据布局如下图所示：
+
+<img src="../images/arraydeque/17.png" alt="01" style="zoom:80%;" />
+
+根据前面一小节谈到的输入在入队的时候数组当中数据的变化我们可以知道，数据在数组当中的布局为：
+
+<img src="../images/arraydeque/19.png" alt="01" style="zoom:80%;" />
+
 ## ArrayDeque类关键字段分析
 
 ```java
@@ -159,6 +173,8 @@ public void addLast(E e) {
     elements[tail] = e;
     // 这里进行的 & 位运算 相当于取余数操作
     // (tail + 1) & (elements.length - 1) == (tail + 1) % elements.length
+    // 这个操作主要是用于判断数组是否满了，如果满了则需要扩容
+    // 同时这个操作将 tail + 1，即 tail = tail + 1
     if ( (tail = (tail + 1) & (elements.length - 1)) == head)
         doubleCapacity();
 }
@@ -168,3 +184,52 @@ public void addLast(E e) {
 $$
 a\% 2^n = a \& (2^n - 1)
 $$
+从上面的代码来看下标为`tail`的位置是没有数据的，是一个空位置。
+
+### addFirst函数分析
+
+```java
+// head 的初始值为 0 
+public void addFirst(E e) {
+    if (e == null)
+        throw new NullPointerException();
+    // 若此时数组长度elements.length = 16
+    // 那么下面代码执行过后 head = 15
+    // 下面代码的操作结果和下面两行代码含义一致
+    // elements[(head - 1 + elements.length) % elements.length] = e
+    // head = (head - 1 + elements.length) % elements.length
+    elements[head = (head - 1) & (elements.length - 1)] = e;
+    if (head == tail)
+        doubleCapacity();
+}
+```
+
+上面代码操作结果和上文当中我们提到的，在队列当中从右向左加入数据一样。从上面的代码看，我们可以发现下标为`head`的位置是存在数据的。
+
+### doubleCapacity函数分析
+
+```java
+private void doubleCapacity() {
+    assert head == tail;
+    int p = head;
+    int n = elements.length;
+    int r = n - p; // number of elements to the right of p
+    int newCapacity = n << 1;
+    if (newCapacity < 0)
+        throw new IllegalStateException("Sorry, deque too big");
+    Object[] a = new Object[newCapacity];
+    System.arraycopy(elements, p, a, 0, r);
+    System.arraycopy(elements, 0, a, r, p);
+    elements = a;
+    head = 0;
+    tail = n;
+}
+
+```
+
+上面的代码还是比较简单的，这里给大家一个图示，大家就更加容易理解了：
+
+<img src="../images/arraydeque/21.png" alt="01" style="zoom:80%;" />
+
+扩容之后将原来数组的数据拷贝到了新数组当中，虽然数据在旧数组和新数组当中的顺序发生变化了，但是他们的相对顺序却没有发生变化，他们的逻辑顺序也是一样的，这里的逻辑可能有点绕，大家在这里可以好好思考一下。
+
