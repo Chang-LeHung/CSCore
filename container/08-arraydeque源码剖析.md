@@ -218,6 +218,11 @@ private void doubleCapacity() {
     if (newCapacity < 0)
         throw new IllegalStateException("Sorry, deque too big");
     Object[] a = new Object[newCapacity];
+    // arraycopy(Object src,  int  srcPos,
+                                        Object dest, int destPos,
+                                        int length)
+    // 上面是函数 System.arraycopy 的函数参数列表
+    // 大家可以参考上面理解下面的拷贝代码
     System.arraycopy(elements, p, a, 0, r);
     System.arraycopy(elements, 0, a, r, p);
     elements = a;
@@ -232,4 +237,51 @@ private void doubleCapacity() {
 <img src="../images/arraydeque/21.png" alt="01" style="zoom:80%;" />
 
 扩容之后将原来数组的数据拷贝到了新数组当中，虽然数据在旧数组和新数组当中的顺序发生变化了，但是他们的相对顺序却没有发生变化，他们的逻辑顺序也是一样的，这里的逻辑可能有点绕，大家在这里可以好好思考一下。
+
+#### pollLast和pollFirst函数分析
+
+这两个函数的代码就比较简单了，大家可以根据前文所谈到的内容和图示去理解下面的代码。
+
+```java
+public E pollLast() {
+    // 计算出待删除的数据的下标
+    int t = (tail - 1) & (elements.length - 1);
+    @SuppressWarnings("unchecked")
+    E result = (E) elements[t];
+    if (result == null)
+        return null;
+    // 将需要删除的数据的下标值设置为 null 这样这块内存就
+    // 可以被回收了
+    elements[t] = null;
+    tail = t;
+    return result;
+}
+
+public E pollFirst() {
+    int h = head;
+    @SuppressWarnings("unchecked")
+    E result = (E) elements[h];
+    // Element is null if deque empty
+    if (result == null)
+        return null;
+    elements[h] = null;     // Must null out slot
+    head = (h + 1) & (elements.length - 1);
+    return result;
+}
+
+```
+
+## 总结
+
+
+
+以上就是本篇文章的所有内容了，希望大家有所收获，我是LeHung，我们下期再见！！！都看到这里了，给孩子一个赞（start）吧。![qz](../images/qz.png)![qz](../images/qz.png)![qz](../images/qz.png)
+
+---
+
+更多精彩内容合集可访问项目：<https://github.com/Chang-LeHung/CSCore>
+
+关注公众号：一无是处的研究僧，了解更多计算机（Java、Python、计算机系统基础、算法与数据结构）知识。
+
+![](https://img2022.cnblogs.com/blog/2519003/202207/2519003-20220703200459566-1837431658.jpg)
 
