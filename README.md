@@ -43,6 +43,9 @@
 
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484109&idx=1&sn=4cd2040eacb04710694282192edeafc4&chksm=cf0c9ec4f87b17d2093a429755c0b3177ddeb39a96d77e210b03fe03f5a76968b7062234594a&token=1155116583&lang=zh_CN#rd)
   - [github阅读](./datastructr&algorithm/01-动态规划.md)
+- 你真的懂01背包问题吗？01背包的这几问你能答出来吗？
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484416&idx=1&sn=d8aa70bc642c94a127ea67409808980f&chksm=cf0c9809f87b111f2fb092adba83da7e5463a8f5eaa92914ddb975065428a1a80a7d6bc53f3a&token=883596793&lang=zh_CN#rd)
+  - [github阅读](./datastructr&algorithm/02-01背包问题.md)
 
 
 ---
