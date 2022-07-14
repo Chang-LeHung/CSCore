@@ -60,4 +60,8 @@ public void test() {
 
 - 当我们需要从左往右增加数据时，内存当中数据变化情况如下：
 
-<img src="../images/arraydeque/07.png" alt="01" style="zoom:80%;" />
+<img src="../images/arraydeque/08.png" alt="01" style="zoom:80%;" />
+
+- 当我们需要从右往做左增加数据时，内存当中数据变化情况如下：
+
+<img src="../images/arraydeque/09.png" alt="01" style="zoom:80%;" />
