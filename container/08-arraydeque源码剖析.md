@@ -58,10 +58,18 @@ public void test() {
 
 其中`tail`指的位置没有数据，`head`指的位置存在数据。
 
-- 当我们需要从左往右增加数据时，内存当中数据变化情况如下：
+- 当我们需要从左往右增加数据时（入队），内存当中数据变化情况如下：
 
-<img src="../images/arraydeque/08.png" alt="01" style="zoom:80%;" />
+<img src="../images/arraydeque/14.png" alt="01" style="zoom:80%;" />
 
-- 当我们需要从右往做左增加数据时，内存当中数据变化情况如下：
+- 当我们需要从右往做左增加数据时（入队），内存当中数据变化情况如下：
 
-<img src="../images/arraydeque/09.png" alt="01" style="zoom:80%;" />
+<img src="../images/arraydeque/15.png" alt="01" style="zoom:80%;" />
+
+- 当我们需要从右往左删除数据时（出队），内存当中数据变化情况如下：
+
+<img src="../images/arraydeque/13.png" alt="01" style="zoom:80%;" />
+
+- 当我们需要从左往右删除数据时（出队），内存当中数据变化情况如下：
+
+<img src="../images/arraydeque/12.png" alt="01" style="zoom:80%;" />
