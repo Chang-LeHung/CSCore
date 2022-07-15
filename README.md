@@ -48,10 +48,10 @@
   
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484416&idx=1&sn=d8aa70bc642c94a127ea67409808980f&chksm=cf0c9809f87b111f2fb092adba83da7e5463a8f5eaa92914ddb975065428a1a80a7d6bc53f3a&token=883596793&lang=zh_CN#rd)
   - [github阅读](./datastructr&algorithm/02-01背包问题.md)
--  面试官：完全背包都不会，是你自己走还是我送你？
-  
+- 面试官：完全背包都不会，是你自己走还是我送你？
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484544&idx=1&sn=c4de17583010430fa519ecd1703bedea&chksm=cf0c9889f87b119fe5621bacf417b163020dcd8a7c0ed63df94de20ba67ae742b4d86e22ae16&token=883596793&lang=zh_CN#rd)
   - [github阅读](./datastructr&algorithm/03完全背包.md)
+
 
 ---
 
