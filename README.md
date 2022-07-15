@@ -52,9 +52,9 @@
 
 -  面试官：完全背包都不会，是你自己走还是我送你？
   
-  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484544&idx=1&sn=c4de17583010430fa519ecd1703bedea&chksm=cf0c9889f87b119fe5621bacf417b163020dcd8a7c0ed63df94de20ba67ae742b4d86e22ae16&token=883596793&lang=zh_CN#rd)
-  
-  - [github阅读](./datastructr&algorithm/03%E5%AE%8C%E5%85%A8%E8%83%8C%E5%8C%85.md)
+       - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484544&idx=1&sn=c4de17583010430fa519ecd1703bedea&chksm=cf0c9889f87b119fe5621bacf417b163020dcd8a7c0ed63df94de20ba67ae742b4d86e22ae16&token=883596793&lang=zh_CN#rd)
+
+       - [github阅读](./datastructr&algorithm/03%E5%AE%8C%E5%85%A8%E8%83%8C%E5%8C%85.md)
 
 ---
 
