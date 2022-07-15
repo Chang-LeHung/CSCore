@@ -3,9 +3,8 @@
 本项目专注于计算机系统基础，比如算法与数据结构，网络，操作系统等！！！同时将会包含一些机器学习和人工智能的算法！！！夯实好计算机系统基础，学习什么技术都将变得更加轻松，能够更好的理解各种软件的原理！！！
 
 <div align="center">
-   	<p>推荐使用微信公众号阅读，国内网速快，而且渲染公式时github有时候会问题，渲染结果不好，微信公众号阅读体验更好</p>
+       <p>推荐使用微信公众号阅读，国内网速快，而且渲染公式时github有时候会问题，渲染结果不好，微信公众号阅读体验更好</p>
 </div>
-
 
 ---
 
@@ -35,7 +34,6 @@
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484364&idx=1&sn=12c645e61113de9390ee142ea556503b&chksm=cf0c9fc5f87b16d3722d75c93f930a64b1270f8532c115ec62d5e6ddf470aa6f3951e2096050&token=883596793&lang=zh_CN#rd)
   - [github阅读](./container/07-hashmap源码剖析.md)
 
-
 ---
 
 ## 算法
@@ -43,13 +41,20 @@
 ### 背包问题
 
 - 庖丁解牛斐波拉契数列和背包问题——详细解析两个问题优化过程（超多问题优化干货，不看血亏），带你从最基本最核心的问题看懂动态规划！！
-
+  
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484109&idx=1&sn=4cd2040eacb04710694282192edeafc4&chksm=cf0c9ec4f87b17d2093a429755c0b3177ddeb39a96d77e210b03fe03f5a76968b7062234594a&token=1155116583&lang=zh_CN#rd)
   - [github阅读](./datastructr&algorithm/01-动态规划.md)
+
 - 你真的懂01背包问题吗？01背包的这几问你能答出来吗？
+  
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484416&idx=1&sn=d8aa70bc642c94a127ea67409808980f&chksm=cf0c9809f87b111f2fb092adba83da7e5463a8f5eaa92914ddb975065428a1a80a7d6bc53f3a&token=883596793&lang=zh_CN#rd)
   - [github阅读](./datastructr&algorithm/02-01背包问题.md)
 
+-  面试官：完全背包都不会，是你自己走还是我送你？
+  
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484544&idx=1&sn=c4de17583010430fa519ecd1703bedea&chksm=cf0c9889f87b119fe5621bacf417b163020dcd8a7c0ed63df94de20ba67ae742b4d86e22ae16&token=883596793&lang=zh_CN#rd)
+  
+  - [github阅读](./datastructr&algorithm/03完全背包.md)
 
 ---
 
