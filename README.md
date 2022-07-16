@@ -33,6 +33,9 @@
 - `HashMap`源码深度剖析，手把手带你分析每一行代码，包会！！！
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484364&idx=1&sn=12c645e61113de9390ee142ea556503b&chksm=cf0c9fc5f87b16d3722d75c93f930a64b1270f8532c115ec62d5e6ddf470aa6f3951e2096050&token=883596793&lang=zh_CN#rd)
   - [github阅读](./container/07-hashmap源码剖析.md)
+- `ArrayDeque`（JDK双端队列）源码深度剖析
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484612&idx=1&sn=63a5a21fab640619333d9836a000ea44&chksm=cf0c98cdf87b11db7d63b2d028f0a70ea73e7c84338bce8e7cdf4bee9d5b0c7ec2bf23663233&token=1311889589&lang=zh_CN#rd)
+  - [github阅读](./container/08-arraydeque源码剖析.md)
 
 ---
 
