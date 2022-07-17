@@ -65,7 +65,76 @@ private T[] newArray(int size) {
 }
 ```
 
+上面的构造函数的代码比较容易理解，主要就是根据用户输入的数组空间长度去申请数组，不过他具体在申请数组的时候会多申请一个空间。
 
+### add函数
+
+```java
+public boolean add(T o) {
+    queue[tail] = o;
+    // 循环使用数组
+    int newtail = (tail + 1) % capacity;
+    if (newtail == head)
+        throw new IndexOutOfBoundsException("Queue full");
+    tail = newtail;
+    return true; // we did add something
+}
+```
+
+上面的代码也相对比较容易看懂，在上文当中我们已经提到了`ArraQueue`可以循环将数据加入到数组当中去，这一点在上面的代码当中也有所体现。
+
+### remove函数
+
+```java
+public T remove(int i) {
+    if (i != 0)
+        throw new IllegalArgumentException("Can only remove head of queue");
+    if (head == tail)
+        throw new IndexOutOfBoundsException("Queue empty");
+    T removed = queue[head];
+    queue[head] = null;
+    head = (head + 1) % capacity;
+    return removed;
+}
+```
+
+从上面的代码当中可以看出，在`remove`函数当中我们必须传递参数0，否则会抛出异常。而在这个函数当中我们只会删除当前`head`下标所在位置的数据，然后将`head`的值进行循环加1操作。
+
+### get函数
+
+```java
+public T get(int i) {
+    int size = size();
+    if (i < 0 || i >= size) {
+        final String msg = "Index " + i + ", queue size " + size;
+        throw new IndexOutOfBoundsException(msg);
+    }
+    int index = (head + i) % capacity;
+    return queue[index];
+}
+```
+
+`get`函数的参数表示得到第`i`个数据，这个第`i`个数据并不是数组位置的第`i`个数据，而是距离`head`位置为`i`的位置的数据，了解这一点，上面的代码是很容易理解的。
+
+### resize函数
+
+```java
+public void resize(int newcapacity) {
+    int size = size();
+    if (newcapacity < size)
+        throw new IndexOutOfBoundsException("Resizing would lose data");
+    newcapacity++;
+    if (newcapacity == this.capacity)
+        return;
+    T[] newqueue = newArray(newcapacity);
+    for (int i = 0; i < size; i++)
+        newqueue[i] = get(i);
+    this.capacity = newcapacity;
+    this.queue = newqueue;
+    this.head = 0;
+    this.tail = size;
+}
+```
 
 ## 总结
 
