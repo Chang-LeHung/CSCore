@@ -56,6 +56,9 @@
 - 面试官：完全背包都不会，是你自己走还是我送你？
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484544&idx=1&sn=c4de17583010430fa519ecd1703bedea&chksm=cf0c9889f87b119fe5621bacf417b163020dcd8a7c0ed63df94de20ba67ae742b4d86e22ae16&token=883596793&lang=zh_CN#rd)
   - [github阅读](./datastructr&algorithm/03完全背包.md)
+- 深入剖析多重背包问题（上篇）
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484627&idx=1&sn=ac975cb31ba1af89425558cfe4442258&chksm=cf0c98daf87b11cc4178c55864ba8eeecd741aaa49bde712aca1c5999f7dbbbbd0997beb6cc2&token=1311889589&lang=zh_CN#rd)
+  - [github阅读](./datastructr&algorithm/04多重背包v1.md)
 
 ## Java
 
