@@ -141,3 +141,16 @@ public void resize(int newcapacity) {
 <img src="../images/arraydeque/29.png" alt="24" style="zoom:80%;" />
 
 ## 总结
+
+在本篇文章当中主要给大家介绍了`ArrayQueue`的内部实现过程和原理，并且看了`ArrayQueue`的源代码，有图的辅助整个阅读的过程应该是比较清晰的，`ArrayQueue`也是一个比较简单的容器，`JDK`对他的实现也比较简单。
+
+以上就是本文所有的内容了，希望大家有所收获，我是LeHung，我们下期再见！！！（记得**点赞**收藏哦！）
+
+---
+
+更多精彩内容合集可访问项目：<https://github.com/Chang-LeHung/CSCore>
+
+关注公众号：一无是处的研究僧，了解更多计算机（Java、Python、计算机系统基础、算法与数据结构）知识。
+
+![](https://img2022.cnblogs.com/blog/2519003/202207/2519003-20220703200459566-1837431658.jpg)
+
