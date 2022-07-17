@@ -1,4 +1,4 @@
-## 深入剖析（JDK）ArrayQueue源码
+# 深入剖析（JDK）ArrayQueue源码
 
 ## 前言
 
