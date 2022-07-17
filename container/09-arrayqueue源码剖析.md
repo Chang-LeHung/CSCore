@@ -37,7 +37,13 @@ public void testQueue() {
 
 <img src="../images/arraydeque/26.png" alt="24" style="zoom:80%;" />
 
-现在我们删除4个数据，那么上图经过4次删除操作之后
+现在我们删除4个数据，那么上图经过4次删除操作之后，`ArrayQueue`内部数据布局如下：
+
+<img src="../images/arraydeque/27.png" alt="24" style="zoom:80%;" />
+
+在上面的状态下，我们继续加入8个数据，那么布局情况如下：
+
+<img src="../images/arraydeque/28.png" alt="24" style="zoom:80%;" />
 
 ## ArrayQueue源码剖析
 
