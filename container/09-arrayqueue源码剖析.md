@@ -45,7 +45,27 @@ public void testQueue() {
 
 <img src="../images/arraydeque/28.png" alt="24" style="zoom:80%;" />
 
+我们知道上图在加入数据的时候不仅将数组后半部分的空间使用完了，而且可以继续使用前半部分没有使用过的空间，也就是说在`ArraQueue`内部实现了一个循环使用的过程。
+
 ## ArrayQueue源码剖析
+
+### 构造函数
+
+```java
+public ArrayQueue(int capacity) {
+    this.capacity = capacity + 1;
+    this.queue = newArray(capacity + 1);
+    this.head = 0;
+    this.tail = 0;
+}
+
+@SuppressWarnings("unchecked")
+private T[] newArray(int size) {
+    return (T[]) new Object[size];
+}
+```
+
+
 
 ## 总结
 
