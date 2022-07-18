@@ -57,7 +57,7 @@ Thread-3
 
 <img src="../../images/concurrency/03.png" alt="01" style="zoom:80%;" />
 
-### 实现runnable接口
+### 使用匿名内部类实现runnable接口
 
 ```java
 public class ConcurrencyMethod2 extends Thread {
@@ -76,6 +76,28 @@ public class ConcurrencyMethod2 extends Thread {
     }
 }
 // 某次执行输出的结果（输出的顺序不一定）
+Thread-0
+Thread-1
+Thread-2
+Thread-4
+Thread-3
+```
+
+当然你也可以采用Lambda函数去实现：
+
+```java
+public class ConcurrencyMethod3 {
+
+    public static void main(String[] args) {
+        for (int i=0; i < 5; i++) {
+            Thread thread = new Thread(() -> {
+                System.out.println(Thread.currentThread().getName());
+            });
+            thread.start();
+        }
+    }
+}
+// 输出结果
 Thread-0
 Thread-1
 Thread-2
