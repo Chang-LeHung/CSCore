@@ -157,18 +157,21 @@ public class MainThread {
         // 下面这段代码是由主线程执行的
         // 主线程通过下面这段代码创建一个子线程
         Thread thread = new Thread(() -> {
-            System.out.println("我是主线程创建的子线程");
+            System.out.println(Thread.currentThread().getName());
         });
         // 这句代码也是主线程执行的
         // 主要意义就是主线程启动子线程
         thread.start();
         thread.join();
-        System.out.println("我是主线程");
+        System.out.println(Thread.currentThread().getName());
     }
 }
+// 输出结果
+Thread-0
+main
 ```
 
-
+上面代码的执行流程大致如下图所示：
 
 <img src="../../images/concurrency/07.png" alt="01" style="zoom:80%;" />
 
