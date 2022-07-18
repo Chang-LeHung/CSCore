@@ -225,5 +225,21 @@ public class X2 {
 }
 ```
 
-上面代码当中的函数主要是用于计算区间$[a, b]$之间的二次函数$x^2$的积分结果。
+上面代码当中的函数`x2integral`主要是用于计算区间$[a, b]$之间的二次函数$x^2$的积分结果，我们现在来看一下如果我们想计算区间`[0, 10000]`之间的积分结果且`delta = 0.000001`需要多长时间。
+
+```java
+public static void main(String[] args) {
+    long start = System.currentTimeMillis();
+    System.out.println(x2integral(0, 10000, 0.000001));
+    long end = System.currentTimeMillis();
+    System.out.println(end - start);
+}
+// 输出结果
+3.333332302493948E11
+29953
+```
+
+从上面的结果来看计算区间`[0, 10000]`之间的积分结果且`delta = 0.000001`大概需要`30s`的时间，现在假设我们使用`8`个线程来做这件事，看看我们需要多少时间。
+
+
 
