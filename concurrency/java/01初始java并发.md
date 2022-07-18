@@ -162,6 +162,8 @@ public class MainThread {
         // 这句代码也是主线程执行的
         // 主要意义就是主线程启动子线程
         thread.start();
+        // 这句代码的含义就是阻塞主线程
+        // 直到 thread 的 run 函数执行完成
         thread.join();
         System.out.println(Thread.currentThread().getName());
     }
@@ -234,18 +236,15 @@ public static void main(String[] args) {
     long end = System.currentTimeMillis();
     System.out.println(end - start);
 }
-// 输出结果
-3.333332302493948E11
-29953
 ```
 
-从上面的结果来看计算区间`[0, 10000]`之间的积分结果且`delta = 0.000001`大概需要`30s`的时间，现在假设我们使用`8`个线程来做这件事，看看我们需要多少时间。
+从上面的结果来看计算区间`[0, 10000]`之间的积分结果且`delta = 0.000001`，现在假设我们使用`8`个线程来做这件事，我们改如何去规划呢？
 
 因为我们是采用`8`个线程来做这件事儿，因此我们可以将这个区间分成`8`段，每个线程去执行一小段，最终我们将每一个小段的结果加起来就行，整个过程大致如下。
 
 <img src="../../images/concurrency/10.png" alt="01" style="zoom:80%;" />
 
-首先我们先定义一个类去计算区间`[a, b]`之间的函数$x^2$的积分：
+首先我们先定义一个继承`Thread`的类（因为我们要进行多线程计算，所以要继承这个类）去计算区间`[a, b]`之间的函数$x^2$的积分：
 
 ```java
 class ThreadX2 extends Thread {
@@ -304,22 +303,36 @@ class ThreadX2 extends Thread {
 
 ```java
 public static void main(String[] args) throws InterruptedException {
+	// 单线程测试计算时间
+    System.out.println("单线程");
     long start = System.currentTimeMillis();
+    ThreadX2 x2 = new ThreadX2();
+    x2.setA(0);
+    x2.setB(1250 * 8);
+    x2.start();
+    x2.join();
+    System.out.println(x2.getSum());
+    long end = System.currentTimeMillis();
+    System.out.println("花费时间为：" + (end - start));
+    System.out.println("多线程");
+	
+    // 多线程测试计算时间
+    start = System.currentTimeMillis();
     ThreadX2[] threads = new ThreadX2[8];
     for (int i = 0; i < 8; i++) {
         threads[i] = new ThreadX2();
         threads[i].setA(i * 1250);
         threads[i].setB((i + 1) * 1250);
     }
+    // 这里要等待每一个线程执行完成
+    // 因为只有执行完成才能得到计算的结果
     for (ThreadX2 thread : threads) {
         thread.start();
     }
-    // 这里要等待每一个线程执行完成
-    // 因为只有这样才能得到计算完成之后的结果
     for (ThreadX2 thread : threads) {
         thread.join();
     }
-    long end = System.currentTimeMillis();
+    end = System.currentTimeMillis();
     System.out.println("花费时间为：" + (end - start));
     double ans = 0;
     for (ThreadX2 thread : threads) {
@@ -328,12 +341,22 @@ public static void main(String[] args) throws InterruptedException {
     System.out.println(ans);
 }
 // 输出结果
-花费时间为：3180
+单线程
+3.333332302493948E11
+花费时间为：14527
+多线程
+花费时间为：2734
 3.333332303236695E11
 ```
 
 |          | 单线程               | 多线程（8个线程）    |
 | -------- | -------------------- | -------------------- |
 | 计算结果 | 3.333332302493948E11 | 3.333332303236695E11 |
-| 执行时间 | 29953                | 3180                 |
+| 执行时间 | 14527                | 2734                 |
+
+从上面的结果来看，当我们使用多个线程执行的时候花费的时间比单线程少的多，几乎减少了7倍，由此可见并发的“威力”。
+
+## FutureTask机制
+
+在前文和代码当中，我们发现不论是我们继承自`Thread`类或者写匿名内部内我们都没有返回值，我们的返回值都是`void`，那么如果我们想要我们的`run`函数有返回值怎么办呢？`JDK`为我们提供了一个机制，可以让线程执行我们指定函数并且带有返回值。
 
