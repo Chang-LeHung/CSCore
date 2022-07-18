@@ -57,3 +57,34 @@ Thread-3
 
 <img src="../../images/concurrency/03.png" alt="01" style="zoom:80%;" />
 
+### 实现runnable接口
+
+```java
+public class ConcurrencyMethod2 extends Thread {
+
+    public static void main(String[] args) {
+        for (int i = 0; i < 5; i++) {
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    // Thread.currentThread().getName() 得到当前正在执行的线程的名字
+                    System.out.println(Thread.currentThread().getName());
+                }
+            });
+            thread.start();
+        }
+    }
+}
+// 某次执行输出的结果（输出的顺序不一定）
+Thread-0
+Thread-1
+Thread-2
+Thread-4
+Thread-3
+```
+
+
+
+
+
+<img src="../../images/concurrency/04.png" alt="01" style="zoom:80%;" />
