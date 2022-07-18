@@ -173,7 +173,7 @@ main
 
 上面代码的执行流程大致如下图所示：
 
-<img src="../../images/concurrency/07.png" alt="01" style="zoom:80%;" />
+<img src="../../images/concurrency/08.png" alt="01" style="zoom:80%;" />
 
 我们需要知道的一点事`thread.join()`这条语句是主线程执行的，它的主要功能就是等待线程`thread`执行完成，只有`thread`执行完成之后主线程才会继续执行`thread.join()`后面的语句。
 
