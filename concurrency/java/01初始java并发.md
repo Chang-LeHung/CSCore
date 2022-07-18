@@ -57,7 +57,7 @@ Thread-3
 
 上面代码当中不同的线程需要得到CPU资源，在CPU当中被执行，而这些线程需要被操作系统调度，然后由操作系统放到不同的CPU上，最终输出不同的字符串。
 
-<img src="../../images/concurrency/03.png" alt="01" style="zoom:80%;" />
+<img src="../../images/concurrency/09.png" alt="01" style="zoom:80%;" />
 
 ### 使用匿名内部类实现runnable接口
 
@@ -175,7 +175,7 @@ main
 
 <img src="../../images/concurrency/08.png" alt="01" style="zoom:80%;" />
 
-我们需要知道的一点事`thread.join()`这条语句是主线程执行的，它的主要功能就是等待线程`thread`执行完成，只有`thread`执行完成之后主线程才会继续执行`thread.join()`后面的语句。
+我们需要知道的一点是`thread.join()`这条语句是主线程执行的，它的主要功能就是等待线程`thread`执行完成，只有`thread`执行完成之后主线程才会继续执行`thread.join()`后面的语句。
 
 ## 第一个并发任务——求$x^2$的积分
 
@@ -241,5 +241,7 @@ public static void main(String[] args) {
 
 从上面的结果来看计算区间`[0, 10000]`之间的积分结果且`delta = 0.000001`大概需要`30s`的时间，现在假设我们使用`8`个线程来做这件事，看看我们需要多少时间。
 
+因为我们是采用`8`个线程来做这件事儿，因此我们可以将这个区间分成`8`段，每个线程去执行一小段，最终我们将每一个小段的结果加起来就行，整个过程大致如下。
 
+<img src="../../images/concurrency/10.png" alt="01" style="zoom:80%;" />
 
