@@ -249,49 +249,89 @@ public static void main(String[] args) {
 
 ```java
 class ThreadX2 extends Thread {
-  private double a;
-  private double b;
-  private double sum = 0;
-  private double delta = 0.000001;
+    private double a;
+    private double b;
+    private double sum = 0;
+    private double delta = 0.000001;
 
-  public double getSum() {
-    return sum;
-  }
-
-  public void setSum(double sum) {
-    this.sum = sum;
-  }
-
-  public double getDelta() {
-    return delta;
-  }
-
-  public void setDelta(double delta) {
-    this.delta = delta;
-  }
-
-  @Override
-  public void run() {
-    while (a <= b) {
-      sum += delta * Math.pow(a, 2);
-      a += delta;
+    public double getSum() {
+        return sum;
     }
-  }
 
-  public double getA() {
-    return a;
-  }
+    public void setSum(double sum) {
+        this.sum = sum;
+    }
 
-  public void setA(double a) {
-    this.a = a;
-  }
+    public double getDelta() {
+        return delta;
+    }
 
-  public double getB() {
-    return b;
-  }
+    public void setDelta(double delta) {
+        this.delta = delta;
+    }
 
-  public void setB(double b) {
-    this.b = b;
-  }
+    /**
+   * 重写函数 run
+   * 计算区间 [a, b] 之间二次函数的积分
+   */
+    @Override
+    public void run() {
+        while (a <= b) {
+            sum += delta * Math.pow(a, 2);
+            a += delta;
+        }
+    }
+
+    public double getA() {
+        return a;
+    }
+
+    public void setA(double a) {
+        this.a = a;
+    }
+
+    public double getB() {
+        return b;
+    }
+
+    public void setB(double b) {
+        this.b = b;
+    }
 }
 ```
+
+我们最终开启8个线程的代码如下所示：
+
+```java
+public static void main(String[] args) throws InterruptedException {
+    long start = System.currentTimeMillis();
+    ThreadX2[] threads = new ThreadX2[8];
+    for (int i = 0; i < 8; i++) {
+        threads[i] = new ThreadX2();
+        threads[i].setA(i * 1250);
+        threads[i].setB((i + 1) * 1250);
+    }
+    for (ThreadX2 thread : threads) {
+        thread.start();
+    }
+    for (ThreadX2 thread : threads) {
+        thread.join();
+    }
+    long end = System.currentTimeMillis();
+    System.out.println("花费时间为：" + (end - start));
+    double ans = 0;
+    for (ThreadX2 thread : threads) {
+        ans += thread.getSum();
+    }
+    System.out.println(ans);
+}
+// 输出结果
+花费时间为：3180
+3.333332303236695E11
+```
+
+|          | 单线程               | 多线程               |
+| -------- | -------------------- | -------------------- |
+| 计算结果 | 3.333332302493948E11 | 3.333332303236695E11 |
+| 执行时间 | 29953                | 3180                 |
+
