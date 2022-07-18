@@ -59,6 +59,9 @@
 - 深入剖析多重背包问题（上篇）
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484627&idx=1&sn=ac975cb31ba1af89425558cfe4442258&chksm=cf0c98daf87b11cc4178c55864ba8eeecd741aaa49bde712aca1c5999f7dbbbbd0997beb6cc2&token=1311889589&lang=zh_CN#rd)
   - [github阅读](./datastructr&algorithm/04多重背包v1.md)
+- 深入剖析多重背包问题（上篇）
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484703&idx=1&sn=d0fb3c949b99a803a30a5dd1452d7bce&chksm=cf0c9916f87b10002e32bf8acfa298c1201d33793c80beb538ac099024868373e4c7a5b35a53&token=1311889589&lang=zh_CN#rd)
+  - [github阅读](./datastructr&algorithm/04多重背包v2.md)
 
 ## Java
 
