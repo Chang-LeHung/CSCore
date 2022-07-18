@@ -358,5 +358,41 @@ public static void main(String[] args) throws InterruptedException {
 
 ## FutureTask机制
 
-在前文和代码当中，我们发现不论是我们继承自`Thread`类或者写匿名内部内我们都没有返回值，我们的返回值都是`void`，那么如果我们想要我们的`run`函数有返回值怎么办呢？`JDK`为我们提供了一个机制，可以让线程执行我们指定函数并且带有返回值。
+在前文和代码当中，我们发现不论是我们继承自`Thread`类或者写匿名内部内我们都没有返回值，我们的返回值都是`void`，那么如果我们想要我们的`run`函数有返回值怎么办呢？`JDK`为我们提供了一个机制，可以让线程执行我们指定函数并且带有返回值，我们来看下面的代码：
+
+```java
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
+
+public class FT {
+
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        FutureTask<Integer> task = new FutureTask<>(new MyCallable());
+        Thread thread = new Thread(task);
+        thread.start();
+        // get 函数如果结果没有计算出来
+        // 主线程会在这里阻塞，如果计算
+        // 出来了将返回结果
+        Integer integer = task.get();
+        System.out.println(integer);
+    }
+}
+
+class  MyCallable implements Callable<Integer> {
+
+    @Override
+    public Integer call() throws Exception {
+        System.out.println("线程正在执行");
+        return 101;
+    }
+}
+// 输出结果
+线程正在执行
+101
+```
+
+<img src="../../images/concurrency/11.png" alt="01" style="zoom:80%;" />
+
+从上面的继承结构我们可以看出`FutureTask`实现了`Runnable`接口，而上面的代码当中我们最终会将一个`FutureTask`作为参数传入到`Thread`类当中，因此线程最终会执行`FutureTask`当中的`run`方法，而我们也给`FutureTask`传入了一个`Callable`接口实现类对象，那么我们就可以在`FutureTask`当中的`run`方法执行我们传给`FutureTask`的`Callable`接口中实现的`call`方法，然后将`call`方法的返回值保存下来，当我们使用`FutureTask`的`get`函数去取结果的时候就将`call`函数的返回结果返回回来。
 
