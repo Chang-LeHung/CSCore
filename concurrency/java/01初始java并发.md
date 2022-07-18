@@ -314,6 +314,8 @@ public static void main(String[] args) throws InterruptedException {
     for (ThreadX2 thread : threads) {
         thread.start();
     }
+    // 这里要等待每一个线程执行完成
+    // 因为只有这样才能得到计算完成之后的结果
     for (ThreadX2 thread : threads) {
         thread.join();
     }
@@ -330,7 +332,7 @@ public static void main(String[] args) throws InterruptedException {
 3.333332303236695E11
 ```
 
-|          | 单线程               | 多线程               |
+|          | 单线程               | 多线程（8个线程）    |
 | -------- | -------------------- | -------------------- |
 | 计算结果 | 3.333332302493948E11 | 3.333332303236695E11 |
 | 执行时间 | 29953                | 3180                 |
