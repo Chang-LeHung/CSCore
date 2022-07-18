@@ -53,3 +53,7 @@ Thread-2
 Thread-3
 ```
 
+上面代码当中不同的线程需要得到CPU资源，在CPU当中被执行，而这些线程需要被操作系统调度，然后由操作系统放到不同的CPU上，最终输出不同的字符串。
+
+<img src="../../images/concurrency/03.png" alt="01" style="zoom:80%;" />
+
