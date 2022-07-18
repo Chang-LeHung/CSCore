@@ -24,5 +24,32 @@
 
 >你可能也听过线程是操作系统调度的基本单位。那这又是为什么呢？首先你需要明白CPU是如何工作的，首先需要明白我们的程序会被编译成一条条的指令，而这些指令会存在在内存当中，而CPU会从内存当中一一的取出这些指令，然后CPU进行指令的执行，而一个线程通常是执行一个函数，而这个函数也是会被编译成很多指令，因此这个线程也可以被CPU执行，因为线程可以被操作系统调度，将其放到CPU上进行执行，而且没有比线程更小的可以被CPU调度的单位了，因此说线程是操作系统调度的基本单位。
 
+## Java实现并发
 
+### 继承Thread类
+
+```java
+public class ConcurrencyMethod1 extends Thread {
+
+    @Override
+    public void run() {
+        // Thread.currentThread().getName() 得到当前正在执行的线程的名字
+        System.out.println(Thread.currentThread().getName());
+    }
+
+    public static void main(String[] args) {
+        for (int i = 0; i < 5; i++) {
+            // 新开启一个线程
+            ConcurrencyMethod1 t = new ConcurrencyMethod1();
+            t.start();// 启动这个线程
+        }
+    }
+}
+// 某次执行输出的结果（输出的顺序不一定）
+Thread-0
+Thread-4
+Thread-1
+Thread-2
+Thread-3
+```
 
