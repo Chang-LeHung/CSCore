@@ -111,7 +111,7 @@ Thread-3
 
 ## 第一个并发任务——求$x^2$的积分
 
-接下来我们用一个例子去具体体会并发带来的效果提升。我们的这个例子就是求函数的积分，我们的函数为最简单的二次函数$x^2$，当然我们就积分（下图当中的阴影部分）完全可以根据公式进行求解（如果你不懂积分也没有关系，下问我们会把这个函数写出来，不会影响你对并发的理解）：
+接下来我们用一个例子去具体体会并发带来的效果提升。我们的这个例子就是求函数的积分，我们的函数为最简单的二次函数$x^2$，当然我们就积分（下图当中的阴影部分）完全可以根据公式进行求解（如果你不懂积分也没有关系，下文我们会把这个函数写出来，不会影响你对并发的理解）：
 $$
 \int_0^{10} x^2\mathrm{d}x = \frac{1}{3}x^3+C
 $$
@@ -121,4 +121,39 @@ $$
 $$
 \int_0^{10} x^2\mathrm{d}x =\sum_{ i= 0}^{1000000}(i * 0.00001) ^2 * 0.00001
 $$
-<img src="../../images/concurrency/05.png" alt="01" style="zoom:80%;" />
+<img src="../../images/concurrency/06.png" alt="01" style="zoom:80%;" />
+
+下面我们用一个单线程先写出求$x^2$积分的代码：
+
+```java
+public class X2 {
+
+  public static double x2integral(double a, double b) {
+    double delta = 0.001;
+    return x2integral(a, b, delta);
+  }
+
+  /**
+   * 这个函数是计算 x^2 a 到 b 位置的积分
+   * @param a 计算积分的起始位置
+   * @param b 计算积分的最终位置
+   * @param delta 表示微元法的微元间隔
+   * @return x^2 a 到 b 位置的积分结果
+   */
+  public static double x2integral(double a, double b, double delta) {
+    double sum = 0;
+    while (a <= b) {
+      sum += delta * Math.pow(a, 2);
+      a += delta;
+    }
+    return sum;
+  }
+
+  public static void main(String[] args) {
+    // 这个输出的结果为 0.3333333832358528
+    // 这个函数计算的是 x^2 0到1之间的积分
+    System.out.println(x2integral(0, 1, 0.0000001));
+  }
+}
+```
+
