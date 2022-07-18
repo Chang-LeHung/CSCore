@@ -225,7 +225,7 @@ public class X2 {
 }
 ```
 
-上面代码当中的函数`x2integral`主要是用于计算区间$[a, b]$之间的二次函数$x^2$的积分结果，我们现在来看一下如果我们想计算区间`[0, 10000]`之间的积分结果且`delta = 0.000001`需要多长时间。
+上面代码当中的函数`x2integral`主要是用于计算区间$[a, b]$之间的二次函数$x^2$的积分结果，我们现在来看一下如果我们想计算区间`[0, 10000]`之间的积分结果且`delta = 0.000001`需要多长时间，其中`delta`表示每一个微元之间的距离。
 
 ```java
 public static void main(String[] args) {
@@ -245,3 +245,53 @@ public static void main(String[] args) {
 
 <img src="../../images/concurrency/10.png" alt="01" style="zoom:80%;" />
 
+首先我们先定义一个类去计算区间`[a, b]`之间的函数$x^2$的积分：
+
+```java
+class ThreadX2 extends Thread {
+  private double a;
+  private double b;
+  private double sum = 0;
+  private double delta = 0.000001;
+
+  public double getSum() {
+    return sum;
+  }
+
+  public void setSum(double sum) {
+    this.sum = sum;
+  }
+
+  public double getDelta() {
+    return delta;
+  }
+
+  public void setDelta(double delta) {
+    this.delta = delta;
+  }
+
+  @Override
+  public void run() {
+    while (a <= b) {
+      sum += delta * Math.pow(a, 2);
+      a += delta;
+    }
+  }
+
+  public double getA() {
+    return a;
+  }
+
+  public void setA(double a) {
+    this.a = a;
+  }
+
+  public double getB() {
+    return b;
+  }
+
+  public void setB(double b) {
+    this.b = b;
+  }
+}
+```
