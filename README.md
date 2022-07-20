@@ -70,6 +70,12 @@
 
 ### 并发
 
+- 并发开篇——带你从0到1建立并发知识体系的基石
+
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247485015&idx=1&sn=9db029931bf0f3277bfbfc82cbda3824&chksm=cf0c9a5ef87b13487e669579193928572798e83f7d08375b08e9fc305afa08fd4471a8f2a90e&token=969171239&lang=zh_CN#rd)
+
+  - [github阅读](./concurrency/java/01初始java并发.md)
+
 ## Python
 
 ## 计算机系统基础
