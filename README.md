@@ -66,6 +66,16 @@
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484703&idx=1&sn=d0fb3c949b99a803a30a5dd1452d7bce&chksm=cf0c9916f87b10002e32bf8acfa298c1201d33793c80beb538ac099024868373e4c7a5b35a53&token=1311889589&lang=zh_CN#rd)
   - [github阅读](./datastructr&algorithm/04多重背包v2.md)
 
+### 数据结构
+
+- 深入剖析前缀、中缀、后缀表达式以及表达式求值
+
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247485085&idx=1&sn=27950d2ccfa01419c7b434a676cdd5a3&chksm=cf0c9a94f87b138225ddbf0538c8af6de3a22f4e155329735c46369ec01860837df77e8234b7&token=969171239&lang=zh_CN#rd)
+
+  - [github阅读](./datastructr&algorithm/07表达式求值.md)
+
+
+
 ## Java
 
 ### 并发
