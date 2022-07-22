@@ -85,6 +85,11 @@
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247485015&idx=1&sn=9db029931bf0f3277bfbfc82cbda3824&chksm=cf0c9a5ef87b13487e669579193928572798e83f7d08375b08e9fc305afa08fd4471a8f2a90e&token=969171239&lang=zh_CN#rd)
 
   - [github阅读](./concurrency/java/01初始java并发.md)
+- 并发程序的噩梦——数据竞争
+
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247485180&idx=1&sn=601ea1ef37536e4dacf565646ff8e254&chksm=cf0c9af5f87b13e30488d95ae4b46dce714d6fadda6c6b781ab6c6437e992bd36c7a61eb790d&token=969171239&lang=zh_CN#rd)
+
+  - [github阅读](./concurrency/java/02并发的噩梦.md)
 
 ## Python
 
