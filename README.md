@@ -90,6 +90,11 @@
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247485180&idx=1&sn=601ea1ef37536e4dacf565646ff8e254&chksm=cf0c9af5f87b13e30488d95ae4b46dce714d6fadda6c6b781ab6c6437e992bd36c7a61eb790d&token=969171239&lang=zh_CN#rd)
 
   - [github阅读](./concurrency/java/02并发的噩梦.md)
+- 并发程序的噩梦——数据竞争
+
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247485228&idx=1&sn=382890d77927f56f9d884ace679d9a6e&chksm=cf0c9b25f87b123394967465be63156cd805f5c769dc5365b92dc47278a57f4bccc08d102609&token=27677037&lang=zh_CN#rd)
+
+  - [github阅读](./concurrency/java/03自己动手写并发工具类.md)
 
 ## Python
 
