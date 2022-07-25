@@ -65,6 +65,9 @@
 - 深入剖析多重背包问题（下篇）
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484703&idx=1&sn=d0fb3c949b99a803a30a5dd1452d7bce&chksm=cf0c9916f87b10002e32bf8acfa298c1201d33793c80beb538ac099024868373e4c7a5b35a53&token=1311889589&lang=zh_CN#rd)
   - [github阅读](./datastructr&algorithm/04多重背包v2.md)
+- 深入剖析斐波拉契数列
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247485229&idx=1&sn=3d4abd19abfcc42f33de534cdaf4b6dc&chksm=cf0c9b24f87b1232ef3ad1bd3d9fc07467a7e5a003e7e8876fcf5091403d47bd43948a836004&token=1125062744&lang=zh_CN#rd)
+  - [github阅读](./datastructr&algorithm/05深入剖析斐波拉契数列.md)
 
 ### 数据结构
 
