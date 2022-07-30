@@ -46,7 +46,9 @@
 
 ## 算法
 
-### 背包问题
+### 动态规划
+
+#### 背包问题
 
 - 庖丁解牛斐波拉契数列和背包问题——详细解析两个问题优化过程（超多问题优化干货，不看血亏），带你从最基本最核心的问题看懂动态规划！！
   
@@ -68,6 +70,9 @@
 - 深入剖析斐波拉契数列
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247485229&idx=1&sn=3d4abd19abfcc42f33de534cdaf4b6dc&chksm=cf0c9b24f87b1232ef3ad1bd3d9fc07467a7e5a003e7e8876fcf5091403d47bd43948a836004&token=1125062744&lang=zh_CN#rd)
   - [github阅读](./datastructr&algorithm/05深入剖析斐波拉契数列.md)
+
+#### 股票问题
+
 - 这种动态规划你见过吗——状态机动态规划之股票问题(上)
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247485286&idx=1&sn=3d0a6a1c2e62ba770d8427c6dd732973&chksm=cf0c9b6ff87b1279d46c775001fd77b8e1437d4001a6c8a1ca8db090eadb4174af1058a1aadf&token=1125062744&lang=zh_CN#rd)
   - [github阅读](./datastructr&algorithm/09状态机动态规划.md)
