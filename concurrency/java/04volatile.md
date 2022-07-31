@@ -56,5 +56,49 @@ public class Visibility {
 - 在休眠一秒之后，`Updater`线程从主内存当中拷贝一份`flag`保存到本地内存当中，然后将`flag`改成`true`，将其写回到主内存当中。
 - 但是虽然`updater`线程将`flag`写回，但是`reader`线程使用的还是之前从主内存当中加载的`flag`，也就是说还是`false`，因此`reader`线程才会一直陷入死循环当中。
 
+现在我们稍微修改一下上面的代码，先让`reader`线程休眠一秒，然后在进行`while`循环，让`updater`线程直接修改。
 
+```java
+import java.util.concurrent.TimeUnit;
+
+class Resource {
+    public boolean flag;
+
+    public void update() {
+        flag = true;
+    }
+}
+
+public class Visibility {
+
+    public static void main(String[] args) throws InterruptedException {
+        Resource resource = new Resource();
+        Thread thread = new Thread(() -> {
+            System.out.println(resource.flag);
+            resource.update();
+        }, "updater");
+
+        new Thread(() -> {
+            System.out.println(resource.flag);
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            while (!resource.flag) {
+
+            }
+            System.out.println("循环结束");
+        }, "reader").start();
+
+        thread.start();
+    }
+}
+```
+
+上面的代码就不会产生死循环了，我们再来分析一下上面的代码的执行过程：
+
+- `reader`线程先休眠一秒。
+- `updater`线程直接修改`flag`为`true`，然后将这个值写回主内存。
+- 在`updater`写回之后，`reader`线程从主内存获取`flag`，这个时候的值已经更新了，因此可以跳出`while`循环了，因此上面的代码不会出现死循环的情况。
 
