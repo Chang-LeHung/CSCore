@@ -103,3 +103,45 @@ public class Visibility {
 - 在`updater`写回之后，`reader`线程从主内存获取`flag`，这个时候的值已经更新了，因此可以跳出`while`循环了，因此上面的代码不会出现死循环的情况。
 
 像这种多个线程共享同一个变量的情况的时候，就会产生数据可见性的问题，如果在我们的程序当中忽略这种问题的话，很容易让我们的并发程序产生BUG。如果在我们的程序当中需要保持多个线程对某一个数据的可见性，即如果一个线程修改了共享变量，那么这个修改的结果要对其他线程可见，也就是其他线程再次访问这个共享变量的时候，得到的是共享变量最新的值，那么在Java当中就需要使用关键字`volatile`对变量进行修饰。
+
+现在我们将第一个程序的共享变量`flag`加上`volatile`进行修饰：
+
+```java
+import java.util.concurrent.TimeUnit;
+
+class Resource {
+    public volatile boolean flag; // 这里使用 volatile 进行修饰
+
+    public void update() {
+        flag = true;
+    }
+}
+
+public class Visibility {
+
+    public static void main(String[] args) throws InterruptedException {
+        Resource resource = new Resource();
+        Thread thread = new Thread(() -> {
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(resource.flag);
+            resource.update();
+        }, "updater");
+
+        new Thread(() -> {
+            System.out.println(resource.flag);
+            while (!resource.flag) {
+
+            }
+            System.out.println("循环结束");
+        }, "reader").start();
+
+        thread.start();
+    }
+}
+```
+
+上面的代码是可以执行完成的，`reader`线程不会产生死循环。
