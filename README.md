@@ -85,6 +85,9 @@
 - 这种动态规划你见过吗——状态机动态规划之股票问题(下)
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247485619&idx=1&sn=d9cd4f7abfbedd9cd638e0952acc4826&chksm=cf0c94baf87b1dacd06e2f36ef91a2bc22e05bf8d746727cb39ba2a378a50a07a3fbc8f241c7&token=1092368950&lang=zh_CN#rd)
   - [github阅读](./datastructr&algorithm/11状态机动态规划03.md)
+- 状态机动态规划之股票问题总结
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486020&idx=1&sn=d54b40cc6219855b9708d3fd62023a78&chksm=cf0c964df87b1f5bc42a940a72628b0bb3f251811bdee093e2e94438437d214f8c538f37fba7&token=1645117295&lang=zh_CN#rd)
+  - [github阅读](./datastructr&algorithm/12状态机动态规划总结.md)
 
 ### 数据结构
 
