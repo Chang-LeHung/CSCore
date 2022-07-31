@@ -317,3 +317,12 @@ JMM规定了线程的工作内存应该如何和主内存进行交互，即共�
 
 ## Volatile实现原理
 
+## 参考书籍
+
+《Java并发编程的艺术》
+
+《深入理解Java虚拟机》
+
+《Java高并发编程详解》
+
+《JSR-133: JavaTM Memory Model and Thread Specifification》
