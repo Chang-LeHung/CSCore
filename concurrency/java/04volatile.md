@@ -237,7 +237,55 @@ public class DCL {
 
 假设一个线程的执行顺序就是上面提到的那样，如果线程在执行完成步骤3之后在执行完步骤2之前，另外一个线程进入`getInstance`，这个时候`INSTANCE != null`，因此这个线程会直接返回这个对象进行使用，但是此时第一个线程还在执行步骤2，也就是说对象还没有初始化完成，这个时候使用对象是不合法的，因此上面的代码存在问题，而当我们使用`volatile`进行修饰就可以禁止这种重排序，从而让他按照正常的指令去执行。
 
+### 不保证原子性
+
+在这里我们先介绍和验证`volatile`不保证原子性，在后文当中我们回仔细分析它不保证原子性和保证可见性和有序性的原理。
+
+```java
+public class AtomicTest {
+
+  public static volatile int data;
+
+  public static void add() {
+    for (int i = 0; i < 10000; i++) {
+      data++;
+    }
+  }
+
+  public static void main(String[] args) throws InterruptedException {
+    Thread t1 = new Thread(AtomicTest::add);
+    Thread t2 = new Thread(AtomicTest::add);
+
+    t1.start();
+    t2.start();
+    t1.join();
+    t2.join();
+    System.out.println(data);
+  }
+}
+```
+
+上面的代码就是两个线程不断的进行`data++`操作，一共回进行2000次，但是我们回发现最终的结果不等于2000，因此这个可以验证`volatile`不保证原子性。
+
 ## Java内存模型（JMM）
 
 我们都知道Java程序可以跨平台运行，之所以可以跨平台，是因为JVM帮助我们屏蔽了这些不同的平台和操作系统的差异，而内存模型也是一样，各个平台是不一样的，Java为了保证程序可以跨平台使用，Java虚拟机规范就定义了“Java内存模型”，规定Java应该如何并发的访问内存，每一个平台实现的JVM都需要遵循这个规则，这样就可以保证程序在不同的平台执行的结果都是一样的。
+
+下图当中的绿色部门就是由JMM进行控制的
+
+<img src="../../images/concurrency/23.png" alt="22" style="zoom:80%;" />
+
+JMM对Java线程和线程的工作内存还有主内存的规定如下：
+
+- 共享变量存储在主内存当中，每个线程都可以进行访问。
+- 每个线程都有自己的工作内存，叫做线程的本地内存。
+- 线程如果像操作共享内存必须首先将共享变量拷贝一份到自己的本地内存。
+- 线程不能直接对主内存当中的数据进行修改，只能直接修改自己本地内存当中的数据，然后通过JMM的控制，将修改后的值写回道主内存当中。
+
+这里区分一下主内存和工作内存（线程本地内存）：
+
+- 主内存：主要是Java堆当中的对象数据。
+- 工作内存：Java虚拟机栈当中的某些区域、CPU的缓存（Cache）和寄存器。
+
+因此线程、线程的工作内存和主内存的交互方式的逻辑结构大致如下图所示：
 
