@@ -325,4 +325,4 @@ JMM规定了线程的工作内存应该如何和主内存进行交互，即共�
 
 《Java高并发编程详解》
 
-《JSR-133: JavaTM Memory Model and Thread Specifification》
+《JSR-133: Java™ Memory Model and Thread Specifification》
