@@ -289,3 +289,4 @@ JMM对Java线程和线程的工作内存还有主内存的规定如下：
 
 因此线程、线程的工作内存和主内存的交互方式的逻辑结构大致如下图所示：
 
+<img src="../../images/concurrency/24.png" alt="22" style="zoom:80%;" />
