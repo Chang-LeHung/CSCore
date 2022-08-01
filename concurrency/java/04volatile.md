@@ -420,11 +420,12 @@ as-if-serial语义的意思是：不管怎么重排序（编译器和处理器�
 
 - `lfence`，这是一种Load Barrier，一种读屏障指令，这个指令可以让高速缓存（CPU的Cache）失效，如果需要加载数据，那么就需要从内存当中重新加载（这样可以加载最新的数据，因为如果其他处理器修改了缓存当中的数据的时候，这个缓存当中的值已经不对了，去内存当中重新加载就可以拿到最新的数据），这个指令其实可以达到上面指令当中LoadLoad和指令的效果。同时这条指令不会让这条指令之后读操作被调度到`lfence`指令之前执行。
 - `sfence`，这是一种Store Barrier，一种写屏障指令，这个指令可以将写入高速缓存的数据刷新到内存当中，这样内存当中的数据就是最新的了，数据就可以全局可见了，其他处理器就可以加载内存当中最新的数据。这条指令有StoreStore的效果。同时这条指令不会让在其之后的写操作调度到其之前执行。
-- `mfence`，这是一种全能型的屏障，相当于上面`lfence`和`sfence`两个指令的效果，这条指令可以达到StoreLoad指令的效果。这同样也说明了Store Load可以达到其他三个指令的效果，因为`mfence`相当于`lfence`和`sfence`，而这两条指令可以实现StoreStore、Load Load、Load Store的效果。
+- 关于以上两点的描述是稍微有点不够准确的，在下文我们在讨论Store Buffer和Invalid Queue时我们会重新修正，这里这么写是为了能够帮助大家理解。
+- `mfence`，这是一种全能型的屏障，相当于上面`lfence`和`sfence`两个指令的效果，除此之外这条指令可以达到StoreLoad指令的效果，这条指令可以保证`mfence`操作之前的写操作对`mfence`之后的操作全局可见。
 
 #### Volatile需要的内存屏障
 
-为了实现Volatile的内存语义，Java编译器（JIT编译器）在进行编译的时候，会进行如下指令的插入操作：
+为了实现Volatile的内存语义，Java编译器（JIT编译器）在进行编译的时候，会进行如下指令的插入操作（这里你可以对照前面的volatile重排序规则，然后你就理解为什么要插入下面的内存屏障了）：
 
 - 在每个volatile写操作的前面插入一个StoreStore屏障。 
 
@@ -452,10 +453,11 @@ Volatile写内存屏障指令插入情况如下：
 
 #### Java虚拟机源码实现Volatile语义
 
-在Java虚拟机当中，当对一个被volatile修饰的变量进行写操作的时候，在操作进行完成之后，在X86体系结构下，JVM会执行下面一段代码：（下面代码来自于：hotspot/src/os_cpu/linux_x86/vm/orderAccess_linux_x86.inline.hpp）
+在Java虚拟机当中，当对一个被volatile修饰的变量进行写操作的时候，在操作进行完成之后，在X86体系结构下，JVM会执行下面一段代码，从而保证volatile的内存语义：（下面代码来自于：hotspot/src/os_cpu/linux_x86/vm/orderAccess_linux_x86.inline.hpp）
 
 ```java
 inline void OrderAccess::fence() {
+  // 这里判断是不是多处理器的机器，如果是执行下面的代码
   if (os::is_MP()) {
     // 这里说明了使用 lock 指令的原因 有时候使用 mfence 代价很高
     // 相比起 lock 指令来说会降低程序的性能
@@ -470,7 +472,7 @@ inline void OrderAccess::fence() {
 }
 ```
 
-上面代码主要是通过内联汇编代码去执行指令`lock`，如果你不熟悉C语言和内联汇编的形式也没有关系，你只需要知道JVM会执行`lock`指令，`lock`指令有`mfence`相同的作用，它可以实现StoreLoad内存屏障的作用，可以保证执行执行的顺序，在前文当中我们说`mfence`是用于实现StoreLoad内存屏障，因为`lock`指令也可以实现同样的效果，而且有时候`mfence`的指令可能对程序的性能影响比较大，因此JVM使用`lock`指令，这样可以提高程序的性能。
+上面代码主要是通过内联汇编代码去执行指令`lock`，如果你不熟悉C语言和内联汇编的形式也没有关系，你只需要知道JVM会执行`lock`指令，`lock`指令有`mfence`相同的作用，它可以实现StoreLoad内存屏障的作用，可以保证执行执行的顺序，在前文当中我们说`mfence`是用于实现StoreLoad内存屏障，因为`lock`指令也可以实现同样的效果，而且有时候`mfence`的指令可能对程序的性能影响比较大，因此JVM使用`lock`指令，这样可以提高程序的性能。如果你对X86的`lock`指令有所了解的话，你可能知道`lock`还可以保证使用`lock`的指令具有原子性，在X86的体系结构下就可以使用`lock`实现自旋锁（CAS）。
 
 ### 可见性实现原理
 
