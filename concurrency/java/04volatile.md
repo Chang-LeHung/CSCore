@@ -563,26 +563,26 @@ Store Buffer、Valid Queue、CPU、CPU缓存以及内存的逻辑机构大致如
 
 |   初始状态   | 操作 |                             响应                             |
 | :----------: | :--: | :----------------------------------------------------------: |
-|  Invalid(I)  | PrRd | 给总线发BusRd信号其他处理器看到BusRd，检查自己是否有有效的数据副本，通知发出请求的缓存状态转换为(S)**Shared**, 如果其他缓存有有效的副本状态转换为(E)**Exclusive**, 如果其他缓存都没有有效的副本如果其他缓存有有效的副本, 其中一个缓存发出数据；否则从主存获得数据 |
-| Exclusive(E) | PrRd |          无总线事务生成状态保持不变读操作为缓存命中          |
-|  Shared(S)   | PrRd |          无总线事务生成状态保持不变读操作为缓存命中          |
-| Modified(M)  | PrRd |          无总线事务生成状态保持不变读操作为缓存命中          |
-|  Invalid(I)  | PrWr | 给总线发BusRdX信号状态转换为(M)**Modified**如果其他缓存有有效的副本, 其中一个缓存发出数据；否则从主存获得数据如果其他缓存有有效的副本, 见到BusRdX信号后无效其副本向缓存块中写入修改后的值 |
-| Exclusive(E) | PrWr | 无总线事务生成状态转换为(M)**Modified**向缓存块中写入修改后的值 |
-|  Shared(S)   | PrWr | 发出总线事务BusUpgr信号状态转换为(M)**Modified**其他缓存看到BusUpgr总线信号，标记其副本为(I)Invalid. |
-| Modified(M)  | PrWr |          无总线事务生成状态保持不变写操作为缓存命中          |
+|  Invalid(I)  | PrRd | 给总线发BusRd信号<br />其他处理器看到BusRd，检查自己是否有有效的数据副本，通知发出请求的缓存<br />状态转换为(S)**Shared**, 如果其他缓存有有效的副本<br />状态转换为(E)**Exclusive**, 如果其他缓存都没有有效的副本<br />如果其他缓存有有效的副本, 其中一个缓存发出数据；否则从主存获得数据 |
+| Exclusive(E) | PrRd |    无总线事务生成<br />状态保持不变<br />读操作为缓存命中    |
+|  Shared(S)   | PrRd |    无总线事务生成<br />状态保持不变<br />读操作为缓存命中    |
+| Modified(M)  | PrRd |    无总线事务生成<br />状态保持不变<br />读操作为缓存命中    |
+|  Invalid(I)  | PrWr | 给总线发BusRdX信号<br />状态转换为(M)**Modified**<br />如果其他缓存有有效的副本, 其中一个缓存发出数据；否则从主存获得数据<br />如果其他缓存有有效的副本, 见到BusRdX信号后无效其副本<br />向缓存块中写入修改后的值 |
+| Exclusive(E) | PrWr | 无总线事务生成<br />状态转换为(M)**Modified**<br />向缓存块中写入修改后的值 |
+|  Shared(S)   | PrWr | 发出总线事务BusUpgr信号<br />状态转换为(M)**Modified**<br />其他缓存看到BusUpgr总线信号，标记其副本为(I)Invalid. |
+| Modified(M)  | PrWr |    无总线事务生成<br />状态保持不变<br />写操作为缓存命中    |
 
 不同的初始状态在不同的总线消息下的状态变化：
 
 |   初始状态   |      操作      |                             响应                             |
 | :----------: | :------------: | :----------------------------------------------------------: |
 |  Invalid(I)  |     BusRd      |                    状态保持不变，信号忽略                    |
-| Exclusive(E) |     BusRd      |        状态变为共享发出总线FlushOpt信号并发出块的内容        |
-|  Shared(S)   |     BusRd      | 状态变为共享可能发出总线FlushOpt信号并发出块的内容（设计时决定那个共享的缓存发出数据） |
-| Modified(M)  |     BusRd      | 状态变为共享发出总线FlushOpt信号并发出块的内容，接收者为最初发出BusRd的缓存与主存控制器（回写主存） |
-| Exclusive(E) |     BusRdX     |        状态变为无效发出总线FlushOpt信号并发出块的内容        |
-|  Shared(S)   |     BusRdX     | 状态变为无效可能发出总线FlushOpt信号并发出块的内容（设计时决定那个共享的缓存发出数据） |
-| Modified(M)  |     BusRdX     | 状态变为无效发出总线FlushOpt信号并发出块的内容，接收者为最初发出BusRd的缓存与主存控制器（回写主存） |
+| Exclusive(E) |     BusRd      |     状态变为共享<br />发出总线FlushOpt信号并发出块的内容     |
+|  Shared(S)   |     BusRd      | 状态变为共享<br />可能发出总线FlushOpt信号并发出块的内容（设计时决定那个共享的缓存发出数据） |
+| Modified(M)  |     BusRd      | 状态变为共享<br />发出总线FlushOpt信号并发出块的内容，接收者为最初发出BusRd的缓存与主存控制器（回写主存） |
+| Exclusive(E) |     BusRdX     |     状态变为无效<br />发出总线FlushOpt信号并发出块的内容     |
+|  Shared(S)   |     BusRdX     | 状态变为无效<br />可能发出总线FlushOpt信号并发出块的内容（设计时决定那个共享的缓存发出数据） |
+| Modified(M)  |     BusRdX     | 状态变为无效<br />发出总线FlushOpt信号并发出块的内容，接收者为最初发出BusRd的缓存与主存控制器（回写主存） |
 |  Invalid(I)  | BusRdX/BusUpgr |                    状态保持不变，信号忽略                    |
 
 ## 参考书籍和资料
