@@ -1,4 +1,4 @@
-# 从本源深入探寻分析volatile和Java内存模型
+# 从计算机本源深入探寻volatile和Java内存模型
 
 ## 为什么我们需要volatile？
 
