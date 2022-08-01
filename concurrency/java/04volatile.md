@@ -517,6 +517,24 @@ Store Buffer、Valid Queue、CPU、CPU缓存以及内存的逻辑机构大致如
 
 <img src="../../images/concurrency/31.png" alt="22" style="zoom:80%;" />
 
+### MESI协议
+
+在前面的文章当中我们已经提到了在MESI协议当中缓存行的四种状态：
+
+- 已修改Modified (M) 缓存行是脏的（*dirty*），与主存的值不同。如果别的CPU内核要读主存这块数据，该缓存行必须回写到主存，状态变为共享(S).
+
+- 独占Exclusive (E)缓存行只在当前缓存中，但是干净的（clean）--缓存数据同于主存数据。当别的缓存读取它时，状态变为共享；当前写数据时，变为已修改状态。
+
+- 共享Shared (S)缓存行也存在于其它缓存中且是干净的。缓存行可以在任意时刻抛弃。
+
+- 无效Invalid (I)缓存行是无效的。
+
+在介绍MESI协议之前，我们先介绍一些基本操作：
+
+
+
+<img src="../../images/concurrency/30.png" alt="22" style="zoom:80%;" />
+
 ## 参考书籍和资料
 
 《Java并发编程的艺术》
@@ -532,3 +550,4 @@ https://blog.the-pans.com/std-atomic-from-bottom-up/
 https://en.wikipedia.org/wiki/MESI_protocol
 
 https://www.felixcloutier.com/x86/index.html
+
