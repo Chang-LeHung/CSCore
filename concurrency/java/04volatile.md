@@ -441,13 +441,19 @@ Volatile写内存屏障指令插入情况如下：
 
 其实上面插入内存屏障只是理论上所需要的，但是因为不同的处理器重排序的规则不一样，因此在插入内存屏障指令的时候需要具体问题具体分析。比如X86处理器只会对读-写这样的操作进行重排序，不会对读-读、读-写和写-写这样的操作进行重排序，因此在X86处理器进行内存屏障指令的插入的时候可以省略这三种情况。
 
-根据volatile重排序的规则表，我们可以发现在读-写的情况下，只禁止了`volatile写-volatile读`的情况，而X86仅仅只会对写-读的情况进行重排序，因此我们在插入内存屏障的时候只需要关心`volatile写-volatile读`这一种情况，这种情况下我们需要使用的内存屏障指令为StoreLoad，即`volatile写-StoreLoad-volatile读`，因此在X86当中我们只需要在volatile写后面加入StoreLoad内存屏障指令即可，在X86当中Store Load对应的具体的指令为`mfence`。
+根据volatile重排序的规则表，我们可以发现在写-读的情况下，只禁止了`volatile写-volatile读`的情况：
+
+<img src="../../images/concurrency/27.png" alt="22" style="zoom:80%;" />
+
+而X86仅仅只会对写-读的情况进行重排序，因此我们在插入内存屏障的时候只需要关心`volatile写-volatile读`这一种情况，这种情况下我们需要使用的内存屏障指令为StoreLoad，即`volatile写-StoreLoad-volatile读`，因此在X86当中我们只需要在volatile写后面加入StoreLoad内存屏障指令即可，在X86当中Store Load对应的具体的指令为`mfence`。
 
 #### Java虚拟机源码实现Volatile语义
 
 ```java
 inline void OrderAccess::fence() {
   if (os::is_MP()) {
+    // 这里说明了使用 lock 指令的原因 有时候使用 mfence 代价很高
+    // 会降低程序的性能
     // always use locked addl since mfence is sometimes expensive
 #ifdef AMD64 // 这个表示如果是 64 位机器
     __asm__ volatile ("lock; addl $0,0(%%rsp)" : : : "cc", "memory");
