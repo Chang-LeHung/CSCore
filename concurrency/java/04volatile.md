@@ -449,11 +449,13 @@ Volatile写内存屏障指令插入情况如下：
 
 #### Java虚拟机源码实现Volatile语义
 
+在Java虚拟机当中，当对一个被volatile修饰的变量进行写操作的时候，在操作进行完成之后，在X86体系结构下，JVM会执行下面一段代码：（下面代码来自于：hotspot/src/os_cpu/linux_x86/vm/orderAccess_linux_x86.inline.hpp）
+
 ```java
 inline void OrderAccess::fence() {
   if (os::is_MP()) {
     // 这里说明了使用 lock 指令的原因 有时候使用 mfence 代价很高
-    // 会降低程序的性能
+    // 相比起 lock 指令来说会降低程序的性能
     // always use locked addl since mfence is sometimes expensive
 #ifdef AMD64 // 这个表示如果是 64 位机器
     __asm__ volatile ("lock; addl $0,0(%%rsp)" : : : "cc", "memory");
@@ -465,13 +467,16 @@ inline void OrderAccess::fence() {
 }
 ```
 
-
+上面代码主要是通过内联汇编代码去执行指令`lock`，如果你不熟悉C语言和内联汇编的形式也没有关系，你只需要知道JVM会执行`lock`指令，`lock`指令有`mfence`相同的作用，它可以实现StoreLoad内存屏障的作用，可以保证执行执行的顺序，在前文当中我们说`mfence`是用于实现StoreLoad内存屏障，因为`lock`指令也可以实现同样的效果，而且有时候`mfence`的指令可能对程序的性能影响比较大，因此JVM使用`lock`指令，这样可以提高程序的性能。
 
 ### 可见性实现原理
 
-可见性存在的根本原因是一个线程读，一个线程写，一个线程写操作对另外一个线程的读不可见，因此我们主要分析volatile的写操作就行。
+可见性存在的根本原因是一个线程读，一个线程写，一个线程写操作对另外一个线程的读不可见，因此我们主要分析volatile的写操作就行，因为如果都是进行读操作的话，数据就不会发生变化了，也就不存在可见性的问题了。
 
+在上文当中我们已经谈到了Java虚拟机在执行volatile变量的写操作时候，会执行一段代码，
 
+- 将执行`lock`指令的处理器的缓存行写回到内存当中。
+- 写回内存的操作会使在其他CPU里缓存了该内存地址的数据无效，这些处理器如果想使用这些数据的话，就需要从内存当中重新加载。
 
 ## 参考书籍和资料
 
