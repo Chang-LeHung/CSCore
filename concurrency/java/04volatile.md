@@ -4,6 +4,8 @@
 
 本篇文章超级干，请大家**坐稳扶好**，发车了！！！
 
+<img src="../../images/concurrency/32.png" alt="22" style="zoom:80%;" />
+
 ## 为什么我们需要volatile？
 
 ### 保证数据的可见性
