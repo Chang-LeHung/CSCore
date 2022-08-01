@@ -410,13 +410,28 @@ as-if-serial语义的意思是：不管怎么重排序（编译器和处理器�
 
 现在处理器可能不会支持上面屏障指令当中的所有指令，但是一般都会支持Store Load屏障指令，这个指令可以达到其他三个指令的效果，因此在实际的机器指令当中如果像达到上面的四种指令的效果，可能不需要四个指令，像在X86当中就主要有三个内存屏障指令：
 
-- `lfence`，这是一种Load Barrier，一种读屏障指令，这个指令可以让高速缓存（CPU的Cache）失效，如果需要加载数据需要从内存当中重新加载（这样可以加载最新的数据，因为如果其他处理器修改了缓存当中的数据的时候，这个缓存当中的值已经不对了，去内存当中重新加载就可以拿到最新的数据），这个指令其实可以达到上面指令当中LoadLoad和Load Store指令的效果。
+- `lfence`，这是一种Load Barrier，一种读屏障指令，这个指令可以让高速缓存（CPU的Cache）失效，如果需要加载数据，那么就需要从内存当中重新加载（这样可以加载最新的数据，因为如果其他处理器修改了缓存当中的数据的时候，这个缓存当中的值已经不对了，去内存当中重新加载就可以拿到最新的数据），这个指令其实可以达到上面指令当中LoadLoad和Load Store指令的效果。
 - `sfence`，这是一种Store Barrier，一种写屏障指令，这个指令可以将写入高速缓存的数据刷新到内存当中，这样内存当中的数据就是最新的了，其他处理器就可以加载内存当中最新的数据。这条指令可以达到上面Store Load指令的效果。
-- `mfence`，这是一种全能型的屏障，相当于上面`lfence`和`sfence`两个指令的效果，这条指令可以达到StoreLoad指令的效果。
+- `mfence`，这是一种全能型的屏障，相当于上面`lfence`和`sfence`两个指令的效果，这条指令可以达到StoreLoad指令的效果。这同样也说明了Store Load可以达到其他三个指令的效果，因为`mfence`相当于`lfence`和`sfence`，而这两条指令可以实现StoreStore、Load Load、Load Store的效果。
+- 其实这还涉及MESI协议和CPU当中Store Buffer和Invalid Queue两种结构，但是这里面涉及的内容还是比较多，就不再这里意义展开，后续再写一篇仔细分析这里面的问题。这里我们就先了解这些指令能够带来的作用。
 
+为了实现Volatile的内存语义，Java编译器（JIT编译器）在进行编译的时候，会进行如下指令的插入操作：
 
+- 在每个volatile写操作的前面插入一个StoreStore屏障。 
 
+- 在每个volatile写操作的后面插入一个StoreLoad屏障。 
 
+- 在每个volatile读操作的后面插入一个LoadLoad屏障。 
+
+- 在每个volatile读操作的后面插入一个LoadStore屏障。 
+
+Volatile读内存屏障指令插入情况如下：
+
+<img src="../../images/concurrency/25.png" alt="22" style="zoom:80%;" />
+
+Volatile写内存屏障指令插入情况如下：
+
+<img src="../../images/concurrency/26.png" alt="22" style="zoom:80%;" />
 
 ### 可见性实现原理
 
