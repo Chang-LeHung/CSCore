@@ -529,9 +529,15 @@ Store Buffer、Valid Queue、CPU、CPU缓存以及内存的逻辑机构大致如
 
 - 无效Invalid (I)缓存行是无效的。
 
+下图表示不同处理器缓存同一个数据的缓存行的状态是否相容：
+
+<img src="../../images/concurrency/33.png" alt="22" style="zoom:80%;" />
+
+- 比如说“I”那一行，处理器A的缓存行H包含数据`data`，而且这个缓存行的状态是Invalid，那么其他处理器包含数据`data`的缓存行的状态可以是“M、E、S、I”当中的任意一个。
+
+- 再比如说包含数据`data`的缓存行是“Shared”的状态，说明这个数据是各个处理器共享的，因此其他的缓存行不可能是“Exclusive”状态，因为不可能既共享也独占。当然肯定也不是“Modified”，如果是“Modified”状态，那么其他缓存行只能是“Invalid”的状态，而不会是“Shared”状态
+
 在介绍MESI协议之前，我们先介绍一些基本操作：
-
-
 
 <img src="../../images/concurrency/30.png" alt="22" style="zoom:80%;" />
 
