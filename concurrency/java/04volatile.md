@@ -419,7 +419,7 @@ as-if-serial语义的意思是：不管怎么重排序（编译器和处理器�
 现在处理器可能不会支持上面屏障指令当中的所有指令，但是一般都会支持Store Load屏障指令，这个指令可以达到其他三个指令的效果，因此在实际的机器指令当中如果像达到上面的四种指令的效果，可能不需要四个指令，像在X86当中就主要有三个内存屏障指令：
 
 - `lfence`，这是一种Load Barrier，一种读屏障指令，这个指令可以让高速缓存（CPU的Cache）失效，如果需要加载数据，那么就需要从内存当中重新加载（这样可以加载最新的数据，因为如果其他处理器修改了缓存当中的数据的时候，这个缓存当中的值已经不对了，去内存当中重新加载就可以拿到最新的数据），这个指令其实可以达到上面指令当中LoadLoad和Load Store指令的效果。同时这条指令不会让这条指令之后读操作被调度到`lfence`指令之前执行。
-- `sfence`，这是一种Store Barrier，一种写屏障指令，这个指令可以将写入高速缓存的数据刷新到内存当中，这样内存当中的数据就是最新的了，其他处理器就可以加载内存当中最新的数据。这条指令有StoreStore的效果。同时这条指令不会让在其之后的写操作调度到其之前执行。
+- `sfence`，这是一种Store Barrier，一种写屏障指令，这个指令可以将写入高速缓存的数据刷新到内存当中，这样内存当中的数据就是最新的了，数据就可以全局可见了，其他处理器就可以加载内存当中最新的数据。这条指令有StoreStore的效果。同时这条指令不会让在其之后的写操作调度到其之前执行。
 - `mfence`，这是一种全能型的屏障，相当于上面`lfence`和`sfence`两个指令的效果，这条指令可以达到StoreLoad指令的效果。这同样也说明了Store Load可以达到其他三个指令的效果，因为`mfence`相当于`lfence`和`sfence`，而这两条指令可以实现StoreStore、Load Load、Load Store的效果。
 
 #### Volatile需要的内存屏障
@@ -494,6 +494,7 @@ inline void OrderAccess::fence() {
 - 共享Shared (S)缓存行也存在于其它缓存中且是干净的。缓存行可以在任意时刻抛弃。
 
 - 无效Invalid (I)缓存行是无效的。
+- 如果你想仔细了解MESI协议，请看文末，这里就不详细说明了！
 
 假设在某个时刻，CPU的多个核心共享一个内存数据，其中一个一个核心想要修改这个数据，那么他就会通过总线给其他核心发送消息表示想要修改这个数据，然后其他核心将这个数据修改为Invalid状态，再给修改数据的核心发送一个消息，表示已经收到这个消息，然后这个修改数据的核心就会将这个数据的状态设置为Modified。
 
@@ -501,9 +502,18 @@ inline void OrderAccess::fence() {
 
 处理器在接受到其他处理器发来的修改数据的消息的时候，需要将被修改的数据对应的缓存行进行失效处理，然后再返回确认消息，为了提高处理器的性能，CPU会在接到消息之后立即返回，然后将这个Invalid的消息放入到Invalid Queue当中，这就可以降低处理器响应Invalid消息的时间。其实这样做还有一个好处，因为处理器的Store Buffer是有限的，如果发出Invalid消息的处理器迟迟接受不到响应信息的话，那么Store Buffer就可以写满，这个时候处理器还会卡主，然后等待其他处理器的响应消息，因此处理器在接受到Invalid的消息的时候立马返回也可以提升发出Invalid消息的处理器的性能，会减少处理器卡住的时间，从而提升处理器的性能。
 
+Store Buffer、Valid Queue、CPU、CPU缓存以及内存的逻辑机构大致如下：
+
 <img src="../../images/concurrency/29.png" alt="22" style="zoom:80%;" />
 
+还记得前面的两条指令`lfence`和`sfence`吗，现在我们重新回顾一下这两条指令：
 
+- `lfence`，在前面的内容当中，这个屏障能够让高速缓存失效，事实上是，它扫描Invalid Queue中的消息，然后让后让对应数据的缓存行失效，这样的话就可以更新到内存当中最新的数据了。这里的失效并不是L1缓存失效，而是L2和L3中的缓存行失效，读取数据也不一定从内存当中读取，因为L1Cache当中可能有最新的数据，如果有的话就可以从L1Cache当中读取。
+- `sfence`
+
+（下面图片来源于网络）
+
+<img src="../../images/concurrency/31.png" alt="22" style="zoom:80%;" />
 
 ## 参考书籍和资料
 
@@ -515,3 +525,8 @@ inline void OrderAccess::fence() {
 
 《JSR-133: Java™ Memory Model and Thread Specifification》
 
+https://blog.the-pans.com/std-atomic-from-bottom-up/
+
+https://en.wikipedia.org/wiki/MESI_protocol
+
+https://www.felixcloutier.com/x86/index.html
