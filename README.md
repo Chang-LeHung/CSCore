@@ -117,6 +117,10 @@
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247485228&idx=1&sn=382890d77927f56f9d884ace679d9a6e&chksm=cf0c9b25f87b123394967465be63156cd805f5c769dc5365b92dc47278a57f4bccc08d102609&token=27677037&lang=zh_CN#rd)
 
   - [github阅读](./concurrency/java/03自己动手写并发工具类.md)
+- 万字长文：从计算机本源深入探寻volatile和Java内存模型
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486127&idx=1&sn=29d6079f6f26bd82633ec611feb3da85&chksm=cf0c96a6f87b1fb006e2f108879a0066aeb14e4bf5a4a9e2a83057a084dd2dfa2c257a813399&token=302443384&lang=zh_CN#rd)
+
+  - [github阅读](./concurrency/java/04volatile.md)
 
 ## Python
 
