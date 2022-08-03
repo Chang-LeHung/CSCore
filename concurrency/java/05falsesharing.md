@@ -112,4 +112,53 @@ public class FalseSharing {
 
 ### JDK解决假共享
 
-为了解决**假共享**的问题
+为了解决**假共享**的问题，JDK为我们提供了一个注解`@Contened`解决假共享的问题。
+
+```java
+import sun.misc.Contended;
+
+class Data {
+//  public volatile long a1, a2, a3, a4, a5, a6, a7;
+  @Contended
+  public volatile long a;
+//  public volatile long b1, b2, b3, b4, b5, b6, b7;
+  @Contended
+  public volatile long b;
+}
+
+public class FalseSharing {
+  public static void main(String[] args) throws InterruptedException {
+    Data data = new Data();
+
+    long start = System.currentTimeMillis();
+    Thread A = new Thread(() -> {
+      for (long i = 0;  i < 500_000_000; i++) {
+        data.a += 1;
+      }
+    }, "A");
+
+    Thread B = new Thread(() -> {
+      for (long i = 0;  i < 500_000_000; i++) {
+        data.b += 1;
+      }
+    }, "B");
+    A.start();
+    B.start();
+    A.join();
+    B.join();
+    long end = System.currentTimeMillis();
+    System.out.println("花费时间为：" + (end - start));
+    System.out.println(data.a);
+    System.out.println(data.b);
+  }
+}
+
+```
+
+上面代码的执行时间也是5秒左右，和之前我们自己在变量的左右两边假如变量的效果是一样的，但是JDK提供的这个接口和我们自己实现的还是有所区别的。（**注意：**上面的代码是在JDK1.8下执行的，如果要想`@Contended`注解生效，你还需要在JVM参数上加入`-XX:-RestrictContended`，这样上面的代码才能生效否则是不能够生效的）
+
+- 在我们自己解决假共享的代码当中，是在变量`a`的左右两边加入56个字节的其他变量，让他和变量`b`不在同一个缓存行当中。
+- 在JDK给我们提供的注解`@Contended`，是在被加注解的字段的右边加入一定数量的空字节，默认加入128空字节，那么变量`a`和变量`b`之间的内存地址大一点，最终不在同一个缓存行当中。这个字节数量可以使用JVM参数`-XX:ContendedPaddingWidth=64`，进行控制，比如这个是64个空字节。
+
+
+
