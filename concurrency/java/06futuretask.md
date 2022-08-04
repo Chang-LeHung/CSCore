@@ -167,13 +167,14 @@ Thread[Blocking-Thread,5,main] 准备等待被其他线程唤醒
 Thread[Inform-Thread,5,main] 准备唤醒其他线程
 ```
 
-### FutureTask设计
+### FutureTask设计与实现
 
 在前文当中我们已经谈到了`FutureTask`的实现原理，主要有以下几点：
 
 - 构造函数需要传入一个实现了`Callable`接口的类对象，这个将会在`FutureTask`的`run`方法执行，然后得到函数的返回值，并且将返回值存储起来。
 - 当线程调用`get`方法的时候，如果这个时候`Callable`当中的`call`已经执行完成，直接返回`call`函数返回的结果就行，如果`call`函数还没有执行完成，那么久就需要将调用`get`方法的线程挂起，这里我们可以使用`condition.await()`将线程挂起。
 - 在`call`函数执行完成之后，需要将之前被`get`方法挂起的线程唤醒继续执行，这里使用`condition.signalAll()`将所有挂起的线程唤醒。
+- 因为是我们自己实现`FutureTask`，功能不会那么齐全，只需要能够满足我们的主要需求即可，主要是帮助大家了解`FutureTask`原理。
 
 实现代码如下（分析都在注释当中）：
 
@@ -188,7 +189,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class MyFutureTask<V> implements Runnable {
 
   private final Callable<V> callable;
-  private Object returnVal;
+  private Object returnVal; // 这个表示我们最终的返回值
   private final ReentrantLock lock;
   private final Condition condition;
 
@@ -201,6 +202,8 @@ public class MyFutureTask<V> implements Runnable {
 
   @SuppressWarnings("unchecked")
   public V get(long timeout, TimeUnit unit) {
+    if (returnVal != null) // 如果符合条件 说明 call 函数已经执行完成 返回值已经不为 null 了
+      return (V) returnVal; // 直接将结果返回即可
     lock.lock();
     try {
       if (returnVal == null)
@@ -215,10 +218,12 @@ public class MyFutureTask<V> implements Runnable {
 
   @SuppressWarnings("unchecked")
   public V get() {
+    if (returnVal != null)
+      return (V) returnVal;
     lock.lock();
     try {
       if (returnVal == null)
-        condition.await();
+      	condition.await();
     } catch (InterruptedException e) {
       e.printStackTrace();
     } finally {
@@ -226,6 +231,7 @@ public class MyFutureTask<V> implements Runnable {
     }
     return (V) returnVal;
   }
+
 
   @Override
   public void run() {
