@@ -89,3 +89,72 @@ public class FutureTaskDemo {
 ## 自己实现FutureTask
 
 经过上文的分析你可能已经大致了解了`FutureTask`的大致执行过程了，但是需要注意的是，如果你执行`FutureTask`的`get`方法是可能阻塞的，因为可能`Callable`的`call`方法还没有执行完成。因此在`get`方法当中就需要有阻塞线程的代码，但是当`call`方法执行完成之后需要将这些线程都唤醒。
+
+在本篇文章当中使用锁`ReentrantLock`和条件变量`Condition`进行线程的阻塞和唤醒，在我们自己动手实现`FutureTask`之前，我们先熟悉一下上面两种工具的使用方法。
+
+- `ReentrantLock`主要有两个方法：
+  - `lock`对临界区代码块进行加锁。
+  - `unlock`对临界区代码进行解锁。
+- `Condition`主要有三个方法：
+  - `await`阻塞调用这个方法的线程，等待其他线程唤醒。
+  - `signal`唤醒一个被`await`方法阻塞的线程。
+  - `signalAll`唤醒所有被`await`方法阻塞的线程。
+
+```java
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class LockDemo {
+
+  private ReentrantLock lock;
+  private Condition condition;
+
+  LockDemo() {
+    lock = new ReentrantLock();
+    condition = lock.newCondition();
+  }
+
+  public void blocking() {
+    lock.lock();
+    try {
+      System.out.println(Thread.currentThread() + " 准备等待被其他线程唤醒");
+      condition.await();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }finally {
+      lock.unlock();
+    }
+  }
+
+  public void inform() throws InterruptedException {
+    // 先休眠两秒 等他其他线程先阻塞
+    TimeUnit.SECONDS.sleep(2);
+    lock.lock();
+    try {
+      System.out.println(Thread.currentThread() + " 准备唤醒其他线程");
+      condition.signal(); // 唤醒一个被 await 方法阻塞的线程
+      // condition.signalAll(); // 唤醒所有被 await 方法阻塞的线程
+    }finally {
+      lock.unlock();
+    }
+  }
+
+  public static void main(String[] args) {
+    LockDemo lockDemo = new LockDemo();
+    Thread thread = new Thread(() -> {
+      lockDemo.blocking();
+    }, "Blocking-Thread");
+    Thread thread1 = new Thread(() -> {
+      try {
+        lockDemo.inform();
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }, "Inform-Thread");
+    thread.start();
+    thread1.start();
+  }
+}
+```
+
