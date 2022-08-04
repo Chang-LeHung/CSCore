@@ -121,6 +121,10 @@
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486127&idx=1&sn=29d6079f6f26bd82633ec611feb3da85&chksm=cf0c96a6f87b1fb006e2f108879a0066aeb14e4bf5a4a9e2a83057a084dd2dfa2c257a813399&token=302443384&lang=zh_CN#rd)
 
   - [github阅读](./concurrency/java/04volatile.md)
+- 并发刺客（False Sharing）——并发程序的隐藏杀手
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486187&idx=1&sn=01b92b321d5192593cd840ed453e23f6&chksm=cf0c96e2f87b1ff4c9f3dcb9dcd859e3e53bcd07118272ba1e091f13d9ee8b791f9e2a04950c&token=302443384&lang=zh_CN#rd)
+
+  - [github阅读](./concurrency/java/05falsesharing.md)
 
 ## Python
 
