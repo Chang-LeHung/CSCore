@@ -222,6 +222,52 @@ public class FalseSharing {
 
 ```
 
+## 从更低层次C语言看假共享
+
+前面我门是使用Java语言去验证**假共享**，在本小节当中我们通过一个C语言的多线程程序去验证**假共享**。
+
+```C
+
+#include <stdio.h>
+#include <pthread.h>
+#include <time.h>
+
+#define CHOOSE // 这里定义了 CHOOSE 如果不想定义CHOOSE 则将这一行注释掉即可
+
+// 定义一个全局变量
+int data[1000];
+
+void* add(void* flag) {
+  // 这个函数的作用就是不断的往 data 当中的某个数据进行加一操作
+  int idx = *((int *)flag);
+  for (long i = 0; i < 10000000000; ++i) {
+    data[idx]++;
+  }
+}
+
+int main() {
+  pthread_t a, b;
+#ifdef CHOOSE // 如果定义了 CHOOSE 则执行下面的代码 让两个线程操作的变量隔得远一点 让他们不在同一个缓存行当中
+  int flag_a = 0;
+  int flag_b = 100;
+  printf("远离\n");
+#else // 如果没有定义 让他们隔得近一点 也就是说让他们在同一个缓存行当中
+  int flag_a = 0;
+  int flag_b = 1;
+  printf("临近\n");
+#endif
+  pthread_create(&a, NULL, add, &flag_a);
+  pthread_create(&b, NULL, add, &flag_b);
+  long start = time(NULL);
+  pthread_join(a, NULL);
+  pthread_join(b, NULL);
+  long end = time(NULL);
+  printf("data[0] = %d\t data[1] = %d\n", data[0], data[1]);
+  printf("cost time = %ld\n", (end - start));
+  return 0;
+}
+```
 
 
 
+<img src="../../images/concurrency/37.png" alt="35" style="zoom:50%;" />
