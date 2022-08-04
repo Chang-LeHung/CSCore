@@ -224,7 +224,7 @@ public class FalseSharing {
 
 ## 从更低层次C语言看假共享
 
-前面我门是使用Java语言去验证**假共享**，在本小节当中我们通过一个C语言的多线程程序去验证**假共享**。
+前面我门是使用Java语言去验证**假共享**，在本小节当中我们通过一个C语言的多线程程序（使用pthread）去验证**假共享**。（下面的代码在类Unix系统都可以执行）
 
 ```C
 
@@ -256,11 +256,11 @@ int main() {
   int flag_b = 1;
   printf("临近\n");
 #endif
-  pthread_create(&a, NULL, add, &flag_a);
-  pthread_create(&b, NULL, add, &flag_b);
+  pthread_create(&a, NULL, add, &flag_a); // 创建线程a 并且启动
+  pthread_create(&b, NULL, add, &flag_b); // 创建线程b 并且启动
   long start = time(NULL);
-  pthread_join(a, NULL);
-  pthread_join(b, NULL);
+  pthread_join(a, NULL); // 主线程等待线程a执行完成
+  pthread_join(b, NULL); // 主线程等待线程b执行完成
   long end = time(NULL);
   printf("data[0] = %d\t data[1] = %d\n", data[0], data[1]);
   printf("cost time = %ld\n", (end - start));
@@ -268,6 +268,31 @@ int main() {
 }
 ```
 
-
+上面代码的输出结果如下图所示：
 
 <img src="../../images/concurrency/37.png" alt="35" style="zoom:50%;" />
+
+我们首先来解释一下上面`time`命令的输出：
+
+- `readl`：这个表示真实世界当中的墙钟时间，就是表示这个程序执行所花费的时间，这个秒单位和我们平常说的秒是一样的。
+- `user`：这个表示程序在用户态执行的CPU时间，CPU时间和真实时间是不一样的，这里需要注意区分，这里的秒和我们平常的秒是不一样的。
+- `sys`：这个表示程序在内核态执行所花费的CPU时间。
+
+从上面程序的输出结果我们可以很明显的看出来当操作的两个整型变量相隔距离远的时候，也就是不在同一个缓存行的时候，程序执行的速度是比数据隔得近在同一个缓存行的时候快得多，这也从侧面显示了**假共享**很大程度的降低了程序执行的效率。
+
+## 总结
+
+在本篇文章当中主要讨论了以下内容：
+
+- 当多个线程操作同一个缓存行当中的多个不同的变量时，虽然他们事实上没有对数据进行共享，但是他们对同一个缓存行当中的数据进行修改，而由于缓存一致性协议的存在会导致程序执行的效率降低，这种现象叫做**假共享**。
+- 
+
+
+
+---
+
+更多精彩内容合集可访问项目：<https://github.com/Chang-LeHung/CSCore>
+
+关注公众号：**一无是处的研究僧**，了解更多计算机（Java、Python、计算机系统基础、算法与数据结构）知识。
+
+![](https://img2022.cnblogs.com/blog/2519003/202207/2519003-20220703200459566-1837431658.jpg)
