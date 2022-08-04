@@ -6,7 +6,12 @@
 
 ## FutureTask
 
-在自己写`FutureTask`之前我们首先写一个例子来回顾一下，`FutureTask`的作用：
+在自己写`FutureTask`之前我们首先写一个例子来回顾一下`FutureTask`的编程步骤：
+
+- 写一个类实现`Callable`接口。
+- `new`一个`FutureTask`对象，并且`new`一个第一步写的类，`new FutureTask<>(callable实现类)`。
+- 最后将刚刚得到的`FutureTask`对象传入`Thread`类当中，然后启动线程即可。
+- 然后我们可以调用`FutureTask`的`get`方法得到返回的结果。
 
 >假如有一个数组`data`，长度为100000，现在有10个线程，第`i`个线程求数组`[i * 10000, (i + 1) * 10000)`所有数据的和，然后将这十个线程的结果加起来。
 
@@ -28,6 +33,7 @@ public class FutureTaskDemo {
     }
     @SuppressWarnings("unchecked")
     FutureTask<Integer>[] tasks = (FutureTask<Integer>[]) Array.newInstance(FutureTask.class, 10);
+    // 设置10个 futuretask 任务计算数组当中数据的和
     for (int i = 0; i < 10; i++) {
       int idx = i;
       tasks[i] = new FutureTask<>(() -> {
@@ -38,6 +44,7 @@ public class FutureTaskDemo {
         return sum;
       });
     }
+    // 开启线程执行 futureTask 任务
     for (FutureTask<Integer> futureTask : tasks) {
       new Thread(futureTask).start();
     }
@@ -46,7 +53,7 @@ public class FutureTaskDemo {
       threadSum += futureTask.get();
     }
     int sum = Arrays.stream(data).sum();
-    System.out.println(sum == threadSum);
+    System.out.println(sum == threadSum); // 结果始终为 true
   }
 }
 
