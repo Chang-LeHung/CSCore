@@ -88,6 +88,8 @@ public class FutureTaskDemo {
 
 ## 自己实现FutureTask
 
+### 工具准备
+
 经过上文的分析你可能已经大致了解了`FutureTask`的大致执行过程了，但是需要注意的是，如果你执行`FutureTask`的`get`方法是可能阻塞的，因为可能`Callable`的`call`方法还没有执行完成。因此在`get`方法当中就需要有阻塞线程的代码，但是当`call`方法执行完成之后需要将这些线程都唤醒。
 
 在本篇文章当中使用锁`ReentrantLock`和条件变量`Condition`进行线程的阻塞和唤醒，在我们自己动手实现`FutureTask`之前，我们先熟悉一下上面两种工具的使用方法。
@@ -143,11 +145,11 @@ public class LockDemo {
   public static void main(String[] args) {
     LockDemo lockDemo = new LockDemo();
     Thread thread = new Thread(() -> {
-      lockDemo.blocking();
+      lockDemo.blocking(); // 执行阻塞线程的代码
     }, "Blocking-Thread");
     Thread thread1 = new Thread(() -> {
       try {
-        lockDemo.inform();
+        lockDemo.inform(); // 执行唤醒线程的代码
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
@@ -156,5 +158,103 @@ public class LockDemo {
     thread1.start();
   }
 }
+```
+
+上面的代码的输出：
+
+```
+Thread[Blocking-Thread,5,main] 准备等待被其他线程唤醒
+Thread[Inform-Thread,5,main] 准备唤醒其他线程
+```
+
+### FutureTask设计
+
+在前文当中我们已经谈到了`FutureTask`的实现原理，主要有以下几点：
+
+- 构造函数需要传入一个实现了`Callable`接口的类对象，这个将会在`FutureTask`的`run`方法执行，然后得到函数的返回值，并且将返回值存储起来。
+- 当线程调用`get`方法的时候，如果这个时候`Callable`当中的`call`已经执行完成，直接返回`call`函数返回的结果就行，如果`call`函数还没有执行完成，那么久就需要将调用`get`方法的线程挂起，这里我们可以使用`condition.await()`将线程挂起。
+- 在`call`函数执行完成之后，需要将之前被`get`方法挂起的线程唤醒继续执行，这里使用`condition.signalAll()`将所有挂起的线程唤醒。
+
+实现代码如下（分析都在注释当中）：
+
+```java
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
+
+// 这里需要实现 Runnable 接口，因为需要将这个对象放入 Thread 类当中
+// 而 Thread 要求传入的对象实现了 Runnable 接口
+public class MyFutureTask<V> implements Runnable {
+
+  private final Callable<V> callable;
+  private Object returnVal;
+  private final ReentrantLock lock;
+  private final Condition condition;
+
+  public MyFutureTask(Callable<V> callable) {
+    // 将传入的 callable 对象存储起来 方便在后面的 run 方法当中调用
+    this.callable = callable;
+    lock = new ReentrantLock();
+    condition = lock.newCondition();
+  }
+
+  @SuppressWarnings("unchecked")
+  public V get(long timeout, TimeUnit unit) {
+    lock.lock();
+    try {
+      if (returnVal == null)
+        condition.await(timeout, unit);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    } finally {
+      lock.unlock();
+    }
+    return (V) returnVal;
+  }
+
+  @SuppressWarnings("unchecked")
+  public V get() {
+    lock.lock();
+    try {
+      if (returnVal == null)
+        condition.await();
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    } finally {
+      lock.unlock();
+    }
+    return (V) returnVal;
+  }
+
+  @Override
+  public void run() {
+    if (returnVal != null)
+      return;
+    try {
+      returnVal = callable.call();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    lock.lock();
+    try {
+      condition.signalAll();
+    }finally {
+      lock.unlock();
+    }
+  }
+
+  public static void main(String[] args) {
+    MyFutureTask<Integer> ft = new MyFutureTask<>(() -> {
+      TimeUnit.SECONDS.sleep(2);
+      return 101;
+    });
+    Thread thread = new Thread(ft);
+    thread.start();
+    System.out.println(ft.get(100, TimeUnit.MILLISECONDS));
+    System.out.println(ft.get());
+  }
+}
+
 ```
 
