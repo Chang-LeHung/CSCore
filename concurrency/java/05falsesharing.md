@@ -256,8 +256,8 @@ int main() {
   int flag_b = 1;
   printf("临近\n");
 #endif
-  pthread_create(&a, NULL, add, &flag_a); // 创建线程a 并且启动
-  pthread_create(&b, NULL, add, &flag_b); // 创建线程b 并且启动
+  pthread_create(&a, NULL, add, &flag_a); // 创建线程a 执行函数 add 传递参数 flag_a 并且启动
+  pthread_create(&b, NULL, add, &flag_b); // 创建线程b 执行函数 add 传递参数 flag_b 并且启动
   long start = time(NULL);
   pthread_join(a, NULL); // 主线程等待线程a执行完成
   pthread_join(b, NULL); // 主线程等待线程b执行完成
@@ -285,9 +285,9 @@ int main() {
 在本篇文章当中主要讨论了以下内容：
 
 - 当多个线程操作同一个缓存行当中的多个不同的变量时，虽然他们事实上没有对数据进行共享，但是他们对同一个缓存行当中的数据进行修改，而由于缓存一致性协议的存在会导致程序执行的效率降低，这种现象叫做**假共享**。
-- 
-
-
+- 在Java程序当中我们如果想让多个变量不在同一个缓存行当中的话，我们可以在变量的旁边通过增加其他变量的方式让多个不同的变量不在同一个缓存行。
+- JDK也为我们提供了`Contended`注解可以在字段的后面通过增加空字节的方式让多个数据不在同一个缓存行，而且你需要在JVM参数当中加入`-XX:-RestrictContended`，同时你可以通过JVM参数`-XX:ContendedPaddingWidth=64`调整空字节的数目。JDK8之后注解`Contended`在JDK当中的位置有所变化，大家可以查询一下。
+- 我们也是用了C语言的API去测试了假共享，事实上在Java虚拟机当中底层的线程也是通过调用`pthread_create`进行创建的。
 
 ---
 
