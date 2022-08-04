@@ -176,5 +176,52 @@ class Data {
 
 在解析注解的时候会让同一组的变量在内存当中的位置相邻，不同的组之间会有一定数量的空字节，配置方式还是跟上面一样，默认每组之间空字节的数量为128。
 
+比如上面的变量在内存当中的逻辑布局详细布局如下：
+
+<img src="../../images/concurrency/36.png" alt="35" style="zoom:80%;" />
+
+```
+ OFFSET  SIZE   TYPE DESCRIPTION                               VALUE
+      0     4        (object header)                           01 00 00 00 (00000001 00000000 00000000 00000000) (1)
+      4     4        (object header)                           00 00 00 00 (00000000 00000000 00000000 00000000) (0)
+      8     4        (object header)                           20 0a 06 00 (00100000 00001010 00000110 00000000) (395808)
+     12   132        (alignment/padding gap)                  
+    144     8   long Data.a                                    0
+    152   128        (alignment/padding gap)                  
+    280     8   long Data.b                                    0
+    288     8   long Data.c                                    0
+    296   128        (loss due to the next object alignment)
+Instance size: 424 bytes
+Space losses: 260 bytes internal + 128 bytes external = 388 bytes total
+```
+
+上面的内容是通过下面代码打印的，你只要在pom文件当中引入包`jol`即可：
+
+```java
+import org.openjdk.jol.info.ClassLayout;
+import sun.misc.Contended;
+
+
+class Data {
+  @Contended("a")
+  public volatile long a;
+  
+  @Contended("bc")
+  public volatile long b;
+  @Contended("bc")
+  public volatile long c;
+}
+
+public class FalseSharing {
+  public static void main(String[] args) throws InterruptedException {
+    Data data = new Data();
+
+    System.out.println(ClassLayout.parseInstance(data).toPrintable());
+  }
+}
+
+```
+
+
 
 
