@@ -206,9 +206,12 @@ public class MyFutureTask<V> implements Runnable {
       return (V) returnVal; // 直接将结果返回即可
     lock.lock();
     try {
-      // 这里需要进行二次判断
+      // 这里需要进行二次判断 (双重检查)
       // 因为如果一个线程在第一次判断 returnVal 为空
-      // 然后这个时候它因为
+      // 然后这个时候它可能因为获取锁而被挂起
+      // 而在被挂起的这段时间，call 可能已经执行完成
+      // 如果这个时候不进行判断直接执行 await方法
+      // 那后面这个线程将无法被唤醒
       if (returnVal == null)
         condition.await(timeout, unit);
     } catch (InterruptedException e) {
@@ -241,18 +244,23 @@ public class MyFutureTask<V> implements Runnable {
     if (returnVal != null)
       return;
     try {
+      // 在 Runnable 的 run 方法当中
+      // 执行 Callable 方法的 call 得到返回结果
       returnVal = callable.call();
     } catch (Exception e) {
       e.printStackTrace();
     }
     lock.lock();
     try {
+      // 因为已经得到了结果
+      // 因此需要将所有被 await 方法阻塞的线程唤醒
+      // 让他们从 get 方法返回
       condition.signalAll();
     }finally {
       lock.unlock();
     }
   }
-
+	// 下面是测试代码
   public static void main(String[] args) {
     MyFutureTask<Integer> ft = new MyFutureTask<>(() -> {
       TimeUnit.SECONDS.sleep(2);
@@ -260,10 +268,43 @@ public class MyFutureTask<V> implements Runnable {
     });
     Thread thread = new Thread(ft);
     thread.start();
-    System.out.println(ft.get(100, TimeUnit.MILLISECONDS));
-    System.out.println(ft.get());
+    System.out.println(ft.get(100, TimeUnit.MILLISECONDS)); // 输出为 null
+    System.out.println(ft.get()); // 输出为 101
   }
 }
 
+```
+
+我们现在用我们自己写的`MyFutureTask`去实现在前文当中数组求和的例子：
+
+```java
+public static void main(String[] args) throws ExecutionException, InterruptedException {
+  int[] data = new int[100000];
+  Random random = new Random();
+  for (int i = 0; i < 100000; i++) {
+    data[i] = random.nextInt(10000);
+  }
+  @SuppressWarnings("unchecked")
+  MyFutureTask<Integer>[] tasks = (MyFutureTask<Integer>[]) Array.newInstance(MyFutureTask.class, 10);
+  for (int i = 0; i < 10; i++) {
+    int idx = i;
+    tasks[i] = new MyFutureTask<>(() -> {
+      int sum = 0;
+      for (int k = idx * 10000; k < (idx + 1) * 10000; k++) {
+        sum += data[k];
+      }
+      return sum;
+    });
+  }
+  for (MyFutureTask<Integer> MyFutureTask : tasks) {
+    new Thread(MyFutureTask).start();
+  }
+  int threadSum = 0;
+  for (MyFutureTask<Integer> MyFutureTask : tasks) {
+    threadSum += MyFutureTask.get();
+  }
+  int sum = Arrays.stream(data).sum();
+  System.out.println(sum == threadSum); // 输出结果为 true
+}
 ```
 
