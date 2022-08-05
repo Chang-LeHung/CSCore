@@ -77,7 +77,7 @@ public class FutureTaskDemo {
 
 可能你会对`FutureTask`的使用方式感觉困惑，或者不是很清楚，现在我们来仔细捋一下思路。
 
-1. 首先启动一个类要么是继承自`Thread`类，然后重写`Thread`类的`run`方法，要么是给`Thread`类传递一个实现了`Runnable`的类对象，当然可以用匿名内部类实现。
+1. 首先启动一个线程要么是继承自`Thread`类，然后重写`Thread`类的`run`方法，要么是给`Thread`类传递一个实现了`Runnable`的类对象，当然可以用匿名内部类实现。
 2. 既然我们的`FutureTask`对象可以传递给`Thread`类，说明`FutureTask`肯定是实现了`Runnable`接口，我们现在来看一下`FutureTask`的继承体系。
 
 <img src="../../images/concurrency/38.png" alt="38" style="zoom:80%;" />
@@ -203,7 +203,7 @@ public class MyFutureTask<V> implements Runnable {
   @SuppressWarnings("unchecked")
   public V get(long timeout, TimeUnit unit) {
     if (returnVal != null) // 如果符合条件 说明 call 函数已经执行完成 返回值已经不为 null 了
-      return (V) returnVal; // 直接将结果返回即可
+      return (V) returnVal; // 直接将结果返回即可 这样不用竞争锁资源 提高程序执行效率
     lock.lock();
     try {
       // 这里需要进行二次判断 (双重检查)
@@ -228,6 +228,7 @@ public class MyFutureTask<V> implements Runnable {
       return (V) returnVal;
     lock.lock();
     try {
+      // 同样的需要进行双重检查
       if (returnVal == null)
       	condition.await();
     } catch (InterruptedException e) {
@@ -307,4 +308,18 @@ public static void main(String[] args) throws ExecutionException, InterruptedExc
   System.out.println(sum == threadSum); // 输出结果为 true
 }
 ```
+
+## 总结
+
+在本篇文章当中主要给大家介绍了`FutureTask`的内部原理，并且我们自己通过使用`ReentrantLock`和`Condition`实现了我们自己的`FutureTask`，本篇文章的主要内容如下：
+
+- `FutureTask`的内部原理：
+  - `FutureTask`首先会继承`Runnable`接口，这样就可以将`FutureTask`的对象直接放入`Thread`类当中，作为构造函数的参数。
+  - 我们在使用`FutureTask`的时候需要传入一个`Callable`实现类的对象，在函数`call`当中实现我们需要执行的函数，执行完成之后，将`call`函数的返回值保存下来，当有线程调用`get`方法时候将保存的返回值返回。
+- 我们使用条件变量进行对线程的阻塞和唤醒。
+  - 当有线程调用`get`方法时，如果`call`已经执行完成，那么可以直接将结果返回，否则需要使用条件变量将线程挂起。
+  - 当`call`函数执行完成的时候，需要使用条件变量将所有阻塞在`get`方法的线程唤醒。
+- 双重检查：
+  - 我们在`get`方法当中首先判断`returnVal`是否为空，如果不为空直接将结果返回，这就可以不用去竞争锁资源了，可以提高程序执行的效率。
+  - 但是我们在使用锁保护的临界区还需要进行判断，判断`returnVal`是否为空，因为如果一个线程在第一次判断 returnVal 为空，然后这个时候它可能因为获取锁而被挂起， 而在被挂起的这段时间，call 可能已经执行完成，如果这个时候不进行判断直接执行 await方法，那后面这个线程将无法被唤醒。
 
