@@ -1,4 +1,4 @@
-# 从零开始手写FutureTask以及FutureTask源码剖析
+# 60行自己动手写FutureTask
 
 ## 前言
 
@@ -206,6 +206,9 @@ public class MyFutureTask<V> implements Runnable {
       return (V) returnVal; // 直接将结果返回即可
     lock.lock();
     try {
+      // 这里需要进行二次判断
+      // 因为如果一个线程在第一次判断 returnVal 为空
+      // 然后这个时候它因为
       if (returnVal == null)
         condition.await(timeout, unit);
     } catch (InterruptedException e) {
