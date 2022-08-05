@@ -125,6 +125,10 @@
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486187&idx=1&sn=01b92b321d5192593cd840ed453e23f6&chksm=cf0c96e2f87b1ff4c9f3dcb9dcd859e3e53bcd07118272ba1e091f13d9ee8b791f9e2a04950c&token=302443384&lang=zh_CN#rd)
 
   - [github阅读](./concurrency/java/05falsesharing.md)
+- 60行从零开始自己动手写FutureTask是什么体验？
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486245&idx=1&sn=b75ded67ef8ca328f23ca2acc35dc7a8&chksm=cf0c972cf87b1e3a4cb93e707c4574cfeabab13809f72878f946b6b73439f384f2752d98a183&token=302443384&lang=zh_CN#rd)
+
+  - [github阅读](./concurrency/java/06futuretask.md)
 
 ## Python
 
