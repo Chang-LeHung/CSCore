@@ -84,7 +84,7 @@ public class FutureTaskDemo {
 
 ​	可以发现的是`FutureTask`确实实现了`Runnable`接口，同时还实现了`Future`接口，这个`Future`接口主要提供了后面我们使用`FutureTask`的一系列函数比如`get`。
 
-3. 看到这里你应该能够大致想到在`FutureTask`中的`run`方法回调用`Callable`当中实现的`call`方法，然后将结果保存下来，当调用`get`方法的时候再将这个结果返回。
+3. 看到这里你应该能够大致想到在`FutureTask`中的`run`方法会调用`Callable`当中实现的`call`方法，然后将结果保存下来，当调用`get`方法的时候再将这个结果返回。
 
 ## 自己实现FutureTask
 
@@ -172,7 +172,7 @@ Thread[Inform-Thread,5,main] 准备唤醒其他线程
 在前文当中我们已经谈到了`FutureTask`的实现原理，主要有以下几点：
 
 - 构造函数需要传入一个实现了`Callable`接口的类对象，这个将会在`FutureTask`的`run`方法执行，然后得到函数的返回值，并且将返回值存储起来。
-- 当线程调用`get`方法的时候，如果这个时候`Callable`当中的`call`已经执行完成，直接返回`call`函数返回的结果就行，如果`call`函数还没有执行完成，那么久就需要将调用`get`方法的线程挂起，这里我们可以使用`condition.await()`将线程挂起。
+- 当线程调用`get`方法的时候，如果这个时候`Callable`当中的`call`已经执行完成，直接返回`call`函数返回的结果就行，如果`call`函数还没有执行完成，那么就需要将调用`get`方法的线程挂起，这里我们可以使用`condition.await()`将线程挂起。
 - 在`call`函数执行完成之后，需要将之前被`get`方法挂起的线程唤醒继续执行，这里使用`condition.signalAll()`将所有挂起的线程唤醒。
 - 因为是我们自己实现`FutureTask`，功能不会那么齐全，只需要能够满足我们的主要需求即可，主要是帮助大家了解`FutureTask`原理。
 
