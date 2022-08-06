@@ -2,7 +2,7 @@
 
 ## 前言
 
-在前面的文章[自己动手写FutureTask](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486245&idx=1&sn=b75ded67ef8ca328f23ca2acc35dc7a8&chksm=cf0c972cf87b1e3a4cb93e707c4574cfeabab13809f72878f946b6b73439f384f2752d98a183&token=302443384&lang=zh_CN#rd)当中我们已经仔细分析了FutureTask给我们提供的功能，并且深入分析了我们改如何实现它的功能，并且给出了使用`ReentrantLock`和条件变量实现FutureTask的具体代码。而在本篇文章当中我们将仔细介绍JDK内部是如何实现FutureTask的。
+在前面的文章[自己动手写FutureTask](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486245&idx=1&sn=b75ded67ef8ca328f23ca2acc35dc7a8&chksm=cf0c972cf87b1e3a4cb93e707c4574cfeabab13809f72878f946b6b73439f384f2752d98a183&token=302443384&lang=zh_CN#rd)当中我们已经仔细分析了FutureTask给我们提供的功能，并且深入分析了我们改如何实现它的功能，并且给出了使用`ReentrantLock`和条件变量实现FutureTask的具体代码。而在本篇文章当中我们将仔细介绍JDK内部是如何实现FutureTask的。(如果对`FutureTask`的内部大致过程还不是很了解的话，可以先阅读[自己动手写FutureTask](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486245&idx=1&sn=b75ded67ef8ca328f23ca2acc35dc7a8&chksm=cf0c972cf87b1e3a4cb93e707c4574cfeabab13809f72878f946b6b73439f384f2752d98a183&token=302443384&lang=zh_CN#rd))。
 
 ## 工具准备
 
@@ -365,6 +365,7 @@ private void finishCompletion() {
 ```java
 public boolean cancel(boolean mayInterruptIfRunning) {
   // 参数 mayInterruptIfRunning 表示可能在线程执行的时候中断
+  
   // 只有 state == NEW 并且能够将 state 的状态从 NEW 变成 中断或者取消才能够执行下面的 try 代码块
   // 否则直接返回 false
   if (!(state == NEW &&
@@ -384,6 +385,7 @@ public boolean cancel(boolean mayInterruptIfRunning) {
       }
     }
   } finally {
+    // 唤醒被 get 函数阻塞的线程
     finishCompletion();
   }
   return true;
@@ -391,9 +393,15 @@ public boolean cancel(boolean mayInterruptIfRunning) {
 
 ```
 
+上面谈到了`FutureTask`当中最核心的一些函数，这些过程还是非常复杂的，必须理好思路仔细分析才能够真正理解。除了上面的这些函数之外，在`FutureTask`当中还有一些其他的函数没有谈到，因为这些函数不会影响我们的理解，如果大家感兴趣可以自行去看`FutureTask`源代码！
+
 ## 总结
 
+在本篇文章当中主要讨论了以下问题：
 
+- `LockSupport`的`park`和`unpark`方法，主要用于阻塞和唤醒线程，更加确切的说是给线程发放凭证，当凭证的数据小于0的时候线程就会阻塞。
+- `UNSAFE.compareAndSwapXXX`方法，这个方法主要是进行原子交换（CAS过程），判断对象的某个内存偏移地址的值是否与指定的值相等，如果相等则进行交换，如果以上说道的操作成功执行则返回`true`否则返回`false`，同时这个操作是具有原子性的。
+- 
 
 ---
 
