@@ -50,6 +50,13 @@ public class Demo {
 
 从上面代码我们可以知道`LockSupport.park()`可以阻塞一个线程，因为如果没有阻塞的话肯定会先打印`阻塞完成`，因为打印这句话的线程只休眠一秒，主线程休眠两秒。
 
+在源代码当中你可以会遇到`UNSAFE.compareAndSwapXXX`的代码，这行代码主要是进行原子交换操作，比如：
+```java
+UNSAFE.compareAndSwapInt(this, stateOffset, NEW, CANCELLED)))
+```
+
+上面的代码主要是将`this`对象当中的内存偏移地址为`stateOffset`的对象拿出来与`NEW`进行比较，如果等于`NEW`那就将这个值设置为`CANCELLED`，这整个操作是原子的，如果操作成功返回`true`反之返回`false`。
+
 ## 深入FutureTask内部
 
 ### FutureTask回顾
@@ -253,28 +260,35 @@ private V report(int s) throws ExecutionException {
 - `awaitDone`方法，这个方法主要是将当前线程挂起。
 
 ```java
-private int awaitDone(boolean timed, long nanos)
+private int awaitDone(boolean timed, long nanos) // timed 表示是否超时阻塞  nanos 表示如果是超时阻塞的话 超时时间是多少
   throws InterruptedException {
   final long deadline = timed ? System.nanoTime() + nanos : 0L;
   WaitNode q = null;
   boolean queued = false;
-  for (;;) {
+  for (;;) { // 注意这是个死循环
+    
+    // 如果线程被中断了 那么需要从 “等待队列” 当中移出去
     if (Thread.interrupted()) {
       removeWaiter(q);
       throw new InterruptedException();
     }
 
     int s = state;
+    // 如果 call 函数执行完成 注意执行完成可能是正常执行完成 也可能是异常 取消 中断的任何一个状态
     if (s > COMPLETING) {
       if (q != null)
         q.thread = null;
       return s;
     }
+    // 如果是正在执行的话 说明马上就执行完成了 只差将 call 函数的执行结果赋值给 outcome 了
+    // 因此可以不进行阻塞先让出 CPU 让其它线程执行 可能下次调度到这个线程 state 的状态很可能就
+    // 变成 完成了
     else if (s == COMPLETING) // cannot time out yet
       Thread.yield();
     else if (q == null)
       q = new WaitNode();
-    else if (!queued)
+    else if (!queued) // 如果节点 q 还没有入队
+      // 下面这行代码稍微有点复杂 
       queued = UNSAFE.compareAndSwapObject(this, waitersOffset,
                                            q.next = waiters, q);
     else if (timed) {
