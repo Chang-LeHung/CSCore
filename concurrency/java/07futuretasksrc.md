@@ -2,7 +2,7 @@
 
 ## 前言
 
-在前面的文章[自己动手写FutureTask](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486245&idx=1&sn=b75ded67ef8ca328f23ca2acc35dc7a8&chksm=cf0c972cf87b1e3a4cb93e707c4574cfeabab13809f72878f946b6b73439f384f2752d98a183&token=302443384&lang=zh_CN#rd)当中我们已经仔细分析了FutureTask给我们提供的功能，并且深入分析了我们改如何实现它的功能，并且给出了使用`ReentrantLock`和条件变量实现FutureTask的具体代码。而在本篇文章当中我们将仔细介绍JDK内部是如何实现FutureTask的。(如果对`FutureTask`的内部大致过程还不是很了解的话，可以先阅读[自己动手写FutureTask](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486245&idx=1&sn=b75ded67ef8ca328f23ca2acc35dc7a8&chksm=cf0c972cf87b1e3a4cb93e707c4574cfeabab13809f72878f946b6b73439f384f2752d98a183&token=302443384&lang=zh_CN#rd))。
+在前面的文章[自己动手写FutureTask](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486245&idx=1&sn=b75ded67ef8ca328f23ca2acc35dc7a8&chksm=cf0c972cf87b1e3a4cb93e707c4574cfeabab13809f72878f946b6b73439f384f2752d98a183&token=302443384&lang=zh_CN#rd)当中我们已经仔细分析了FutureTask给我们提供的功能，并且深入分析了我们该如何实现它的功能，并且给出了使用`ReentrantLock`和条件变量实现FutureTask的具体代码。而在本篇文章当中我们将仔细介绍JDK内部是如何实现FutureTask的。(如果对`FutureTask`的内部大致过程还不是很了解的话，可以先阅读[自己动手写FutureTask](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486245&idx=1&sn=b75ded67ef8ca328f23ca2acc35dc7a8&chksm=cf0c972cf87b1e3a4cb93e707c4574cfeabab13809f72878f946b6b73439f384f2752d98a183&token=302443384&lang=zh_CN#rd))。
 
 ## 工具准备
 
@@ -144,7 +144,7 @@ private static final int INTERRUPTED  = 6;
   ```
 
   ```java
-  private volatile WaitNode waiters;// 被 get 函数挂起的线程 是一个单项链表 waiters 表示单向链表的头节点
+  private volatile WaitNode waiters;// 被 get 函数挂起的线程 是一个单向链表 waiters 表示单向链表的头节点
   static final class WaitNode {
     volatile Thread thread; // 表示被挂起来的线程
     volatile WaitNode next; // 表示下一个节点
@@ -400,7 +400,7 @@ public boolean cancel(boolean mayInterruptIfRunning) {
 在本篇文章当中主要讨论了以下问题：
 
 - `LockSupport`的`park`和`unpark`方法，主要用于阻塞和唤醒线程，更加确切的说是给线程发放凭证，当凭证的数据小于0的时候线程就会阻塞。
-- `UNSAFE.compareAndSwapXXX`方法，这个方法主要是进行原子交换（CAS过程），判断对象的某个内存偏移地址的值是否与指定的值相等，如果相等则进行交换，如果以上说道的操作成功执行则返回`true`否则返回`false`，同时这个操作是具有原子性的。
+- `UNSAFE.compareAndSwapXXX`方法，这个方法主要是进行原子交换（CAS过程），判断对象的某个内存偏移地址的值是否与指定的值相等，如果相等则进行交换，如果以上操作成功执行则返回`true`否则返回`false`，同时这个操作是具有原子性的。
 - 在`get`方法当中，如果`state`的状态小于或者等于`COMPLETING`，则需要调用函数`awaitDone`将线程挂起，否则直接返回结果即可。
 - `run`方法是整个`FutureTask`最核心的方法，在这个方法当中会调用传入`FutureTask`对象的`Callable`对象当中的`call`方法，然后将其的返回值保存到`outcome`当中，最后会将所有被`get`函数阻塞的线程都唤醒。
 - `finishCompletion`方法，是将等待队列当中所有的被阻塞的线程全部唤醒。
