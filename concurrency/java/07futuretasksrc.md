@@ -145,8 +145,6 @@ private static final int INTERRUPTED  = 6;
   }
   ```
 
-  
-
 - 构造函数：
 
 ```java
@@ -170,7 +168,7 @@ public void run() {
     Callable<V> c = callable;
     if (c != null && state == NEW) {
       V result;
-      boolean ran;
+      boolean ran; // 这个值主要用于表示 call 函数是否正常执行完成 如果正常执行完成就为 true
       try {
         result = c.call(); // 执行 call 函数得到我们需要的返回值并且柏村在
         ran = true;
@@ -180,7 +178,7 @@ public void run() {
         setException(ex);
       }
       if (ran)
-        set(result);
+        set(result); // call 函数正常执行完成 将得到的结果 result 保存到 outcome 当中 并且唤醒被 get 函数阻塞的线程
     }
   } finally {
     // runner must be non-null until state is settled to
