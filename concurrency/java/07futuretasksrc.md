@@ -288,10 +288,20 @@ private int awaitDone(boolean timed, long nanos) // timed 表示是否超时阻�
     else if (q == null)
       q = new WaitNode();
     else if (!queued) // 如果节点 q 还没有入队
-      // 下面这行代码稍微有点复杂 
+      // 下面这行代码稍微有点复杂 其中 waiter 表示等待队列的头节点
+      // 这行代码的作用是将 q 节点的 next 指向 waiters 然后将 q 节点
+      // 赋值给 waiters 也就是说 q 节点变成等待队列的头节点 整个过程可以用
+      // 下面代码标识
+      // q.next = waiters;
+      // waiters = q;
+      // 但是将 q 节点赋值给 waiter这个操作是原子的 可能成功也可能不成功
+      // 如果不成功 因为 for 循环是死循环下次喊 还会进行 if 判断
+      // 如果 call 函数已经执行完成得到其返回结果那么就可以直接返回
+      // 如果还没有结束 那么就会调用下方的两个 if 分支将线程挂起
       queued = UNSAFE.compareAndSwapObject(this, waitersOffset,
                                            q.next = waiters, q);
     else if (timed) {
+      // 如果是使用超时挂起 deadline 表示如果时间超过这个值的话就可以将线程启动了
       nanos = deadline - System.nanoTime();
       if (nanos <= 0L) {
         removeWaiter(q);
@@ -300,6 +310,7 @@ private int awaitDone(boolean timed, long nanos) // timed 表示是否超时阻�
       LockSupport.parkNanos(this, nanos);
     }
     else
+      // 如果不是超时阻塞的话 直接将这个线程挂起即可
       LockSupport.park(this);
   }
 }
