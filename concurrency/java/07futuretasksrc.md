@@ -167,6 +167,10 @@ public FutureTask(Callable<V> callable) {
 
 ```java
 public void run() {
+  // 如果 futuretask 的状态 state 不是 NEW
+  // 或者不能够设置 runner 为当前的线程的话直接返回
+  // 不在执行下面的代码 因为 state 已经不是NEW 
+  // 说明取消了 futuretask 的执行
   if (state != NEW ||
       !UNSAFE.compareAndSwapObject(this, runnerOffset,
                                    null, Thread.currentThread()))
@@ -355,4 +359,47 @@ private void finishCompletion() {
 }
 
 ```
+
+- `cancel`方法，这个方法主要是取消`FutureTask`的执行过程。
+
+```java
+public boolean cancel(boolean mayInterruptIfRunning) {
+  // 参数 mayInterruptIfRunning 表示可能在线程执行的时候中断
+  // 只有 state == NEW 并且能够将 state 的状态从 NEW 变成 中断或者取消才能够执行下面的 try 代码块
+  // 否则直接返回 false
+  if (!(state == NEW &&
+        UNSAFE.compareAndSwapInt(this, stateOffset, NEW,
+                                 mayInterruptIfRunning ? INTERRUPTING : CANCELLED)))
+    return false;
+  try {    // in case call to interrupt throws exception
+    // 如果在线程执行的时候中断代码就执行下面的逻辑
+    if (mayInterruptIfRunning) {
+      try {
+        Thread t = runner; // 得到正在执行 call 函数的线程
+        if (t != null)
+          t.interrupt();
+      } finally { // final state
+        // 将 state 设置为 INTERRUPTED 状态
+        UNSAFE.putOrderedInt(this, stateOffset, INTERRUPTED);
+      }
+    }
+  } finally {
+    finishCompletion();
+  }
+  return true;
+}
+
+```
+
+## 总结
+
+
+
+---
+
+更多精彩内容合集可访问项目：<https://github.com/Chang-LeHung/CSCore>
+
+关注公众号：**一无是处的研究僧**，了解更多计算机（Java、Python、计算机系统基础、算法与数据结构）知识。
+
+![](https://img2022.cnblogs.com/blog/2519003/202207/2519003-20220703200459566-1837431658.jpg)
 
