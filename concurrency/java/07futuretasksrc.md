@@ -189,6 +189,7 @@ public void run() {
     int s = state;
     // 如果这个if语句条件满足的话就表示执行过程被中断了
     if (s >= INTERRUPTING)
+      // 这个主要是后续处理中断的过程不是很重要
       handlePossibleCancellationInterrupt(s);
   }
 }
@@ -202,7 +203,9 @@ protected void set(V v) { // call 方法正常执行完成执行下面的方法 
   // 这个是原子交换 state 从 NEW 状态变成 COMPLETING 状态
   if (UNSAFE.compareAndSwapInt(this, stateOffset, NEW, COMPLETING)) {
     outcome = v; // 将 call 函数的返回结果保存到 outcome 当中 然后会在 get 函数当中使用 outcome ，因为 get 函数需要得到 call 函数的结果 因此我们需要在 call 函数当中返回 outcome
+    // 下面代码是将 state 的状态变成 NORMAL 表示程序执行完成
     UNSAFE.putOrderedInt(this, stateOffset, NORMAL); // final state
+    // 因为其他线程可能在调用 get 函数的时候 call 函数还没有执行完成 因此这些线程会被阻塞 下面的这个方法主要是将这些线程唤醒
     finishCompletion();
   }
 }
