@@ -238,10 +238,13 @@ public V get() throws InterruptedException, ExecutionException {
 
 private V report(int s) throws ExecutionException {
   Object x = outcome;
-  if (s == NORMAL)
+  if (s == NORMAL) // 如果程序正常执行完成则直接返回结果
     return (V)x;
-  if (s >= CANCELLED)
+  if (s >= CANCELLED) // 如果 s 大于 CANCELLED 说明程序要么是被取消要么是被中断了 抛出异常
     throw new CancellationException();
+  // 如果上面两种转台都不是那么说明在执行 call 函数的时候程序发生异常
+  // 还记得我们在 setException 函数当中将异常赋值给了 outcome 吗？
+  // 在这里将那个异常抛出了
   throw new ExecutionException((Throwable)x);
 }
 
