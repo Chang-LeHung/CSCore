@@ -175,7 +175,7 @@ public void run() {
       } catch (Throwable ex) {
         result = null;
         ran = false;
-        setException(ex);
+        setException(ex); // call 函数异常执行 设置 state 为异常状态 并且唤醒由 get 函数阻塞的线程
       }
       if (ran)
         set(result); // call 函数正常执行完成 将得到的结果 result 保存到 outcome 当中 并且唤醒被 get 函数阻塞的线程
@@ -187,10 +187,32 @@ public void run() {
     // state must be re-read after nulling runner to prevent
     // leaked interrupts
     int s = state;
+    // 如果这个if语句条件满足的话就表示执行过程被中断了
     if (s >= INTERRUPTING)
       handlePossibleCancellationInterrupt(s);
   }
 }
 
+```
+
+- `set`方法，主要是用于设置`state`的状态，并且唤醒由`get`函数阻塞的线程。
+
+```java
+protected void set(V v) { // call 方法正常执行完成执行下面的方法 v 是 call 方法返回的结果
+  // 这个是原子交换 state 从 NEW 状态变成 COMPLETING 状态
+  if (UNSAFE.compareAndSwapInt(this, stateOffset, NEW, COMPLETING)) {
+    outcome = v; // 将 call 函数的返回结果保存到 outcome 当中 然后会在 get 函数当中使用 outcome ，因为 get 函数需要得到 call 函数的结果 因此我们需要在 call 函数当中返回 outcome
+    UNSAFE.putOrderedInt(this, stateOffset, NORMAL); // final state
+    finishCompletion();
+  }
+}
+
+protected void setException(Throwable t) {
+  if (UNSAFE.compareAndSwapInt(this, stateOffset, NEW, COMPLETING)) {
+    outcome = t;
+    UNSAFE.putOrderedInt(this, stateOffset, EXCEPTIONAL); // final state
+    finishCompletion();
+  }
+}
 ```
 
