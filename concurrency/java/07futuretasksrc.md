@@ -52,6 +52,44 @@ public class Demo {
 
 ## 深入FutureTask内部
 
+### FutureTask回顾
+
+我们首先来回顾一下`FutureTask`的编程步骤：
+
+- 写一个类实现`Callable`接口。
+
+```java
+@FunctionalInterface
+public interface Callable<V> {
+    /**
+     * Computes a result, or throws an exception if unable to do so.
+     *
+     * @return computed result
+     * @throws Exception if unable to compute a result
+     */
+    V call() throws Exception;
+}
+```
+
+实现接口就实现`call`即可，可以看到这个函数是有返回值的，而`FutureTask`返回给我们的值就是这个函数的返回值。
+
+- `new`一个`FutureTask`对象，并且`new`一个第一步写的类，`new FutureTask<>(callable实现类)`。
+- 最后将刚刚得到的`FutureTask`对象传入`Thread`类当中，然后启动线程即可`new Thread(futureTask).start();`。
+- 然后我们可以调用`FutureTask`的`get`方法得到返回的结果`futureTask.get();`。
+
+可能你会对`FutureTask`的使用方式感觉困惑，或者不是很清楚，现在我们来仔细捋一下思路。
+
+1. 首先启动一个线程要么是继承自`Thread`类，然后重写`Thread`类的`run`方法，要么是给`Thread`类传递一个实现了`Runnable`的类对象，当然可以用匿名内部类实现。
+2. 既然我们的`FutureTask`对象可以传递给`Thread`类，说明`FutureTask`肯定是实现了`Runnable`接口，事实上也确实如此：
+
+<img src="../../images/concurrency/38.png" alt="38" style="zoom:80%;" />
+
+​	可以发现的是`FutureTask`确实实现了`Runnable`接口，同时还实现了`Future`接口，这个`Future`接口主要提供了后面我们使用`FutureTask`的一系列函数比如`get`。
+
+3. 看到这里你应该能够大致想到在`FutureTask`中的`run`方法会调用`Callable`当中实现的`call`方法，然后将结果保存下来，当调用`get`方法的时候再将这个结果返回。
+
+### 状态表示
+
 首先我们先了解一下FutureTask的几种状态：
 
 - NEW，刚刚新建一个FutureTask对象。
@@ -82,7 +120,79 @@ private static final int INTERRUPTING = 5;
 private static final int INTERRUPTED  = 6;
 ```
 
+### 核心函数
 
+- `FutureTask`类当中的核心字段
 
+  ```java
+  private Callable<V> callable; // 用于保存传入 FutureTask 对象的 Callable 对象
+  ```
 
+  ```java
+  private Object outcome; // 用于保存 Callable 当中 call 函数的返回结果
+  ```
+
+  ```java
+  private volatile Thread runner; // 表示正在执行 call 函数的线程
+  ```
+
+  ```java
+  private volatile WaitNode waiters;// 被 get 函数挂起的线程 是一个链表 代码如下所示
+  static final class WaitNode {
+    volatile Thread thread;
+    volatile WaitNode next;
+    WaitNode() { thread = Thread.currentThread(); }
+  }
+  ```
+
+  
+
+- 构造函数：
+
+```java
+public FutureTask(Callable<V> callable) {
+  if (callable == null)
+    throw new NullPointerException();
+  this.callable = callable; //保存传入来的 Callable 接口的实现类对象
+  this.state = NEW;       // 这个就是用来保存 FutureTask 的状态 初识时 是新建状态
+}
+```
+
+- `run`方法，这个函数是实现`Runnable`接口的方法，也就是传入`Thread`类之后，`Thread`启动时执行的方法。
+
+```java
+public void run() {
+  if (state != NEW ||
+      !UNSAFE.compareAndSwapObject(this, runnerOffset,
+                                   null, Thread.currentThread()))
+    return;
+  try {
+    Callable<V> c = callable;
+    if (c != null && state == NEW) {
+      V result;
+      boolean ran;
+      try {
+        result = c.call(); // 执行 call 函数得到我们需要的返回值并且柏村在
+        ran = true;
+      } catch (Throwable ex) {
+        result = null;
+        ran = false;
+        setException(ex);
+      }
+      if (ran)
+        set(result);
+    }
+  } finally {
+    // runner must be non-null until state is settled to
+    // prevent concurrent calls to run()
+    runner = null;
+    // state must be re-read after nulling runner to prevent
+    // leaked interrupts
+    int s = state;
+    if (s >= INTERRUPTING)
+      handlePossibleCancellationInterrupt(s);
+  }
+}
+
+```
 
