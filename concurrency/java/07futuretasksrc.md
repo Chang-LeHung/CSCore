@@ -212,10 +212,78 @@ protected void set(V v) { // call 方法正常执行完成执行下面的方法 
 
 protected void setException(Throwable t) {
   if (UNSAFE.compareAndSwapInt(this, stateOffset, NEW, COMPLETING)) {
-    outcome = t;
+    outcome = t; // 将异常作为结果返回
+    // 将最后的状态设置为 EXCEPTIONAL
     UNSAFE.putOrderedInt(this, stateOffset, EXCEPTIONAL); // final state
     finishCompletion();
   }
 }
+```
+
+- `get`方法，这个方法主要是从`FutureTask`当中取出数据，但是这个时候可能`call`函数还没有执行完成，因此这个方法可能会阻塞调用这个方法的线程。
+
+```java
+public V get() throws InterruptedException, ExecutionException {
+  int s = state;
+  // 如果当前的线程还没有执行完成就需要将当前线程挂起
+  if (s <= COMPLETING)
+    // 调用 awaitDone 函数将当前的线程挂起
+    s = awaitDone(false, 0L);
+  // 如果 state 大于 COMPLETING 也就说是完成状态 可以直接调用这个函数返回 当然也可以是从 awaitDone 函数当中恢复执行才返回
+  return report(s);// report 方法的主要作用是将结果 call 函数的返回结果 返回出去 也就是将 outcome 返回出去
+  
+}
+
+private V report(int s) throws ExecutionException {
+  Object x = outcome;
+  if (s == NORMAL)
+    return (V)x;
+  if (s >= CANCELLED)
+    throw new CancellationException();
+  throw new ExecutionException((Throwable)x);
+}
+
+```
+
+- `awaitDone`方法，这个方法主要是将当前线程挂起。
+
+```java
+private int awaitDone(boolean timed, long nanos)
+  throws InterruptedException {
+  final long deadline = timed ? System.nanoTime() + nanos : 0L;
+  WaitNode q = null;
+  boolean queued = false;
+  for (;;) {
+    if (Thread.interrupted()) {
+      removeWaiter(q);
+      throw new InterruptedException();
+    }
+
+    int s = state;
+    if (s > COMPLETING) {
+      if (q != null)
+        q.thread = null;
+      return s;
+    }
+    else if (s == COMPLETING) // cannot time out yet
+      Thread.yield();
+    else if (q == null)
+      q = new WaitNode();
+    else if (!queued)
+      queued = UNSAFE.compareAndSwapObject(this, waitersOffset,
+                                           q.next = waiters, q);
+    else if (timed) {
+      nanos = deadline - System.nanoTime();
+      if (nanos <= 0L) {
+        removeWaiter(q);
+        return state;
+      }
+      LockSupport.parkNanos(this, nanos);
+    }
+    else
+      LockSupport.park(this);
+  }
+}
+
 ```
 
