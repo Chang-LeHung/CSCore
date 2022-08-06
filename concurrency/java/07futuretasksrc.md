@@ -55,7 +55,7 @@ public class Demo {
 UNSAFE.compareAndSwapInt(this, stateOffset, NEW, CANCELLED)))
 ```
 
-上面的代码主要是将`this`对象当中的内存偏移地址为`stateOffset`的对象拿出来与`NEW`进行比较，如果等于`NEW`那就将这个值设置为`CANCELLED`，这整个操作是原子的，如果操作成功返回`true`反之返回`false`。
+上面的代码主要是将`this`对象当中的内存偏移地址为`stateOffset`的对象拿出来与`NEW`进行比较，如果等于`NEW`那就将这个值设置为`CANCELLED`，这整个操作是原子的，如果操作成功返回`true`反之返回`false`。如果你目前不是很理解也没关系，只需要知道它是将对象`this`的内存偏移为`stateOffset`的值替换为`CANCELLED`就行，如果这个操作成功返回`true`，不成功返回`false`。
 
 ## 深入FutureTask内部
 
