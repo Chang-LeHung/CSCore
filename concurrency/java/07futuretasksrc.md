@@ -50,12 +50,12 @@ public class Demo {
 
 从上面代码我们可以知道`LockSupport.park()`可以阻塞一个线程，因为如果没有阻塞的话肯定会先打印`阻塞完成`，因为打印这句话的线程只休眠一秒，主线程休眠两秒。
 
-在源代码当中你可以会遇到`UNSAFE.compareAndSwapXXX`的代码，这行代码主要是进行原子交换操作，比如：
+在源代码当中你可以会遇到`UNSAFE.compareAndSwapXXX`的代码，这行代码主要是进行原子交换操作**CAS**，比如：
 ```java
 UNSAFE.compareAndSwapInt(this, stateOffset, NEW, CANCELLED)))
 ```
 
-上面的代码主要是将`this`对象当中的内存偏移地址为`stateOffset`的对象拿出来与`NEW`进行比较，如果等于`NEW`那就将这个值设置为`CANCELLED`，这整个操作是原子的，如果操作成功返回`true`反之返回`false`。如果你目前不是很理解也没关系，只需要知道它是将对象`this`的内存偏移为`stateOffset`的值替换为`CANCELLED`就行，如果这个操作成功返回`true`，不成功返回`false`。
+上面的代码主要是将`this`对象当中的内存偏移地址为`stateOffset`的对象拿出来与`NEW`进行比较，如果等于`NEW`那就将这个值设置为`CANCELLED`，这整个操作是原子的（因为可能多个线程同时调用这个函数，因此需要保证操作是原子的），如果操作成功返回`true`反之返回`false`。如果你目前不是很理解也没关系，只需要知道它是将对象`this`的内存偏移为`stateOffset`的值替换为`CANCELLED`就行，如果这个操作成功返回`true`，不成功返回`false`。
 
 ## 深入FutureTask内部
 
@@ -127,7 +127,7 @@ private static final int INTERRUPTING = 5;
 private static final int INTERRUPTED  = 6;
 ```
 
-### 核心函数
+### 核心函数和字段
 
 - `FutureTask`类当中的核心字段
 
@@ -144,10 +144,10 @@ private static final int INTERRUPTED  = 6;
   ```
 
   ```java
-  private volatile WaitNode waiters;// 被 get 函数挂起的线程 是一个链表 代码如下所示
+  private volatile WaitNode waiters;// 被 get 函数挂起的线程 是一个单项链表 waiters 表示单向链表的头节点
   static final class WaitNode {
-    volatile Thread thread;
-    volatile WaitNode next;
+    volatile Thread thread; // 表示被挂起来的线程
+    volatile WaitNode next; // 表示下一个节点
     WaitNode() { thread = Thread.currentThread(); }
   }
   ```
@@ -313,6 +313,41 @@ private int awaitDone(boolean timed, long nanos) // timed 表示是否超时阻�
       // 如果不是超时阻塞的话 直接将这个线程挂起即可
       LockSupport.park(this);
   }
+}
+
+```
+
+- `finishCompletion`方法，这个方法是用于将所有被`get`函数阻塞的线程唤醒。
+
+```java
+private void finishCompletion() {
+  // assert state > COMPLETING;
+  for (WaitNode q; (q = waiters) != null;) {
+    // 如果可以将 waiter 设置为 null 则进入 for 循环 在 for 循环内部将所有线程唤醒
+    // 这个操作也是原子操作
+    if (UNSAFE.compareAndSwapObject(this, waitersOffset, q, null)) {
+      for (;;) {
+        Thread t = q.thread;
+        // 如果线程不等于空 则需要将这个线程唤醒
+        if (t != null) {
+          q.thread = null;
+          LockSupport.unpark(t);
+        }
+        // 得到下一个节点
+        WaitNode next = q.next;
+        // 如果节点为空 说明所有的线程都已经被唤醒了 可以返回了
+        if (next == null)
+          break;
+        q.next = null; // unlink to help gc
+        q = next; // 唤醒下一个节点
+      }
+      break;
+    }
+  }
+
+  done();// 这个函数是空函数没有实现
+
+  callable = null;        // to reduce footprint
 }
 
 ```
