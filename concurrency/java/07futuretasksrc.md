@@ -202,7 +202,8 @@ public void run() {
 protected void set(V v) { // call 方法正常执行完成执行下面的方法 v 是 call 方法返回的结果
   // 这个是原子交换 state 从 NEW 状态变成 COMPLETING 状态
   if (UNSAFE.compareAndSwapInt(this, stateOffset, NEW, COMPLETING)) {
-    outcome = v; // 将 call 函数的返回结果保存到 outcome 当中 然后会在 get 函数当中使用 outcome ，因为 get 函数需要得到 call 函数的结果 因此我们需要在 call 函数当中返回 outcome
+    outcome = v; // 将 call 函数的返回结果保存到 outcome 当中 然后会在 get 函数当中使用 outcome 
+   							 // 因为 get 函数需要得到 call 函数的结果 因此我们需要在 call 函数当中返回 outcome
     // 下面代码是将 state 的状态变成 NORMAL 表示程序执行完成
     UNSAFE.putOrderedInt(this, stateOffset, NORMAL); // final state
     // 因为其他线程可能在调用 get 函数的时候 call 函数还没有执行完成 因此这些线程会被阻塞 下面的这个方法主要是将这些线程唤醒
@@ -229,8 +230,9 @@ public V get() throws InterruptedException, ExecutionException {
   if (s <= COMPLETING)
     // 调用 awaitDone 函数将当前的线程挂起
     s = awaitDone(false, 0L);
-  // 如果 state 大于 COMPLETING 也就说是完成状态 可以直接调用这个函数返回 当然也可以是从 awaitDone 函数当中恢复执行才返回
-  return report(s);// report 方法的主要作用是将结果 call 函数的返回结果 返回出去 也就是将 outcome 返回出去
+  // 如果 state 大于 COMPLETING 也就说是完成状态 可以直接调用这个函数返回 
+  // 当然也可以是从 awaitDone 函数当中恢复执行才返回
+  return report(s);// report 方法的主要作用是将结果 call 函数的返回结果 返回出去 也就是将 outcome 返回
   
 }
 
