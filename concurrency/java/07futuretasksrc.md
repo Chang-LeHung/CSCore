@@ -58,6 +58,31 @@ public class Demo {
 - COMPLETING，FutureTask正在执行。
 - NORMAL，FutureTask正常结束。
 - EXCEPTIONAL，如果FutureTask对象在执行`Callable`实现类对象的`call`方法的时候出现的异常，那么FutureTask的状态就变成这个状态了。
+- CANCELLED，表示FutureTask的执行过程被取消了。
 - INTERRUPTING，表示正在终止FutureTask对象的执行过程。
 - INTERRUPTED，表示FutureTask对象在执行的过程当中被中断了。
+
+这些状态之间的可能的转移情况如下所示：
+
+- NEW -> COMPLETING -> NORMAL。
+- NEW -> COMPLETING -> EXCEPTIONAL。
+- NEW -> CANCELLED。
+- NEW -> INTERRUPTING -> INTERRUPTED。
+
+在`FutureTask`当中用数字去表示这几个状态：
+
+```java
+private volatile int state;
+private static final int NEW          = 0;
+private static final int COMPLETING   = 1;
+private static final int NORMAL       = 2;
+private static final int EXCEPTIONAL  = 3;
+private static final int CANCELLED    = 4;
+private static final int INTERRUPTING = 5;
+private static final int INTERRUPTED  = 6;
+```
+
+
+
+
 
