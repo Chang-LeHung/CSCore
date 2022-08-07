@@ -172,3 +172,53 @@ public class AddMinus {
 
 上面的代码没有使用`static`关键字，因此我们需要`new`出一个实例对象才能够调用`add`和`minus`方法，但是同样对于`AddMinus`的实例对象来说同一个时刻只能有一个线程在执行`add`或者`minus`方法，因此上面代码的输出同样是0。
 
+## Synchronized修饰实例方法代码块
+
+Synchronized修饰实例方法代码块
+
+```java
+public class CodeBlock {
+
+  private int count;
+
+  public void add() {
+    System.out.println("进入了 add 方法");
+    synchronized (this) {
+      count++;
+    }
+  }
+
+  public void minus() {
+    System.out.println("进入了 minus 方法");
+    synchronized (this) {
+        count--;
+    }
+  }
+
+  public static void main(String[] args) throws InterruptedException {
+    CodeBlock codeBlock = new CodeBlock();
+    Thread t1 = new Thread(() -> {
+      for (int i = 0; i < 10000; i++) {
+        codeBlock.add();
+      }
+    });
+
+    Thread t2 = new Thread(() -> {
+      for (int i = 0; i < 10000; i++) {
+        codeBlock.minus();
+      }
+    });
+
+    t1.start();
+    t2.start();
+    t1.join();
+    t2.join();
+    System.out.println(codeBlock.count); // 输出结果为 0
+  }
+}
+```
+
+有时候我们并不需要用`synchronized`去修饰代码块，因为这样并发度就比较低了，一个方法一个时刻只能有一个线程在执行。因此我们可以选择用`synchronized`去修饰代码块，只让某个代码块一个时刻只能有一个线程执行，除了这个代码块之外的代码还是可以并行的。
+
+比如上面的代码当中`add`和`minus`方法没有使用`synchronized`进行修饰，因此一个时刻可以有多个线程执行这个两个方法。在上面的`synchronized`代码块当中我们使用了`this`对象作为锁对象，只有拿到这个锁对象的线程才能够进入代码块执行，而在同一个时刻只能有一个线程能够获得锁对象。也就是说`add`函数和`minus`函数用`synchronized`修饰的两个代码块同一个时刻只能有一个代码块的代码能够被一个线程执行，因此上面的结果同样是0。
+
