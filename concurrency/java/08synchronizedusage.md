@@ -65,7 +65,7 @@ public class SyncDemo {
   private static int count;
 
   public static synchronized void add() {
-    count++;
+    count++; // 注意 count 也要用 static 修饰 否则编译通过不了
   }
 
   public static void main(String[] args) throws InterruptedException {
@@ -89,4 +89,7 @@ public class SyncDemo {
 }
 ```
 
-上面的代码最终输出的结果也是20000，但是与前一个程序不同的是。
+上面的代码最终输出的结果也是20000，但是与前一个程序不同的是。这里的`add`方法用`static`修饰的，在这种情况下真正的只能有一个线程进入到`add`代码块，因为用`static`修饰的话是所有对象公共的，因此和前面的那种情况不同，不存在两个不同的线程同一时刻执行`add`方法。
+
+你仔细想想如果能够让两个不同的线程执行`add`代码块，那么`count++`的执行就不是原子的了。那为什么没有用`static`修饰的代码为什么可以呢？因为当没有用`static`修饰时，每一个对象的`count`都是不同的，内存地址不一样，因此在这种情况下`count++`这个操作仍然是原子的！
+
