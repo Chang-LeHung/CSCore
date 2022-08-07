@@ -368,3 +368,23 @@ Java编译器和JVM当发现能够让程序执行的更快的时候是可能对�
 
 在JVM的实现当中是不允许`synchronized`代码块内部的指令和他前面和后面的指令进行重排序的，但是在`synchronized`内部的指令是可能与`synchronized`内部的指令进行重排序的，比较著名的就是`DCL单例模式`，他就是在`synchronized`代码块当中存在重排序的，如果你对`DCL单例模式`还不是很熟悉，你可以阅读[这篇文章](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486127&idx=1&sn=29d6079f6f26bd82633ec611feb3da85&chksm=cf0c96a6f87b1fb006e2f108879a0066aeb14e4bf5a4a9e2a83057a084dd2dfa2c257a813399&token=302443384&lang=zh_CN#rd)的`DCL单例`模式部分。
 
+## 总结
+
+在本篇文章当中主要介绍了各种`synchronized`的使用方法，总结如下：
+
+- Synchronized修饰实例方法，这种情况不同的对象之间是可以并发的。
+- Synchronized修饰实例方法，这种情况下不同的对象是不能并发的，但是不同的类之间可以进行鬓并发。
+- Sychronized修饰多个方法，这多个方法在统一时刻只能有一个方法被执行，而且只能有一个线程能够执行。
+- Synchronized修饰实例方法代码块，同一个时刻只能有一个线程执行代码块。
+- Synchronized修饰静态代码块，同一个时刻只能有一个线程执行这个代码块，而且不同的对象之间不能够进行并发。
+- 应该用什么对象作为锁对象，建议不要使用字符串和基本类型的包装类作为锁对象，因为Java对这些进行优化，很可能多个对象使用的是同一个锁对象，这回大大降低程序的并发度。
+- 程序在进入和离开Synchronized代码块的时候都会将线程的工作内存刷新到内存当中，以保证数据的可见性，这一点和`volatile`关键字很像，同时Synchronized代码块中的指令不会和Synchronized代码块之间和之后的指令进行重排序，但是Synchronized代码块内部可能进行重排序。
+
+---
+
+更多精彩内容合集可访问项目：<https://github.com/Chang-LeHung/CSCore>
+
+关注公众号：**一无是处的研究僧**，了解更多计算机（Java、Python、计算机系统基础、算法与数据结构）知识。
+
+![](https://img2022.cnblogs.com/blog/2519003/202207/2519003-20220703200459566-1837431658.jpg)
+
