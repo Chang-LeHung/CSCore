@@ -222,3 +222,133 @@ public class CodeBlock {
 
 比如上面的代码当中`add`和`minus`方法没有使用`synchronized`进行修饰，因此一个时刻可以有多个线程执行这个两个方法。在上面的`synchronized`代码块当中我们使用了`this`对象作为锁对象，只有拿到这个锁对象的线程才能够进入代码块执行，而在同一个时刻只能有一个线程能够获得锁对象。也就是说`add`函数和`minus`函数用`synchronized`修饰的两个代码块同一个时刻只能有一个代码块的代码能够被一个线程执行，因此上面的结果同样是0。
 
+这里说的锁对象是`this`也就`CodeBlock`类的一个实例对象，因为它锁住的是一个实例对象，因此当实例对象不一样的时候他们之间是没有关系的，也就是说不同实例用`synchronized`修饰的代码块是没有关系的，他们之间是可以并发的。
+
+## Synchronized修饰静态代码块
+
+```java
+public class CodeBlock {
+
+  private static int count;
+
+  public static void add() {
+    System.out.println("进入了 add 方法");
+    synchronized (CodeBlock.class) {
+      count++;
+    }
+  }
+
+  public static void minus() {
+    System.out.println("进入了 minus 方法");
+    synchronized (CodeBlock.class) {
+        count--;
+    }
+  }
+
+  public static void main(String[] args) throws InterruptedException {
+    Thread t1 = new Thread(() -> {
+      for (int i = 0; i < 10000; i++) {
+        CodeBlock.add();
+      }
+    });
+
+    Thread t2 = new Thread(() -> {
+      for (int i = 0; i < 10000; i++) {
+        CodeBlock.minus();
+      }
+    });
+
+    t1.start();
+    t2.start();
+    t1.join();
+    t2.join();
+    System.out.println(CodeBlock.count);
+  }
+}
+```
+
+上面的代码是使用`synchronized`修饰静态代码块，上面代码的锁对象是`CodeBlock.class`，这个时候他不再是锁住一个对象了，而是一个类了，这个时候的并发度就变小了，上一份代码当锁对象是`CodeBlock`的实例对象时并发度更大一些，因为当锁对象时实例对象的时候，只有实例对象内部是不能够并发的，实例之间是可以并发的。但是当锁对象时`CodeBlock.class`的时候，实例对象之间时不能够并发的，因为这个时候的锁对象是一个类。
+
+## 应该用什么对象作为锁对象
+
+在前面的代码当中我们分别使用了实例对象和类的class对象作为锁对象，事实上你可以使用任何对象作为锁对象，但是不推荐使用字符串和基本类型的包装类作为锁对象，这是因为字符串对象和基本类型的包装对象会有缓存的问题。字符串有字符串常量池，整数有小整数池。因此在使用这些对象的时候他们可能最终都指向同一个对象，因为指向的都是同一个对象，线程获得锁对象的难度就会增加，程序的并发度就会降低。
+
+比如在下面的示例代码当中就是由于锁对象是同一个对象而导致并发度下降：
+
+```java
+import java.util.concurrent.TimeUnit;
+
+public class Test {
+
+  public void testFunction() throws InterruptedException {
+    synchronized ("HELLO WORLD") {
+      System.out.println(Thread.currentThread().getName() + "\tI am in synchronized code block");
+      TimeUnit.SECONDS.sleep(5);
+    }
+  }
+
+  public static void main(String[] args) {
+    Test t1 = new Test();
+    Test t2 = new Test();
+    Thread thread1 = new Thread(() -> {
+      try {
+        t1.testFunction();
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    });
+
+    Thread thread2 = new Thread(() -> {
+      try {
+        t2.testFunction();
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    });
+    thread1.start();
+    thread2.start();
+  }
+}
+
+```
+
+在上面的代码当中我们使用两个不同的线程执行两个不同的对象内部的`testFunction`函数，按道理来说这两个线程是可以同时执行的，因为执行的是两个不同的实力对象的同步代码块。但是上面代码的执行首先一个线程会进入同步代码块然后打印输出，等待5秒之后，这个线程退出同步代码块另外一个线程才会再进入同步代码块，这就说明了两个线程不是同时执行的，其中一个线程需要等待另外一个线程执行完成才执行。这正是因为两个`Test`对象当中使用的`"HELLO WORLD"`字符串在内存当中是同一个对象，是存储在字符串常量池中的对象，这才导致了锁对象的竞争。
+
+下面的代码执行的结果也是一样的，一个线程需要等待另外一个线程执行完成才能够继续执行，这是因为在Java当中如果整数数据在`[-128, 127]`之间的话使用的是小整数池当中的对象，这样可以减少频繁的内存申请和回收，对内存更加友好。
+
+```java
+import java.util.concurrent.TimeUnit;
+
+public class Test {
+
+  public void testFunction() throws InterruptedException {
+    synchronized (Integer.valueOf(1)) {
+      System.out.println(Thread.currentThread().getName() + "\tI am in synchronized code block");
+      TimeUnit.SECONDS.sleep(5);
+    }
+  }
+
+  public static void main(String[] args) {
+    Test t1 = new Test();
+    Test t2 = new Test();
+    Thread thread1 = new Thread(() -> {
+      try {
+        t1.testFunction();
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    });
+
+    Thread thread2 = new Thread(() -> {
+      try {
+        t2.testFunction();
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    });
+    thread1.start();
+    thread2.start();
+  }
+}
+```
+
