@@ -43,11 +43,13 @@ public class SyncDemo {
     });
     t1.start();
     t2.start();
-    t1.join();
-    t2.join();
-    System.out.println(syncDemo.count);
+    t1.join(); // 阻塞住线程等待线程 t1 执行完成
+    t2.join(); // 阻塞住线程等待线程 t2 执行完成
+    System.out.println(syncDemo.count);// 输出结果为 20000
   }
 }
 
 ```
+
+在上面的代码当中的`add`方法只有一个简单的`count++`操作，因为这个方法是使用`synchronized`修饰的因此每一个时刻只能有一个线程执行`add`方法，因此上面打印的结果是20000。如果`add`方法没有使用`synchronized`修饰的话，那么线程t1和线程t2就可以同时执行`add`方法，这回导致最终`count`的结果小于20000。
 
