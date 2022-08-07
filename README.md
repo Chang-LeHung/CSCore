@@ -129,6 +129,10 @@
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486245&idx=1&sn=b75ded67ef8ca328f23ca2acc35dc7a8&chksm=cf0c972cf87b1e3a4cb93e707c4574cfeabab13809f72878f946b6b73439f384f2752d98a183&token=302443384&lang=zh_CN#rd)
 
   - [github阅读](./concurrency/java/06futuretask.md)
+- FutureTask源码深度剖析
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486318&idx=1&sn=f4bb75bb482c55b425a1e3a39cded23c&chksm=cf0c9767f87b1e71c004caf6c5a0e66b70f3d477dcfdd856ca6e6b210a8362ff69be67f858ec&token=1166204888&lang=zh_CN#rd)
+
+  - [github阅读](/concurrency/java/07futuretasksrc.md)
 
 ## Python
 
