@@ -93,3 +93,82 @@ public class SyncDemo {
 
 你仔细想想如果能够让两个不同的线程执行`add`代码块，那么`count++`的执行就不是原子的了。那为什么没有用`static`修饰的代码为什么可以呢？因为当没有用`static`修饰时，每一个对象的`count`都是不同的，内存地址不一样，因此在这种情况下`count++`这个操作仍然是原子的！
 
+## Sychronized修饰多个方法
+
+synchronized修饰多个方法示例：
+
+```java
+public class AddMinus {
+  public static int ans;
+
+  public static synchronized void add() {
+    ans++;
+  }
+
+  public static synchronized void minus() {
+    ans--;
+  }
+
+  public static void main(String[] args) throws InterruptedException {
+    Thread t1 = new Thread(() -> {
+      for (int i = 0; i < 10000; i++) {
+        AddMinus.add();
+      }
+    });
+
+    Thread t2 = new Thread(() -> {
+      for (int i = 0; i < 10000; i++) {
+        AddMinus.minus();
+      }
+    });
+
+    t1.start();
+    t2.start();
+    t1.join();
+    t2.join();
+    System.out.println(AddMinus.ans); // 输出结果为 0
+  }
+}
+```
+
+在上面的代码当中我们用`synchronized`修饰了两个方法，`add`和`minus`。这意味着在同一个时刻这两个函数只能够有一个被一个线程执行，也正是因为`add`和`minus`函数在同一个时刻只能有一个函数被一个线程执行，这才会导致`ans`最终输出的结果等于0。
+
+对于一个实例对象来说：
+
+```java
+public class AddMinus {
+  public int ans;
+
+  public synchronized void add() {
+    ans++;
+  }
+
+  public synchronized void minus() {
+    ans--;
+  }
+
+  public static void main(String[] args) throws InterruptedException {
+    AddMinus addMinus = new AddMinus();
+    Thread t1 = new Thread(() -> {
+      for (int i = 0; i < 10000; i++) {
+        addMinus.add();
+      }
+    });
+
+    Thread t2 = new Thread(() -> {
+      for (int i = 0; i < 10000; i++) {
+        addMinus.minus();
+      }
+    });
+
+    t1.start();
+    t2.start();
+    t1.join();
+    t2.join();
+    System.out.println(addMinus.ans);
+  }
+}
+```
+
+上面的代码没有使用`static`关键字，因此我们需要`new`出一个实例对象才能够调用`add`和`minus`方法，但是同样对于`AddMinus`的实例对象来说同一个时刻只能有一个线程在执行`add`或者`minus`方法，因此上面代码的输出同样是0。
+
