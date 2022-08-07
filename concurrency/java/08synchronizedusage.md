@@ -13,3 +13,5 @@ synchronized关键字通常使用在下面四个地方：
 - synchronized修饰实例方法的代码块。
 - synchronized修饰静态方法的代码块。
 
+在实际情况当中我们需要仔细分析我们的需求选择合适的使用synchronized方法，在保证程序正确的情况下提升程序执行的效率。
+
