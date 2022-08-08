@@ -133,6 +133,10 @@
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486318&idx=1&sn=f4bb75bb482c55b425a1e3a39cded23c&chksm=cf0c9767f87b1e71c004caf6c5a0e66b70f3d477dcfdd856ca6e6b210a8362ff69be67f858ec&token=1166204888&lang=zh_CN#rd)
 
   - [github阅读](/concurrency/java/07futuretasksrc.md)
+- 深入学习Synchronized各种使用方法
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486361&idx=1&sn=dce819edcce0d509d7fec212abc2bd03&chksm=cf0c9790f87b1e86fcef49c58cbad141a43e803f01fec8a2170c82fae25a284601c5f9f27929&token=1166204888&lang=zh_CN#rd)
+
+  - [github阅读](/concurrency/java/08synchronizedusage.md)
 
 ## Python
 
