@@ -6,4 +6,4 @@
 
 ## 基础准备
 
-在正式谈synchronized的原理之前我们先谈一下自旋锁，因为在synchronized的优化当中
+在正式谈synchronized的原理之前我们先谈一下自旋锁，因为在synchronized的优化当中自旋锁发挥了很大的作用。
