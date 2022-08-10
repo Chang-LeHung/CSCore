@@ -4,7 +4,7 @@
 
 在上篇文章[深入学习Synchronized各种使用方法](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486361&idx=1&sn=dce819edcce0d509d7fec212abc2bd03&chksm=cf0c9790f87b1e86fcef49c58cbad141a43e803f01fec8a2170c82fae25a284601c5f9f27929&token=1166204888&lang=zh_CN#rd)当中我们仔细介绍了在各种情况下该如何使用synchronized关键字。因为在我们写的程序当中可能会经常使用到synchronized关键字，因此JVM对synchronized做出了很多优化，而在本篇文章当中我们将仔细介绍JVM对synchronized的各种优化的细节。
 
-## 基础准备
+## 工具准备
 
 在正式谈synchronized的原理之前我们先谈一下**自旋锁**，因为在synchronized的优化当中**自旋锁**发挥了很大的作用。而需要了解**自旋锁**，我们首先需要了解什么是**原子性**。
 
@@ -99,3 +99,20 @@ public final int getAndAddInt(Object o, long offset, int delta) {
 
 看到这里你应该就发现了当上面的那条语句执行不成的话就会一直进行while循环操作，直到操作成功之后才退出while循环，假如没有操作成功就会一直“旋”在这里，像这种操作就是**自旋**，通过这种**自旋**方式所构成的锁🔒就叫做**自旋锁**。
 
+## 对象的内存布局
+
+在JVM当中，一个Java对象的内存主要有三块：
+
+- 对象头，对象头包含两部分数据，分别是**Mark word**和类型指针（**Kclass pointer**）。
+- 实例数据，就是我们在累当中定义的各种数据。
+- 对齐填充，JVM在实现的时候要求每一个对象所占有的内存大小都需要是8字节的整数倍，如果一个对象的数据所占有的内存大小不够8字节的整数倍，那就需要进行填充，补齐到8字节，比如说如果一个对象站60字节，那么最终会填充到64字节。
+
+
+
+<img src="../../images/concurrency/43.png" alt="43" style="zoom:80%;" />
+
+<img src="../../images/concurrency/45.png" alt="44" style="zoom:80%;" />
+
+<img src="../../images/concurrency/46.png" alt="44" style="zoom:80%;" />
+
+<img src="../../images/concurrency/47.png" alt="44" style="zoom:80%;" />
