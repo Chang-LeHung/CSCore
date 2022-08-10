@@ -87,7 +87,7 @@ public final int addAndGet(int delta) {
 public final int getAndAddInt(Object o, long offset, int delta) {
   int v;
   do {
-    v = getIntVolatile(o, offset);
+    v = getIntVolatile(o, offset); // 从对象 o 偏移地址为 offset 的位置取出数据 value 也就是前面提到的存书具体数据的变量
   } while (!compareAndSwapInt(o, offset, v, v + delta));
   return v;
 }
