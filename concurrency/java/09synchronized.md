@@ -124,7 +124,15 @@ public final int getAndAddInt(Object o, long offset, int delta) {
 
 ## 锁升级过程
 
+### 偏向锁
+
+假如你写的synchronized代码块没有多个线程执行，而只有一个线程执行的时候这中锁对性能的提高还是非常大的。他的具体做法是JVM会将对象头当中的第三个用于表示是否为偏向锁的比特位设置为1，同时会使用CAS操作将线程的ID记录到Mark Word当中，如果操作成功就相当于获得🔒了，那么下次这个线程想进入临界区就只需要比较一下线程ID是否相同了，而不需要进行CAS或者加锁这样花费比较大的操作了，只需要进行一个简单的比较即可。
+
 <img src="../../images/concurrency/45.png" alt="44" style="zoom:80%;" />
+
+可能你会有一个疑问在无锁的状态下Mark Word存储的是哈希值，而在偏向锁的状态下存储的是线程的ID，那么之前存储的Hash Code不就没有了嘛！你可能会想没有就没有吧，再算一遍不就行了！事实上不是这样，如果我们计算过哈希值之后我们需要尽量保持哈希值不变（但是这个在Java当中并没有强制，因为在Java当中可以重写hashCode方法）
+
+#### 轻量级锁
 
 <img src="../../images/concurrency/46.png" alt="44" style="zoom:80%;" />
 
