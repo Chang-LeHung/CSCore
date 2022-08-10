@@ -73,9 +73,12 @@ public class AtomicDemo {
 
 ```java
 public final int addAndGet(int delta) {
+  // 在 AtomicInteger 内部有一个数据 value 用于存储具体的数值的
+  // 这个 valueOffset 表示这个数据 value 在对象 this （也就是 AtomicInteger一个具体的对象）
+  // 当中的内存偏移地址
+  // delta 就是我们需要往 value 上加的值 在这里我们加上的是 1
   return unsafe.getAndAddInt(this, valueOffset, delta) + delta;
 }
-
 ```
 
 上面的代码最终时调用`UnSafe`类的方法进行实现的，我们再看一下他的源代码：
