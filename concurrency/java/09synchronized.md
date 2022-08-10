@@ -122,6 +122,56 @@ public final int getAndAddInt(Object o, long offset, int delta) {
 
 而synchronized锁升级的顺序是：无🔒->偏向🔒->轻量级🔒->重量级🔒。
 
+在Java当中有一个JVM参数用于设置在JVM启动多少秒之后开启偏向锁（JDK6之后默认开启偏向锁，JVM默认启动4秒之后开启对象偏向锁，这个延迟时间叫做偏向延迟，你可以通过下面的参数进行控制）：
+
+```
+//关闭延迟开启偏向锁
+-XX:BiasedLockingStartupDelay=4
+//禁止偏向锁
+-XX:-UseBiasedLocking
+//开启偏向锁
+-XX:+UseBiasedLocking
+```
+
+我们可以用代码验证一下在无锁状态下，MarkWord的内容是什么：
+
+```java
+import org.openjdk.jol.info.ClassLayout;
+
+import java.util.concurrent.TimeUnit;
+
+public class MarkWord {
+
+  public Object o = new Object();
+
+  public synchronized void demo() {
+
+    synchronized (o) {
+      System.out.println("synchronized代码块内");
+      System.out.println(ClassLayout.parseInstance(o).toPrintable());
+    }
+  }
+
+  public static void main(String[] args) throws InterruptedException {
+    System.out.println("等待4s前");
+    System.out.println(ClassLayout.parseInstance(new Object()).toPrintable());
+    TimeUnit.SECONDS.sleep(4);
+
+    MarkWord markWord = new MarkWord();
+    System.out.println("等待4s后");
+    System.out.println(ClassLayout.parseInstance(new Object()).toPrintable());
+    Thread thread = new Thread(markWord::demo);
+    thread.start();
+    thread.join();
+    System.out.println(ClassLayout.parseInstance(markWord.o).toPrintable());
+
+  }
+}
+
+```
+
+<img src="../../images/concurrency/48.png" alt="48" style="zoom:80%;" />
+
 ## 锁升级过程
 
 ### 偏向锁
