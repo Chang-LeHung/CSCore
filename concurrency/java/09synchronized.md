@@ -28,12 +28,12 @@ public class AtomicDemo {
     data.set(0); // 将数据初始化位0
     Thread t1 = new Thread(() -> {
       for (int i = 0; i < 100000; i++) {
-        data.addAndGet(1); // 对数据 data 进行原子加一操作
+        data.addAndGet(1); // 对数据 data 进行原子加1操作
       }
     });
     Thread t2 = new Thread(() -> {
       for (int i = 0; i < 100000; i++) {
-        data.addAndGet(1);// 对数据 data 进行原子加一操作
+        data.addAndGet(1);// 对数据 data 进行原子加1操作
       }
     });
     // 启动两个线程
@@ -66,3 +66,27 @@ public class AtomicDemo {
 <img src="../../images/concurrency/18.png" alt="15" style="zoom:80%;" />
 
 我们本来希望`data`的值在经过上面的变化之后变成`2`，但是线程二覆盖了我们的值，因此在多线程情况下，会使得我们最终的结果变小。
+
+但是在上面的程序当中我们最终的输出结果是等于20000的，这是因为给`data`进行`+1`的操作是原子的不可分的，在操作的过程当中其他线程是不能对`data`进行操作的。这就是**原子性**带来的优势。
+
+事实上上面的`+1`原子操作就是通过**自旋锁**实现的，我们可以看一下`AtomicInteger`的源代码：
+
+```java
+public final int addAndGet(int delta) {
+  return unsafe.getAndAddInt(this, valueOffset, delta) + delta;
+}
+
+```
+
+上面的代码最终时调用`UnSafe`类的方法进行实现的，我们再看一下他的源代码：
+
+```java
+public final int getAndAddInt(Object o, long offset, int delta) {
+  int v;
+  do {
+    v = getIntVolatile(o, offset);
+  } while (!compareAndSwapInt(o, offset, v, v + delta));
+  return v;
+}
+```
+
