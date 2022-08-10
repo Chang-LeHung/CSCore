@@ -107,7 +107,7 @@ public final int getAndAddInt(Object o, long offset, int delta) {
 - 实例数据，就是我们在累当中定义的各种数据。
 - 对齐填充，JVM在实现的时候要求每一个对象所占有的内存大小都需要是8字节的整数倍，如果一个对象的数据所占有的内存大小不够8字节的整数倍，那就需要进行填充，补齐到8字节，比如说如果一个对象站60字节，那么最终会填充到64字节。
 
-而与我们要谈到的synchronized锁升级原理密切相关的是**Mark word**，这个字段主要是存储对象运行时的数据，比如说对象的Hashcode、GC的分代年龄、持有线程的锁、偏向锁的线程等等。
+而与我们要谈到的synchronized锁升级原理密切相关的是**Mark word**，这个字段主要是存储对象运行时的数据，比如说对象的Hashcode、GC的分代年龄、持有线程的锁、偏向锁的线程等等。而Kclass pointer主要是用于指向对象的类，主要是表示这个对象是属于哪一个类。
 
 在32位Java虚拟机当中Mark word有4个字节一共32个比特位，其内容如下：
 
@@ -125,7 +125,7 @@ public final int getAndAddInt(Object o, long offset, int delta) {
 在Java当中有一个JVM参数用于设置在JVM启动多少秒之后开启偏向锁（JDK6之后默认开启偏向锁，JVM默认启动4秒之后开启对象偏向锁，这个延迟时间叫做偏向延迟，你可以通过下面的参数进行控制）：
 
 ```
-//关闭延迟开启偏向锁
+//设置偏向延迟时间
 -XX:BiasedLockingStartupDelay=4
 //禁止偏向锁
 -XX:-UseBiasedLocking
@@ -170,7 +170,19 @@ public class MarkWord {
 
 ```
 
+上面的代码当中使用到了jol，你需要在你的pom文件当中引入对应的包：
+
+```java
+<dependency>
+  <groupId>org.openjdk.jol</groupId>
+  <artifactId>jol-core</artifactId>
+  <version>0.10</version>
+</dependency>
+```
+
 <img src="../../images/concurrency/48.png" alt="48" style="zoom:80%;" />
+
+从上面的图当中我们可以分析得知在偏向延迟的时间之前，对象头中的Markword当中锁状态是01，同时偏向锁状态是0，表示这个时候是无锁状态，但是在4秒之后偏向锁的状态已经变成1了，因此当前的锁状态是偏向锁，但是还没有线程占有他，这种状态也被称作**匿名偏向**，因为在上面的代码当中只有一个线程进入了synchronized同步代码块，因此可以使用偏向锁，因此在synchronized代码块当中打印的对象的锁状态也是**偏向锁**。
 
 ## 锁升级过程
 
