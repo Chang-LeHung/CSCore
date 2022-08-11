@@ -180,6 +180,8 @@ public class MarkWord {
 </dependency>
 ```
 
+输出结果，下面的红框框住的表示是否是偏向锁和锁标志位（可能你会有疑问为什么是这个位置，不应该是最后3个比特位，这个其实是数据表示的大小端问题，大家感兴趣可以去查一下）：
+
 <img src="../../images/concurrency/48.png" alt="48" style="zoom:80%;" />
 
 从上面的图当中我们可以分析得知在偏向延迟的时间之前，对象头中的Markword当中锁状态是01，同时偏向锁状态是0，表示这个时候是无锁状态，但是在4秒之后偏向锁的状态已经变成1了，因此当前的锁状态是偏向锁，但是还没有线程占有他，这种状态也被称作**匿名偏向**，因为在上面的代码当中只有一个线程进入了synchronized同步代码块，因此可以使用偏向锁，因此在synchronized代码块当中打印的对象的锁状态也是**偏向锁**。
@@ -193,6 +195,44 @@ public class MarkWord {
 <img src="../../images/concurrency/45.png" alt="44" style="zoom:80%;" />
 
 可能你会有一个疑问在无锁的状态下Mark Word存储的是哈希值，而在偏向锁的状态下存储的是线程的ID，那么之前存储的Hash Code不就没有了嘛！你可能会想没有就没有吧，再算一遍不就行了！事实上不是这样，如果我们计算过哈希值之后我们需要尽量保持哈希值不变（但是这个在Java当中并没有强制，因为在Java当中可以重写hashCode方法），因此在Java当中为了能够保持哈希值的不变性就会在第一次计算一致性哈希值（**Mark Word里面存储的是一致性哈希值，并不是指重写的hashCode返回值，在Java当中可以通过 Object.hashCode()或者System.identityHashCode(Object)方法计算一致性哈希值**）的时候就将计算出来的一致性哈希值存储到Mark Word当中，下一次再有一致性哈希值的请求的时候就将存储下来的一致性哈希值返回，这样就可以保证每次计算的一致性哈希值相同。但是在变成偏向锁的时候回使用线程ID覆盖哈希值，**因此当一个对象计算过一致性哈希值之后，他就再也不能进行偏向锁状态，而且当一个对象正处于偏向锁状态的时候，收到了一致性哈希值的请求的时候，也就是调用上面提到的两个方法，偏向锁就回立马膨胀为重量级锁，然后将Mark Word 储在重量级锁里。**
+
+下面的代码就是验证当在偏向锁的状态调用`System.identityHashCode`函数锁的状态就会升级为重量级锁：
+
+```java
+import org.openjdk.jol.info.ClassLayout;
+
+import java.util.concurrent.TimeUnit;
+
+public class MarkWord {
+
+  public Object o = new Object();
+
+  public synchronized void demo() {
+
+    System.out.println("System.identityHashCode(o) 函数之前");
+    System.out.println(ClassLayout.parseInstance(o).toPrintable());
+    synchronized (o) {
+      System.identityHashCode(o);
+      System.out.println("System.identityHashCode(o) 函数之后");
+      System.out.println(ClassLayout.parseInstance(o).toPrintable());
+    }
+  }
+
+  public static void main(String[] args) throws InterruptedException {
+    TimeUnit.SECONDS.sleep(5);
+
+    MarkWord markWord = new MarkWord();
+    Thread thread = new Thread(markWord::demo);
+    thread.start();
+    thread.join();
+    TimeUnit.SECONDS.sleep(2);
+    System.out.println(ClassLayout.parseInstance(markWord.o).toPrintable());
+  }
+}
+
+```
+
+<img src="../../images/concurrency/49.png" style="zoom:80%;" />
 
 ### 轻量级锁
 
@@ -218,8 +258,8 @@ public class MarkWord {
 
 在本篇文章当中我们主要介绍了synchronized内部锁升级的原理，具体的锁升级的过程是：无🔒->偏向🔒->轻量级🔒->重量级🔒。
 
-- 无锁：这是没有开启偏向锁的时候的状态，在JDK1.6之后偏向锁的默认开启的，但是有一个偏向延迟，需要在JVM启动之后的多少秒之后才能开启，这个可以通过JVM参数进行设置。
-- 偏向锁：这个是在偏向锁开启之后的锁的状态，如果还没有一个线程拿到这个锁的话，这个状态叫做匿名偏向。
+- 无锁：这是没有开启偏向锁的时候的状态，在JDK1.6之后偏向锁的默认开启的，但是有一个偏向延迟，需要在JVM启动之后的多少秒之后才能开启，这个可以通过JVM参数进行设置，同时是否开启偏向锁也可以通过JVM参数设置。
+- 偏向锁：这个是在偏向锁开启之后的锁的状态，如果还没有一个线程拿到这个锁的话，这个状态叫做匿名偏向，当一个线程拿到偏向锁的时候，下次想要竞争锁只需要拿线程ID跟MarkWord当中存储的线程ID进行比较，如果线程ID相同则直接获取锁（相当于锁偏向于这个线程），不需要进行CAS操作和将线程挂起的操作。
 - 轻量级锁：在这个状态下线程主要是通过CAS操作实现的。将对象的MarkWord存储到线程的虚拟机栈上，然后通过CAS将对象的MarkWord的内容设置为指向Displaced Mark Word的指针，如果设置成功则获取锁。在线程出临界区之后，也需要使用CAS，如果使用CAS替换成功则同步成功，如果失败表示有其他线程在获取锁，那么就需要在释放锁之后将被挂起的线程唤醒。
 - 重量级锁：当有两个以上的线程获取锁的时候轻量级锁就会升级为重量级锁，因为CAS如果没有成功的话始终都在自旋，进行while循环操作，这是非常消耗CPU的，但是在升级为重量级锁之后，线程会被操作系统调度然后挂起，这可以节约CPU资源。
 
