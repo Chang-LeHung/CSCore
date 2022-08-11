@@ -51,7 +51,7 @@ public class AtomicDemo {
 
 从上面的代码分析可以知道，如果是一般的整型变量如果两个线程同时进行操作的时候，最终的结果是会小于200000。
 
-我们现在来模拟一下出现问题的过程：
+我们现在来模拟一下一般的整型变量出现问题的过程：
 
 - 主内存`data`的初始值等于0，两个线程得到的`data`初始值都等于0。
 
@@ -73,7 +73,7 @@ public class AtomicDemo {
 
 ```java
 public final int addAndGet(int delta) {
-  // 在 AtomicInteger 内部有一个数据 value 用于存储具体的数值的
+  // 在 AtomicInteger 内部有一个整型数据 value 用于存储具体的数值的
   // 这个 valueOffset 表示这个数据 value 在对象 this （也就是 AtomicInteger一个具体的对象）
   // 当中的内存偏移地址
   // delta 就是我们需要往 value 上加的值 在这里我们加上的是 1
@@ -87,7 +87,7 @@ public final int addAndGet(int delta) {
 public final int getAndAddInt(Object o, long offset, int delta) {
   int v;
   do {
-    v = getIntVolatile(o, offset); // 从对象 o 偏移地址为 offset 的位置取出数据 value 也就是前面提到的存书具体数据的变量
+    v = getIntVolatile(o, offset); // 从对象 o 偏移地址为 offset 的位置取出数据 value ，也就是前面提到的存储整型数据的变量
   } while (!compareAndSwapInt(o, offset, v, v + delta));
   return v;
 }
@@ -97,7 +97,7 @@ public final int getAndAddInt(Object o, long offset, int delta) {
 
 这条语句的主要作用是：比较对象`o`内存偏移地址为`offset`的数据是否等于`v`，如果等于`v`则将偏移地址为`offset`的数据设置为`v + delta`，如果这条语句执行成功返回 `true`否则返回`false`，这就是我们常说的Java当中的**CAS**。
 
-看到这里你应该就发现了当上面的那条语句执行不成的话就会一直进行while循环操作，直到操作成功之后才退出while循环，假如没有操作成功就会一直“旋”在这里，像这种操作就是**自旋**，通过这种**自旋**方式所构成的锁🔒就叫做**自旋锁**。
+看到这里你应该就发现了当上面的那条语句执行不成功的话就会一直进行while循环操作，直到操作成功之后才退出while循环，假如没有操作成功就会一直“旋”在这里，像这种操作就是**自旋**，通过这种**自旋**方式所构成的锁🔒就叫做**自旋锁**。
 
 ## 对象的内存布局
 
@@ -107,7 +107,7 @@ public final int getAndAddInt(Object o, long offset, int delta) {
 - 实例数据，就是我们在类当中定义的各种数据。
 - 对齐填充，JVM在实现的时候要求每一个对象所占有的内存大小都需要是8字节的整数倍，如果一个对象的数据所占有的内存大小不够8字节的整数倍，那就需要进行填充，补齐到8字节，比如说如果一个对象站60字节，那么最终会填充到64字节。
 
-而与我们要谈到的synchronized锁升级原理密切相关的是**Mark word**，这个字段主要是存储对象运行时的数据，比如说对象的Hashcode、GC的分代年龄、持有线程的锁、偏向锁的线程等等。而Kclass pointer主要是用于指向对象的类，主要是表示这个对象是属于哪一个类。
+而与我们要谈到的synchronized锁升级原理密切相关的是**Mark word**，这个字段主要是存储对象运行时的数据，比如说对象的Hashcode、GC的分代年龄、持有锁的线程等等。而Kclass pointer主要是用于指向对象的类，主要是表示这个对象是属于哪一个类，主要是寻找类的元数据。
 
 在32位Java虚拟机当中Mark word有4个字节一共32个比特位，其内容如下：
 
@@ -116,7 +116,7 @@ public final int getAndAddInt(Object o, long offset, int delta) {
 我们在使用synchronized时，如果我们是将synchronized用在同步代码块，我们需要一个锁对象。对于这个锁对象来说一开始还没有线程执行到同步代码块时，这个4个字节的内容如上图所示，其中有25个比特用来存储哈希值，4个比特用来存储垃圾回收的分代年龄（如果不了解可以跳过），剩下三个比特其中一个用俩来表示当前的锁状态是否为偏向锁，最后的两个比特表示当前的锁是哪一种状态：
 
 - 如果最后三个比特是：001，则说明锁状态是没有锁。
-- 如果最后三个比特是：001，则说明锁状态是偏向锁。
+- 如果最后三个比特是：101，则说明锁状态是偏向锁。
 - 如果最后两个比特是：00，  则说明锁状态是轻量级锁。
 - 如果最后两个比特是：10，  则说明锁状态是重量级锁。
 
@@ -124,8 +124,8 @@ public final int getAndAddInt(Object o, long offset, int delta) {
 
 在Java当中有一个JVM参数用于设置在JVM启动多少秒之后开启偏向锁（JDK6之后默认开启偏向锁，JVM默认启动4秒之后开启对象偏向锁，这个延迟时间叫做偏向延迟，你可以通过下面的参数进行控制）：
 
-```
-//设置偏向延迟时间
+```java
+//设置偏向延迟时间 只有经过这个时间只有对象锁才会有偏向锁这个状态
 -XX:BiasedLockingStartupDelay=4
 //禁止偏向锁
 -XX:-UseBiasedLocking
@@ -170,7 +170,13 @@ public class MarkWord {
 
 ```
 
-上面的代码当中使用到了jol，你需要在你的pom文件当中引入对应的包：
+上面代码输出结果，下面的红框框住的表示是否是偏向锁和锁标志位（可能你会有疑问为什么是这个位置，不应该是最后3个比特位表示锁相关的状态吗，这个其实是数据表示的大小端问题，大家感兴趣可以去查一下）：
+
+<img src="../../images/concurrency/48.png" alt="48" style="zoom:80%;" />
+
+从上面的图当中我们可以分析得知在偏向延迟的时间之前，对象锁的状态还不会有偏向锁，因此对象头中的Markword当中锁状态是01，同时偏向锁状态是0，表示这个时候是无锁状态，但是在4秒之后偏向锁的状态已经变成1了，因此当前的锁状态是偏向锁，但是还没有线程占有他，这种状态也被称作**匿名偏向**，因为在上面的代码当中只有一个线程进入了synchronized同步代码块，因此可以使用偏向锁，因此在synchronized代码块当中打印的对象的锁状态也是**偏向锁**。
+
+上面的代码当中使用到了jol包，你需要在你的pom文件当中引入对应的包：
 
 ```java
 <dependency>
@@ -180,11 +186,11 @@ public class MarkWord {
 </dependency>
 ```
 
-输出结果，下面的红框框住的表示是否是偏向锁和锁标志位（可能你会有疑问为什么是这个位置，不应该是最后3个比特位表示锁相关的状态吗，这个其实是数据表示的大小端问题，大家感兴趣可以去查一下）：
+上图当中我们显示的结果是在64位机器下面显示的结果，在64位机器当中在Java对象头当中的MarkWord和Klcass Pointer内存布局如下：
 
-<img src="../../images/concurrency/48.png" alt="48" style="zoom:80%;" />
+<img src="../../images/concurrency/50.png" alt="50" style="zoom:80%;" />
 
-从上面的图当中我们可以分析得知在偏向延迟的时间之前，对象头中的Markword当中锁状态是01，同时偏向锁状态是0，表示这个时候是无锁状态，但是在4秒之后偏向锁的状态已经变成1了，因此当前的锁状态是偏向锁，但是还没有线程占有他，这种状态也被称作**匿名偏向**，因为在上面的代码当中只有一个线程进入了synchronized同步代码块，因此可以使用偏向锁，因此在synchronized代码块当中打印的对象的锁状态也是**偏向锁**。
+
 
 ## 锁升级过程
 
