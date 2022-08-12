@@ -71,7 +71,17 @@ public class AtomicDemo {
 
 ### 自己动手写自旋锁
 
-现在我们已经了解了原子性的作用了，我们现在来了解`AtomicInteger`类的另外一个原子性的操作，
+现在我们已经了解了原子性的作用了，我们现在来了解`AtomicInteger`类的另外一个原子性的操作——`compareAndSet`，这个操作叫做**比较并交换（CAS）**，他具有原子性。
+
+```java
+public static void main(String[] args) {
+  AtomicInteger atomicInteger = new AtomicInteger();
+  atomicInteger.set(0);
+  atomicInteger.compareAndSet(0, 1);
+}
+```
+
+compareAndSet函数的意义：首先会比较第一个参数（对应上面的代码就是0）和atomicInteger的值，如果相等则进行交换，也就是将atomicInteger的值设置为第二个参数（对应上面的代码就是1）。
 
 
 
