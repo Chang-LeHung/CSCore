@@ -189,7 +189,10 @@ public static void add(int state) throws InterruptedException {
 
 在这种情况我们需要实现一个可重入的自旋锁，我们的思想大致如下：
 
-- 
+- 在我们实现的自旋锁当中，我们可以增加两个变量，`owner`一个用于存当前拥有锁的线程，`count`一个记录当前线程进入锁的次数。
+- 如果线程获得锁，`owner = Thread.currentThread()`并且`count = 1`。
+- 当线程下次再想获取锁的时候，首先先看`owner`是不是指向自己，则一直进行循环操作，如果是则直接进行`count++`操作，然后就可以进入临界区了。
+- 我们在出临界区的时候，如果`count`大于一的话，说明这个线程重入了这把锁，因此不能够直接将锁设置为0也就是未上锁的状态，这种情况直接进行`count--`操作，如果`count`等于1的话，说明线程当前的状态不是重入状态（可能是重入之后递归返回了），因此在出临界区之前需要将锁的状态设置为0，也就是没上锁的状态，好让其他线程能够获取锁。
 
 ```java
 public class ReentrantSpinLock extends SpinLock {
