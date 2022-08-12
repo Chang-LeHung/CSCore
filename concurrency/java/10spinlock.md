@@ -166,6 +166,26 @@ public class SpinLockTest {
 
 ### 自己动手写可重入自旋锁
 
+在上面实现的自旋锁当中已经可以满足一些我们的基本需求了，就是一个时刻只能够有一个线程执行临界区的代码。但是上面的的代码并不能够满足重入的需求，也就是说上面写的自旋锁并不是一个可重入的自旋锁，事实上在上面实现的自旋锁当中重入的话就会产生死锁。
+
+我们通过一份代码来模拟上面重入产生死锁的情况：
+
+```java
+public static void add(int state) throws InterruptedException {
+  TimeUnit.SECONDS.sleep(1);
+  if (state <= 3) {
+    lock.lock();
+    System.out.println(Thread.currentThread().getName() + "\t进入临界区 state = " + state);
+    for (int i = 0; i < 10; i++)
+      data++;
+    add(state + 1);
+    lock.unlock();
+  }
+}
+```
+
+
+
 ```java
 public class ReentrantSpinLock extends SpinLock {
 
