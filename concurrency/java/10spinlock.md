@@ -91,35 +91,39 @@ compareAndSet函数的意义：首先会比较第一个参数（对应上面的�
 
 - AtomicInteger类的初始值为0。
 - 在上锁时，我们可以使用代码`atomicInteger.compareAndSet(0, 1)`进行实现，我们在前面已经提到了只能够有一个线程完成这个操作，也就是说只能有一个线程调用这行代码然后返回`true`其余线程都返回`false`，这些返回`false`的线程不能够进入临界区，因此我们需要这些线程停在`atomicInteger.compareAndSet(0, 1)`这行代码不能够往下执行，我们可以使用while循环让这些线程一直停在这里`while (!value.compareAndSet(0, 1));`，只有返回`true`的线程才能够跳出循环，其余线程都会一直在这里循环，我们称这种行为叫做**自旋**，这种锁因而也被叫做**自旋锁**。
+- 线程在出临界区的时候需要重新将锁的状态调整为未上锁的上状态，我们使用代码`value.compareAndSet(1, 0);`就可以实现
 
 #### 自旋锁代码实现
-
-
 
 ```java
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class SpinLock {
-
+	
+  // 0 表示未上锁状态
+  // 1 表示上锁状态
   protected AtomicInteger value;
 
   public SpinLock() {
     this.value = new AtomicInteger();
+    // 设置 value 的初始值为0 表示未上锁的状态
     this.value.set(0);
   }
 
   public void lock() {
+    // 进行自旋操作
     while (!value.compareAndSet(0, 1));
   }
 
   public void unlock() {
+    // 将锁的状态设置为未上锁状态
     value.compareAndSet(1, 0);
   }
 
 }
 ```
 
-
+上面就是我们自己实现的自旋锁的代码，这看起来实在太简单了，但是它确实帮助我们实现了一个锁，而且能够在真实场景进行使用的。
 
 测试程序：
 
