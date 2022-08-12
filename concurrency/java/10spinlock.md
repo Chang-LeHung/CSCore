@@ -81,7 +81,7 @@ public static void main(String[] args) {
 }
 ```
 
-compareAndSet函数的意义：首先会比较第一个参数（对应上面的代码就是0）和atomicInteger的值，如果相等则进行交换，也就是将atomicInteger的值设置为第二个参数（对应上面的代码就是1）。
+compareAndSet函数的意义：首先会比较第一个参数（对应上面的代码就是0）和atomicInteger的值，如果相等则进行交换，也就是将atomicInteger的值设置为第二个参数（对应上面的代码就是1），如果这些操作成功，那么compareAndSet函数就返回`true`，如果操作失败则返回`false`，操作失败可能是因为第一个参数的值（期望值）和atomicInteger不相等，如果相等也可能因为在更改atomicInteger的值的时候失败（因为可能有多个线程在操作，因为原子性的存在，只能有一个线程操作成功）。
 
 
 
