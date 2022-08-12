@@ -1,4 +1,4 @@
-# 深入剖析自旋锁
+# 从零开始自己动手写自旋锁
 
 ## 前言
 
@@ -69,17 +69,156 @@ public class AtomicDemo {
 
 但是在上面的程序当中我们最终的输出结果是等于20000的，这是因为给`data`进行`+1`的操作是原子的不可分的，在操作的过程当中其他线程是不能对`data`进行操作的。这就是**原子性**带来的优势。
 
+### 自己动手写自旋锁
+
+现在我们已经了解了原子性的作用了，我们现在来了解`AtomicInteger`类的另外一个原子性的操作，
+
+
+
+```java
+import java.util.concurrent.atomic.AtomicInteger;
+
+public class SpinLock {
+
+  protected AtomicInteger value;
+
+  public SpinLock() {
+    this.value = new AtomicInteger();
+    this.value.set(0);
+  }
+
+  public void lock() {
+    while (!value.compareAndSet(0, 1));
+  }
+
+  public void unlock() {
+    value.compareAndSet(1, 0);
+  }
+
+}
+```
+
+
+
+测试程序：
+
+```java
+public class SpinLockTest {
+
+  public static int data;
+  public static SpinLock lock = new SpinLock();
+
+  public static void add() {
+    for (int i = 0; i < 100000; i++) {
+      lock.lock();
+      data++;
+      lock.unlock();
+    }
+  }
+
+  public static void main(String[] args) throws InterruptedException {
+    Thread[] threads = new Thread[100];
+    for (int i = 0; i < 100; i ++) {
+      threads[i] = new Thread(SpinLockTest::add);
+    }
+    for (int i = 0; i < 100; i++) {
+      threads[i].start();
+    }
+    for (int i = 0; i < 100; i++) {
+      threads[i].join();
+    }
+    System.out.println(data);
+  }
+}
+
+```
+
+
+
+### 自己动手写可重入自旋锁
+
+```java
+public class ReentrantSpinLock extends SpinLock {
+
+  private Thread owner;
+  private int count;
+
+  @Override
+  public void lock() {
+    if (owner == null || owner != Thread.currentThread()) {
+      while (!value.compareAndSet(0, 1));
+      owner = Thread.currentThread();
+      count = 1;
+    }else {
+      count++;
+    }
+
+  }
+
+  @Override
+  public void unlock() {
+    if (count == 1) {
+      count = 0;
+      value.compareAndSet(1, 0);
+    }else
+      count--;
+  }
+}
+
+```
+
+
+
+测试程序：
+
+```java
+import java.util.concurrent.TimeUnit;
+
+public class ReentrantSpinLockTest {
+
+  public static int data;
+  public static ReentrantSpinLock lock = new ReentrantSpinLock();
+
+  public static void add(int state) throws InterruptedException {
+    TimeUnit.SECONDS.sleep(1);
+    if (state <= 3) {
+      lock.lock();
+      System.out.println(Thread.currentThread().getName() + "\t进入临界区 state = " + state);
+      for (int i = 0; i < 10; i++)
+        data++;
+      add(state + 1);
+      lock.unlock();
+    }
+  }
+
+  public static void main(String[] args) throws InterruptedException {
+    Thread[] threads = new Thread[10];
+    for (int i = 0; i < 10; i++) {
+      threads[i] = new Thread(new Thread(() -> {
+        try {
+          ReentrantSpinLockTest.add(1);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+      }));
+    }
+    for (int i = 0; i < 10; i++) {
+      threads[i].start();
+    }
+    for (int i = 0; i < 10; i++) {
+      threads[i].join();
+    }
+    System.out.println(data);
+  }
+}
+
+```
 
 
 
 
 
-
-
-
-
-
-事实上上面的`+1`原子操作就是通过**自旋锁**实现的，我们可以看一下`AtomicInteger`的源代码：
+事实上上面的`+1`原子操作就是通过**自旋**实现的，我们可以看一下`AtomicInteger`的源代码：
 
 ```java
 public final int addAndGet(int delta) {
