@@ -135,6 +135,7 @@ public class SpinLockTest {
 
   public static void add() {
     for (int i = 0; i < 100000; i++) {
+      // 上锁 只能有一个线程执行 data++ 操作 其余线程都只能进行while循环
       lock.lock();
       data++;
       lock.unlock();
