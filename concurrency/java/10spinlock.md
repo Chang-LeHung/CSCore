@@ -91,7 +91,7 @@ compareAndSet函数的意义：首先会比较第一个参数（对应上面的�
 
 - AtomicInteger类的初始值为0。
 - 在上锁时，我们可以使用代码`atomicInteger.compareAndSet(0, 1)`进行实现，我们在前面已经提到了只能够有一个线程完成这个操作，也就是说只能有一个线程调用这行代码然后返回`true`其余线程都返回`false`，这些返回`false`的线程不能够进入临界区，因此我们需要这些线程停在`atomicInteger.compareAndSet(0, 1)`这行代码不能够往下执行，我们可以使用while循环让这些线程一直停在这里`while (!value.compareAndSet(0, 1));`，只有返回`true`的线程才能够跳出循环，其余线程都会一直在这里循环，我们称这种行为叫做**自旋**，这种锁因而也被叫做**自旋锁**。
-- 线程在出临界区的时候需要重新将锁的状态调整为未上锁的上状态，我们使用代码`value.compareAndSet(1, 0);`就可以实现
+- 线程在出临界区的时候需要重新将锁的状态调整为未上锁的上状态，我们使用代码`value.compareAndSet(1, 0);`就可以实现，将锁的状态还原为未上锁的状态，这样其他的自旋的线程就可以拿到锁，然后进入临界区了。
 
 #### 自旋锁代码实现
 
@@ -123,7 +123,7 @@ public class SpinLock {
 }
 ```
 
-上面就是我们自己实现的自旋锁的代码，这看起来实在太简单了，但是它确实帮助我们实现了一个锁，而且能够在真实场景进行使用的。
+上面就是我们自己实现的自旋锁的代码，这看起来实在太简单了，但是它确实帮助我们实现了一个锁，而且能够在真实场景进行使用的，我们现在用代码对上面我们写的锁进行测试。
 
 测试程序：
 
@@ -143,22 +143,25 @@ public class SpinLockTest {
 
   public static void main(String[] args) throws InterruptedException {
     Thread[] threads = new Thread[100];
+    // 设置100个线程
     for (int i = 0; i < 100; i ++) {
       threads[i] = new Thread(SpinLockTest::add);
     }
+    // 启动一百个线程
     for (int i = 0; i < 100; i++) {
       threads[i].start();
     }
+    // 等待这100个线程执行完成
     for (int i = 0; i < 100; i++) {
       threads[i].join();
     }
-    System.out.println(data);
+    System.out.println(data); // 10000000
   }
 }
 
 ```
 
-
+在上面的代码单中，我们使用100个线程，然后每个线程循环执行100000`data++`操作，上面的代码最后输出的结果是10000000，和我们期待的结果是相等的，这就说明我们实现的自旋锁是正确的。
 
 ### 自己动手写可重入自旋锁
 
