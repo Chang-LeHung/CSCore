@@ -166,6 +166,8 @@ public class SpinLockTest {
 
 ### 自己动手写可重入自旋锁
 
+#### 可重入自旋锁
+
 在上面实现的自旋锁当中已经可以满足一些我们的基本需求了，就是一个时刻只能够有一个线程执行临界区的代码。但是上面的的代码并不能够满足重入的需求，也就是说上面写的自旋锁并不是一个可重入的自旋锁，事实上在上面实现的自旋锁当中重入的话就会产生死锁。
 
 我们通过一份代码来模拟上面重入产生死锁的情况：
@@ -187,12 +189,18 @@ public static void add(int state) throws InterruptedException {
 - 在上面的代码当中加入我们传入的参数`state`的值为1，那么在线程执行for循环之后再次递归调用`add`函数的话，那么`state`的值就变成了2。
 - if条件仍然满足，这个线程也需要重新获得锁，但是此时锁的状态是1，这个线程已经获得过一次锁了，然是自旋锁期待的锁的状态是0，因为只有这样他才能够再次获得锁，进入临界区，但是现在锁的状态是1，也就是说虽然这个线程获得过一次锁，但是它也会一直进行while循环而且永远都出不来了，这样就形成了死锁了。
 
-在这种情况我们需要实现一个可重入的自旋锁，我们的思想大致如下：
+#### 可重入自旋锁思想
+
+针对上面这种情况我们需要实现一个可重入的自旋锁，我们的思想大致如下：
 
 - 在我们实现的自旋锁当中，我们可以增加两个变量，`owner`一个用于存当前拥有锁的线程，`count`一个记录当前线程进入锁的次数。
 - 如果线程获得锁，`owner = Thread.currentThread()`并且`count = 1`。
 - 当线程下次再想获取锁的时候，首先先看`owner`是不是指向自己，则一直进行循环操作，如果是则直接进行`count++`操作，然后就可以进入临界区了。
 - 我们在出临界区的时候，如果`count`大于一的话，说明这个线程重入了这把锁，因此不能够直接将锁设置为0也就是未上锁的状态，这种情况直接进行`count--`操作，如果`count`等于1的话，说明线程当前的状态不是重入状态（可能是重入之后递归返回了），因此在出临界区之前需要将锁的状态设置为0，也就是没上锁的状态，好让其他线程能够获取锁。
+
+#### 可重入锁代码实现：
+
+实现的可重入锁代码如下：
 
 ```java
 public class ReentrantSpinLock extends SpinLock {
@@ -224,7 +232,7 @@ public class ReentrantSpinLock extends SpinLock {
 
 ```
 
-
+下面我们通过一个递归程序去验证我们写的可重入的自旋锁是否能够成功工作。
 
 测试程序：
 
@@ -257,7 +265,7 @@ public class ReentrantSpinLockTest {
         } catch (InterruptedException e) {
           e.printStackTrace();
         }
-      }));
+      }, String.valueOf(i)));
     }
     for (int i = 0; i < 10; i++) {
       threads[i].start();
@@ -271,36 +279,41 @@ public class ReentrantSpinLockTest {
 
 ```
 
-
-
-
-
-事实上上面的`+1`原子操作就是通过**自旋**实现的，我们可以看一下`AtomicInteger`的源代码：
+上面程序的输出：
 
 ```java
-public final int addAndGet(int delta) {
-  // 在 AtomicInteger 内部有一个整型数据 value 用于存储具体的数值的
-  // 这个 valueOffset 表示这个数据 value 在对象 this （也就是 AtomicInteger一个具体的对象）
-  // 当中的内存偏移地址
-  // delta 就是我们需要往 value 上加的值 在这里我们加上的是 1
-  return unsafe.getAndAddInt(this, valueOffset, delta) + delta;
-}
+Thread-3	进入临界区 state = 1
+Thread-3	进入临界区 state = 2
+Thread-3	进入临界区 state = 3
+Thread-0	进入临界区 state = 1
+Thread-0	进入临界区 state = 2
+Thread-0	进入临界区 state = 3
+Thread-9	进入临界区 state = 1
+Thread-9	进入临界区 state = 2
+Thread-9	进入临界区 state = 3
+Thread-4	进入临界区 state = 1
+Thread-4	进入临界区 state = 2
+Thread-4	进入临界区 state = 3
+Thread-7	进入临界区 state = 1
+Thread-7	进入临界区 state = 2
+Thread-7	进入临界区 state = 3
+Thread-8	进入临界区 state = 1
+Thread-8	进入临界区 state = 2
+Thread-8	进入临界区 state = 3
+Thread-5	进入临界区 state = 1
+Thread-5	进入临界区 state = 2
+Thread-5	进入临界区 state = 3
+Thread-2	进入临界区 state = 1
+Thread-2	进入临界区 state = 2
+Thread-2	进入临界区 state = 3
+Thread-6	进入临界区 state = 1
+Thread-6	进入临界区 state = 2
+Thread-6	进入临界区 state = 3
+Thread-1	进入临界区 state = 1
+Thread-1	进入临界区 state = 2
+Thread-1	进入临界区 state = 3
+300
 ```
 
-上面的代码最终是调用`UnSafe`类的方法进行实现的，我们再看一下他的源代码：
+从上面的输出结果我们就可以知道，当一个线程能够获取锁的时候他能够进行重入，而且最终输出的结果也是正确的，因此验证了我们写了可重入自旋锁是有效的！
 
-```java
-public final int getAndAddInt(Object o, long offset, int delta) {
-  int v;
-  do {
-    v = getIntVolatile(o, offset); // 从对象 o 偏移地址为 offset 的位置取出数据 value ，也就是前面提到的存储整型数据的变量
-  } while (!compareAndSwapInt(o, offset, v, v + delta));
-  return v;
-}
-```
-
-上面的代码主要流程是不断的从内存当中取对象内偏移地址为`offset`的数据，然后执行语句`!compareAndSwapInt(o, offset, v, v + delta)`
-
-这条语句的主要作用是：比较对象`o`内存偏移地址为`offset`的数据是否等于`v`，如果等于`v`则将偏移地址为`offset`的数据设置为`v + delta`，如果这条语句执行成功返回 `true`否则返回`false`，这就是我们常说的Java当中的**CAS**。
-
-看到这里你应该就发现了当上面的那条语句执行不成功的话就会一直进行while循环操作，直到操作成功之后才退出while循环，假如没有操作成功就会一直“旋”在这里，像这种操作就是**自旋**，通过这种**自旋**方式所构成的锁🔒就叫做**自旋锁**。
