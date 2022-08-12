@@ -178,11 +178,14 @@ public static void add(int state) throws InterruptedException {
     System.out.println(Thread.currentThread().getName() + "\t进入临界区 state = " + state);
     for (int i = 0; i < 10; i++)
       data++;
-    add(state + 1);
+    add(state + 1); // 进行递归重入 重入之前锁状态已经是1了 因为这个线程进入了临界区
     lock.unlock();
   }
 }
 ```
+
+- 在上面的代码当中加入我们传入的参数`state`的值为1，那么在线程执行for循环之后再次递归调用`add`函数的话，那么`state`的值就变成了2。
+- if条件仍然满足，这个线程也需要重新获得锁，但是此时锁的状态是1，这个线程已经获得过一次锁了，然是自旋锁期待的锁的状态是0，因为只有这样他才能够再次获得锁，进入临界区，但是现在锁的状态是1，也就是说虽然这个线程获得过一次锁，但是它也会一直进行while循环而且永远都出不来了，这样就形成了死锁了。
 
 
 
