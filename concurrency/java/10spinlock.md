@@ -71,6 +71,8 @@ public class AtomicDemo {
 
 ### 自己动手写自旋锁
 
+#### AtomicInteger类
+
 现在我们已经了解了原子性的作用了，我们现在来了解`AtomicInteger`类的另外一个原子性的操作——`compareAndSet`，这个操作叫做**比较并交换（CAS）**，他具有原子性。
 
 ```java
@@ -82,6 +84,15 @@ public static void main(String[] args) {
 ```
 
 compareAndSet函数的意义：首先会比较第一个参数（对应上面的代码就是0）和atomicInteger的值，如果相等则进行交换，也就是将atomicInteger的值设置为第二个参数（对应上面的代码就是1），如果这些操作成功，那么compareAndSet函数就返回`true`，如果操作失败则返回`false`，操作失败可能是因为第一个参数的值（期望值）和atomicInteger不相等，如果相等也可能因为在更改atomicInteger的值的时候失败（因为可能有多个线程在操作，因为原子性的存在，只能有一个线程操作成功）。
+
+#### 自旋锁实现原理
+
+我们可以使用AtomicInteger类实现自旋锁，我们可以用0这个值表示未上锁，1这个值表示已经上锁了。
+
+- AtomicInteger类的初始值为0。
+- 在上锁时，我们可以使用代码`atomicInteger.compareAndSet(0, 1)`进行实现，我们在前面已经提到了只能够有一个线程完成这个操作，也就是说只能有一个线程调用这行代码然后返回`true`其余线程都返回`false`，这些返回`false`的线程不能够进入临界区，因此我们需要这些线程停在`atomicInteger.compareAndSet(0, 1)`这行代码不能够往下执行，我们可以使用while循环让这些线程一直停在这里`while (!value.compareAndSet(0, 1));`，只有返回`true`的线程才能够跳出循环，其余线程都会一直在这里循环，我们称这种行为叫做**自旋**，这种锁因而也被叫做**自旋锁**。
+
+#### 自旋锁代码实现
 
 
 
