@@ -390,6 +390,8 @@ public class MyArrayBlockingQueue<E> {
 
 现在对上面的代码进行测试：
 
+我们现在使用阻塞队列模拟一个生产者消费者模型，设置阻塞队列的大小为5，生产者线程会往队列当中加入数据，数据为0-9的10个数字，消费者线程一共会消费10次。
+
 ```java
 import java.util.concurrent.TimeUnit;
 
@@ -420,5 +422,30 @@ public class Test {
   }
 }
 
+```
+
+上面代码的输出如下所示：
+
+```java
+Thread-0 往队列当中加入数据：0
+Thread-0 往队列当中加入数据：1
+Thread-0 往队列当中加入数据：2
+Thread-0 往队列当中加入数据：3
+Thread-0 往队列当中加入数据：4
+Thread-0 往队列当中加入数据：5
+Thread-1 从队列当中取出数据：0
+Thread-1 从队列当中取出数据：1
+Thread-1 从队列当中取出数据：2
+Thread-1 从队列当中取出数据：3
+Thread-1 从队列当中取出数据：4
+Thread-0 往队列当中加入数据：6
+Thread-0 往队列当中加入数据：7
+Thread-0 往队列当中加入数据：8
+Thread-0 往队列当中加入数据：9
+Thread-1 从队列当中取出数据：5
+Thread-1 从队列当中取出数据：6
+Thread-1 从队列当中取出数据：7
+Thread-1 从队列当中取出数据：8
+Thread-1 从队列当中取出数据：9
 ```
 
