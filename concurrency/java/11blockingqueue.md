@@ -173,6 +173,7 @@ public boolean add(E e) {
 
 ```java
 public E take() throws InterruptedException {
+  // 
   lock.lock();
   try {
     while (count == 0)
