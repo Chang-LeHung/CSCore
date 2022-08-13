@@ -207,3 +207,39 @@ private E  dequeue() {
 
 ### 重写toString函数
 
+因为我们在后面的测试函数当中会打印我们这个类，而打印这个类的时候会调用对象的`toString`方法得到一个字符串，最后打印这个字符串。
+
+```java
+@Override
+public String toString() {
+  StringBuilder stringBuilder = new StringBuilder();
+  stringBuilder.append("[");
+  // 这里需要上锁 因为我们在打印的时候需要打印所有的数据
+  // 打印所有的数据就需要对数组进行遍历操作 而在进行遍历
+  // 操作的时候是不能进行插入和删除操作的 因为打印的是某
+  // 个时刻的数据
+  lock.lock();
+  try {
+    if (count == 0)
+      stringBuilder.append("]");
+    else {
+      int cur = 0;
+      // 对数据进行遍历 一共遍历 count 次 因为数组当中一共有 count
+      // 个数据
+      while (cur != count) {
+        // 从 takeIndex 位置开始进行遍历 因为数据是从这个位置开始的
+        stringBuilder.append(items[cur + takeIndex].toString() + ", ");
+        cur += 1;
+      }
+      // 删除掉最后一次没用的 ", "
+      stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+      stringBuilder.append(']');
+    }
+  }finally {
+    lock.unlock();
+  }
+  return stringBuilder.toString();
+}
+
+```
+
