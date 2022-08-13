@@ -109,7 +109,8 @@ public void put(E x){
     while (count == items.length)
       notFull.await();
     // 当数组没有满 或者在挂起之后再次唤醒的话说明数组当中有空间了
-    // 这个时候需要将数组入队
+    // 这个时候需要将数组入队 
+    // 调用入队函数将数据入队
     enqueue(x);
   } catch (InterruptedException e) {
     e.printStackTrace();
@@ -119,12 +120,51 @@ public void put(E x){
   }
 }
 
+// 将数据入队
 private void enqueue(E x) {
   this.items[putIndex] = x;
   if (++putIndex == items.length)
     putIndex = 0;
   count++;
   notEmpty.signal();
+}
+
+```
+
+### offer函数
+
+offer函数和put函数一样，但是与put函数不同的是，当数组当中数据填满之后offer函数返回`false`，而不是被阻塞。
+
+```java
+public boolean offer(E e) {
+  final ReentrantLock lock = this.lock;
+  lock.lock();
+  try {
+    // 如果数组满了 则直接返回false 而不是被阻塞
+    if (count == items.length)
+      return false;
+    else {
+      // 如果数组没有满则直接入队 并且返回 true
+      enqueue(e);
+      return true;
+    }
+  } finally {
+    lock.unlock();
+  }
+}
+
+```
+
+### add函数
+
+这个函数和上面两个函数作用一样，也是往队列当中加入数据，但是单队列满了之后这个函数会抛出异常。
+
+```java
+public boolean add(E e) {
+  if (offer(e))
+    return true;
+  else
+    throw new RuntimeException("Queue full");
 }
 
 ```
