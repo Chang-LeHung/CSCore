@@ -228,7 +228,7 @@ public String toString() {
       // 个数据
       while (cur != count) {
         // 从 takeIndex 位置开始进行遍历 因为数据是从这个位置开始的
-        stringBuilder.append(items[cur + takeIndex].toString() + ", ");
+        stringBuilder.append(items[(cur + takeIndex) % items.length].toString() + ", ");
         cur += 1;
       }
       // 删除掉最后一次没用的 ", "
@@ -372,7 +372,7 @@ public class MyArrayBlockingQueue<E> {
       else {
         int cur = 0;
         while (cur != count) {
-          stringBuilder.append(items[cur + takeIndex].toString()).append(", ");
+          stringBuilder.append(items[(cur + takeIndex) % items.length].toString()).append(", ");
           cur += 1;
         }
         stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
@@ -411,6 +411,7 @@ public class Test {
       for (int i = 0; i < 10; i++) {
         try {
           System.out.println(Thread.currentThread().getName() + " 从队列当中取出数据：" + queue.take());
+          System.out.println(Thread.currentThread().getName() + " 当前队列当中的数据：" + queue);
         } catch (InterruptedException e) {
           e.printStackTrace();
         }
@@ -435,20 +436,45 @@ public class Test {
 生产者 往队列当中加入数据：4
 生产者 往队列当中加入数据：5
 消费者 从队列当中取出数据：0
-消费者 从队列当中取出数据：1
-消费者 从队列当中取出数据：2
-消费者 从队列当中取出数据：3
-消费者 从队列当中取出数据：4
 生产者 往队列当中加入数据：6
+消费者 当前队列当中的数据：[1, 2, 3, 4, 5]
+消费者 从队列当中取出数据：1
+消费者 当前队列当中的数据：[2, 3, 4, 5]
+消费者 从队列当中取出数据：2
+消费者 当前队列当中的数据：[3, 4, 5, 6]
 生产者 往队列当中加入数据：7
-生产者 往队列当中加入数据：8
-生产者 往队列当中加入数据：9
+消费者 从队列当中取出数据：3
+消费者 当前队列当中的数据：[4, 5, 6, 7]
+消费者 从队列当中取出数据：4
+消费者 当前队列当中的数据：[5, 6, 7]
 消费者 从队列当中取出数据：5
+消费者 当前队列当中的数据：[6, 7]
+生产者 往队列当中加入数据：8
 消费者 从队列当中取出数据：6
+消费者 当前队列当中的数据：[7, 8]
 消费者 从队列当中取出数据：7
+消费者 当前队列当中的数据：[8]
 消费者 从队列当中取出数据：8
+消费者 当前队列当中的数据：[]
+生产者 往队列当中加入数据：9
 消费者 从队列当中取出数据：9
+消费者 当前队列当中的数据：[]
+
 ```
 
 从上面的输出结果我们知道，生产者线程打印5之后被挂起了，因为如果没有被挂起，生产者线程肯定可以一次行输出完成，因为消费者线程阻塞了3秒。但是他没有输出完成说明在打印5之后，因为阻塞队列满了，因而生产者线程被挂起了。然后消费者开始消费，这样阻塞队列当中就有空间了，生产者线程就可以继续生产了。
+
+## 总结
+
+在本篇文章当中，主要向大家介绍了阻塞队列的原理并且实现了一个低配版的数组阻塞队列，其实如果你了解数组队列和锁的话，这个代码实现起来还是相对比较简单的，我们只需要使用锁去保证我们的程序并发安全即可。
+
+
+
+---
+
+以上就是本篇文章的所有内容了，我是**LeHung**，我们下期再见！！！更多精彩内容合集可访问项目：<https://github.com/Chang-LeHung/CSCore>
+
+关注公众号：**一无是处的研究僧**，了解更多计算机（Java、Python、计算机系统基础、算法与数据结构）知识。
+
+![](https://img2022.cnblogs.com/blog/2519003/202207/2519003-20220703200459566-1837431658.jpg)
 
