@@ -49,6 +49,8 @@
 
 ## 代码实现
 
+### 成员变量定义
+
 根据上面的分析我们可以知道，在我们自己实现的类当中我们需要有如下的类成员变量：
 
 ```java
@@ -68,6 +70,8 @@ private int count;
 private Object[] items;
 ```
 
+### 构造函数
+
 我们的构造函数也很简单，最核心的就是传入一个数组大小的参数，并且给上面的变量进行初始化赋值。
 
 ```java
@@ -80,9 +84,42 @@ public MyArrayBlockingQueue(int size) {
   takeIndex = 0;
   putIndex = 0;
   count = 0;
+  // 数组的长度肯定不能够小于0
   if (size <= 0)
     throw new RuntimeException("size can not be less than 1");
   items = (E[])new Object[size];
+}
+
+```
+
+### put函数
+
+这是一个比较重要的函数了，在这个函数当中如果队列没有满，则直接将数据放入到数组当中即可，如果数组满了，则需要将线程挂起。
+
+```java
+public void put(E x){
+  // put 函数可能多个线程调用 但是我们需要保证在给变量赋值的时候只能够有一个线程
+  // 因为如果多个线程同时进行赋值的话 那么可能后一个线程的赋值操作覆盖了前一个线程的赋值操作
+  // 因此这里需要上锁
+  lock.lock();
+
+  try {
+    while (count == items.length)
+      notFull.await();
+    enqueue(x);
+  } catch (InterruptedException e) {
+    e.printStackTrace();
+  } finally {
+    lock.unlock();
+  }
+}
+
+private void enqueue(E x) {
+  this.items[putIndex] = x;
+  if (++putIndex == items.length)
+    putIndex = 0;
+  count++;
+  notEmpty.signal();
 }
 
 ```
