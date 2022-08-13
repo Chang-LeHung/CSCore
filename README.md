@@ -137,6 +137,14 @@
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486361&idx=1&sn=dce819edcce0d509d7fec212abc2bd03&chksm=cf0c9790f87b1e86fcef49c58cbad141a43e803f01fec8a2170c82fae25a284601c5f9f27929&token=1166204888&lang=zh_CN#rd)
 
   - [github阅读](/concurrency/java/08synchronizedusage.md)
+- Synchronized锁升级原理与过程深入剖析
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486440&idx=1&sn=3058ad4928d65a44cb482e0f68da9ab6&chksm=cf0c97e1f87b1ef7abda684050c8d741833ddb4f538b75fbbd685c90fedfdbc87ce6fe4168d4&token=2045951226&lang=zh_CN#rd)
+
+  - [github阅读](/concurrency/java/09synchronized.md)
+- 从零开始自己动手写自旋锁
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486484&idx=1&sn=fc391789b861083aad6fd9757968557b&chksm=cf0c901df87b190bf1602e5357ba5ff13875665b86e4872fbd6e3a9f0949330b1c88d07dd69e&token=2045951226&lang=zh_CN#rd)
+
+  - [github阅读](/concurrency/java/10spinlock.md)
 
 ## Python
 
