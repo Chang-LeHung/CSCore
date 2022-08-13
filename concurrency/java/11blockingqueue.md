@@ -171,9 +171,11 @@ public boolean add(E e) {
 
 ### take函数
 
+这个函数主要是从队列当中取出一个数据，但是当队列为空的时候，这个函数会阻塞调用该函数的线程：
+
 ```java
 public E take() throws InterruptedException {
-  // 这个函数也是不能够并发的
+  // 这个函数也是不能够并发的 否则可能不同的线程取出的是同一个位置的数据
   // 进行加锁操作
   lock.lock();
   try {
