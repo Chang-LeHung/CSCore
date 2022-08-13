@@ -169,3 +169,30 @@ public boolean add(E e) {
 
 ```
 
+### take函数
+
+```java
+public E take() throws InterruptedException {
+  lock.lock();
+  try {
+    while (count == 0)
+      notEmpty.await();
+    return dequeue();
+  }finally {
+    lock.unlock();
+  }
+}
+
+private E  dequeue() {
+  final Object[] items = this.items;
+  @SuppressWarnings("unchecked")
+  E x = (E) items[takeIndex];
+  items[takeIndex] = null;
+  if (++takeIndex == items.length)
+    takeIndex = 0;
+  count--;
+  notFull.signal();
+  return x;
+}
+```
+
