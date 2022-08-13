@@ -104,12 +104,17 @@ public void put(E x){
   lock.lock();
 
   try {
+    // 如果队列当中的数据个数等于数组的长度的话 说明数组已经满了
+    // 这个时候需要将线程挂起
     while (count == items.length)
       notFull.await();
+    // 当数组没有满 或者在挂起之后再次唤醒的话说明数组当中有空间了
+    // 这个时候需要将数组入队
     enqueue(x);
   } catch (InterruptedException e) {
     e.printStackTrace();
   } finally {
+    // 解锁
     lock.unlock();
   }
 }
