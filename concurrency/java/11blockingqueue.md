@@ -107,7 +107,7 @@ public void put(E x){
     // 如果队列当中的数据个数等于数组的长度的话 说明数组已经满了
     // 这个时候需要将线程挂起
     while (count == items.length)
-      notFull.await();
+      notFull.await(); // 将调用 await的线程挂起
     // 当数组没有满 或者在挂起之后再次唤醒的话说明数组当中有空间了
     // 这个时候需要将数组入队 
     // 调用入队函数将数据入队
@@ -126,7 +126,7 @@ private void enqueue(E x) {
   if (++putIndex == items.length)
     putIndex = 0;
   count++;
-  notEmpty.signal();
+  notEmpty.signal(); // 唤醒一个被 take 函数阻塞的线程唤醒
 }
 
 ```
@@ -200,8 +200,10 @@ private E  dequeue() {
   count--; // 队列当中数据少一个了
   // 因为出队了一个数据 可以唤醒一个被 put 函数阻塞的线程 如果这个时候没有被阻塞的线程
   // 这个函数就不会起作用 也就说在这个函数调用之后被 put 函数挂起的线程也不会被唤醒
-  notFull.signal();
+  notFull.signal(); // 唤醒一个被 put 函数阻塞的线程
   return x;
 }
 ```
+
+### 重写toString函数
 
