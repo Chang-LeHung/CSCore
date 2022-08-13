@@ -18,10 +18,53 @@
 
 ## 阻塞队列实现原理
 
+### 线程阻塞和唤醒
+
 在上面我们已经谈到了阻塞队列是**并发安全**的，而且我们还有将线程唤醒和阻塞的需求，因此我们可以选择可重入锁`ReentrantLock`保证并发安全，但是我们还需要将线程唤醒和阻塞，因此我们可以选择条件变量`Condition`进行线程的唤醒和阻塞操作，在`Condition`当中我们将会使用到的，主要有以下两个函数：
 
 - `signal`用于唤醒线程，当一个线程调用`Condition`的`signal`函数的时候就可以唤醒一个被`await`函数阻塞的线程。
 - `await`用于阻塞线程，当一个线程调用`Condition`的`await`函数的时候这个线程就会阻塞。
 
+### 数组循环使用
+
 因为队列是一端进一端出，因此队列肯定有头有尾。
+
+<img src="../../images/arraydeque/24.png" alt="24" style="zoom:80%;" />
+
+当我们往队列当中加入一些数据之后，队列的情况可能如下：
+
+<img src="../../images/arraydeque/26.png" alt="24" style="zoom:80%;" />
+
+在上图的基础之上我们在进行四次出队操作，结果如下：
+
+<img src="../../images/arraydeque/27.png" alt="24" style="zoom:80%;" />
+
+在上面的状态下，我们继续加入8个数据，那么布局情况如下：
+
+<img src="../../images/arraydeque/28.png" alt="24" style="zoom:80%;" />
+
+我们知道上图在加入数据的时候不仅将数组后半部分的空间使用完了，而且可以继续使用前半部分没有使用过的空间，也就是说在队列内部实现了一个循环使用的过程。
+
+为了保证数组的循环使用，我们需要用一个变量记录队列头在数组当中的位置，用一个变量记录队列尾部在数组当中的位置，还需要有一个变量记录队列当中有多少个数据。
+
+## 代码实现
+
+根据上面的分析我们可以知道，在我们自己实现的类当中我们需要有如下的类成员变量：
+
+```java
+  // 用于保护临界区的锁
+  private final ReentrantLock lock;
+  // 用于唤醒取数据的时候被阻塞的线程
+  private final Condition notEmpty;
+  // 用于唤醒放数据的时候被阻塞的线程
+  private final Condition notFull;
+  // 用于记录从数组当中取数据的位置 也就是队列头部的位置
+  private int takeIndex;
+  // 用于记录从数组当中放数据的位置 也就是队列尾部的位置
+  private int putIndex;
+  // 记录队列当中有多少个数据
+  private int count;
+  // 用于存放具体数据的数组
+  private Object[] items;
+```
 
