@@ -243,3 +243,182 @@ public String toString() {
 
 ```
 
+### 完整代码
+
+整个我们自己完成的阻塞队列的代码如下：
+
+```java
+
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class MyArrayBlockingQueue<E> {
+
+  // 用于保护临界区的锁
+  private final ReentrantLock lock;
+  // 用于唤醒取数据的时候被阻塞的线程
+  private final Condition notEmpty;
+  // 用于唤醒放数据的时候被阻塞的线程
+  private final Condition notFull;
+  // 用于记录从数组当中取数据的位置 也就是队列头部的位置
+  private int takeIndex;
+  // 用于记录从数组当中放数据的位置 也就是队列尾部的位置
+  private int putIndex;
+  // 记录队列当中有多少个数据
+  private int count;
+  // 用于存放具体数据的数组
+  private Object[] items;
+
+
+  @SuppressWarnings("unchecked")
+  public MyArrayBlockingQueue(int size) {
+    this.lock = new ReentrantLock();
+    this.notEmpty = lock.newCondition();
+    this.notFull = lock.newCondition();
+    // 其实可以不用初始化 类会有默认初始化 默认初始化为0
+    takeIndex = 0;
+    putIndex = 0;
+    count = 0;
+    if (size <= 0)
+      throw new RuntimeException("size can not be less than 1");
+    items = (E[])new Object[size];
+  }
+
+  public void put(E x){
+    lock.lock();
+
+    try {
+      while (count == items.length)
+        notFull.await();
+      enqueue(x);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    } finally {
+      lock.unlock();
+    }
+  }
+
+  private void enqueue(E x) {
+    this.items[putIndex] = x;
+    if (++putIndex == items.length)
+      putIndex = 0;
+    count++;
+    notEmpty.signal();
+  }
+
+  private E  dequeue() {
+    final Object[] items = this.items;
+    @SuppressWarnings("unchecked")
+    E x = (E) items[takeIndex];
+    items[takeIndex] = null;
+    if (++takeIndex == items.length)
+      takeIndex = 0;
+    count--;
+    notFull.signal();
+    return x;
+  }
+
+  public boolean add(E e) {
+    if (offer(e))
+      return true;
+    else
+      throw new RuntimeException("Queue full");
+  }
+
+  public boolean offer(E e) {
+    final ReentrantLock lock = this.lock;
+    lock.lock();
+    try {
+      if (count == items.length)
+        return false;
+      else {
+        enqueue(e);
+        return true;
+      }
+    } finally {
+      lock.unlock();
+    }
+  }
+
+  public E poll() {
+    final ReentrantLock lock = this.lock;
+    lock.lock();
+    try {
+      return (count == 0) ? null : dequeue();
+    } finally {
+      lock.unlock();
+    }
+  }
+
+  public E take() throws InterruptedException {
+    lock.lock();
+    try {
+      while (count == 0)
+        notEmpty.await();
+      return dequeue();
+    }finally {
+      lock.unlock();
+    }
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder stringBuilder = new StringBuilder();
+    stringBuilder.append("[");
+    lock.lock();
+    try {
+      if (count == 0)
+        stringBuilder.append("]");
+      else {
+        int cur = 0;
+        while (cur != count) {
+          stringBuilder.append(items[cur + takeIndex].toString()).append(", ");
+          cur += 1;
+        }
+        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
+        stringBuilder.append(']');
+      }
+    }finally {
+      lock.unlock();
+    }
+    return stringBuilder.toString();
+  }
+
+}
+
+```
+
+现在对上面的代码进行测试：
+
+```java
+import java.util.concurrent.TimeUnit;
+
+public class Test {
+
+  public static void main(String[] args) throws InterruptedException {
+    MyArrayBlockingQueue<Integer> queue = new MyArrayBlockingQueue<>(5);
+    Thread thread = new Thread(() -> {
+      for (int i = 0; i < 10; i++) {
+        System.out.println(Thread.currentThread().getName() + " 往队列当中加入数据：" + i);
+        queue.put(i);
+      }
+    });
+
+    Thread thread1 = new Thread(() -> {
+      for (int i = 0; i < 10; i++) {
+        try {
+          System.out.println(Thread.currentThread().getName() + " 从队列当中取出数据：" + queue.take());
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+      }
+    });
+    thread.start();
+    TimeUnit.SECONDS.sleep(2);
+    thread1.start();
+
+  }
+}
+
+```
+
