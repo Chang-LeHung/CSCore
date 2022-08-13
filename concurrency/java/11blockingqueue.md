@@ -52,19 +52,38 @@
 根据上面的分析我们可以知道，在我们自己实现的类当中我们需要有如下的类成员变量：
 
 ```java
-  // 用于保护临界区的锁
-  private final ReentrantLock lock;
-  // 用于唤醒取数据的时候被阻塞的线程
-  private final Condition notEmpty;
-  // 用于唤醒放数据的时候被阻塞的线程
-  private final Condition notFull;
-  // 用于记录从数组当中取数据的位置 也就是队列头部的位置
-  private int takeIndex;
-  // 用于记录从数组当中放数据的位置 也就是队列尾部的位置
-  private int putIndex;
-  // 记录队列当中有多少个数据
-  private int count;
-  // 用于存放具体数据的数组
-  private Object[] items;
+// 用于保护临界区的锁
+private final ReentrantLock lock;
+// 用于唤醒取数据的时候被阻塞的线程
+private final Condition notEmpty;
+// 用于唤醒放数据的时候被阻塞的线程
+private final Condition notFull;
+// 用于记录从数组当中取数据的位置 也就是队列头部的位置
+private int takeIndex;
+// 用于记录从数组当中放数据的位置 也就是队列尾部的位置
+private int putIndex;
+// 记录队列当中有多少个数据
+private int count;
+// 用于存放具体数据的数组
+private Object[] items;
+```
+
+我们的构造函数也很简单，最核心的就是传入一个数组大小的参数，并且给上面的变量进行初始化赋值。
+
+```java
+@SuppressWarnings("unchecked")
+public MyArrayBlockingQueue(int size) {
+  this.lock = new ReentrantLock();
+  this.notEmpty = lock.newCondition();
+  this.notFull = lock.newCondition();
+  // 其实可以不用初始化 类会有默认初始化 默认初始化为0
+  takeIndex = 0;
+  putIndex = 0;
+  count = 0;
+  if (size <= 0)
+    throw new RuntimeException("size can not be less than 1");
+  items = (E[])new Object[size];
+}
+
 ```
 
