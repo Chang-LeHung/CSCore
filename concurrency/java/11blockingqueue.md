@@ -173,11 +173,15 @@ public boolean add(E e) {
 
 ```java
 public E take() throws InterruptedException {
-  // 
+  // 这个函数也是不能够并发的
+  // 进行加锁操作
   lock.lock();
   try {
+    // 当 count 等于0 说明队列为空
+    // 需要将线程挂起等待
     while (count == 0)
       notEmpty.await();
+    // 当被唤醒之后进行出队操作
     return dequeue();
   }finally {
     lock.unlock();
@@ -188,10 +192,12 @@ private E  dequeue() {
   final Object[] items = this.items;
   @SuppressWarnings("unchecked")
   E x = (E) items[takeIndex];
-  items[takeIndex] = null;
+  items[takeIndex] = null; // 将对应的位置设置为 null GC就可以回收了
   if (++takeIndex == items.length)
     takeIndex = 0;
-  count--;
+  count--; // 队列当中数据少一个了
+  // 因为出队了一个数据 可以唤醒一个被 put 函数阻塞的线程 如果这个时候没有被阻塞的线程
+  // 这个函数就不会起作用 也就说在这个函数调用之后被 put 函数挂起的线程也不会被唤醒
   notFull.signal();
   return x;
 }
