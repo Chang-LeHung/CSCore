@@ -194,3 +194,58 @@ private E dequeue() {
 
 同样的道理这里也需要使用`while`循环去进行阻塞，否则可能存在**虚假唤醒**，可能队列当中没有数据返回的数据为 null，而且会破坏队列的结构因为会涉及队列的两个端点的值的改变，也就是`takeIndex`和`putIndex`的改变。
 
+### offer函数
+
+这个函数的作用和put函数一样，只不过当队列满了的时候，这个函数返回false，加入数据成功之后这个函数返回true，下面的代码就比较简单了。
+
+```java
+public boolean offer(E e) {
+  checkNotNull(e);
+  final ReentrantLock lock = this.lock;
+  lock.lock();
+  try {
+    // 如果队列当中的数据个数和数组的长度相等 说明队列满了 直接返回 false 即可
+    if (count == items.length)
+      return false;
+    else {
+      enqueue(e);
+      return true;
+    }
+  } finally {
+    lock.unlock();
+  }
+}
+
+```
+
+### add函数
+
+这个函数和上面两个函数的意义也是一样的，只不过当队列满了之后这个函数会抛出异常。
+
+```java
+public boolean add(E e) {
+  if (offer(e))
+    return true;
+  else
+    throw new IllegalStateException("Queue full");
+}
+
+```
+
+### poll函数
+
+这个函数和take函数的作用差不多，但是这个函数不会阻塞，当队列当中没有数据的时候直接返回null，有数据的话返回数据。
+
+```java
+public E poll() {
+  final ReentrantLock lock = this.lock;
+  lock.lock();
+  try {
+    return (count == 0) ? null : dequeue();
+  } finally {
+    lock.unlock();
+  }
+}
+
+```
+
