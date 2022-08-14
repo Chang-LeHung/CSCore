@@ -152,6 +152,8 @@ try {
 
 ### take函数
 
+这个函数主要是从队列当中取数据，但是当队列为空的时候需要将调用这个方法的线程阻塞。当队列当中有数据的时候，就可以从队列当中取出数据，但是有一点很重要的就是当从队列当中取出数据之后，需要调用`signal`方法，用于唤醒被 put 函数阻塞的线程，因为从队列当中取出数据了，队列肯定已经不满了，因此可以唤醒被 put 函数阻塞的线程了。
+
 ```java
 public E take() throws InterruptedException {
   final ReentrantLock lock = this.lock;
