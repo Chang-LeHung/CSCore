@@ -157,10 +157,13 @@ try {
 ```java
 public E take() throws InterruptedException {
   final ReentrantLock lock = this.lock;
+  // 因为取数据的代码涉及到数据竞争 也就是说多个线程同时竞争 数组数据items 因此需要用锁保护起来
   lock.lockInterruptibly();
   try {
+    // 当 count == 0 说明队列当中没有数据
     while (count == 0)
       notEmpty.await();
+    // 当队列当中还有数据的时候可以将数据出队
     return dequeue();
   } finally {
     lock.unlock();
@@ -172,13 +175,17 @@ private E dequeue() {
   // assert items[takeIndex] != null;
   final Object[] items = this.items;
   @SuppressWarnings("unchecked")
+  // 取出数据
   E x = (E) items[takeIndex];
-  items[takeIndex] = null;
+  items[takeIndex] = null; // 将对应的位置设置为 null 数据就可以被垃圾收集器回收了
   if (++takeIndex == items.length)
     takeIndex = 0;
   count--;
+  // 迭代器也需要出队 如果不了
   if (itrs != null)
     itrs.elementDequeued();
+  // 调用 signal 函数 将被 put 函数阻塞的线程唤醒 如果调用这个方法的时候没有线程阻塞
+  // 那么调用这个方法相当于没有调用 如果有线程阻塞那么将会唤醒一个线程
   notFull.signal();
   return x;
 }
