@@ -55,6 +55,8 @@
 
 ### 构造函数
 
+构造函数的主要功能是申请指定大小的内存空间，并且对类的成员变量进行赋值操作。
+
 ```java
 public ArrayBlockingQueue(int capacity) {
   // capacity 表示用与存储数据的数组的长度
@@ -73,5 +75,33 @@ public ArrayBlockingQueue(int capacity, boolean fair) {
   notFull =  lock.newCondition();
 }
 
+```
+
+### 核心put函数
+
+```java
+public void put(E e) throws InterruptedException {
+  checkNotNull(e);
+  final ReentrantLock lock = this.lock;
+  lock.lockInterruptibly();
+  try {
+    while (count == items.length)
+      notFull.await();
+    enqueue(e);
+  } finally {
+    lock.unlock();
+  }
+}
+
+private void enqueue(E x) {
+  // assert lock.getHoldCount() == 1;
+  // assert items[putIndex] == null;
+  final Object[] items = this.items;
+  items[putIndex] = x;
+  if (++putIndex == items.length)
+    putIndex = 0;
+  count++;
+  notEmpty.signal();
+}
 ```
 
