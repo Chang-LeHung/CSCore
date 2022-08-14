@@ -6,7 +6,7 @@
 
 ## 需求分析
 
-在前面的两片文章[ArrayDeque（JDK双端队列）源码深度剖析](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484612&idx=1&sn=63a5a21fab640619333d9836a000ea44&chksm=cf0c98cdf87b11db7d63b2d028f0a70ea73e7c84338bce8e7cdf4bee9d5b0c7ec2bf23663233&token=1311889589&lang=zh_CN#rd)和[深入剖析（JDK）ArrayQueue源码](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484813&idx=1&sn=ace534e0492bbc9f77b9cf488c7c4edc&chksm=cf0c9984f87b109210387f71d9591450ead667611351cd6857b7accb6f1fdc02939e12ad0434&token=969171239&lang=zh_CN#rd)当中我们仔细介绍了队列的原理，如果大家感兴趣可以查看一下！
+在前面的两篇文章[ArrayDeque（JDK双端队列）源码深度剖析](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484612&idx=1&sn=63a5a21fab640619333d9836a000ea44&chksm=cf0c98cdf87b11db7d63b2d028f0a70ea73e7c84338bce8e7cdf4bee9d5b0c7ec2bf23663233&token=1311889589&lang=zh_CN#rd)和[深入剖析（JDK）ArrayQueue源码](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484813&idx=1&sn=ace534e0492bbc9f77b9cf488c7c4edc&chksm=cf0c9984f87b109210387f71d9591450ead667611351cd6857b7accb6f1fdc02939e12ad0434&token=969171239&lang=zh_CN#rd)当中我们仔细介绍了队列的原理，如果大家感兴趣可以查看一下！
 
 而在本篇文章所谈到的阻塞队列当中，是在并发的情况下使用的，上面所谈到的是队列是**并发不安全**的，但是阻塞队列在并发下情况是安全的。阻塞队列的主要的需求如下：
 
@@ -157,7 +157,7 @@ public boolean offer(E e) {
 
 ### add函数
 
-这个函数和上面两个函数作用一样，也是往队列当中加入数据，但是单队列满了之后这个函数会抛出异常。
+这个函数和上面两个函数作用一样，也是往队列当中加入数据，但当单队列满了之后这个函数会抛出异常。
 
 ```java
 public boolean add(E e) {
@@ -462,7 +462,7 @@ public class Test {
 
 ```
 
-从上面的输出结果我们知道，生产者线程打印5之后被挂起了，因为如果没有被挂起，生产者线程肯定可以一次行输出完成，因为消费者线程阻塞了3秒。但是他没有输出完成说明在打印5之后，因为阻塞队列满了，因而生产者线程被挂起了。然后消费者开始消费，这样阻塞队列当中就有空间了，生产者线程就可以继续生产了。
+从上面的输出结果我们知道，生产者线程打印5之后被挂起了，因为如果没有被挂起，生产者线程肯定可以一次性输出完成，因为消费者线程阻塞了3秒。但是他没有输出完成说明在打印5之后，因为阻塞队列满了，因而生产者线程被挂起了。然后消费者开始消费，这样阻塞队列当中就有空间了，生产者线程就可以继续生产了。
 
 ## 总结
 
