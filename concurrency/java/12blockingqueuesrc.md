@@ -152,3 +152,34 @@ try {
 
 ### take函数
 
+```java
+public E take() throws InterruptedException {
+  final ReentrantLock lock = this.lock;
+  lock.lockInterruptibly();
+  try {
+    while (count == 0)
+      notEmpty.await();
+    return dequeue();
+  } finally {
+    lock.unlock();
+  }
+}
+
+private E dequeue() {
+  // assert lock.getHoldCount() == 1;
+  // assert items[takeIndex] != null;
+  final Object[] items = this.items;
+  @SuppressWarnings("unchecked")
+  E x = (E) items[takeIndex];
+  items[takeIndex] = null;
+  if (++takeIndex == items.length)
+    takeIndex = 0;
+  count--;
+  if (itrs != null)
+    itrs.elementDequeued();
+  notFull.signal();
+  return x;
+}
+
+```
+
