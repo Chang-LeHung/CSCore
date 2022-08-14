@@ -148,6 +148,12 @@
 
 ### 并发数据结构
 
+从零开始自己动手写阻塞队列
+
+- [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486539&idx=1&sn=0bed9e23cf165be130a4f79e36e2c3f8&chksm=cf0c9042f87b195415d0278c0ce34d7f1c354b22246fe2101415174f9a8e3b74bc8830caf18e&token=2045951226&lang=zh_CN#rd)
+
+- [github阅读](/concurrency/java/11blockingqueue.md)
+
 
 
 ## Python
