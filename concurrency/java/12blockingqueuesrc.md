@@ -20,6 +20,22 @@
 
 阅读这部分内容你需要熟悉可重入锁`ReentrantLock`和条件变量`Condition`的使用。
 
+### 数组的循环使用
+
+因为我们是使用数组存储队列当中的数据，从下表为0的位置开始，当我们往队列当中加入一些数据之后，队列的情况可能如下，其中head表示队头，tail表示队尾。
+
+<img src="../../images/arraydeque/26.png" alt="24" style="zoom:80%;" />
+
+在上图的基础之上我们在进行四次出队操作，结果如下：
+
+<img src="../../images/arraydeque/27.png" alt="24" style="zoom:80%;" />
+
+在上面的状态下，我们继续加入8个数据，那么布局情况如下：
+
+<img src="../../images/arraydeque/28.png" alt="24" style="zoom:80%;" />
+
+我们知道上图在加入数据的时候不仅将数组后半部分的空间使用完了，而且可以继续使用前半部分没有使用过的空间，也就是说在队列内部实现了一个循环使用的过程。
+
 ### 字段设计
 
 在JDK当中数组阻塞队列的实现是`ArrayBlockingQueue`类，在他的内部是使用数组实现的，我们现在来看一下它的主要的字段，为了方便阅读将所有的解释说明都写在的注释当中：
@@ -79,28 +95,41 @@ public ArrayBlockingQueue(int capacity, boolean fair) {
 
 ### 核心put函数
 
+这个函数是阻塞队列对核心的函数之一了，首先我们需要了解的是，如果一个线程调用了这个函数往队列当中加入数据，如果此时队列已经满了则线程需要被挂起，如果没有满则需要将数据加入到队列当中，也就是将数据存储到数组当中。注意还有一个很重要的一点是，当我们往队列当中加入一个数据之后需要发一个信号给其他被`take`函数阻塞的线程，因为这些线程在取数据的时候可能队列当中已经空了，因此需要将这些线程唤醒。
+
 ```java
 public void put(E e) throws InterruptedException {
-  checkNotNull(e);
+  checkNotNull(e); // 保证输入的数据不为 null 
   final ReentrantLock lock = this.lock;
+  // 进行加锁操作，因为下面是临界区
   lock.lockInterruptibly();
   try {
-    while (count == items.length)
+    while (count == items.length) // 如果队列已经满了 也就是队列当中数据的个数 count == 数组的长度的话 就需要将线程挂起
       notFull.await();
+    // 当队列当中有空间的之后将数据加入到队列当中 这个函数在下面仔细分析
     enqueue(e);
   } finally {
     lock.unlock();
   }
 }
 
+private static void checkNotNull(Object v) {
+  if (v == null)
+    throw new NullPointerException();
+}
+
 private void enqueue(E x) {
   // assert lock.getHoldCount() == 1;
   // assert items[putIndex] == null;
+  // 进入这个函数的线程已经在 put 函数当中加上锁了 因此这里不需要加锁
   final Object[] items = this.items;
   items[putIndex] = x;
-  if (++putIndex == items.length)
+  if (++putIndex == items.length) // 因为这个数据是循环使用的 因此可以回到下标为0的位置
+    // 因为队列当中的数据可以出队 因此下标为 0 的位置不存在数据可以使用
     putIndex = 0;
   count++;
+  // 在这里需要将一个被 take 函数阻塞的线程唤醒 如果调用这个方法的时候没有线程阻塞
+  // 那么调用这个方法相当于没有调用 如果有线程阻塞那么将会唤醒一个线程
   notEmpty.signal();
 }
 ```
