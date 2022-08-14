@@ -99,14 +99,14 @@ public ArrayBlockingQueue(int capacity, boolean fair) {
 
 ```java
 public void put(E e) throws InterruptedException {
-  checkNotNull(e); // 保证输入的数据不为 null 
+  checkNotNull(e); // 保证输入的数据不为 null 代码在下方
   final ReentrantLock lock = this.lock;
   // 进行加锁操作，因为下面是临界区
   lock.lockInterruptibly();
   try {
     while (count == items.length) // 如果队列已经满了 也就是队列当中数据的个数 count == 数组的长度的话 就需要将线程挂起
       notFull.await();
-    // 当队列当中有空间的之后将数据加入到队列当中 这个函数在下面仔细分析
+    // 当队列当中有空间的之后将数据加入到队列当中 这个函数在下面仔细分析 代码在下方
     enqueue(e);
   } finally {
     lock.unlock();
@@ -133,4 +133,20 @@ private void enqueue(E x) {
   notEmpty.signal();
 }
 ```
+
+**注意**：这里有一个地方非常容易被忽略，那就是在将线程挂起的时候使用的是`while`循环而不是`if`条件语句，代码：
+
+```java
+final ReentrantLock lock = this.lock;
+lock.lockInterruptibly();
+try {
+  while (count == items.length)
+    notFull.await();
+  enqueue(e);
+} finally {
+  lock.unlock();
+}
+```
+
+这是因为，线程被唤醒之后并不会立马执行，因为线程在调用`await`方法的之后会释放锁🔒，他想再次执行还需要再次获得锁，然后就在他获取锁之前的这段时间里面，可能其他的线程也会从数组当中放数据，因此这个线程执行的时候队列可能还是满的，因此需要再次判断，否则就会覆盖数据。这种现象叫做**虚假唤醒**。
 
