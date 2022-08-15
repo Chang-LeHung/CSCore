@@ -2,7 +2,7 @@
 
 ## 前言
 
-在前面一便文章[从零开始自己动手写阻塞队列](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486539&idx=1&sn=0bed9e23cf165be130a4f79e36e2c3f8&chksm=cf0c9042f87b195415d0278c0ce34d7f1c354b22246fe2101415174f9a8e3b74bc8830caf18e&token=2045951226&lang=zh_CN#rd)当中我们仔细介绍了阻塞队列提供给我们的功能，以及他的实现原理，并且基于谈到的内容我们自己实现了一个低配版的**数组阻塞队列**。在这篇文章当中我们将仔细介绍JDK具体是如何实现**数组阻塞队列**的。
+在前面一篇文章[从零开始自己动手写阻塞队列](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486539&idx=1&sn=0bed9e23cf165be130a4f79e36e2c3f8&chksm=cf0c9042f87b195415d0278c0ce34d7f1c354b22246fe2101415174f9a8e3b74bc8830caf18e&token=2045951226&lang=zh_CN#rd)当中我们仔细介绍了阻塞队列提供给我们的功能，以及他的实现原理，并且基于谈到的内容我们自己实现了一个低配版的**数组阻塞队列**。在这篇文章当中我们将仔细介绍JDK具体是如何实现**数组阻塞队列**的。
 
 ## 阻塞队列的功能
 
@@ -79,7 +79,7 @@ public ArrayBlockingQueue(int capacity) {
   this(capacity, false);
 }
 // fair 这个参数主要是用于说明 是否使用公平锁
-// 如果为 true 表示使用公平锁 执行效率弟 但是各个线程进入临界区的顺序是先来后到的顺序 更加公平
+// 如果为 true 表示使用公平锁 执行效率低 但是各个线程进入临界区的顺序是先来后到的顺序 更加公平
 // 如果为 false 表示使用非公平锁 执行效率更高
 public ArrayBlockingQueue(int capacity, boolean fair) {
   if (capacity <= 0)
