@@ -47,15 +47,13 @@
 - 从零开始自己动手写阻塞队列
 
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486539&idx=1&sn=0bed9e23cf165be130a4f79e36e2c3f8&chksm=cf0c9042f87b195415d0278c0ce34d7f1c354b22246fe2101415174f9a8e3b74bc8830caf18e&token=2045951226&lang=zh_CN#rd)
-
   - [github阅读](/concurrency/java/11blockingqueue.md)
-  
+
 - JDK数组阻塞队列源码深入剖析
 
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486596&idx=1&sn=43b09e72333f1561c3cc77aad26b2a1d&chksm=cf0c908df87b199ba77bb0dc9db95bf360dacfd1986d4d1c007154312cef6a25750b58c38bdb&token=2045951226&lang=zh_CN#rd)
+  - [github阅读](/concurrency/java/12blockingqueuesrc.md)
 
-  
-    - [github阅读](/concurrency/java/12blockingqueuesrc.md)
 
 ---
 
@@ -166,16 +164,13 @@
 - 从零开始自己动手写阻塞队列
 
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486539&idx=1&sn=0bed9e23cf165be130a4f79e36e2c3f8&chksm=cf0c9042f87b195415d0278c0ce34d7f1c354b22246fe2101415174f9a8e3b74bc8830caf18e&token=2045951226&lang=zh_CN#rd)
-  
-  
-    - [github阅读](/concurrency/java/11blockingqueue.md)
-  
+  - [github阅读](/concurrency/java/11blockingqueue.md)
+
 - JDK数组阻塞队列源码深入剖析
 
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486596&idx=1&sn=43b09e72333f1561c3cc77aad26b2a1d&chksm=cf0c908df87b199ba77bb0dc9db95bf360dacfd1986d4d1c007154312cef6a25750b58c38bdb&token=2045951226&lang=zh_CN#rd)
-  
-  
-    - [github阅读](/concurrency/java/12blockingqueuesrc.md)
+  - [github阅读](/concurrency/java/12blockingqueuesrc.md)
+
 
 
 
