@@ -227,19 +227,17 @@ public void unpark(Thread thread) {
   try {
     if (permits.get(t) == null) // 如果还没有创建许可证变量 说明线程当前的许可证数量等于初始数量也就是0 因此方法许可证之后 许可证的数量为 1
       permits.put(t, 1);
-    else if (permits.get(t) == -1) { // 如果许可证
+    else if (permits.get(t) == -1) { // 如果许可证数量为-1，则说明肯定线程 thread 调用了park方法，而且线程 thread已经被挂起了 因此在 unpark 函数当中不急需要将许可证数量这是为0 同时还需要将线程唤醒
       permits.put(t, 0);
       conditions.get(t).signal();
-    }else if (permits.get(t) == 0) {
+    }else if (permits.get(t) == 0) { // 如果许可证数量为0 说明线程正在执行 因此许可证数量加一
       permits.put(t, 1);
-    }
+    } // 除此之外就是许可证为1的情况了 在这种情况下是不需要进行操作的 因为许可证最大的数量就是1
   }finally {
     lock.unlock();
   }
 }
 ```
-
-
 
 完整代码如下：
 
@@ -299,4 +297,14 @@ public class Parker {
 }
 
 ```
+
+## 总结
+
+---
+
+以上就是本篇文章的所有内容了，我是**LeHung**，我们下期再见！！！更多精彩内容合集可访问项目：<https://github.com/Chang-LeHung/CSCore>
+
+关注公众号：**一无是处的研究僧**，了解更多计算机（Java、Python、计算机系统基础、算法与数据结构）知识。
+
+![](https://img2022.cnblogs.com/blog/2519003/202207/2519003-20220703200459566-1837431658.jpg)
 
