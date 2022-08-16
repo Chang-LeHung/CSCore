@@ -171,15 +171,19 @@ public class Demo03 {
 - Condition.signal 方法用于将线程唤醒。
 - 因为我们在unpark方法当中需要传入具体的线程，将这个线程发放许可证，因此我们需要为每一个线程维护一个**计数器**和**条件变量**。
 
+### 具体实现
+
 因此综合上面的分析我们的类变量如下：
 
 ```java
-private final ReentrantLock lock;
-private final HashMap<Thread, Integer> permits;
-private final HashMap<Thread, Condition> conditions;
+private final ReentrantLock lock; // 用于保护临界去
+private final HashMap<Thread, Integer> permits; // 许可证的数量
+private final HashMap<Thread, Condition> conditions; // 用于唤醒和阻塞线程的条件变量
 ```
 
 
+
+完整代码如下：
 
 ```java
 import java.util.HashMap;
