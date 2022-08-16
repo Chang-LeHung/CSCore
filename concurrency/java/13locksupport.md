@@ -195,17 +195,18 @@ public Parker() {
 
 ```java
 public void park() {
-  Thread t = Thread.currentThread();
-  if (conditions.get(t) == null) {
+  Thread t = Thread.currentThread(); // 首先得到当前正在执行的线程
+  if (conditions.get(t) == null) { // 如果还没有线程对应的condition的话就进行创建
     conditions.put(t, lock.newCondition());
   }
   lock.lock();
   try {
+    // 如果许可证变量还没有创建 或者许可证等于0 说明没有许可证了 线程需要被挂起
     if (permits.get(t) == null || permits.get(t) == 0) {
-      permits.put(t, -1);
+      permits.put(t, -1); // 同时许可证的数目应该设置为-1
       conditions.get(t).await();
     }else if (permits.get(t) > 0) {
-      permits.put(t, 0);
+      permits.put(t, 0); // 如果许可证的数目大于0 也就是为1 说明线程已经有了许可证因此可以直接被放行 但是需要消耗一个许可证
     }
   } catch (InterruptedException e) {
     e.printStackTrace();
@@ -221,12 +222,12 @@ public void park() {
 
 ```java
 public void unpark(Thread thread) {
-  Thread t = thread;
+  Thread t = thread; // 给线程 thread 发放一个许可证
   lock.lock();
   try {
-    if (permits.get(t) == null)
+    if (permits.get(t) == null) // 如果还没有创建许可证变量 说明线程当前的许可证数量等于初始数量也就是0 因此方法许可证之后 许可证的数量为 1
       permits.put(t, 1);
-    else if (permits.get(t) == -1) {
+    else if (permits.get(t) == -1) { // 如果许可证
       permits.put(t, 0);
       conditions.get(t).signal();
     }else if (permits.get(t) == 0) {
