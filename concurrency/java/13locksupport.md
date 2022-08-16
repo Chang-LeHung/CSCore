@@ -138,11 +138,72 @@ public class Demo03 {
 
 **其实JVM在实现LockSupport的时候，内部会给每一个线程维护一个计数器变量`_counter`，这个变量是表示的含义是“许可证的数量”，只有当许可证的数量大于等于0的时候线程才可以执行，同时许可证最大的数量只能为1。当调用一次park的时候许可证的数量会减一。当调用一次unpark的时候计数器就会加一，但是计数器的值不能超过1**。
 
-- 如果我们在调用park的时候，计数器的值等于1，计数器的值变为-1，则线程可以继续执行。
+- 如果我们在调用park的时候，计数器的值等于1，计数器的值变为0，则线程可以继续执行。
 - 如果我们在调用park的时候，计数器的值等于0，计数器的值变为-1，则线程不可以继续执行，需要将线程挂起。
 - 如果我们在调用unpark的时候，被unpark的线程的计数器的值等于0，则需要将计数器的值变为1。
 - 如果我们在调用unpark的时候，被unpark的线程的计数器的值等于1，则不需要改变计数器的值，因为计数器的最大值就是1。
 - 如果我们在调用unpark的时候，被unpark的线程的计数器的值等于-1，则需要改变计数器的值，将计数器的值改成0，同时需要唤醒线程。
 
 ## 自己动手实现自己的LockSupport
+
+在前文当中我们已经介绍了locksupport的原理，
+
+
+
+```java
+import java.util.HashMap;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class Parker {
+
+  private final ReentrantLock lock;
+  private final HashMap<Thread, Integer> permits;
+  private final HashMap<Thread, Condition> conditions;
+
+  public Parker() {
+    lock = new ReentrantLock();
+    permits = new HashMap<>();
+    conditions = new HashMap<>();
+  }
+
+  public void park() {
+    Thread t = Thread.currentThread();
+    if (conditions.get(t) == null) {
+      conditions.put(t, lock.newCondition());
+    }
+    lock.lock();
+    try {
+      if (permits.get(t) == null || permits.get(t) == 0) {
+        permits.put(t, -1);
+        conditions.get(t).await();
+      }else if (permits.get(t) > 0) {
+        permits.put(t, 0);
+      }
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    } finally {
+      lock.unlock();
+    }
+  }
+
+  public void unpark(Thread thread) {
+    Thread t = thread;
+    lock.lock();
+    try {
+      if (permits.get(t) == null)
+        permits.put(t, 1);
+      else if (permits.get(t) == -1) {
+        permits.put(t, 0);
+        conditions.get(t).signal();
+      }else if (permits.get(t) == 0) {
+        permits.put(t, 1);
+      }
+    }finally {
+      lock.unlock();
+    }
+  }
+}
+
+```
 
