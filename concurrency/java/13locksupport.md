@@ -76,3 +76,61 @@ park 之后
 
 在上面的代码当中主线程会先进行`unpark`操作，然后线程thread才进行`park`操作，这种情况下程序也可以正常执行。但是如果是signal的调用在await调用之前的话，程序则不会执行完成，比如下面的代码：
 
+```java
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class Demo03 {
+
+  private static final ReentrantLock lock = new ReentrantLock();
+  private static final Condition condition = lock.newCondition();
+
+  public static void thread() throws InterruptedException {
+    lock.lock();
+
+    try {
+      TimeUnit.SECONDS.sleep(5);
+      condition.await();
+      System.out.println("等待完成");
+    }finally {
+      lock.unlock();
+    }
+  }
+
+  public static void mainThread() {
+    lock.lock();
+    try {
+      System.out.println("发送信号");
+      condition.signal();
+    }finally {
+      lock.unlock();
+      System.out.println("主线程解锁完成");
+    }
+  }
+
+  public static void main(String[] args) {
+    Thread thread = new Thread(() -> {
+      try {
+        thread();
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    });
+    thread.start();
+
+    mainThread();
+  }
+}
+
+```
+
+上面的代码输出如下：
+
+```
+发送信号
+主线程解锁完成
+```
+
+在上面的代码当中“等待完成“始终是不会被打印出来的，这是因为signal函数的调用在await之前，signal函数只会对在它之前执行的await函数有效果，对在其后面调用的await是不会产生影响的。
+
