@@ -80,6 +80,9 @@
 - 深入剖析多重背包问题（下篇）
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484703&idx=1&sn=d0fb3c949b99a803a30a5dd1452d7bce&chksm=cf0c9916f87b10002e32bf8acfa298c1201d33793c80beb538ac099024868373e4c7a5b35a53&token=1311889589&lang=zh_CN#rd)
   - [github阅读](./datastructr&algorithm/04多重背包v2.md)
+- 完全背包转化为多重背包
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486630&idx=1&sn=3132f69c0fb2207e9d4677f304eba63d&chksm=cf0c90aff87b19b9c427ff6d76e31666aef8feb8e02373b07fbaea7642c386b232f76ac80c16&token=1278893481&lang=zh_CN#rd)
+  - [github阅读](./datastructr&algorithm/14深入剖析完全背包.md)
 - 深入浅出零钱兑换问题——背包问题的套壳
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247485777&idx=1&sn=69ffd91b7669704c03127ecb9a18381c&chksm=cf0c9558f87b1c4e3df12503c6d933c5693f05dba9c60df278db1601026d3bd14221bda5ef64&token=1645117295&lang=zh_CN#rd)
   - [github阅读](./datastructr&algorithm/13零钱兑换.md)
