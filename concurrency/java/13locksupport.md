@@ -41,3 +41,38 @@ park 之后
 
 咋一看上面的LockSupport的park和unpark实现的功能和await和signal实现的功能好像是一样的，但是其实不然，我们来看下面的代码：
 
+```java
+
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.LockSupport;
+
+public class Demo02 {
+  public static void main(String[] args) throws InterruptedException {
+    Thread thread = new Thread(() -> {
+      try {
+        TimeUnit.SECONDS.sleep(5);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+      System.out.println("park 之前");
+      LockSupport.park(); // 线程 thread 后进行 park 操作 
+      System.out.println("park 之后");
+    });
+    thread.start();
+    System.out.println("主线程 unpark thread");
+    LockSupport.unpark(thread); // 先进行 unpark 操作
+
+  }
+}
+```
+
+上面代码输出结果如下：
+
+```java
+主线程 unpark thread
+park 之前
+park 之后
+```
+
+在上面的代码当中主线程会先进行`unpark`操作，然后线程thread才进行`park`操作，这种情况下程序也可以正常执行。但是如果是signal的调用在await调用之前的话，程序则不会执行完成，比如下面的代码：
+
