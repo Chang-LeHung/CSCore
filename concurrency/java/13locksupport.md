@@ -239,7 +239,7 @@ public void unpark(Thread thread) {
 }
 ```
 
-完整代码如下：
+### 完整代码
 
 ```java
 import java.util.HashMap;
@@ -297,6 +297,48 @@ public class Parker {
 }
 
 ```
+
+其实在JVM底层对于park和unpark的实现也是基于锁和条件变量的，只不过是用更加底层的操作系统提供的API进行实现的，但是原理是相仿的。
+
+比如下面的就是JVM实现的unpark方法：
+
+```C++
+void Parker::unpark() {
+  int s, status;
+  // 进行加锁操作 相当于 可重入锁的 lock.lock()
+  status = pthread_mutex_lock(_mutex);
+  assert (status == 0, "invariant");
+  s = _counter;
+  _counter = 1;
+  if (s < 1) {
+    // 如果许可证小于 1 进行下面的操作
+    if (WorkAroundNPTLTimedWaitHang) {
+      // 这行代码相当于 condition.signal() 唤醒线程
+      status = pthread_cond_signal (_cond);
+      assert (status == 0, "invariant");
+      // 解锁操作 相当于可重入锁的 lock.unlock()
+      status = pthread_mutex_unlock(_mutex);
+      assert (status == 0, "invariant");
+    } else {
+      status = pthread_mutex_unlock(_mutex);
+      assert (status == 0, "invariant");
+      status = pthread_cond_signal (_cond);
+      assert (status == 0, "invariant");
+    }
+  } else {
+    // 如果有许可证 也就是 s == 1 那么不许要将线程挂起
+    // 解锁操作 相当于可重入锁的 lock.unlock()
+    pthread_mutex_unlock(_mutex);
+    assert (status == 0, "invariant");
+  }
+}
+```
+
+
+
+
+
+
 
 ## 总结
 
