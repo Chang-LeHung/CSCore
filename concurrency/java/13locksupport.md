@@ -173,12 +173,69 @@ public class Demo03 {
 
 ### 具体实现
 
-因此综合上面的分析我们的类变量如下：
+- 因此综合上面的分析我们的类变量如下：
 
 ```java
 private final ReentrantLock lock; // 用于保护临界去
 private final HashMap<Thread, Integer> permits; // 许可证的数量
 private final HashMap<Thread, Condition> conditions; // 用于唤醒和阻塞线程的条件变量
+```
+
+- 构造函数主要对变量进行赋值：
+
+```java
+public Parker() {
+  lock = new ReentrantLock();
+  permits = new HashMap<>();
+  conditions = new HashMap<>();
+}
+```
+
+- park方法
+
+```java
+public void park() {
+  Thread t = Thread.currentThread();
+  if (conditions.get(t) == null) {
+    conditions.put(t, lock.newCondition());
+  }
+  lock.lock();
+  try {
+    if (permits.get(t) == null || permits.get(t) == 0) {
+      permits.put(t, -1);
+      conditions.get(t).await();
+    }else if (permits.get(t) > 0) {
+      permits.put(t, 0);
+    }
+  } catch (InterruptedException e) {
+    e.printStackTrace();
+  } finally {
+    lock.unlock();
+  }
+}
+
+
+```
+
+- unpark方法
+
+```java
+public void unpark(Thread thread) {
+  Thread t = thread;
+  lock.lock();
+  try {
+    if (permits.get(t) == null)
+      permits.put(t, 1);
+    else if (permits.get(t) == -1) {
+      permits.put(t, 0);
+      conditions.get(t).signal();
+    }else if (permits.get(t) == 0) {
+      permits.put(t, 1);
+    }
+  }finally {
+    lock.unlock();
+  }
+}
 ```
 
 
