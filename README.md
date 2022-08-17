@@ -161,6 +161,10 @@
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486484&idx=1&sn=fc391789b861083aad6fd9757968557b&chksm=cf0c901df87b190bf1602e5357ba5ff13875665b86e4872fbd6e3a9f0949330b1c88d07dd69e&token=2045951226&lang=zh_CN#rd)
 
   - [github阅读](/concurrency/java/10spinlock.md)
+- 60行自己动手写LockSupport是什么体验？
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486695&idx=1&sn=a980a07d436ba264bc83c17b65963e06&chksm=cf0c90eef87b19f8d179f9ba76dd524cfa2bc9965e630b97672f282674d76779b485f241be76&token=1278893481&lang=zh_CN#rd)
+
+  - [github阅读](/concurrency/java/13locksupport.md)
 
 ### 并发数据结构
 
