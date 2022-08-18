@@ -56,3 +56,45 @@ while (true) {
 - `take`函数，从队列当中取出数据，但是当队列为空的时候需要将调用这个方法的线程阻塞。当队列当中有数据的时候，就可以从队列当中取出数据。
 - 需要注意的是，如果一个线程被上面两个任何一个线程阻塞之后，可以调用对应线程的`interrupt`方法终止线程的执行，同时还会抛出一个异常。
 
+下面是一份测试代码：
+
+```java
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.TimeUnit;
+
+public class QueueTest {
+
+  public static void main(String[] args) throws InterruptedException {
+    ArrayBlockingQueue<Integer> queue = new ArrayBlockingQueue<Integer>(5);
+    Thread thread = new Thread(() -> {
+      for (int i = 0; i < 10; i++) {
+        try {
+          queue.put(i);
+          System.out.println("数据 " + i + "被加入到队列当中");
+        } catch (InterruptedException e) {
+          System.out.println("出现了中断异常");
+          // 如果出现中断异常 则退出 线程就不会一直在这个地方被挂起了
+          return;
+        }finally {
+        }
+      }
+    });
+    thread.start();
+    TimeUnit.SECONDS.sleep(1);
+    thread.interrupt();
+  }
+}
+
+```
+
+上面代码输出结果：
+
+```
+数据 0被加入到队列当中
+数据 1被加入到队列当中
+数据 2被加入到队列当中
+数据 3被加入到队列当中
+数据 4被加入到队列当中
+出现了中断异常
+```
+
