@@ -73,7 +73,7 @@ public class QueueTest {
           System.out.println("数据 " + i + "被加入到队列当中");
         } catch (InterruptedException e) {
           System.out.println("出现了中断异常");
-          // 如果出现中断异常 则退出 线程就不会一直在这个地方被挂起了
+          // 如果出现中断异常 则退出 线程就不会一直在 put 方法被挂起了
           return;
         }finally {
         }
@@ -101,4 +101,58 @@ public class QueueTest {
 上面代码的执行顺序是：
 
 线程`thread`会将0-4这5个数据加入到队列当中，但是在加入第6个数据的时候，阻塞队列已经满了，因此在加入数据的时候线程`thread`会被阻塞，然后主线程在休息一秒之后中断了线程`thread`，然后线程`thread`发生了中断异常，然后被捕获进入`catch`代码块，然后函数返回，线程`thread`就不会一直被阻塞了，这一点在我们后面写线程池非常重要！！！
+
+## 线程池设计
+
+在前文当中我们已经提到了我们的线程需要不断的去任务队列里面取出任务然后执行，我们设计一个`Worker`类去做这件事！
+
+- 首先在类当中肯定需要有一个线程池的任务队列，因为`worker`需要不断的从阻塞队列当中取出任务进行执行。
+- 我们用一个`isStopped`变量表示线程是否需要终止了。
+- 我们还需要有一个变量记录执行任务的线程，因为当我们需要关闭线程池的时候需要，需要等待任务队列当中所有的任务执行完成，那么当所有的任务都执行执行完成的时候，队列肯定是空的，而如果这个时候有线程还去取任务，那么肯定会被阻塞，前面已经提到了`ArrayBlockingQueue`的使用方法了，我们可以使用这个线程的`interrupt`的方法去中断这个线程的执行，这个线程会出现异常，然后这个线程捕获这个异常就可以退出了！
+
+```java
+import java.util.concurrent.ArrayBlockingQueue;
+
+public class Worker implements Runnable {
+
+  // 用于保存任务的队列
+  private ArrayBlockingQueue<Runnable> tasks;
+  // 线程的状态 是否终止
+  private volatile boolean isStopped;
+
+  // 保存执行 run 方法的线程
+  private volatile Thread thisThread;
+
+  public Worker(ArrayBlockingQueue<Runnable> tasks) {
+    this.tasks = tasks;
+  }
+
+  @Override
+  public void run() {
+    thisThread = Thread.currentThread();
+    while (!isStopped) {
+      try {
+        Runnable task = tasks.take();
+        task.run();
+      } catch (InterruptedException e) {
+        // do nothing
+      }
+    }
+  }
+	// 注意是其他线程调用这个方法 同时需要注意是 thisThread 这个线程在执行上面的 run 方法
+  // 其他线程调用 thisThread 的 interrupt 方法之后 thisThread 会出现异常 然后就不会一直阻塞了
+  // 会判断 isStopped 是否为 true 如果为 true 的话就可以退出 while 循环了
+  public void stop() {
+    isStopped = true;
+    thisThread.interrupt(); // 中断线程 thisThread
+  }
+
+  public boolean isStopped(){
+    return isStopped;
+  }
+}
+
+```
+
+
 
