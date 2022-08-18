@@ -107,8 +107,10 @@ public class QueueTest {
 在前文当中我们已经提到了我们的线程需要不断的去任务队列里面取出任务然后执行，我们设计一个`Worker`类去做这件事！
 
 - 首先在类当中肯定需要有一个线程池的任务队列，因为`worker`需要不断的从阻塞队列当中取出任务进行执行。
-- 我们用一个`isStopped`变量表示线程是否需要终止了。
-- 我们还需要有一个变量记录执行任务的线程，因为当我们需要关闭线程池的时候需要，需要等待任务队列当中所有的任务执行完成，那么当所有的任务都执行执行完成的时候，队列肯定是空的，而如果这个时候有线程还去取任务，那么肯定会被阻塞，前面已经提到了`ArrayBlockingQueue`的使用方法了，我们可以使用这个线程的`interrupt`的方法去中断这个线程的执行，这个线程会出现异常，然后这个线程捕获这个异常就可以退出了！
+- 我们用一个`isStopped`变量表示线程是否需要终止了，也就是线程池是否需要关闭，如果线程池需要关闭了，那么线程也应该停止了。
+- 我们还需要有一个变量记录执行任务的线程，因为当我们需要关闭线程池的时候需要等待任务队列当中所有的任务执行完成，那么当所有的任务都执行执行完成的时候，队列肯定是空的，而如果这个时候有线程还去取任务，那么肯定会被阻塞，前面已经提到了`ArrayBlockingQueue`的使用方法了，我们可以使用这个线程的`interrupt`的方法去中断这个线程的执行，这个线程会出现异常，然后这个线程捕获这个异常就可以退出了，因此我们需要知道对那个线程执行`interrupt`方法！
+
+`Worker`实现的代码如下：
 
 ```java
 import java.util.concurrent.ArrayBlockingQueue;
@@ -124,6 +126,7 @@ public class Worker implements Runnable {
   private volatile Thread thisThread;
 
   public Worker(ArrayBlockingQueue<Runnable> tasks) {
+    // 这个参数是线程池当中传入的
     this.tasks = tasks;
   }
 
@@ -154,5 +157,84 @@ public class Worker implements Runnable {
 
 ```
 
+线程池实现代码：
 
+```java
+import java.util.ArrayList;
+import java.util.concurrent.ArrayBlockingQueue;
 
+public class MyFixedThreadPool {
+  // 用于存储任务的阻塞队列
+  private ArrayBlockingQueue<Runnable> taskQueue;
+
+  // 保存线程池当中所有的线程
+  private ArrayList<Worker> threadLists;
+
+  // 线程池是否关闭
+  private boolean isShutDown;
+
+  // 线程池当中的线程数目
+  private int numThread;
+
+  public MyFixedThreadPool(int i) {
+    this(Runtime.getRuntime().availableProcessors() + 1, 1024);
+  }
+
+  public MyFixedThreadPool(int numThread, int maxTaskNumber) {
+    this.numThread = numThread;
+    taskQueue = new ArrayBlockingQueue<>(maxTaskNumber);
+    threadLists = new ArrayList<>();
+    for (int i = 0; i < numThread; i++) {
+      Worker worker = new Worker(taskQueue);
+      threadLists.add(worker);
+    }
+    for (int i = 0; i < threadLists.size(); i++) {
+      new Thread(threadLists.get(i),
+              "ThreadPool-Thread-" + i).start();
+    }
+  }
+
+  private void stopAllThread() {
+    for (Worker worker : threadLists) {
+      worker.stop();
+    }
+  }
+
+  public void shutDown() {
+    // 等待任务队列当中的任务执行完成
+    while (taskQueue.size() != 0) {
+      Thread.yield();
+    }
+    // 停止所有线程的执行
+    stopAllThread();
+  }
+
+  public void submit(Runnable runnable) {
+    try {
+      taskQueue.put(runnable);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+  }
+}
+
+```
+
+测试代码：
+
+```java
+public class Test {
+
+  public static void main(String[] args) {
+    MyFixedThreadPool pool = new MyFixedThreadPool(5, 1024);
+    for (int i = 0; i < 1000000; i++) {
+      pool.submit(() -> {
+        System.out.println(Thread.currentThread().getName());
+      });
+    }
+    pool.shutDown();
+  }
+}
+```
+
+上面的代码是可以正常执行并且结束的，这个输出太长了这里就不进行列出了。
