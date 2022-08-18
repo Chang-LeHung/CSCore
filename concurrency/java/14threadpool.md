@@ -65,7 +65,7 @@ import java.util.concurrent.TimeUnit;
 public class QueueTest {
 
   public static void main(String[] args) throws InterruptedException {
-    ArrayBlockingQueue<Integer> queue = new ArrayBlockingQueue<Integer>(5);
+    ArrayBlockingQueue<Integer> queue = new ArrayBlockingQueue<Integer>(5); // 队列的容量为5
     Thread thread = new Thread(() -> {
       for (int i = 0; i < 10; i++) {
         try {
@@ -97,4 +97,8 @@ public class QueueTest {
 数据 4被加入到队列当中
 出现了中断异常
 ```
+
+上面代码的执行顺序是：
+
+线程`thread`会将0-4这5个数据加入到队列当中，但是在加入第6个数据的时候，阻塞队列已经满了，因此在加入数据的时候线程`thread`会被阻塞，然后主线程在休息一秒之后中断了线程`thread`，然后线程`thread`发生了中断异常，然后被捕获进入`catch`代码块，然后函数返回，线程`thread`就不会一直被阻塞了，这一点在我们后面写线程池非常重要！！！
 
