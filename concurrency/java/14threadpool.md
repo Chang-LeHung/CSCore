@@ -222,7 +222,7 @@ public class MyFixedThreadPool {
 
   public void submit(Runnable runnable) {
     try {
-      taskQueue.put(runnable);
+      taskQueue.put(runnable); // 如果任务队列满了， 调用这个方法的线程会被阻塞
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
