@@ -206,7 +206,7 @@ public class MyFixedThreadPool {
   // 停止所有的 worker 这个只在线程池要关闭的时候才会调用
   private void stopAllThread() {
     for (Worker worker : threadLists) {
-      worker.stop();
+      worker.stop(); // 调用 worker 的 stop 方法 让正在执行 worker 当中 run 方法的线程停止执行
     }
   }
 
@@ -237,10 +237,10 @@ public class MyFixedThreadPool {
 public class Test {
 
   public static void main(String[] args) {
-    MyFixedThreadPool pool = new MyFixedThreadPool(5, 1024);
+    MyFixedThreadPool pool = new MyFixedThreadPool(5, 1024); // 开启5个线程 任务队列当中最多只能存1024个任务
     for (int i = 0; i < 1000000; i++) {
       pool.submit(() -> {
-        System.out.println(Thread.currentThread().getName());
+        System.out.println(Thread.currentThread().getName()); // 提交的任务就是打印线程自己的名字
       });
     }
     pool.shutDown();
@@ -248,4 +248,30 @@ public class Test {
 }
 ```
 
-上面的代码是可以正常执行并且结束的，这个输出太长了这里就不进行列出了。
+上面的代码是可以正常执行并且结束的，这个输出太长了这里只列出部分输出结果：
+
+```
+ThreadPool-Thread-0
+ThreadPool-Thread-4
+ThreadPool-Thread-0
+ThreadPool-Thread-1
+ThreadPool-Thread-3
+ThreadPool-Thread-1
+ThreadPool-Thread-3
+ThreadPool-Thread-3
+ThreadPool-Thread-3
+ThreadPool-Thread-3
+ThreadPool-Thread-3
+ThreadPool-Thread-2
+ThreadPool-Thread-3
+ThreadPool-Thread-2
+ThreadPool-Thread-1
+ThreadPool-Thread-0
+ThreadPool-Thread-0
+ThreadPool-Thread-0
+ThreadPool-Thread-1
+ThreadPool-Thread-4
+```
+
+从上面的输出我们可以看见线程池当中只有5个线程。
+
