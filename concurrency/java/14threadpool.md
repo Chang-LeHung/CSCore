@@ -161,7 +161,7 @@ public class Worker implements Runnable {
 
 - 首先线程池需要可以指定有多少个线程，阻塞队列的最大长度，因此我们需要有这两个参数。
 - 线程池肯定需要有一个队列去存放通过`submit`函数提交的任务。
-- 需要有一个变量存储所有的woker，因为线程池关闭的时候需要将这些worker都停下来。
+- 需要有一个变量存储所有的woker，因为线程池关闭的时候需要将这些worker都停下来，也就是调用worker的stop方法。
 - 需要有一个`shutDown`函数表示关闭线程池。
 - 需要有一个函数能够停止所有线程的执行，因为关闭线程池就是让所有线程的工作停下来。
 
@@ -190,18 +190,20 @@ public class MyFixedThreadPool {
 
   public MyFixedThreadPool(int numThread, int maxTaskNumber) {
     this.numThread = numThread;
-    taskQueue = new ArrayBlockingQueue<>(maxTaskNumber);
+    taskQueue = new ArrayBlockingQueue<>(maxTaskNumber); // 创建阻塞队列
     threadLists = new ArrayList<>();
+    // 将所有的 worker 都保存下来
     for (int i = 0; i < numThread; i++) {
       Worker worker = new Worker(taskQueue);
       threadLists.add(worker);
     }
     for (int i = 0; i < threadLists.size(); i++) {
       new Thread(threadLists.get(i),
-              "ThreadPool-Thread-" + i).start();
+              "ThreadPool-Thread-" + i).start(); // 让worker开始工作
     }
   }
-
+	
+  // 停止所有的 worker 这个只在线程池要关闭的时候才会调用
   private void stopAllThread() {
     for (Worker worker : threadLists) {
       worker.stop();
@@ -211,9 +213,10 @@ public class MyFixedThreadPool {
   public void shutDown() {
     // 等待任务队列当中的任务执行完成
     while (taskQueue.size() != 0) {
+      // 如果队列当中还有任务 则让出 CPU 的使用权
       Thread.yield();
     }
-    // 停止所有线程的执行
+    // 在所有的任务都被执行完成之后 停止所有线程的执行
     stopAllThread();
   }
 
