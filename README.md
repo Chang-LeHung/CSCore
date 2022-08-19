@@ -165,6 +165,10 @@
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486695&idx=1&sn=a980a07d436ba264bc83c17b65963e06&chksm=cf0c90eef87b19f8d179f9ba76dd524cfa2bc9965e630b97672f282674d76779b485f241be76&token=1278893481&lang=zh_CN#rd)
 
   - [github阅读](/concurrency/java/13locksupport.md)
+- 彻底了解线程池的原理——40行从零开始自己写线程池
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486735&idx=1&sn=0e139e9a38e6f4850c2ed87e3c38e7aa&chksm=cf0c9106f87b1810c29f5b569acbda9335ef6408ae55bb4506b05c638a06e64188b7901c1fdb&token=2018090499&lang=zh_CN#rd)
+
+  - [github阅读](/concurrency/java/14threadpool.md)
 
 ### 并发数据结构
 
