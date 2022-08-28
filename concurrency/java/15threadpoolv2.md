@@ -6,4 +6,4 @@
 
 ## 需求分析
 
-在正式实现我们自己的ThreadPoolExecutor之前我们先来看一下ThreadPoolExecutor给我们提供了一些什么功能。
+在正式实现我们自己的ThreadPoolExecutor之前我们先来看一下ThreadPoolExecutor给我们提供了一些什么功能。ThreadPoolExecutor实现了一个线程池，我们先来看一下他的参数，通过他的参数分析ThreadPoolExecutor给我们提供的大致的功能。
