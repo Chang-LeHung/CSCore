@@ -46,11 +46,35 @@ for (int i = 1; i <= n; i++) {
 
 ![](../../images/backtrace/02.png)
 
-上图是例子的解树，其中绿色的节点表示最终的答案，对于每个节点的数据都有两种选择办法，选和不选，因此上面的解决问题的树结构是一个完全二叉树，我们可以使用深度有限遍历去实现上面的解题过程。从上图来看我们可以进行一些剪枝，当我们选中的数据的个数已经达到`k`的时候我们不需要在进行递归，具体看下图，其中紫色节点表示不需要进行递归的节点：
+上图是例子的解树，其中绿色的节点表示最终的答案，对于每个节点的数据都有两种选择办法，选和不选，因此上面的解决问题的树结构是一个完全二叉树，我们可以使用**深度优先遍历**去实现上面的解题过程。从上图来看我们可以进行一些剪枝，当我们选中的数据的个数已经达到`k`的时候我们不需要在进行递归，具体看下图，其中紫色节点表示不需要进行递归的节点：
 
 ![](../../images/backtrace/03.png)
 
 因此当我们选中的元素达到`k`个的时候，我们就可以退出递归，因此这是我们的一个递归出口。
+
+![](../../images/backtrace/04.png)
+
+除了上面提到的递归出口之外我们还有另外一个隐藏的递归出口。当我们当前选择的数据的个数加上后面还剩下的数据之后还达不到我们所需要的数据的个数`k`的时候，我们也不需要在进行遍历了，可以直接退出递归了。
+
+根据上面我们的思路，我们可以写出下面的代码：
+
+```java
+public void backTrace(int n, int k, List<Integer> path,
+                      int idx) {
+  // idx 表示当前正在遍历的数据
+  if (path.size() == k){ // 如果选中的数据个数达到 k 了那么我们需要将当前选中数据的集合加入到我们返回的数据当中 ans 是选中的所有的数据的个数为 k 的集合
+    ans.add(new ArrayList<>(path));
+    return;
+  } else if ((path.size() + n - idx + 1) < k)
+    return;
+  path.add(idx);
+  backTrace(n, k, path, idx + 1);
+  path.remove(path.size() - 1);
+  backTrace(n, k, path, idx + 1);
+}
+```
+
+
 
 ## 代码实现
 
@@ -70,11 +94,12 @@ public:
         ans.push_back(tmp);
         return;
       }
-      for (int i = cur; i <= n - (k - tmp.size()) + 1 ; ++i) {
-        tmp.push_back(i);
-        backtrace(n, k, tmp, i + 1);
-        tmp.pop_back();
-      }
+      if (tmp.size() + (n - cur) + 1 < k)
+        return;
+      tmp.push_back(cur);
+      backtrace(n, k, tmp, cur + 1);
+      tmp.pop_back();
+      backtrace(n ,k, tmp, cur + 1);
     }
 };
 
@@ -127,7 +152,7 @@ class Solution {
     if (path.size() == k){
       ans.add(new ArrayList<>(path));
       return;
-    } else if ((path.size() + n - idx + 1) < k || idx > n)
+    } else if ((path.size() + n - idx + 1) < k)
       return;
     path.add(idx);
     backTrace(n, k, path, idx + 1);
