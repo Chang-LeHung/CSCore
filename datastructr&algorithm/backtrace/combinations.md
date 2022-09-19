@@ -129,11 +129,39 @@ public void backtrace(int n, int k,
 - 前面两个节点表示选择数据2得到的所有的结果，第二个节点之后的所有节点表示不选择2得到的结果。
 - 前面三个节点表示选择数据3得到的所有的结果，第三个节点之后所有的节点表示不选择3得到的结果。
 
-## 代码实现
+使用第二种方法的完整代码：
+
+```java
+class Solution {
+    private List<List<Integer>> res = new ArrayList<>();
+    private List<Integer> path = new ArrayList<>();
+    public List<List<Integer>> combine(int n, int k) {
+
+        backtrace(n, k, 1);
+        return res;
+    }
+
+    public void backtrace(int n, int k,
+                          int startPosition) {
+        if (path.size() == k) {
+            res.add(new ArrayList<>(path));
+            return;
+        }
+        for (int i = startPosition; i <= n; i++) {
+            path.add(i);
+            backtrace(n, k, i + 1);
+            path.remove(path.size() - 1);
+        }
+    }
+
+}
+```
+
+
 
 ### C++实现
 
-#### 实现方式2
+#### 实现方式1
 
 ```c++
 class Solution {
@@ -189,62 +217,3 @@ public:
     }
 };
 ```
-
-### Java实现
-
-#### 实现方式1
-
-```java
-class Solution {
-  private List<List<Integer>> ans = new ArrayList<>();
-
-  public List<List<Integer>> combine(int n, int k) {
-
-    backTrace(n, k, new ArrayList<>(), 1);
-    return ans;
-  }
-
-  public void backTrace(int n, int k, List<Integer> path,
-                        int idx) {
-    if (path.size() == k){
-      ans.add(new ArrayList<>(path));
-      return;
-    } else if ((path.size() + n - idx + 1) < k)
-      return;
-    path.add(idx);
-    backTrace(n, k, path, idx + 1);
-    path.remove(path.size() - 1);
-    backTrace(n, k, path, idx + 1);
-  }
-
-}
-```
-
-#### 实现方式2
-
-```java
-class Solution {
-    private List<List<Integer>> res = new ArrayList<>();
-    private List<Integer> path = new ArrayList<>();
-    public List<List<Integer>> combine(int n, int k) {
-
-        backtrace(n, k, 1);
-        return res;
-    }
-
-    public void backtrace(int n, int k,
-                          int startPosition) {
-        if (path.size() == k) {
-            res.add(new ArrayList<>(path));
-            return;
-        }
-        for (int i = startPosition; i <= n; i++) {
-            path.add(i);
-            backtrace(n, k, i + 1);
-            path.remove(path.size() - 1);
-        }
-    }
-
-}
-```
-
