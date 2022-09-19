@@ -49,6 +49,32 @@ for (int i = 1; i <= n; i++) {
 ## 代码实现
 
 ```c++
+class Solution {
+    vector<vector<int>> ans;
+public:
+    vector<vector<int>> combine(int n, int k) {
+      backtrace(n, k, vector<int>());
+      return ans;
+    }
+
+    void backtrace(int n, int k, vector<int> tmp, int cur=1) {
+      if (tmp.size() == k) {
+        ans.push_back(tmp);
+        return;
+      }
+      for (int i = cur; i <= n - (k - tmp.size()) + 1 ; ++i) {
+        tmp.push_back(i);
+        backtrace(n, k, tmp, i + 1);
+        tmp.pop_back();
+      }
+    }
+};
+
+```
+
+
+
+```c++
 
 
 #include <vector>
