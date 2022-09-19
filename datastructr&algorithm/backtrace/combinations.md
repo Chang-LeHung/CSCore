@@ -74,11 +74,41 @@ public void backTrace(int n, int k, List<Integer> path,
 }
 ```
 
+完整代码如下：
+
+```java
+class Solution {
+  private List<List<Integer>> ans = new ArrayList<>();
+
+  public List<List<Integer>> combine(int n, int k) {
+
+    backTrace(n, k, new ArrayList<>(), 1);
+    return ans;
+  }
+
+  public void backTrace(int n, int k, List<Integer> path,
+                        int idx) {
+    if (path.size() == k){
+      ans.add(new ArrayList<>(path));
+      return;
+    } else if ((path.size() + n - idx + 1) < k)
+      return;
+    path.add(idx);
+    backTrace(n, k, path, idx + 1);
+    path.remove(path.size() - 1);
+    backTrace(n, k, path, idx + 1);
+  }
+
+}
+```
+
 
 
 ## 代码实现
 
 ### C++实现
+
+#### 实现方式2
 
 ```c++
 class Solution {
@@ -105,7 +135,7 @@ public:
 
 ```
 
-
+#### 实现方式2
 
 ```c++
 
@@ -137,6 +167,8 @@ public:
 
 ### Java实现
 
+#### 实现方式1
+
 ```java
 class Solution {
   private List<List<Integer>> ans = new ArrayList<>();
@@ -162,6 +194,8 @@ class Solution {
 
 }
 ```
+
+#### 实现方式2
 
 ```java
 class Solution {
