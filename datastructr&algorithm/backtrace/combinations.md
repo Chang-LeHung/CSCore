@@ -102,6 +102,23 @@ class Solution {
 }
 ```
 
+除了上面的实现方式之外，我们还有另外一种方式实现**选和不选**的操作。如果我们不选一个数据的话表示我们在后面对数据的选择过程当中就不会选到这个数据了。
+
+```java
+public void backtrace(int n, int k,
+                      int startPosition) {
+  if (path.size() == k) {
+    res.add(new ArrayList<>(path));
+    return;
+  }
+  for (int i = startPosition; i <= n; i++) {
+    path.add(i);
+    backtrace(n, k, i + 1);
+    path.remove(path.size() - 1);
+  }
+}
+```
+
 
 
 ## 代码实现
