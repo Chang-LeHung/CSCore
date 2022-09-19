@@ -48,6 +48,8 @@ for (int i = 1; i <= n; i++) {
 
 ## 代码实现
 
+### C++实现
+
 ```c++
 class Solution {
     vector<vector<int>> ans;
@@ -100,5 +102,59 @@ public:
       }
     }
 };
+```
+
+### Java实现
+
+```java
+class Solution {
+  private List<List<Integer>> ans = new ArrayList<>();
+
+  public List<List<Integer>> combine(int n, int k) {
+
+    backTrace(n, k, new ArrayList<>(), 1);
+    return ans;
+  }
+
+  public void backTrace(int n, int k, List<Integer> path,
+                        int idx) {
+    if (path.size() == k){
+      ans.add(new ArrayList<>(path));
+      return;
+    } else if ((path.size() + n - idx + 1) < k || idx > n)
+      return;
+    path.add(idx);
+    backTrace(n, k, path, idx + 1);
+    path.remove(path.size() - 1);
+    backTrace(n, k, path, idx + 1);
+  }
+
+}
+```
+
+```java
+class Solution {
+    private List<List<Integer>> res = new ArrayList<>();
+    private List<Integer> path = new ArrayList<>();
+    public List<List<Integer>> combine(int n, int k) {
+
+        backtrace(n, k, 1);
+        return res;
+    }
+
+    public void backtrace(int n, int k,
+                          int startPosition) {
+        if (path.size() == k) {
+            res.add(new ArrayList<>(path));
+            return;
+        }
+        for (int i = startPosition; i <= n; i++) {
+            path.add(i);
+            backtrace(n, k, i + 1);
+            path.remove(path.size() - 1);
+        }
+    }
+
+}
 ```
 
