@@ -54,7 +54,7 @@ for (int i = 1; i <= n; i++) {
 
 ![](../../images/backtrace/04.png)
 
-除了上面提到的递归出口之外我们还有另外一个隐藏的递归出口。当我们当前选择的数据的个数加上后面还剩下的数据之后还达不到我们所需要的数据的个数`k`的时候，我们也不需要在进行遍历了，可以直接退出递归了。
+除了上面提到的递归出口之外我们还有另外一个隐藏的递归出口。当我们当前选择的数据的个数加上后面还剩下的所有的数据的时候还达不到我们所需要的数据的个数`k`的时候，我们也不需要在进行遍历了，可以直接退出递归了。
 
 根据上面我们的思路，我们可以写出下面的代码：
 
@@ -67,9 +67,9 @@ public void backTrace(int n, int k, List<Integer> path,
     return;
   } else if ((path.size() + n - idx + 1) < k)
     return;
-  path.add(idx); // 加入一个数据
+  path.add(idx); // 加入一个数据 表示选择数据 idx
   backTrace(n, k, path, idx + 1);
-  path.remove(path.size() - 1); // 在这里进行回溯 因为我们是深度有限遍历，
+  path.remove(path.size() - 1); // 移出上面加入的数据 表示在这里进行回溯 因为我们是深度优先遍历，前面将 idx 加入到了 path 当中 当递归返回的时候我们需要将加入的数据移出 因为这里表示不选择数据 idx 
   backTrace(n, k, path, idx + 1);
 }
 ```
