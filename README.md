@@ -105,6 +105,12 @@
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486020&idx=1&sn=d54b40cc6219855b9708d3fd62023a78&chksm=cf0c964df87b1f5bc42a940a72628b0bb3f251811bdee093e2e94438437d214f8c538f37fba7&token=1645117295&lang=zh_CN#rd)
   - [github阅读](./datastructr&algorithm/12状态机动态规划总结.md)
 
+### 回溯
+
+- 数据的组合
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486020&idx=1&sn=d54b40cc6219855b9708d3fd62023a78&chksm=cf0c964df87b1f5bc42a940a72628b0bb3f251811bdee093e2e94438437d214f8c538f37fba7&token=1645117295&lang=zh_CN#rd)
+  - [github阅读](./datastructr&algorithm/backtrace/01combinations.md)
+
 ### 数据结构
 
 - 深入剖析前缀、中缀、后缀表达式以及表达式求值
@@ -112,8 +118,6 @@
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247485085&idx=1&sn=27950d2ccfa01419c7b434a676cdd5a3&chksm=cf0c9a94f87b138225ddbf0538c8af6de3a22f4e155329735c46369ec01860837df77e8234b7&token=969171239&lang=zh_CN#rd)
 
   - [github阅读](./datastructr&algorithm/07表达式求值.md)
-
-
 
 ## 🔖Java
 
