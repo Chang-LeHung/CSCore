@@ -89,7 +89,70 @@ if(curSum >= target || idx >= candidates.size())
   }
   ```
 
-  
+## 完整代码
+
+### C++版
+
+```C++
+class Solution {
+
+    vector<vector<int>> ans;
+    vector<int> path;
+public:
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        backtrace(candidates, target, 0, 0);
+        return ans;
+    }
+
+    void backtrace(vector<int> &candidates, int target, int idx, int curSum) {
+        if(curSum == target) {
+            ans.push_back(path);
+        }
+        if(curSum >= target || idx >= candidates.size())
+            return;
+        for (int i = idx; i < candidates.size(); ++i) {
+            path.push_back(candidates[i]);
+            curSum += candidates[i];
+            backtrace(candidates, target, i, curSum);
+            path.pop_back();
+            curSum -= candidates[i];
+        }
+    }
+};
+
+```
+
+### Java版
+
+```JAVA
+class Solution {
+    private List<List<Integer>> res = new ArrayList<>();
+    private List<Integer> path = new ArrayList<>();
+
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+
+        solve(candidates, target, 0, 0);
+        return res;
+    }
+
+    public void solve(int[] candidates, int target, int startPosition,
+                      int curSum) {
+        if (curSum == target) {
+            res.add(new ArrayList<>(path));
+            return;
+        }
+        else if (curSum > target) return;
+        for (int i = startPosition; i < candidates.length; i++) {
+            path.add(candidates[i]);
+            curSum += candidates[i];
+            solve(candidates, target, i, curSum);
+            path.remove(path.size() - 1);
+            curSum -= candidates[i];
+        }
+    }
+
+}
+```
 
 
 
