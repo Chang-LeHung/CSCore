@@ -58,13 +58,38 @@
 ## 写代码的流程
 
 - 仔细分析程序递归的过程，分析求解问题的树，得到代码的主题思路，根据分析的结果我们可以设计我们函数会有哪些参数，在这道题目当中我们需要记录选中的数据的集合的和，这样就可以避免反复去计算选中数据的和了，还有当前遍历到数据的下标。
+
+```C++
+backtrace(vector<int> &candidates, int target, int idx, int curSum)
+```
+
 - 确定递归函数的出口：
   - 在这里我们一个出口就是，当被选中的集合当中的数据的和满足要求的时候就进行退出。
   - 当被选中的数据的和大于给定的值的时候我们不需要再进行遍历了，因为即使遍历得到的结果使用会大于给定的值，因此没有遍历的必要了，下图当中深红色的节点就是表示和大于给定的值的情况。
 
 ![11](../../images/backtrace/12.png)
 
-- 根据我们思路确定我们函数的主体部分。
+```C++
+if(curSum == target) {
+    ans.push_back(path);
+}
+if(curSum >= target || idx >= candidates.size())
+    return;
+```
+
+- 根据我们思路确定我们函数的主体部分：
+
+  ```C++
+  for (int i = idx; i < candidates.size(); ++i) {
+      path.push_back(candidates[i]);
+      curSum += candidates[i];
+      backtrace(candidates, target, i, curSum);
+      path.pop_back();
+      curSum -= candidates[i];
+  }
+  ```
+
+  
 
 
 
