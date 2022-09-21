@@ -108,7 +108,7 @@
 ### 回溯
 
 - 通过组合问题看透回溯法
-  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486020&idx=1&sn=d54b40cc6219855b9708d3fd62023a78&chksm=cf0c964df87b1f5bc42a940a72628b0bb3f251811bdee093e2e94438437d214f8c538f37fba7&token=1645117295&lang=zh_CN#rd)
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486751&idx=1&sn=8e9cedd729d01ff8867fcb2c085ecbe3&chksm=cf0c9116f87b18002551eefcd773f4762d79d2c06614b304437bfcd382e14afa031d29cc4dcc&mpshare=1&scene=22&srcid=0921yRhazbXlqGuEZagKb0p9&sharer_sharetime=1663737871952&sharer_shareid=236a49567847c05f78e6b440ce6dabff#rd)
   - [github阅读](./datastructr&algorithm/backtrace/01combinations.md)
 
 ### 数据结构
