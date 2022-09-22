@@ -110,6 +110,9 @@
 - 通过组合问题看透回溯法
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486751&idx=1&sn=8e9cedd729d01ff8867fcb2c085ecbe3&chksm=cf0c9116f87b18002551eefcd773f4762d79d2c06614b304437bfcd382e14afa031d29cc4dcc&mpshare=1&scene=22&srcid=0921yRhazbXlqGuEZagKb0p9&sharer_sharetime=1663737871952&sharer_shareid=236a49567847c05f78e6b440ce6dabff#rd)
   - [github阅读](./datastructr&algorithm/backtrace/01combinations.md)
+- [力扣39]组合总和
+  - [微信公众号阅读](https://mp.weixin.qq.com/s/7A8-rmw0l5Y8c8SnQ5vqwQ)
+  - [github阅读](./datastructr&algorithm/backtrace/02combinations.md)
 
 ### 数据结构
 
