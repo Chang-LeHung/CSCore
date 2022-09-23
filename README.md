@@ -198,7 +198,7 @@
 
 - 彻底掌握Makefile（一）
   - [微信公众号阅读]()
-  - [github阅读](./tools/makefile01.md)
+  - [github阅读](./tools/01.md)
 
 #### 其他算法
 
