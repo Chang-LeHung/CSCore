@@ -197,7 +197,7 @@
 ### 工具使用
 
 - 彻底掌握Makefile（一）
-  - [微信公众号阅读]()
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486795&idx=1&sn=1da47724ddaa139d87b8994abefef7cd&chksm=cf0c9142f87b1854f619b6f6d744b6f6c570adb726c857b36787cec7a821cebbaf2b6bd6799f&token=1023752079&lang=zh_CN#rd)
   - [github阅读](./tools/makefile/01.md)
 
 #### 其他算法
