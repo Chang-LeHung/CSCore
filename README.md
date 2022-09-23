@@ -198,13 +198,13 @@
 
 - 彻底掌握Makefile（一）
   - [微信公众号阅读]()
-  - [github阅读](./tools/makefile.01.md)
+  - [github阅读](./tools/makefile01.md)
 
 #### 其他算法
 
 - DES加密算法从入门到入坟
   - [微信公众号阅读]()
-  - [github阅读](./desdes.md)
+  - [github阅读](./des/des.md)
 
 
 ---
