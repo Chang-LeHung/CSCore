@@ -49,6 +49,57 @@
 
 根据上面的例子我们可以总结出来，在同一层当中，如果后面的值等于他前面一个值的话，我们就可以不去生成“选择”这个分支的子树，因为在他的前面已经生成了一颗一模一样的子树了。
 
+现在我们的问题是如何确定和上一个遍历的节点是在同一层上面。我们可以使用一个`used`数组进行确定，当我们使用一个数据之后我们将对应下标的`used`数组的值设置为`true`，当递归完成进行回溯的时候在将对应位置的`used`值设置为`false`，因此当我们遍历一个数据的时候如果他前面的一个数据的`used`值是`false`的话，那么这个节点就和前面的一个节点在同一层上面。
+
+根据上面的分析我们可以写出如下的代码：
+
+```C++
+class Solution {
+    vector<vector<int>> ans;
+    vector<int> path;
+public:
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+      sort(candidates.begin(), candidates.end());
+      vector<bool> used(candidates.size(), false);
+      backtrace(candidates, target, 0, 0, used);
+      return ans;
+    }
+
+    void backtrace(vector<int>& candidates, int target, int curIdx,
+                   int curSum, vector<bool>& used) {
+      if (curSum == target) {
+        ans.push_back(path);
+        return;
+      } else if (curSum > target || curIdx >= candidates.size()) {
+        return;
+      }
+      if (curIdx == 0) {
+        path.push_back(candidates[curIdx]);
+        used[curIdx] = true;
+        backtrace(candidates, target, curIdx + 1, curSum + candidates[curIdx], used);
+        path.pop_back();
+        used[curIdx] = false;
+        backtrace(candidates, target, curIdx + 1, curSum, used);
+      }else {
+       if (used[curIdx - 1] == false && candidates[curIdx - 1] ==
+              candidates[curIdx]) {
+         backtrace(candidates, target, curIdx + 1, curSum, used);
+       }else{
+         path.push_back(candidates[curIdx]);
+         used[curIdx] = true;
+         backtrace(candidates, target, curIdx + 1, curSum + candidates[curIdx], used);
+         path.pop_back();
+         used[curIdx] = false;
+         backtrace(candidates, target, curIdx + 1, curSum, used);
+       }
+      }
+    }
+};
+
+```
+
+
+
 
 
 ```C++
