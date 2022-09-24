@@ -200,7 +200,7 @@
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486795&idx=1&sn=1da47724ddaa139d87b8994abefef7cd&chksm=cf0c9142f87b1854f619b6f6d744b6f6c570adb726c857b36787cec7a821cebbaf2b6bd6799f&token=1023752079&lang=zh_CN#rd)
   - [github阅读](./tools/makefile/01.md)
 - 彻底掌握Makefile（二）
-  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486795&idx=1&sn=1da47724ddaa139d87b8994abefef7cd&chksm=cf0c9142f87b1854f619b6f6d744b6f6c570adb726c857b36787cec7a821cebbaf2b6bd6799f&token=1023752079&lang=zh_CN#rd)
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486840&idx=1&sn=68fc4d2c10eb8112bd3c1c26b1c38ac5&chksm=cf0c9171f87b186769351ef320efa7e916dc367de9e948da83c30164b235e079340547e28cb5&token=2139521096&lang=zh_CN#rd)
   - [github阅读](./tools/makefile/02.md)
 - 彻底掌握Makefile（三）
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486840&idx=1&sn=68fc4d2c10eb8112bd3c1c26b1c38ac5&chksm=cf0c9171f87b186769351ef320efa7e916dc367de9e948da83c30164b235e079340547e28cb5&token=2139521096&lang=zh_CN#rd)
