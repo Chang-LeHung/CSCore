@@ -203,7 +203,7 @@
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486840&idx=1&sn=68fc4d2c10eb8112bd3c1c26b1c38ac5&chksm=cf0c9171f87b186769351ef320efa7e916dc367de9e948da83c30164b235e079340547e28cb5&token=2139521096&lang=zh_CN#rd)
   - [github阅读](./tools/makefile/02.md)
 - 彻底掌握Makefile（三）
-  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486840&idx=1&sn=68fc4d2c10eb8112bd3c1c26b1c38ac5&chksm=cf0c9171f87b186769351ef320efa7e916dc367de9e948da83c30164b235e079340547e28cb5&token=2139521096&lang=zh_CN#rd)
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486881&idx=1&sn=de6d09baa5b844ab29ad942535d58b72&chksm=cf0c91a8f87b18becd5b4121c461943c41a81af5468a874d3f86bb60dae9b5a0ff302c2a96b1&token=2139521096&lang=zh_CN#rd)
   - [github阅读](./tools/makefile/03.md)
   
 
