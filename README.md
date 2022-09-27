@@ -1,6 +1,6 @@
-![logo](images/logo.png)
 
----
+
+<P style="text-align: center;"> <img src="images/logo.png"></img></p>
 
 # 🚀CSCore（所有内容都将持续更新...）
 
