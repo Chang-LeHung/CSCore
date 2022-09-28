@@ -2,6 +2,13 @@
 
 <P style="text-align: center;"> <img src="images/logo.png"></img></p>
 
+<p> 
+
+  <a href="https://github.com/Chang-LeHung/CSCore/blob/main/qrcode2.jpg"><img src="https://img.shields.io/badge/微信公众号-一无是处的研究僧-379d2e.svg" height="25px" alt="LinkedIn"> </a>
+  <a href="https://www.zhihu.com/people/lbj-31-91"><img src="https://img.shields.io/badge/知乎-0079FF.svg?style=plastic&logo=zhihu&logoColor=white" height="25px" alt="知乎"></a>
+  <a href="https://juejin.cn/user/1636513656355735"><img src="https://img.shields.io/badge/稀土掘金-一无是处的研究僧-1907f8.svg" height="25px" alt="稀土掘金"></a>
+</p> 
+
 # 🚀CSCore（所有内容都将持续更新...）
 
 本项目专注于计算机系统基础，比如算法与数据结构，网络，操作系统，编译原理等！！！同时将会包含一些机器学习和人工智能的算法！！！夯实好计算机系统基础，学习什么技术都将变得更加轻松，能够更好的理解各种软件的原理！！！同时欢迎大家提出pr，修正文章当中的错误，或者改进文章，使得文章更好阅读，或者其他能够改进这个项目的提交！！！
