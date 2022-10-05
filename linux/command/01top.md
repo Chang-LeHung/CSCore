@@ -1,4 +1,4 @@
-# Linux命令系列之top——里面藏着很多宝藏知识
+# Linux命令系列之top——里面藏着很多鲜为人知的宝藏知识
 
 
 
@@ -147,3 +147,44 @@ int main() {
 - %MEM，这个主要是进程使用的内存占用实际的可用的物理内存的比例。
 - TIME+，这个表示自从进程启动以来累计消耗的CPU时间。
 - COMMAND，这个表示启动进程的时候执行的命令。
+
+## top命令交互操作
+
+- c，详细显示命令行的内容，你在交互模式下直接按下键盘上的c即可。
+
+![04](../../images/linux/command/08.png)
+
+- o，在交互模式下先按下键盘上的o，然后就可以输入过滤条件，在这里掩饰的是COMMAND=a.out的进程：
+
+![04](../../images/linux/command/09.png)
+
+- k，shell给我们提供了一个非常方便的操作我们可以在交互模式下选择我们想要杀死的进程，比如在下图当中我们杀死进程135020。
+
+我们先在交互模式下先按下键盘上的k，然后输入进程号，然后输入回车，再输入想发送的信号类型。
+
+输入进程号
+
+![04](../../images/linux/command/10.png)
+
+再输入想要发送的信号：
+
+![04](../../images/linux/command/11.png)
+
+这里可以输入代表信号的数字，也可以输入代表信号的名字，不同的信号的名字和代表输入如下：
+
+```C++
+ 1) SIGHUP	 2) SIGINT	 3) SIGQUIT	 4) SIGILL	 5) SIGTRAP
+ 6) SIGABRT	 7) SIGBUS	 8) SIGFPE	 9) SIGKILL	10) SIGUSR1
+11) SIGSEGV	12) SIGUSR2	13) SIGPIPE	14) SIGALRM	15) SIGTERM
+16) SIGSTKFLT	17) SIGCHLD	18) SIGCONT	19) SIGSTOP	20) SIGTSTP
+21) SIGTTIN	22) SIGTTOU	23) SIGURG	24) SIGXCPU	25) SIGXFSZ
+26) SIGVTALRM	27) SIGPROF	28) SIGWINCH	29) SIGIO	30) SIGPWR
+31) SIGSYS	34) SIGRTMIN	35) SIGRTMIN+1	36) SIGRTMIN+2	37) SIGRTMIN+3
+38) SIGRTMIN+4	39) SIGRTMIN+5	40) SIGRTMIN+6	41) SIGRTMIN+7	42) SIGRTMIN+8
+43) SIGRTMIN+9	44) SIGRTMIN+10	45) SIGRTMIN+11	46) SIGRTMIN+12	47) SIGRTMIN+13
+48) SIGRTMIN+14	49) SIGRTMIN+15	50) SIGRTMAX-14	51) SIGRTMAX-13	52) SIGRTMAX-12
+53) SIGRTMAX-11	54) SIGRTMAX-10	55) SIGRTMAX-9	56) SIGRTMAX-8	57) SIGRTMAX-7
+58) SIGRTMAX-6	59) SIGRTMAX-5	60) SIGRTMAX-4	61) SIGRTMAX-3	62) SIGRTMAX-2
+63) SIGRTMAX-1	64) SIGRTMAX
+```
+
