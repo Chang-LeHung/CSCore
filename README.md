@@ -8,7 +8,7 @@
   <a href="https://juejin.cn/user/1636513656355735"><img src="https://img.shields.io/badge/稀土掘金-一无是处的研究僧-1907f8.svg" height="25px" alt="稀土掘金"></a>
   <a href="https://www.zhihu.com/people/lbj-31-91"><img src="https://img.shields.io/badge/知乎-0079FF.svg?style=plastic&logo=zhihu&logoColor=white" height="25px" alt="知乎"></a>
   <a href="https://www.cnblogs.com/Chang-LeHung/"><img src="https://img.shields.io/badge/博客园-一无是处的研究僧-4b89cf.svg?style=plastic&logo=cnblogs&logoColor=white" height="25px" alt="博客园"></a>
-  
+
 </p> 
 
 # 🚀CSCore（所有内容都将持续更新...）
@@ -220,11 +220,19 @@
   - [github阅读](./tools/makefile/03.md)
   
 
-#### 其他算法
+### 其他算法
 
 - DES加密算法从入门到入坟
   - [微信公众号阅读]()
   - [github阅读](./des/des.md)
+
+### LInux操作系统
+
+#### 命令行
+
+- Linux命令系列之top——里面藏着很多鲜为人知的宝藏知识
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486949&idx=1&sn=428516fe22182f41de4dfed075b03e7a&chksm=cf0c91ecf87b18fad120db8c34c0a22e748ed403991803d114e7e505dbcc6c5d53cff2bbddb0&token=102890258&lang=zh_CN#rd)
+  - [github阅读](linux/command/01top.md)
 
 
 ---
