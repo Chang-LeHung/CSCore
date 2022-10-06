@@ -1,6 +1,5 @@
 
 
-
 #include <stdio.h>
 #include <dirent.h>
 #include <sys/types.h>
@@ -13,6 +12,12 @@
 #include <pwd.h>
 #include <grp.h>
 #include <time.h>
+
+#define COLOR_NORMAL "\033[0m"
+#define COLOR_GREEN "\033[1;32m"
+#define COLOR_YELLOW "\033[1;33m"
+#define COLOR_RED "\033[1;31m"
+#define COLOR_GREY "\033[1;30m"
 
 #define PRIV(mode, match, char) \
         {if(mode & match) printf(char); else printf("-");}
@@ -81,7 +86,7 @@ void print_file_detail_info(char * filename) {
     char buf[1024];
     size_t s = readlink(filename, buf, 1024);
     buf[s] = '\0';
-    printf(" -> %s", buf);
+    printf(COLOR_GREEN " -> %s" COLOR_NORMAL, buf);
   }
   
   printf("\n");
@@ -91,8 +96,9 @@ void print_file_detail_info(char * filename) {
 int main(int argc, char* argv[]) {
 
   if(argc != 2) {
-    printf("argc != 2\n");
-    exit(-1);
+    printf(COLOR_RED "no dir sepcified default show current dir files\n" COLOR_NORMAL);
+    argv[1] = malloc(10);
+    sprintf(argv[1], "./");
   }
 
   DIR* dir = opendir(argv[1]);
@@ -115,4 +121,3 @@ int main(int argc, char* argv[]) {
   }
   return 0;
 }
-
