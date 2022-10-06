@@ -3,4 +3,4 @@ reco.md
 .ipynb_checkpoints
 life
 .idea
-*/**/.vecode
+**/.vscode
