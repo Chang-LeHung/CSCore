@@ -11,6 +11,8 @@ import java.nio.file.attribute.PosixFilePermission;
 import java.util.Objects;
 import java.util.Set;
 
+import static java.nio.file.LinkOption.NOFOLLOW_LINKS;
+
 public class LS {
 
   public static boolean hasRight(Set<PosixFilePermission> set, PosixFilePermission
@@ -75,9 +77,11 @@ public class LS {
 
   public static void echoFileInformation(String args) throws IOException {
     Path path = Paths.get(args);
-    PosixFileAttributes attributes = Files.readAttributes(path, PosixFileAttributes.class);
+    PosixFileAttributes attributes = Files.readAttributes(path, PosixFileAttributes.class, NOFOLLOW_LINKS);
     echoType(attributes);
     echoCharacter(attributes.permissions());
+
+    System.out.printf("\t%-2d", Files.getAttribute(path, "unix:nlink"));
     System.out.print("\t" + attributes.owner().getName());
     System.out.print("\t" + attributes.group().getName());
     System.out.printf("\t%-5d", attributes.size());
