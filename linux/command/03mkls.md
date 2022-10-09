@@ -50,14 +50,36 @@
 在Java当中给我们提供了一个工具类查看文件的一些元信息(metadata)，比如说文件的uid（用户id）、gid（用户组id）、文件的大小和文件的链接数目(nlink)。
 
 ```java
-Path path = Paths.get(".");
-System.out.println(Files.getAttribute(path, "unix:dev")); // 打印存储当前目录数据的设备的设备id
-System.out.println(Files.getAttribute(path, "unix:ino")); // 打印存储当前目录数据inode号
-System.out.println(Files.getAttribute(path, "unix:mode"));// 打印存储当前目录数据的mode数据 这个数据主要用于表示文件的类型
-System.out.println(Files.getAttribute(path, "unix:uid")); // 打印存储当前目录所属用户的用户id
-System.out.println(Files.getAttribute(path, "unix:gid")); // 打印存储当前目录所属组的组id
-System.out.println(Files.getAttribute(path, "unix:size"));// 打印存储当前目录数据所占的空间大小
-System.out.println(Files.getAttribute(path, "unix:nlink"));// 打印存储当前目录数据的链接数
+  Path path = Paths.get(".");
+  System.out.println(Files.getAttribute(path, "unix:dev")); // 打印存储当前目录数据的设备的设备id
+  System.out.println(Files.getAttribute(path, "unix:ino")); // 打印存储当前目录数据inode号
+  System.out.println(Files.getAttribute(path, "unix:mode"));// 打印存储当前目录数据的mode数据 这个数据主要用于表示文件的类型
+  System.out.println(Files.getAttribute(path, "unix:uid")); // 打印存储当前目录所属用户的用户id
+  System.out.println(Files.getAttribute(path, "unix:gid")); // 打印存储当前目录所属组的组id
+  System.out.println(Files.getAttribute(path, "unix:size"));// 打印存储当前目录数据所占的空间大小
+  System.out.println(Files.getAttribute(path, "unix:nlink"));// 打印存储当前目录数据的链接数
+```
+
+除了上面的方式，我们还可以使用下面的方式去得到文件的元数据：
+
+```java
+  public void attrTest02() throws IOException {
+    Path path = Paths.get(".");
+    PosixFileAttributes attr = Files.readAttributes(path, PosixFileAttributes.class, NOFOLLOW_LINKS);
+    System.out.println(attr.owner());
+    System.out.println(attr.group());
+    System.out.println(attr.isRegularFile());
+    System.out.println(attr.isSymbolicLink());
+    System.out.println(attr.isDirectory());
+    System.out.println(attr.isOther());
+    System.out.println(attr.permissions());
+    System.out.println(attr.lastAccessTime());
+    System.out.println(attr.creationTime());
+    System.out.println(attr.lastModifiedTime());
+    System.out.println(attr.fileKey());
+    System.out.println(attr.size());
+
+  }
 ```
 
 
