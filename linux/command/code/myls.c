@@ -109,9 +109,9 @@ int main(int argc, char* argv[]) {
   }
   
   struct dirent* dirs;
+  char* filename = malloc(1024);
   while ((dirs = readdir(dir)) != NULL)
   {
-    char* filename = malloc(1024);
     // printf("%s %c %ld\n", dirs->d_name, dirs->d_type, dirs->d_ino);
     strcpy(filename, argv[1]);
     strcat(filename, dirs->d_name);
@@ -119,5 +119,6 @@ int main(int argc, char* argv[]) {
     // printf("filename = %s\n", filename);
     print_file_detail_info(filename);
   }
+  free(filename);
   return 0;
 }
