@@ -120,5 +120,10 @@ int main(int argc, char* argv[]) {
     print_file_detail_info(filename);
   }
   free(filename);
+  if (argc != 2)
+  {
+    free(argv[1]);
+  }
+  
   return 0;
 }
