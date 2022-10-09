@@ -124,6 +124,5 @@ int main(int argc, char* argv[]) {
   {
     free(argv[1]);
   }
-  
   return 0;
 }
