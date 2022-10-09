@@ -82,6 +82,22 @@
   }
 ```
 
+```java
+xxxxx // 这里是用户名
+xxxxx // 这里是用户组名
+false
+false
+true
+false
+[GROUP_READ, OTHERS_EXECUTE, OWNER_WRITE, OWNER_EXECUTE, OTHERS_READ, OWNER_READ, GROUP_EXECUTE]
+2022-10-09T18:08:47.791072133Z
+2022-10-09T13:10:51Z
+2022-10-09T18:08:23.746949182Z
+(dev=1000012,ino=16176823)
+192
+
+```
+
 
 
 ```java
