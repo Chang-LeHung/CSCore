@@ -6,13 +6,15 @@
 
 ## 代码实现
 
+### 文件操作的基本原理
+
 如果我们使用Java实现一个简单的ls命令其实并不难，因为Java已经给我们提供了一些比较方便和文件系统相关的api了，困难的是理解api是在做什么事儿！
 
-事实上这些api都是操作系统给我们提供的，然后Java进行了一些列的封装，将这些操作给我们进行提供，我们仔细来看一下封装的层次：
+事实上这些api都是操作系统给我们提供的，然后Java进行了一些列的封装，将这些操作给我们进行提供，我们仔细来看一下封装的层次，首先操作系统会给我们提供很多系统调用用于和设备（磁盘、CPU）进行交互，比如说和文件的交互就是读写数据，当然我们的Java程序也需要这些操作，因此JVM也需要给我们提供这些操作，因此JVM就对系统调用进行了一系列的封装，在Java当中具体的形式就是用native修饰的方法。
 
 <img src="../../images/linux/command/25.png" alt="25" style="zoom:50%;" />
 
-比如说对于读写文件这些操作来说都是操作系统给我们提供的接口，如果Java想让我们使用这些借口的话，必须对这些方法进行封装，如果你是一个比较有经验Java程序员那么一定见过Java当中的`native`方法，这些方法都是Java给我们封装的底层接口，比如说在`FileInputStream`当中有一个`read`方法，这个方法就是读取文件当中的内容，我们看一下这个方法是如何实现的：
+如果你是一个比较有经验Java程序员那么一定见过Java当中的`native`方法，这些方法都是Java给我们封装的底层接口，比如说在`FileInputStream`当中有一个`read`方法，这个方法就是读取文件当中的内容，我们看一下这个方法是如何实现的：
 
 ```java
     public int read() throws IOException {
@@ -24,9 +26,92 @@
 
 <img src="../../images/linux/command/26.png" alt="25" style="zoom:50%;" />
 
+从上面的图看当我们调用`FileInputStream`方法的时候确实调用了native方法。我们再来看一些与文件操作相关的api，他们也是使用Java给我们封装的native方法实现的。
+
+<img src="../../images/linux/command/27.png" alt="25" style="zoom:50%;" />
+
+上面主要谈了一些基本的文件操作过程的原理，简要说明了Java将很多系统操作封装成native方法供我们调用，现在我们来看看要想实现ls命令，我们需要哪些api。
+
+### 查看一个目录下面有哪些文件和目录
+
+在Java当中给我们提供了一个类`File`，我们可以使用这个类去得到一个目录下面有哪些文件和目录。
+
+```java
+  public void fileTest() {
+    File file = new File("./");
+    // file.listFiles() 将当前 file 对应的目录下所有的文件和目录都得到
+    for (File listFile : file.listFiles()) {
+      System.out.println(listFile.getName()); // 将文件或者目录的名字打印
+    }
+```
+
+### 查看文件和目录的元数据
+
+在Java当中给我们提供了一个工具类查看文件的一些元信息(metadata)，比如说文件的uid（用户id）、gid（用户组id）、文件的大小和文件的链接数目(nlink)。
+
+```java
+Path path = Paths.get(".");
+System.out.println(Files.getAttribute(path, "unix:dev")); // 打印存储当前目录数据的设备的设备id
+System.out.println(Files.getAttribute(path, "unix:ino")); // 打印存储当前目录数据inode号
+System.out.println(Files.getAttribute(path, "unix:mode"));// 打印存储当前目录数据的mode数据 这个数据主要用于表示文件的类型
+System.out.println(Files.getAttribute(path, "unix:uid")); // 打印存储当前目录所属用户的用户id
+System.out.println(Files.getAttribute(path, "unix:gid")); // 打印存储当前目录所属组的组id
+System.out.println(Files.getAttribute(path, "unix:size"));// 打印存储当前目录数据所占的空间大小
+System.out.println(Files.getAttribute(path, "unix:nlink"));// 打印存储当前目录数据的链接数
+```
 
 
 
+```java
+public enum PosixFilePermission {
+
+    /**
+     * Read permission, owner.
+     */
+    OWNER_READ,
+
+    /**
+     * Write permission, owner.
+     */
+    OWNER_WRITE,
+
+    /**
+     * Execute/search permission, owner.
+     */
+    OWNER_EXECUTE,
+
+    /**
+     * Read permission, group.
+     */
+    GROUP_READ,
+
+    /**
+     * Write permission, group.
+     */
+    GROUP_WRITE,
+
+    /**
+     * Execute/search permission, group.
+     */
+    GROUP_EXECUTE,
+
+    /**
+     * Read permission, others.
+     */
+    OTHERS_READ,
+
+    /**
+     * Write permission, others.
+     */
+    OTHERS_WRITE,
+
+    /**
+     * Execute/search permission, others.
+     */
+    OTHERS_EXECUTE;
+}
+
+```
 
 
 
