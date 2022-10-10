@@ -64,27 +64,26 @@
 
 ```java
   public void attrTest02() throws IOException {
-    Path path = Paths.get(".");
+    Path path = Paths.get("."); // 传入的参数就是文件或者目录的路径 这个传入的就是当前目录
     PosixFileAttributes attr = Files.readAttributes(path, PosixFileAttributes.class, NOFOLLOW_LINKS);
-    System.out.println(attr.owner());
-    System.out.println(attr.group());
-    System.out.println(attr.isRegularFile());
-    System.out.println(attr.isSymbolicLink());
-    System.out.println(attr.isDirectory());
-    System.out.println(attr.isOther());
-    System.out.println(attr.permissions());
-    System.out.println(attr.lastAccessTime());
-    System.out.println(attr.creationTime());
-    System.out.println(attr.lastModifiedTime());
-    System.out.println(attr.fileKey());
-    System.out.println(attr.size());
-
+    System.out.println(attr.owner()); // 打印用户名
+    System.out.println(attr.group()); // 打印用户组名
+    System.out.println(attr.isRegularFile()); // 是不是一般文件
+    System.out.println(attr.isSymbolicLink()); // 是不是一个符号链接
+    System.out.println(attr.isDirectory()); // 是否是目录
+    System.out.println(attr.isOther()); //其他类型
+    System.out.println(attr.permissions()); // 打印文件的权限 是否可读 可写 可执行
+    System.out.println(attr.lastAccessTime()); // 上一次访问时间
+    System.out.println(attr.creationTime()); // 创建时间
+    System.out.println(attr.lastModifiedTime()); // 上一次修改时间
+    System.out.println(attr.fileKey()); // 打印文件其他相关参数 主要是设备id和inode编号
+    System.out.println(attr.size()); // 文件的大小
   }
 ```
 
 ```java
-xxxxx // 这里是用户名
-xxxxx // 这里是用户组名
+root // 这里是用户名
+root // 这里是用户组名
 false
 false
 true
@@ -98,7 +97,9 @@ false
 
 ```
 
+### 文件权限
 
+在Java当中给我们提供了一个类表示文件的9中权限（文件的作者的读写执行，作者所在组的读写执行，和其他人的读写执行，一共九种权限）：
 
 ```java
 package java.nio.file.attribute;
@@ -106,27 +107,27 @@ package java.nio.file.attribute;
 public enum PosixFilePermission {
 
     /**
-     * Read permission, owner.
+     * Read permission, owner. 作者读权限
      */
     OWNER_READ,
 
     /**
-     * Write permission, owner.
+     * Write permission, owner. 作者写权限
      */
     OWNER_WRITE,
 
     /**
-     * Execute/search permission, owner.
+     * Execute/search permission, owner. 作者的执行权限
      */
     OWNER_EXECUTE,
 
     /**
-     * Read permission, group.
+     * Read permission, group. 作者所在组的读权限
      */
     GROUP_READ,
 
     /**
-     * Write permission, group.
+     * Write permission, group.作者所在组的写权限
      */
     GROUP_WRITE,
 
@@ -136,27 +137,37 @@ public enum PosixFilePermission {
     GROUP_EXECUTE,
 
     /**
-     * Read permission, others.
+     * Read permission, others. 其他人读权限
      */
     OTHERS_READ,
 
     /**
-     * Write permission, others.
+     * Write permission, others. 其他人写权限
      */
     OTHERS_WRITE,
 
     /**
-     * Execute/search permission, others.
+     * Execute/search permission, others. 其他人执行权限
      */
     OTHERS_EXECUTE;
 }
 
 ```
 
-
+在上面查看文件或者目录的元数据的时候我们已经得到的文件的所有权限信息：
 
 ```java
-package cscore.linux.command;
+System.out.println(attr.permissions());
+//[GROUP_READ, OTHERS_EXECUTE, OWNER_WRITE, OWNER_EXECUTE, OTHERS_READ, OWNER_READ, GROUP_EXECUTE]
+```
+
+函数返回的是一个集合`set`，里面存放的就是文件的各种权限的信息，比如在我们的例子当中我们可以看到，有组读，其他人执行，作者自己写，作者执行，其他人读，作者读权限，如果我们想判断某种权限，只需要看看集合当中是否包含即可。
+
+### 完整代码实现
+
+在上面我们已经谈到了所有的关于实现 ls 命令的细节了，接下来看一下我们的代码实现：
+
+```java
 
 
 import java.io.File;
@@ -258,6 +269,17 @@ public class LS {
 
 ```
 
-
+上面的代码很短，如果大家了解了上main所谈到的api的话，就应该很容易理解了。下面我们看看程序的输出结果：
 
 ![24](../../images/linux/command/28.png)
+
+可以看到我们的程序的输出结果和ls命令的输出结果是一样的，只是在时间的表示上有所差别而已，这一点没什么关系。
+
+---
+
+以上就是本篇文章的所有内容了，我是**LeHung**，我们下期再见！！！更多精彩内容合集可访问项目：<https://github.com/Chang-LeHung/CSCore>
+
+关注公众号：**一无是处的研究僧**，了解更多计算机（Java、Python、计算机系统基础、算法与数据结构）知识。
+
+![](https://img2022.cnblogs.com/blog/2519003/202207/2519003-20220703200459566-1837431658.jpg)
+
