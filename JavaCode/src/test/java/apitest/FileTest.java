@@ -50,6 +50,5 @@ public class FileTest {
     System.out.println(attr.lastModifiedTime());
     System.out.println(attr.fileKey());
     System.out.println(attr.size());
-
   }
 }
