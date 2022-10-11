@@ -239,7 +239,8 @@
 - 自己动手写ls命令——Java版
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486987&idx=1&sn=be2afc483e8ba9ba9ad48689ea7d355e&chksm=cf0c9202f87b1b14d40824997a567d438e33599df89b8e19bf6a469309b1a9c1615db1842c13&token=952740120&lang=zh_CN#rd)
   - [github阅读](linux/command/03mkls.md)
-  - [代码](linux/command/code/myls.c)
+  - [代码——C语言版本](linux/command/code/myls.c)
+  - [代码——Java语言版本](JavaCode/src/main/java/cscore/linux/command/LS.java)
 
 
 ---
