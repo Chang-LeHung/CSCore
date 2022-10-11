@@ -6,3 +6,4 @@ life
 **/.vscode
 *.out
 **/target
+.DS*
