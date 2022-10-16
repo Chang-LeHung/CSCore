@@ -1,2 +1,3 @@
-package cscore.threadpool;public class HelloWorld {
+package cscore.threadpool;
+public class HelloWorld {
 }
