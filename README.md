@@ -190,7 +190,7 @@
 
   - [github阅读](/concurrency/java/14threadpool.md)
 - 再谈线程池——深入剖析线程池的前世今生
-  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486735&idx=1&sn=0e139e9a38e6f4850c2ed87e3c38e7aa&chksm=cf0c9106f87b1810c29f5b569acbda9335ef6408ae55bb4506b05c638a06e64188b7901c1fdb&token=2018090499&lang=zh_CN#rd)
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486999&idx=1&sn=53cc8c0a3bbf78bd35eb9f0d1322f7d6&chksm=cf0c921ef87b1b088d9db6e2d5c2de1288dc582ee181b80bf9d6a920f4f655c986ab771fb002&token=1326758682&lang=zh_CN#rd)
 
   - [github阅读](concurrency/java/16retalkingthreadpool.md)
 
