@@ -154,3 +154,144 @@ this is exit
 从输出的结果看确实和上面我们提到的规则一样，先注册的函数后执行。这一点再linux程序员开发手册里面也提到了。
 
 ![01](../../images/programming/02.png)
+
+但是这里有一点需要注意的是我们应该尽可能使用atexit函数，而不是使用on_exit函数，因为atexit函数是标准规定的，而on_exit并不是标准规定的。
+
+### exit和_exit函数
+
+其中exit函数是libc给我们提供的函数，我们可以使用这个函数正常的终止程序的执行，而且我们在前面注册的函数还是能够被执行。比如在下面的代码当中：
+
+```C
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+void __attribute__((destructor)) __exit1() {
+  printf("this is exit1\n");
+}
+
+void __attribute__((destructor)) __exit2() {
+  printf("this is exit2\n");
+}
+
+
+void __attribute__((constructor)) init1() {
+  printf("this is init1\n");
+}
+
+
+void __attribute__((constructor)) init2() {
+  printf("this is init2\n");
+}
+
+void on__exit1() {
+  printf("this in on exit1\n");
+}
+
+void at__exit1() {
+  printf("this in at exit1\n");
+}
+
+void on__exit2() {
+  printf("this in on exit2\n");
+}
+
+void at__exit2() {
+  printf("this in at exit2\n");
+}
+
+
+int main() {
+  // _exit(1);
+  on_exit(on__exit1, NULL);
+  on_exit(on__exit2, NULL);
+  atexit(at__exit1);
+  atexit(at__exit2);
+  printf("this is main\n");
+  exit(1);
+  return 0;
+}
+```
+
+上面的函数执行结果如下所示：
+
+```shell
+this is init1
+this is init2
+this is main
+this in at exit2
+this in at exit1
+this in on exit2
+this in on exit1
+this is exit2
+this is exit1
+```
+
+可以看到我们的代码被正常执行啦。
+
+但是_exit是一个系统调用，当执行这个方法的时候程序会被直接终止，我们看下面的代码：
+
+```c
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+void __attribute__((destructor)) __exit1() {
+  printf("this is exit1\n");
+}
+
+void __attribute__((destructor)) __exit2() {
+  printf("this is exit2\n");
+}
+
+
+void __attribute__((constructor)) init1() {
+  printf("this is init1\n");
+}
+
+
+void __attribute__((constructor)) init2() {
+  printf("this is init2\n");
+}
+
+void on__exit1() {
+  printf("this in on exit1\n");
+}
+
+void at__exit1() {
+  printf("this in at exit1\n");
+}
+
+void on__exit2() {
+  printf("this in on exit2\n");
+}
+
+void at__exit2() {
+  printf("this in at exit2\n");
+}
+
+
+int main() {
+  // _exit(1);
+  on_exit(on__exit1, NULL);
+  on_exit(on__exit2, NULL);
+  atexit(at__exit1);
+  atexit(at__exit2);
+  printf("this is main\n");
+  _exit(1); // 只改了这个函数 从 exit 变成 _exit
+  return 0;
+}
+```
+
+上面的代码输出结果如下所示：
+
+```shell
+this is init1
+this is init2
+this is main
+```
+
+可以看到我们注册的函数和最终的析构函数都没有被执行，程序直接退出啦。
+
