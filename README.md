@@ -193,6 +193,10 @@
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486999&idx=1&sn=53cc8c0a3bbf78bd35eb9f0d1322f7d6&chksm=cf0c921ef87b1b088d9db6e2d5c2de1288dc582ee181b80bf9d6a920f4f655c986ab771fb002&token=1326758682&lang=zh_CN#rd)
 
   - [github阅读](concurrency/java/16retalkingthreadpool.md)
+- 自己动手写乞丐版线程池
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247487010&idx=1&sn=63e8418c64b0d9f064fa391882538e7d&chksm=cf0c922bf87b1b3d3d9f485161a4657efdd415b63cd22c6c7be7c1b9ce704735fea9a8daf9b2&token=1326758682&lang=zh_CN#rd)
+
+  - [github阅读](concurrency/java/17threadpoolimplementation.md)
 
 ### 并发数据结构
 
