@@ -250,6 +250,11 @@
   - [代码——C语言版本](linux/command/code/myls.c)
   - [代码——Java语言版本](JavaCode/src/main/java/cscore/linux/command/LS.java)
 
+#### 系统编程
+
+- C语言中的这些骚操作你都知道吗？
+  - [github阅读](linux/programming/01exit.md)
+
 
 ---
 
