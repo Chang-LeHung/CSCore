@@ -295,3 +295,192 @@ this is main
 
 可以看到我们注册的函数和最终的析构函数都没有被执行，程序直接退出啦。
 
+### 花式退出
+
+出了上面的`_exit`函数之外，我们还可以使用其他的方式直接退出程序：
+
+```c
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/syscall.h> 
+
+void __attribute__((destructor)) __exit1() {
+  printf("this is exit1\n");
+}
+
+void __attribute__((destructor)) __exit2() {
+  printf("this is exit2\n");
+}
+
+
+void __attribute__((constructor)) init1() {
+  printf("this is init1\n");
+}
+
+
+void __attribute__((constructor)) init2() {
+  printf("this is init2\n");
+}
+
+void on__exit1() {
+  printf("this in on exit1\n");
+}
+
+void at__exit1() {
+  printf("this in at exit1\n");
+}
+
+void on__exit2() {
+  printf("this in on exit2\n");
+}
+
+void at__exit2() {
+  printf("this in at exit2\n");
+}
+
+
+int main() {
+  // _exit(1);
+  on_exit(on__exit1, NULL);
+  on_exit(on__exit2, NULL);
+  atexit(at__exit1);
+  atexit(at__exit2);
+  printf("this is main\n");
+  syscall(SYS_exit, 1); // 和 _exit 效果一样
+  return 0;
+}
+```
+
+出了上面直接调用函数的方法退出函数，我们还可以使用内联汇编退出函数，比如在64位操作系统我们可以使用下面的代码退出程序：
+
+```shell
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/syscall.h> 
+
+void __attribute__((destructor)) __exit1() {
+  printf("this is exit1\n");
+}
+
+void __attribute__((destructor)) __exit2() {
+  printf("this is exit2\n");
+}
+
+
+void __attribute__((constructor)) init1() {
+  printf("this is init1\n");
+}
+
+
+void __attribute__((constructor)) init2() {
+  printf("this is init2\n");
+}
+
+void on__exit1() {
+  printf("this in on exit1\n");
+}
+
+void at__exit1() {
+  printf("this in at exit1\n");
+}
+
+void on__exit2() {
+  printf("this in on exit2\n");
+}
+
+void at__exit2() {
+  printf("this in at exit2\n");
+}
+
+
+int main() {
+  // _exit(1);
+  on_exit(on__exit1, NULL);
+  on_exit(on__exit2, NULL);
+  atexit(at__exit1);
+  atexit(at__exit2);
+  printf("this is main\n");
+  asm(
+    "movq $60, %%rax;"
+    "movq $1, %%rdi;"
+    "syscall;"
+    :::"eax"
+  );
+  return 0;
+}
+```
+
+上面是在64位操作系统退出程序的汇编实现，在64为系统上退出程序的系统调用号为60。下面我们使用32位操作系统上的汇编实现程序退出，在32位系统上退出程序的系统调用号等于1：
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/syscall.h>
+
+void __attribute__((destructor)) __exit1() {
+  printf("this is exit1\n");
+}
+
+void __attribute__((destructor)) __exit2() {
+  printf("this is exit2\n");
+}
+
+
+void __attribute__((constructor)) init1() {
+  printf("this is init1\n");
+}
+
+
+void __attribute__((constructor)) init2() {
+  printf("this is init2\n");
+}
+
+void on__exit1() {
+  printf("this in on exit1\n");
+}
+
+void at__exit1() {
+  printf("this in at exit1\n");
+}
+
+void on__exit2() {
+  printf("this in on exit2\n");
+}
+
+void at__exit2() {
+  printf("this in at exit2\n");
+}
+
+
+int main() {
+  // _exit(1);
+  on_exit(on__exit1, NULL);
+  on_exit(on__exit2, NULL);
+  atexit(at__exit1);
+  atexit(at__exit2);
+  printf("this is main\n");
+  asm volatile(
+    "movl $1, %%eax;"
+    "movl $1, %%edi;"
+    "int $0x80;"
+    :::"eax"
+  );
+  return 0;
+}
+```
+
+## 总结
+
+在本篇文章当中主要给大家介绍C语言当中一些与程序退出的骚操作，希望大家有所收获！
+
+以上就是本篇文章的所有内容了，我是**LeHung**，我们下期再见！！！更多精彩内容合集可访问项目：<https://github.com/Chang-LeHung/CSCore>
+
+关注公众号：**一无是处的研究僧**，了解更多计算机（Java、Python、计算机系统基础、算法与数据结构）知识。
+
+![](../../qrcode2.jpg)
+
