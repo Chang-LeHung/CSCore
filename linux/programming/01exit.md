@@ -34,3 +34,37 @@ this is main funciton
 ![01](../../images/programming/01.png)
 
 从上面的结果可以知道，程序第一个执行的函数是`_start`，这是在类Unix操作系统上执行的第一个函数。
+
+那么main函数是程序执行的最后一个函数吗？我们看下面的代码：
+
+```C
+#include <stdio.h>
+
+void __attribute__((destructor)) __exit() {
+  printf("this is exit\n");
+}
+
+void __attribute__((constructor)) init() {
+  printf("this is init\n");
+}
+
+
+int main() {
+  printf("this is main\n");
+  return 0;
+}
+```
+
+上面程序的输出结果如下：
+
+```shell
+➜  code git:(main) ./out.out 
+this is init
+this is main
+this is exit
+```
+
+由此可见main函数也不是我们最后执行的函数！事实上我们除了上面的方法之外我们也可以在libc当中注册一些函数，让程序在main函数之后，退出执行前执行这些函数。
+
+
+
