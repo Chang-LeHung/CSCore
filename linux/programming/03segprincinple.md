@@ -8,7 +8,7 @@
 
 发生Sgementation fault的直接原因是，程序收到一个来自内核的SIGSEGV信号，如果是你的程序导致的内核给进程发送这个信号的话，那么就是你的程序正在读或者写一个没有分配的页面或者你没有读或者写的权限。
 
-- 在类Unix系统内核个进程发送的信号为SIGGEV，信号对应数字为11，在Linux当中信号对应的数字情况大致如下所示：
+- 在类Linux系统中，内核给进程发送的信号为SIGGEV，信号对应数字为11，在Linux当中信号对应的数字情况大致如下所示：
 
 ```shell
  1) SIGHUP	 2) SIGINT	 3) SIGQUIT	 4) SIGILL	 5) SIGTRAP
@@ -46,7 +46,63 @@ int main() {
 }
 ```
 
-下面是一个别的程序给其他程序发送SIGSGEV信号会导致其他进程出现段错误：
+下面是一个别的程序给其他程序发送SIGSGEV信号会导致其他进程出现段错误（下面的终端给上面终端的进程号等于504092的程序发送了一个信号值等于11（就是SIGGSGEV）信号，让他发生段错误）：
 
 ![06](../../images/programming/06.png)
+
+## 段错误的魔幻
+
+操作系统允许我们自己定义函数，当某些信号被发送到进程之后，进程就会去执行这些函数，而不是系统默认的程序（比如说SIGSEGV默认函数是退出程序）。
+
+```c
+
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <signal.h>
+#include <string.h>
+
+void sig(int n) {
+  char* str = "signal number = %d\n";
+  char* out = malloc(128);
+  sprintf(out, str, n);
+  write(STDOUT_FILENO, out, strlen(out));
+  free(out);
+}
+
+int main() {
+  signal(SIGINT, sig);
+  printf("pid = %d\n", getpid());
+  while (1)
+  {
+    sleep(1);
+  }
+  
+  return 0;
+}
+```
+
+
+
+这里有一个程序，我们看看这个程序的输出是什么：
+
+```c
+
+#include <stdio.h>
+#include <unistd.h> 
+#include <signal.h>
+
+void sig(int n) {
+  write(STDOUT_FILENO, "a", 1); // 这个函数就是向标准输出输出一个字符 a 
+}
+
+int main() {
+  signal(SIGSEGV, sig); // 这个是注册一个 SIGSEGV 错误的处理函数 当操作系统给进程发送一个 SIGSEGV 信号之后这个函数就会被执行
+  int* p; 
+  printf("%d\n", *p);
+  return 0;
+}
+```
+
+我们知道上面的程序肯定会产生 segementation fault 错误，会收到 SIGSGEV 信号，肯定会执行到函数`sig`。但是上面的程序会不断的输出`a`产生死循环。我们需要了解操作系统是如何处理 segementation fault 的，了解这个处理过程之后对上面程序的输出就很容易理解了。
 
