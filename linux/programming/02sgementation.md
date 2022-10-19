@@ -152,8 +152,53 @@ int main() {
   printf("rbp = %lx\n", rbp);
   // long* p = 0x7ffd4ea724a0;
   printf("%ld\n", *(long*)rbp);
-  *(long*)rbp = 100;
+  *(long*)rbp = 100; // 给指向的位置进行复制操作
   return 0;
 }
 ```
+
+### 解引用已经释放的内存
+
+```c
+
+#include <stdlib.h>
+
+int main() {
+  int* ptr = (int*)malloc(sizeof(int));
+
+  free(ptr);
+  *ptr = 10;
+  return 0;
+}
+```
+
+其实上面的代码不见得一定会产生 sementation fault 因为我们使用的libc给我们提供的 free 和 malloc 函数，当我们使用 free 函数释放我们的内存的时候，这部分内存不一定就马上还给操作系统了，因此在地址空间当中这部分内存还是存在的，因此是可以解引用的。
+
+### 其他方式
+
+我相信你肯定还有很多其他的方式去引起 sementation fault 的，嗯相信你！！！😂
+
+造成 sementation failt 的原因主要有以下两大类：
+
+- 读写没有权限的位置：
+  - 比如说前面对只读数据区的写操作，或者读写内核数据等等。
+- 使用没有分配的页面：
+  - 比如数组越界，就是访问一个没有分配的页面。
+  - 解引用空指针或者野指针或者没有初始化的指针，因为空指针或者野指针指向的地址没有分配。
+  - 不正确的使用解引用和取地址符号，比如你在使用scanf的时候没有使用取地址符号，也可能造成segmentation fault。
+  - 栈溢出，这个是操作系统规定的栈的最大空间。
+
+## Segmentation fault的本质
+
+
+
+## 总结
+
+在本篇文章当中主要给大家介绍C语言当中一些与程序退出的骚操作，希望大家有所收获！
+
+以上就是本篇文章的所有内容了，我是**LeHung**，我们下期再见！！！更多精彩内容合集可访问项目：<https://github.com/Chang-LeHung/CSCore>
+
+关注公众号：**一无是处的研究僧**，了解更多计算机（Java、Python、计算机系统基础、算法与数据结构）知识。
+
+![](../../qrcode2.jpg)
 
