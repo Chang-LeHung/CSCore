@@ -35,7 +35,7 @@ int main() {
 
   int arr[10];
   arr[1 << 20] = 100; // 会导致 segmentation fault
-  printf("arr[12] = %d\n", arr[1 << 20]); // 会导致 segmentation fault
+  printf("arr[n] = %d\n", arr[1 << 20]); // 会导致 segmentation fault
   return 0;
 }
 ```
@@ -103,7 +103,34 @@ int main() {
 }
 ```
 
-当我们去解引用一个空指针或者一个野指针的时候就汇报segmentation fault，其实本质上还是解引用访问的页面没有分配或者没有权限访问，比如下面代码我们可以解引用一个不存在空间。
+当我们去解引用一个空指针或者一个野指针的时候就汇报segmentation fault，其实本质上还是解引用访问的页面没有分配或者没有权限访问，比如下面代码我们可以解引用一个已经被释放的空间。
+
+```c
+
+#include <stdio.h>
+#include <stdint.h>
+
+uint64_t find_rbp() {
+  // 这个函数主要是得到寄存器 rbp 的值
+  uint64_t rbp;
+  asm(
+    "movq %%rbp, %0;"
+    :"=m"(rbp)::
+  );
+  return rbp;
+}
+
+int main() {
+
+  uint64_t rbp =  find_rbp();
+  printf("rbp = %lx\n", rbp);
+  // long* p = 0x7ffd4ea724a0;
+  printf("%ld\n", *(long*)rbp);
+  return 0;
+}
+```
+
+上面的代码当中我们调用函数 `find_rbp`，得到这个函数对应的寄存器 rbp 的值，当这个函数调用返回的时候，这个函数的栈帧会被摧毁，也就是说 rbp 指向的位置程序已经没有使用了，但是上面的程序不会产生 segmentation fault ，其中最主要的原因就是解引用的位置的页面我们已经分配了，而且我们有读权限，而且我们也有写权限，我们甚至可以给 rbp 指向的位置赋值，像下面那样，程序也不会崩溃。
 
 ```c
 
@@ -125,6 +152,7 @@ int main() {
   printf("rbp = %lx\n", rbp);
   // long* p = 0x7ffd4ea724a0;
   printf("%ld\n", *(long*)rbp);
+  *(long*)rbp = 100;
   return 0;
 }
 ```
