@@ -188,13 +188,9 @@ int main() {
   - 不正确的使用解引用和取地址符号，比如你在使用scanf的时候没有使用取地址符号，也可能造成segmentation fault。
   - 栈溢出，这个是操作系统规定的栈的最大空间。
 
-## Segmentation fault的本质
-
-
-
 ## 总结
 
-在本篇文章当中主要给大家介绍C语言当中一些与程序退出的骚操作，希望大家有所收获！
+在本篇文章当中主要给大家介绍了一些常见的造成段错误的原因，下篇我们仔细分析 segmentation fauilt 的本质，以及我们应该如何应对和处理 segmentation fauilt 。希望大家有所收获～～～
 
 以上就是本篇文章的所有内容了，我是**LeHung**，我们下期再见！！！更多精彩内容合集可访问项目：<https://github.com/Chang-LeHung/CSCore>
 
