@@ -252,8 +252,9 @@
 
 #### 系统编程
 
-- C语言中的这些骚操作你都知道吗？
+- C语言中这么骚的退出程序的方式你知道几个？
   - [github阅读](linux/programming/01exit.md)
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247487031&idx=1&sn=17e8a5b378b0437d74ff28190a9d21cf&chksm=cf0c923ef87b1b288e3ab96c1a04cfb5ff7cc92ffb9f1025c6832be3d8c9598114d1c768cd6f&token=1326758682&lang=zh_CN#rd)
 
 
 ---
