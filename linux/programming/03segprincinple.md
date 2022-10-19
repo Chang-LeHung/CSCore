@@ -29,3 +29,24 @@
 - 当一个程序发生 segmentation fault 的时候，这个程序的退出码 exitcode 等于 139！
 
 ![05](../../images/programming/05.png)
+
+发生 segmentation fault 的一个主要的原因是我们自己的程序发生非法访问内存，同时别的程序给这个进程发送 SIGSGEV 信号也会导致我们的程序发生 segmentation fault 错误。
+
+比如下面的程序就是自己发生的段错误（发生了越界访问）：
+
+```c
+#include <stdio.h>
+
+int main() {
+
+  int arr[10];
+  arr[1 << 20] = 100; // 会导致 segmentation fault
+  printf("arr[12] = %d\n", arr[1 << 20]); // 会导致 segmentation fault
+  return 0;
+}
+```
+
+下面是一个别的程序给其他程序发送SIGSGEV信号会导致其他进程出现段错误：
+
+![06](../../images/programming/06.png)
+
