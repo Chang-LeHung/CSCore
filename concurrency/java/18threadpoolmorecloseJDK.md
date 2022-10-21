@@ -455,7 +455,44 @@ public class ThreadPool {
 }
 ```
 
+### 线程池测试
 
+```java
+package cscore.concurrent.java.threadpoolv2;
+
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.RunnableFuture;
+import java.util.concurrent.TimeUnit;
+
+public class Test {
+
+  public static void main(String[] args) throws InterruptedException, ExecutionException {
+    var pool = new ThreadPool(2, 5, TimeUnit.SECONDS, 10, RejectPolicy.ABORT, 100000);
+
+    for (int i = 0; i < 10; i++) {
+      RunnableFuture<Integer> submit = pool.submit(() -> {
+        System.out.println(Thread.currentThread().getName() + " output a");
+        try {
+          Thread.sleep(10);
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+        return 0;
+      });
+      System.out.println(submit.get());
+    }
+    int n = 15;
+    while (n-- > 0) {
+      System.out.println("Number Threads = " + pool.getCt());
+      Thread.sleep(1000);
+    }
+    pool.shutDown();
+  }
+}
+
+```
+
+上面测试代码的输出结果如下所示：
 
 ```java
 ThreadPool-Thread-2 output a
@@ -492,6 +529,8 @@ Number Threads = 2
 Number Threads = 2
 Number Threads = 2
 ```
+
+从上面的代码可以看出我们实现了正确的任务实现结果，同时线程池当中的核心线程数从 2 变到了 5 ，当线程池当中任务队列全部别执行完成之后，线程的数目重新降下来了，这确实是我们想要达到的结果。
 
 ## 总结
 
