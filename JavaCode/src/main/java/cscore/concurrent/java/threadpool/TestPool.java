@@ -7,9 +7,7 @@ public class TestPool {
 
     for (int i = 0; i < 10; i++) {
       int tmp = i;
-      pool.execute(() -> {
-        System.out.println(Thread.currentThread().getName() + " say hello " + tmp);
-      });
+      pool.execute(() -> System.out.println(Thread.currentThread().getName() + " say hello " + tmp));
     }
     pool.shutDown();
   }

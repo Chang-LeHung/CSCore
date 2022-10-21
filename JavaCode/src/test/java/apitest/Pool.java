@@ -2,16 +2,14 @@ package apitest;
 
 import org.junit.Test;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.*;
 
 public class Pool {
 
   @Test
-  public void testPool() {
+  public void testPool() throws InterruptedException {
     ExecutorService pool = Executors.newFixedThreadPool(5);
-
+    ArrayBlockingQueue<Integer> integers = new ArrayBlockingQueue<>(2);
+    System.out.println(integers.poll(5, TimeUnit.SECONDS));
   }
 }
