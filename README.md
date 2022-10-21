@@ -259,6 +259,7 @@
   - [github阅读](linux/programming/02sgementation.md)
 - 深入剖析Sgementation fault原理
   - [github阅读](linux/programming/03segprincinple.md)
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247487063&idx=1&sn=89f3025d3b23e399ced13e6991e8afb2&chksm=cf0c925ef87b1b480165986028d0605672d6047b9fd4111831a70f2b9b5dc5e6e01902e60efb&token=624247549&lang=zh_CN#rd)
 
 
 ---
