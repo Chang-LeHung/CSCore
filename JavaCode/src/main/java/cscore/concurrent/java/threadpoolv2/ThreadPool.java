@@ -25,7 +25,7 @@ public class ThreadPool {
   }
 
   public ThreadPool(int corePoolSize, int maximumPoolSize, TimeUnit unit, long keepAliveTime, RejectPolicy policy
-                    , int maxTasks) {
+          , int maxTasks) {
     // please add -ea to vm options to make assert keyword enable
     assert corePoolSize > 0;
     assert maximumPoolSize > 0;
@@ -131,7 +131,7 @@ public class ThreadPool {
     }
   }
 
-   class Worker implements Runnable {
+  class Worker implements Runnable {
 
     private Thread thisThread;
 
