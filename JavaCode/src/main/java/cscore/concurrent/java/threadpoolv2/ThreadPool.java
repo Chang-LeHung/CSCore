@@ -149,7 +149,7 @@ public class ThreadPool {
       firstTask.run();
 
       thisThread = Thread.currentThread();
-      while (!isStopped || taskQueue.size() != 0) {
+      while (!isStopped) {
         try {
           Runnable task = useTimed ? taskQueue.poll(keepAliveTime, unit) : taskQueue.take();
           if (task == null) {
