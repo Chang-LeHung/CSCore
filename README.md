@@ -197,6 +197,10 @@
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247487010&idx=1&sn=63e8418c64b0d9f064fa391882538e7d&chksm=cf0c922bf87b1b3d3d9f485161a4657efdd415b63cd22c6c7be7c1b9ce704735fea9a8daf9b2&token=1326758682&lang=zh_CN#rd)
 
   - [github阅读](concurrency/java/17threadpoolimplementation.md)
+- 自己动手写线程池——向JDK线程池进发
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247487083&idx=1&sn=a978623a89917e3353209d1a81ebaf71&chksm=cf0c9262f87b1b749ded86937d70347d644bc9951656929215fc085c8171377445beb9b3d632&token=985838262&lang=zh_CN#rd)
+  - [github阅读](concurrency/java/18threadpoolmorecloseJDK.md)
+  
 
 ### 并发数据结构
 
