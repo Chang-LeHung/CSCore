@@ -10,7 +10,7 @@
 
 杀死进程的基本原理：我们使用命令去杀死进程，本质上是通过一个进程（比如说kill命令的那个进程）给另外一个进程发送信号，当进程接收到信号的时候就会进行判断是哪个信号，然后根据不同的信号做出相应的行为。
 
-在linux操作系统当中，常见的信号如下所示，信号前面表示代表不同信号的数值，比如说我们执行命令 `kill -9 1234` 就是将 9 这个值对应的信号 SIGKILL 发送给进程号等于 1234 的进程：
+信号前面表示代表不同信号的数值，比如说我们执行命令 `kill -9 1234` 就是将 9 这个值对应的信号 SIGKILL 发送给进程号等于 1234 的进程，在linux操作系统当中，常见的信号如下所示：
 
 ```shell
  1) SIGHUP	 2) SIGINT	 3) SIGQUIT	 4) SIGILL	 5) SIGTRAP
@@ -36,7 +36,7 @@
 
 ## 程序的定位
 
-我们通常可以使用 ps 和 top 两个命令进行程序的定位，在前面的两篇文章[Linux命令系列之top——里面藏着很多鲜为人知的宝藏知识](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486949&idx=1&sn=428516fe22182f41de4dfed075b03e7a&chksm=cf0c91ecf87b18fad120db8c34c0a22e748ed403991803d114e7e505dbcc6c5d53cff2bbddb0&token=102890258&lang=zh_CN#rd)和[这才是使用ps命令的正确姿势](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247487127&idx=1&sn=5486fcdac3ea1c251b4e0bc63bf110be&chksm=cf0c929ef87b1b88e4f76559a1b2c271438e89d8e5dbe9aef4cecf8c6f27eb8d695224aa48a1&token=985838262&lang=zh_CN#rd)当中我么已经仔细讨论过这个问题了！因此当我们想要杀死某个程序的时候我们可以通过上述两个命令进行程序的定位。
+我们通常可以使用 ps 和 top 两个命令进行程序的定位，在前面的两篇文章[Linux命令系列之top——里面藏着很多鲜为人知的宝藏知识](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486949&idx=1&sn=428516fe22182f41de4dfed075b03e7a&chksm=cf0c91ecf87b18fad120db8c34c0a22e748ed403991803d114e7e505dbcc6c5d53cff2bbddb0&token=102890258&lang=zh_CN#rd)和[这才是使用ps命令的正确姿势](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247487127&idx=1&sn=5486fcdac3ea1c251b4e0bc63bf110be&chksm=cf0c929ef87b1b88e4f76559a1b2c271438e89d8e5dbe9aef4cecf8c6f27eb8d695224aa48a1&token=985838262&lang=zh_CN#rd)当中我么已经仔细讨论过这个问题了！因此当我们想要杀死某个程序的时候我们可以通过上述两个命令进行程序的定位，找到我们想要杀死的进程的进程号和进程名字。
 
 在本篇文章当中主要使用一个程序 group.c 作为例子，讲述各种 kill 命令的使用，他会 fork 出几个子进程，子进程的进程名和它的进程名都是 group.out，这个程序的源代码如下所示：
 
@@ -201,4 +201,16 @@ Killall 和 pkill 使用方法差不多，而且含义也一致，将符合条�
 ## 为什么我们不能够捕获所有的信号
 
 在前面的文章当中我们提到了，SIGKILL和SIGSTOP这两个信号是不能够被捕获的！试想一下，在你的系统的当中有一个病毒程序，他会不断的创建新的进程并且不断的申请系统资源，那么你还没有办法杀死他，你只能够眼睁睁的看着你的系统卡死。这种问题 linux 设计者早就想到了，基于这个问题就肯定需要有一种方式能够万无一失的杀掉进程，因此才出现了不能够被捕获的信号。
+
+## 总结
+
+在本篇文章当中主要给大家介绍各种 kill 命令的使用方法以及一些简单的信号含义的介绍，这部分内容在我们平常的学习工作过程当中经常会使用到，希望大家有所收获～
+
+---
+
+以上就是本篇文章的所有内容了，我是**LeHung**，我们下期再见！！！更多精彩内容合集可访问项目：<https://github.com/Chang-LeHung/CSCore>
+
+关注公众号：**一无是处的研究僧**，了解更多计算机（Java、Python、计算机系统基础、算法与数据结构）知识。
+
+![](https://img2022.cnblogs.com/blog/2519003/202207/2519003-20220703200459566-1837431658.jpg)
 
