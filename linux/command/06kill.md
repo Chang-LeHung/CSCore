@@ -38,6 +38,27 @@
 
 我们通常可以使用 ps 和 top 两个命令进行程序的定位，在前面的两篇文章[Linux命令系列之top——里面藏着很多鲜为人知的宝藏知识](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486949&idx=1&sn=428516fe22182f41de4dfed075b03e7a&chksm=cf0c91ecf87b18fad120db8c34c0a22e748ed403991803d114e7e505dbcc6c5d53cff2bbddb0&token=102890258&lang=zh_CN#rd)和[这才是使用ps命令的正确姿势](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247487127&idx=1&sn=5486fcdac3ea1c251b4e0bc63bf110be&chksm=cf0c929ef87b1b88e4f76559a1b2c271438e89d8e5dbe9aef4cecf8c6f27eb8d695224aa48a1&token=985838262&lang=zh_CN#rd)当中我么已经仔细讨论过这个问题了！因此当我们想要杀死某个程序的时候我们可以通过上述两个命令进行程序的定位。
 
+在本篇文章当中主要使用一个程序 group.c 作为例子，讲述各种 kill 命令的使用，他会 fork 出几个子进程，子进程的进程名和它的进程名都是 group.out，这个程序的源代码如下所示：
+
+```c
+
+
+#include <stdio.h>
+#include <unistd.h>
+
+int main() {
+  for(int i = 0; i < 10; i++) {
+    if(!fork())
+      break;
+  }
+  printf("进程ID = %d 进程组ID = %d\n", getpid(), getpgid(0));
+  sleep(100);
+  return 0;
+}
+```
+
+
+
 ## 使用kill命令杀死进程
 
 kill命令的使用方法如下所示：
@@ -88,11 +109,31 @@ kill [option] -<pid> [...] # [option] 是参数选项比如 -9 pid 表示进程�
 
 ## pkill和pgrep
 
-pgrep 命令其实就是根据正则表达式列出相应的进程。
+pgrep 命令其实就是根据正则表达式列出相应的进程。默认他只会讲符合要求的进程的进程号列出来：
+
+```shell
+➜  pthreads pgrep out
+3204266
+3204268
+3204269
+3204270
+3204271
+3204272
+3204273
+```
 
 比如说，列出所有含有 out 这个字符的进程：
 
-![48](../../images/linux/command/48.png)
+```shell
+➜  pthreads pgrep -l out
+3204266 group.out
+3204268 group.out
+3204269 group.out
+3204270 group.out
+3204271 group.out
+3204272 group.out
+3204273 group.out
+```
 
 ```shell
 pgrep -l out
@@ -106,7 +147,56 @@ pgrep -l out
 pgrep -u abc out # 也是选择含有 out 字符串的进程
 ```
 
- 
+ pgrep 还有一个比较重要的选项就是 -v ，这个选项的意思就是除了符合正则表达式要求的其他进程，比如说我们想要将所有不含 out 的进程筛选出来，就可以使用如下命令：
+
+```shell
+pgrep -v out
+```
+
+如果我们想要统计一下符合要求的进程的个数我们可以使用下面的这个命令：
+
+```shell
+pgrep -c out # 统计一下含有 out 字符串的进程的个数
+```
+
+pkill 的使用方式和 pgrep 是一样的只不过 pgrep 是将进程的进程号列出来，而pkill是将一个发送给所有符合要求的进程，默认发送的信号是 SIGTERM 对应的值等于 15。
+
+![49](../../images/linux/command/49.png)
+
+比如在上图当中就发送一个默认信号SIGTERM给所有命令行当中还有字符串 out 的进程。因此 pkill 在批处理场景用的比较多，将还有某个特征的进程全部杀死。
+
+如果你想指定具体发送那个信号格式和 kill 是一样的，比如发送 SIGKILL（-9）信号给含有字符串 out 的进程。
+
+```shell
+pkill -9 out
+或者
+pkill -SIGKILL out
+```
+
+## 使用killall命令
+
+Killall 和 pkill 使用方法差不多，而且含义也一致，将符合条件的进程全部杀死。默认发送的信号也是SIGTERM，信号值等于15，但是pkill不同的是 killall 默认不开启正则表达式，我们需要通过 -r 选项启动正则表达式识别。
+
+例子如下所示：
+
+![49](../../images/linux/command/50.png)
+
+如果我们想在不实用 -r 选项的情况下杀死进程，只能输入进程的全称了。
+
+![49](../../images/linux/command/51.png)
+
+在killall命令当中还有一些常用的选项：
+
+| 选项            | 含义                                                         |
+| --------------- | ------------------------------------------------------------ |
+| -u              | 只杀死指定用户的进程，比如说 -u abc 只杀死用户 abc 满足要求的进程 |
+| -I              | 字母大小写不敏感                                             |
+| -i              | 交互模式，每次杀死进程都会询问是否杀死进程                   |
+| -r              | 表示使用正则表达式进行匹配                                   |
+| -数字或者信号名 | 发送特定的信号，如下的例子所示                               |
+|                 |                                                              |
+
+![49](../../images/linux/command/52.png)
 
 ## 为什么我们不能够捕获所有的信号
 
