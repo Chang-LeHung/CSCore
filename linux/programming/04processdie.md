@@ -244,7 +244,39 @@ int main() {
 
 ![53](../../images/linux/command/56.png)
 
-我们在父进程对子进程的退出码进行了判断，如果子进程退出的原因是 core dump 的话就进行打印。
+我们在父进程对子进程的退出码进行了判断，如果子进程退出的原因是 core dump 的话就进行打印输出，而在上面的程序输出当中我们看到了程序进行了输出，因此父进程可以判断子进程是因为 core dump 而退出程序的。
 
 ## 从子进程获取系统资源信息
+
+出了上面所谈到的等在子进程退出的方法之外，我们还有可以获取子进程执行时候的状态信息，比如说运行时占用的最大的内存空间，进程有多少次上下文切换等等。主要有下面两个系统调用：
+
+```c
+pid_t wait3(int *wstatus, int options,
+                   struct rusage *rusage);
+pid_t wait4(pid_t pid, int *wstatus, int options,
+                   struct rusage *rusage);
+```
+
+其中 3 和 4 表示对应的函数的参数的个数。在上面的两个函数当中有一个比较重要的数据类型 `struct rusage` ，我们看一下这个结构体的内容和对应字段的含义：
+
+```c
+struct rusage {
+  struct timeval ru_utime; /* user CPU time used */
+  struct timeval ru_stime; /* system CPU time used */
+  long   ru_maxrss;        /* maximum resident set size */
+  long   ru_ixrss;         /* integral shared memory size */
+  long   ru_idrss;         /* integral unshared data size */
+  long   ru_isrss;         /* integral unshared stack size */
+  long   ru_minflt;        /* page reclaims (soft page faults) */
+  long   ru_majflt;        /* page faults (hard page faults) */
+  long   ru_nswap;         /* swaps */
+  long   ru_inblock;       /* block input operations */
+  long   ru_oublock;       /* block output operations */
+  long   ru_msgsnd;        /* IPC messages sent */
+  long   ru_msgrcv;        /* IPC messages received */
+  long   ru_nsignals;      /* signals received */
+  long   ru_nvcsw;         /* voluntary context switches */
+  long   ru_nivcsw;        /* involuntary context switches */
+};
+```
 
