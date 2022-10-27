@@ -73,3 +73,50 @@ if __name__ == "__main__":
 
 大家可以根据上表当中的内容对应一下程序的状态，就发现子进程目前处于僵尸状态。
 
+### 孤儿进程
+
+孤儿进程：当一个进程还在执行，但是他的父进程已经退出了，那么这个进程就变成了一个孤儿进程，然后他会被 init 进程（进程ID=1）"收养"，然后 init j 进程会调用 wait 系统调用回收这个进程的资源。
+
+下面是一个孤儿进程的例子，我们可以看看子进程的父进程的输出是什么：
+
+```c
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+
+int main() {
+  if(fork()) {
+    sleep(1);
+    // 父进程退出
+    exit(0);
+  }
+  while(1) {
+    printf("pid = %d parent pid = %d\n", getpid(), getppid());
+    sleep(1);
+  }
+  return 0;
+}
+```
+
+对应的python代码如下：
+
+```py
+import os
+import time
+
+
+if __name__ == "__main__":
+    pid = os.fork()
+
+    if pid == 0:
+        while True:
+            print(f"pid = {os.getpid()} parent pid = {os.getppid()}")
+            time.sleep(1)
+```
+
+程序执行结果如下所示：
+
+![53](../../images/linux/command/54.png)
+
+可以看到子进程的父进程发生了变化，当父进程退出之后，子进程的父进程变成了 init 进程，进程号等于1。
+
