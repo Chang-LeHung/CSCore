@@ -261,10 +261,10 @@ pid_t wait4(pid_t pid, int *wstatus, int options,
 
 ```c
 struct rusage {
-  struct timeval ru_utime; /* user CPU time used */
-  struct timeval ru_stime; /* system CPU time used */
-  long   ru_maxrss;        /* maximum resident set size */
-  long   ru_ixrss;         /* integral shared memory size */
+  struct timeval ru_utime; /* user CPU time used */ // 程序在用户态的时候使用了多少的CPU时间
+  struct timeval ru_stime; /* system CPU time used */ // 程序在内核态的时候使用了多少CPU时间
+  long   ru_maxrss;        /* maximum resident set size */ // 使用的内存的峰值 单位 kb
+  long   ru_ixrss;         /* integral shared memory size */ 
   long   ru_idrss;         /* integral unshared data size */
   long   ru_isrss;         /* integral unshared stack size */
   long   ru_minflt;        /* page reclaims (soft page faults) */
@@ -273,10 +273,10 @@ struct rusage {
   long   ru_inblock;       /* block input operations */
   long   ru_oublock;       /* block output operations */
   long   ru_msgsnd;        /* IPC messages sent */
-  long   ru_msgrcv;        /* IPC messages received */
-  long   ru_nsignals;      /* signals received */
-  long   ru_nvcsw;         /* voluntary context switches */
-  long   ru_nivcsw;        /* involuntary context switches */
+  long   ru_msgrcv;        /* IPC messages received */ // 
+  long   ru_nsignals;      /* signals received */ // 接收的信号的个数
+  long   ru_nvcsw;         /* voluntary context switches */ // 主动上下文切换的次数
+  long   ru_nivcsw;        /* involuntary context switches */ // 非主动上下文切换的次数
 };
 ```
 
