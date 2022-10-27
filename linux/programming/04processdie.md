@@ -2,7 +2,7 @@
 
 ## 前言
 
-在本篇文章当中主要给大家介绍父子进程之间的关系，以及他们之间的交互以及可能造成的状态，帮助大家深入理解父子进程之间的关系。
+在本篇文章当中主要给大家介绍父子进程之间的关系，以及他们之间的交互以及可能造成的状态，帮助大家深入理解父子进程之间的关系，以及他们之间的交互。
 
 ## 僵尸进程和孤儿进程
 
@@ -264,19 +264,67 @@ struct rusage {
   struct timeval ru_utime; /* user CPU time used */ // 程序在用户态的时候使用了多少的CPU时间
   struct timeval ru_stime; /* system CPU time used */ // 程序在内核态的时候使用了多少CPU时间
   long   ru_maxrss;        /* maximum resident set size */ // 使用的内存的峰值 单位 kb
-  long   ru_ixrss;         /* integral shared memory size */ 
-  long   ru_idrss;         /* integral unshared data size */
-  long   ru_isrss;         /* integral unshared stack size */
-  long   ru_minflt;        /* page reclaims (soft page faults) */
-  long   ru_majflt;        /* page faults (hard page faults) */
-  long   ru_nswap;         /* swaps */
-  long   ru_inblock;       /* block input operations */
-  long   ru_oublock;       /* block output operations */
-  long   ru_msgsnd;        /* IPC messages sent */
-  long   ru_msgrcv;        /* IPC messages received */ // 
-  long   ru_nsignals;      /* signals received */ // 接收的信号的个数
+  long   ru_ixrss;         /* integral shared memory size */ // 暂时没有使用
+  long   ru_idrss;         /* integral unshared data size */ // 暂时没有使用
+  long   ru_isrss;         /* integral unshared stack size */ // 暂时没有使用
+  long   ru_minflt;        /* page reclaims (soft page faults) */ // 没有IO操作时候 page fault 的次数
+  long   ru_majflt;        /* page faults (hard page faults) */ // 有 IO 操作的时候 page fault 的次数
+  long   ru_nswap;         /* swaps */ // 暂时没有使用
+  long   ru_inblock;       /* block input operations */ // 文件系统写操作次数
+  long   ru_oublock;       /* block output operations */ // 文件系统读操作次数
+  long   ru_msgsnd;        /* IPC messages sent */// 暂时没有使用
+  long   ru_msgrcv;        /* IPC messages received */ // 暂时没有使用
+  long   ru_nsignals;      /* signals received */ // 暂时没有使用
   long   ru_nvcsw;         /* voluntary context switches */ // 主动上下文切换的次数
   long   ru_nivcsw;        /* involuntary context switches */ // 非主动上下文切换的次数
 };
 ```
+
+下面我们用一个例子看看是如何从子进程当中获取子进程执行时候的一些详细数据信息的：
+
+下面是子进程的代码，我们在 fork 之后使用 execv 加载下面的程序：
+
+```c
+
+#include <stdio.h>
+
+
+int main() {
+  printf("hello world\n");
+  return 0;
+}
+```
+
+父进程代码：
+
+```c
+
+#include <sys/time.h>
+#include <stdio.h>
+#include <sys/resource.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+int main(int argc, char* argv[]) {
+  if(fork() != 0) {
+    struct rusage usage; // 定义一个统计资源的结构体
+    int pid = wait4(-1, NULL, 0, &usage); // 将这个结构体的地址传入 好让内核能讲对应的信息存在指针所指向的地方
+    // 打印内存使用的峰值
+    printf("pid = %d memory usage peek = %ldkb\n", pid, usage.ru_maxrss);
+  }else {
+    execv("./getrusage.out", argv);
+  }
+  return 0;
+}
+```
+
+上面程序执行结果如下图所示：
+
+![53](../../images/linux/command/57.png)
+
+可以看出我们得到了内存使用的峰值，其实我们还可以使用 time 命令去查看一个进程执行时候的这些数据值。
+
+![53](../../images/linux/command/58.png)
+
+从上面的结果可以看到使用 time 命令得到的结果和我们自己使用程序得到的结果是一样的，这也从侧面验证了我们的程序。
 
