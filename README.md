@@ -256,6 +256,9 @@
 - 这才是使用ps命令的正确姿势
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247487127&idx=1&sn=5486fcdac3ea1c251b4e0bc63bf110be&chksm=cf0c929ef87b1b88e4f76559a1b2c271438e89d8e5dbe9aef4cecf8c6f27eb8d695224aa48a1&token=985838262&lang=zh_CN#rd)
   - [github阅读](linux/command/05ps.md)
+- 如何优雅的杀掉一个进程
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247487150&idx=1&sn=b4e8338b726242435236a7acd451fcae&chksm=cf0c92a7f87b1bb19bf9397387dbff594ebb0df79e227d8415511a97ab1b2d75b215bde8cbfa&token=308651918&lang=zh_CN#rd)
+  - [github阅读](linux/command/06kill.md)
 
 #### 系统编程
 
