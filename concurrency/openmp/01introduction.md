@@ -97,3 +97,58 @@ int main() {
 
 ![02](../../images/openmp/01.png)
 
+现在我们用一个程序去验证上面的过程：
+
+```c
+
+#include <stdio.h>
+#include <omp.h>
+#include <unistd.h>
+
+int main() {
+
+  #pragma omp parallel num_threads(4)
+  {
+    printf("parallel region 1 thread id = %d\n", omp_get_thread_num());
+    sleep(1);
+  }
+  printf("after parallel region 1 thread id = %d\n", omp_get_thread_num());
+
+  #pragma omp parallel num_threads(4)
+  {
+    printf("parallel region 2 thread id = %d\n", omp_get_thread_num());
+    sleep(1);
+  }
+  printf("after parallel region 2 thread id = %d\n", omp_get_thread_num());
+
+  #pragma omp parallel num_threads(4)
+  {
+    printf("parallel region 3 thread id = %d\n", omp_get_thread_num());
+    sleep(1);
+  }
+
+  printf("after parallel region 3 thread id = %d\n", omp_get_thread_num());
+  return 0;
+}
+```
+
+程序的输入如下所示：
+
+```shell
+parallel region 1 thread id = 0
+parallel region 1 thread id = 3
+parallel region 1 thread id = 1
+parallel region 1 thread id = 2
+after parallel region 1 thread id = 0
+parallel region 2 thread id = 0
+parallel region 2 thread id = 2
+parallel region 2 thread id = 3
+parallel region 2 thread id = 1
+after parallel region 2 thread id = 0
+parallel region 3 thread id = 0
+parallel region 3 thread id = 1
+parallel region 3 thread id = 3
+parallel region 3 thread id = 2
+after parallel region 3 thread id = 0
+```
+
