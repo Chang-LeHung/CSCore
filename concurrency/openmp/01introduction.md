@@ -93,7 +93,7 @@ int main() {
 
 ![02](../../images/openmp/02.png)
 
-在 openmp 的程序当中，你可以将程序用一个个的并行域分开，在并行域（parallel region）中，程序是有并发的，但是在并行域之外是没有并发的，只有主线程在执行，整个过程如下图所示：
+在 openmp 的程序当中，你可以将程序用一个个的并行域分开，在并行域（parallel region）中，程序是有并发的，但是在并行域之外是没有并发的，只有主线程（master）在执行，整个过程如下图所示：
 
 ![02](../../images/openmp/01.png)
 
@@ -152,3 +152,4 @@ parallel region 3 thread id = 2
 after parallel region 3 thread id = 0
 ```
 
+从上面的输出我们可以了解到，
