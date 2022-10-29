@@ -4,7 +4,7 @@
 
 Openmp 一个非常易用的共享内存的并行编程框架，它提供了一些非常简单易用的API，让编程人员从复杂的并发编程当中释放出来，专注于具体功能的实现。openmp 主要是通过编译指导语句以及他的动态运行时库实现，在本篇文章当中我们主要介绍 openmp 一些入门的简单指令的使用。
 
-## 认识 openmp 的简单性
+## 认识 openmp 的简单易用性
 
 比如现在我们有一个任务，启动四个线程打印 `hello world`，我们看看下面 `C` 使用 `pthread` 的实现以及 `C++` 的实现，并对比他们和  `openmp` 的实现复杂性。
 
@@ -64,7 +64,7 @@ int main() {
 
 上面文件编译命令：`g++ 文件名 lpthread` 。
 
-### Openmp 实现
+### OpenMP 实现
 
 ```c
 
@@ -166,6 +166,8 @@ $$
 $$
 \int_0^{10} x^2\mathrm{d}x =\sum_{ i= 0}^{1000000}(i * 0.00001) ^2 * 0.00001
 $$
+微元法的本质就是将曲线下方的面积分割成一个一个的非常小的长方形，然后将所有的长方形的面积累加起来，这样得到最终的结果。
+
 <img src="../../images/concurrency/06.png" alt="01" style="zoom:80%;" />
 
 如果你不懂上面所谈到的求解方法也没关系，只需要知道我们需要使用 openmp 去计算一个计算量比较大的任务即可。
@@ -179,6 +181,11 @@ $$
 #include <omp.h>
 #include <math.h>
 
+/// @brief 计算 x^2 一部分的面积
+/// @param start 线程开始计算的位置
+/// @param end   线程结束计算的位置
+/// @param delta 长方形的边长
+/// @return 计算出来的面积
 double x_square_partial_integral(double start, double end, double delta) {
 
   double s = 0;
@@ -191,20 +198,41 @@ double x_square_partial_integral(double start, double end, double delta) {
 int main() {
 
   int s = 0;
-  int e = 100;
+  int e = 10;
   double sum = 0;
-  #pragma omp parallel num_threads(4) reduction(+:sum)
+  #pragma omp parallel num_threads(32) reduction(+:sum)
   {
-    double start = (double)(e - s) / 4 * omp_get_thread_num();
-    double end   = (double)(e - s) / 4 * (omp_get_thread_num() + 1);
+    // 根据线程号进行计算区间的分配
+    // omp_get_thread_num() 返回的线程 id 从 0 开始计数 ：0, 1, 2, 3, 4, ..., 31
+    double start = (double)(e - s) / 32 * omp_get_thread_num();
+    double end   = (double)(e - s) / 32 * (omp_get_thread_num() + 1);
     sum = x_square_partial_integral(start, end, 0.0000001);
   }
   printf("sum = %lf\n", sum);
   return 0;
 }
+
 ```
 
-在上面的代码当中 `#pragma omp parallel num_threads(4)` 表示启动 4 个线程执行 `{}` 中的代码，`reduction(+:sum)` 表示需要对 `sum` 这个变量进行一个规约操作，当 openmp 遇到这样的子句的时候首先会拷贝一份 `sum` 作为本地变量，然后在并行域当中使用的就是每一个线程的本地变量，因为有 reduction 的规约操作，因此在每个线程计算完成之后还需要将每个线程本地计算出来的值对操作符 + 进行规约操作，也就是将每个线程计算得到的结果求和，最终将得到的结果赋值给我们在 main 函数当中定义的变量 `sum` 。最终我们打印的变量 `sum` 就是各个线程求和之后的结果。
+在上面的代码当中 `#pragma omp parallel num_threads(4)` 表示启动 4 个线程执行 `{}` 中的代码，`reduction(+:sum)` 表示需要对 `sum` 这个变量进行一个规约操作，当 openmp 遇到这样的子句的时候首先会拷贝一份 `sum` 作为本地变量，然后在并行域当中使用的就是每一个线程的本地变量，因为有 reduction 的规约操作，因此在每个线程计算完成之后还需要将每个线程本地计算出来的值对操作符 + 进行规约操作，也就是将每个线程计算得到的结果求和，最终将得到的结果赋值给我们在 main 函数当中定义的变量 `sum` 。最终我们打印的变量 `sum` 就是各个线程求和之后的结果。上面的代码执行过程大致如下图所示：
 
+![02](../../images/openmp/04.png)
 
+注意事项：你在编译上述程序的时候需要加上编译选项 `-fopenmp` 启动`openmp` 编译选项和 `-lm` 链接数学库。
+
+上面程序的执行结果如下所示：
+
+![02](../../images/openmp/03.png)
+
+## 总结
+
+在本篇文章当中主要给大家介绍了 OpenMP 的基本使用和程序执行的基本原理，在后续的文章当中我们将仔细介绍各种 `OpenMP` 的子句和指令的使用方法，希望大家有所收获！
+
+---
+
+更多精彩内容合集可访问项目：<https://github.com/Chang-LeHung/CSCore>
+
+关注公众号：一无是处的研究僧，了解更多计算机（Java、Python、计算机系统基础、算法与数据结构）知识。
+
+![](https://img2022.cnblogs.com/blog/2519003/202207/2519003-20220703200459566-1837431658.jpg)
 
