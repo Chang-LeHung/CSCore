@@ -152,5 +152,57 @@ parallel region 3 thread id = 2
 after parallel region 3 thread id = 0
 ```
 
-从上面的输出我们可以了解到，在并行域内部程序的输出是没有顺序的，但是在并行域的外部是有序的，在并行域的开始部分程序会进行并发操作，但是在并行域的最后会有一个隐藏的同步点，等待所有线程到达这个同步点之后程序才会继续执行，现在再看上文当中 openmp 的执行流图的话就很清晰易懂了。
+从上面的输出我们可以了解到，在并行域内部程序的输出是没有顺序的，但是在并行域的外部是有序的，在并行域的开始部分程序会进行并发操作，但是在并行域的最后会有一个隐藏的同步点，等待所有线程到达这个同步点之后程序才会继续执行，现在再看上文当中 `openmp` 的执行流图的话就很清晰易懂了。
+
+## 积分例子
+
+现在我们使用一个简单的函数积分的例子去具体了解 `openmp` 在具体的使用场景下的并行。比如我们求函数  $x^2$ 的积分。
+
+<img src="../../images/concurrency/04.png" alt="01" style="zoom:80%;" />
+$$
+\int_0^{x} = \frac{1}{3}x^2dx
+$$
+比如我们现在需要 x = 10 时，$x^2$ 的积分结果。我们在程序里面使用微元法去计算函数的微分结果，而不是直接使用公式进行计算，微元法对应的计算方式如下所示：
+$$
+\int_0^{10} x^2\mathrm{d}x =\sum_{ i= 0}^{1000000}(i * 0.00001) ^2 * 0.00001
+$$
+<img src="../../images/concurrency/06.png" alt="01" style="zoom:80%;" />
+
+如果你不懂上面所谈到的求解方法也没关系，只需要知道我们要求下面的表达式即可：
+$$
+\sum_{ i= 0}^{1000000}(i * 0.00001) ^2 * 0.00001
+$$
+`openmp` 具体的实现代码如下所示：
+
+```c
+
+
+#include <stdio.h>
+#include <omp.h>
+#include <math.h>
+
+double x_square_partial_integral(double start, double end, double delta) {
+
+  double s = 0;
+  for(double i = start; i < end; i += delta) {
+    s += pow(i, 2) * delta;
+  }
+  return s;
+}
+
+int main() {
+
+  int s = 0;
+  int e = 100;
+  double sum = 0;
+  #pragma omp parallel num_threads(4) reduction(+:sum)
+  {
+    double start = (double)(e - s) / 4 * omp_get_thread_num();
+    double end   = (double)(e - s) / 4 * (omp_get_thread_num() + 1);
+    sum = x_square_partial_integral(start, end, 0.0000001);
+  }
+  printf("sum = %lf\n", sum);
+  return 0;
+}
+```
 
