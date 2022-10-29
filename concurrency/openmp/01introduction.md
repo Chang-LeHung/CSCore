@@ -6,6 +6,8 @@ Openmp 一个非常易用的共享内存的并行编程框架，它提供了一�
 
 ## 认识 openmp 的简单性
 
+比如现在我们有一个任务，启动四个线程打印 `hello world`，我们看看下面 `C` 使用 `pthread` 的实现以及 `C++` 的实现，并对比他们和  `openmp` 的实现复杂性。
+
 ### C 语言实现
 
 ```c
@@ -30,6 +32,8 @@ int main() {
   return 0;
 }
 ```
+
+上面文件编译命令：`gcc 文件名 -lpthread` 。
 
 ### C++ 实现
 
@@ -58,6 +62,8 @@ int main() {
 }
 ```
 
+上面文件编译命令：`g++ 文件名 lpthread` 。
+
 ### Openmp 实现
 
 ```c
@@ -67,12 +73,27 @@ int main() {
 
 
 int main() {
-
+	
+  // #pragma 表示这是编译指导语句 表示编译器需要对下面的并行域进行特殊处理 omp parallel 表示下面的代码区域 {} 是一个并行域 num_threads(4) 表示一共有 4 个线程执行 {} 内的代码 因此实现的效果和上面的效果是一致的
   #pragma omp parallel num_threads(4)
   {
-    printf("hello world from tid = %d\n", omp_get_thread_num());
+    printf("hello world from tid = %d\n", omp_get_thread_num()); // omp_get_thread_num 表示得到线程的线程 id
   }
   return 0;
 }
 ```
+
+上面文件编译命令：`gcc 文件名 -fopenmp` ，如果你使用了 openmp 的编译指导语句的话需要在编译选项上加上 `-fopenmp`。
+
+从上面的代码来看，确实 `openmp` 写并发程序的复杂度确实比 `pthread` 和 `C++` 低。`openmp` 相比起其他构建并行程序的方式来说，使用 `openmp` 你可以更加关注具体的业务实现，而不用太关心并发程序背后的启动与结束的过程。
+
+## opnemp 基本原理
+
+在上文当中我们写了一个非常简单的 openmp 程序，使用 4 个不同的线程分别打印 `hello world` 。我们仔细分析一下这个程序的执行流程：
+
+![02](../../images/openmp/02.png)
+
+在 openmp 的程序当中，你可以将程序用一个个的并行域分开，在并行域（parallel region）中，程序是有并发的，但是在并行域之外是没有并发的，只有主线程在执行，整个过程如下图所示：
+
+![02](../../images/openmp/01.png)
 
