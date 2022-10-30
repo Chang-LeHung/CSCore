@@ -216,7 +216,7 @@
 
 ## 🔖Python
 
-## 🔖OpenMp
+## 🔖OpenMP
 
 - OpenMP 入门
   - [github阅读](concurrency/openmp/01introduction.md)
