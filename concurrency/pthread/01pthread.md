@@ -202,3 +202,67 @@ int main() {
 多个线程的执行流和大致的内存布局如下图所示：
 
 ![01](../../images/pthread/02.png)
+
+## 关于栈大小程序的一个小疑惑
+
+```c
+
+
+#include <stdio.h>
+#include <pthread.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <unistd.h>
+int times = 1;
+
+// 先申请内存空间再打印
+void* func(void* arg) {
+  char s[1 << 20]; // 申请 1MB 内存空间（分配在栈空间上）
+  printf("times = %d\n", times);
+  times++;
+  func(NULL);
+  return NULL;
+}
+
+int main() {
+
+  pthread_t t;
+  pthread_create(&t, NULL, func, NULL);
+  pthread_join(t, NULL);
+  // func(NULL);
+  return 0;
+}
+```
+
+```c
+
+
+#include <stdio.h>
+#include <pthread.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <unistd.h>
+int times = 1;
+
+// 先打印再申请内存空间
+void* func(void* arg) {
+  printf("times = %d\n", times);
+  times++;
+  char s[1 << 20]; // 申请 1MB 内存空间（分配在栈空间上）
+  func(NULL);
+  return NULL;
+}
+
+int main() {
+
+  pthread_t t;
+  pthread_create(&t, NULL, func, NULL);
+  pthread_join(t, NULL);
+  // func(NULL);
+  return 0;
+}
+```
+
+
+
+![01](../../images/funny/cat.webp)
