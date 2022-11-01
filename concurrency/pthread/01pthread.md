@@ -151,13 +151,53 @@ int main() {
 
 ### 深入理解参数 attr
 
+在深入介绍参数 attr 前，我们首先需要了解一下程序的内存布局，在64位操作系统当中程序的虚拟内存布局大致如下所示，从下往上依次为：只读数据/代码区、可读可写数据段、堆区、共享库的映射区、程序栈区以及内核内存区域。我们程序执行的区域就是在栈区。
 
+![03](../../images/programming/03.png)
 
-
-
-单个线程的执行流和大致的内存布局如下所示：
+根据上面的虚拟内存布局示意图，我们将其简化一下得到单个线程的执行流和大致的内存布局如下所示（程序执行的时候有他的栈帧以及寄存器现场，图中将寄存器也做出了标识）：
 
 ![01](../../images/pthread/01.png)
+
+程序执行的时候当我们进行函数调用的时候函数的栈帧就会从上往下生长，我们现在进行一下测试，看看程序的栈帧最大能够达到多少。
+
+```c
+
+
+#include <stdio.h>
+#include <pthread.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <unistd.h>
+int times = 1;
+
+void* func(void* arg) {
+  char s[1 << 20]; // 申请 1MB 内存空间（分配在栈空间上）
+  printf("times = %d\n", times);
+  times++;
+  func(NULL);
+  return NULL;
+}
+
+int main() {
+
+  pthread_t t;
+  pthread_create(&t, NULL, func, NULL);
+  pthread_join(t, NULL);
+  // func(NULL);
+  return 0;
+}
+```
+
+上述程序的执行结果如下图所示：
+
+![01](../../images/pthread/06.png)
+
+从上面的程序我们可以看到在第 8 次申请栈内存的时候遇到了段错误，因此可以判断栈空间大小在 8MB 左右，事实上我们可以查看 linux 操作系统上，栈内存的指定大小：
+
+![01](../../images/pthread/07.png)
+
+事实上在 linux 操作系统当中程序的栈空间的大小默认最大为 8 MB。
 
 多个线程的执行流和大致的内存布局如下图所示：
 
