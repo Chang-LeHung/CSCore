@@ -58,6 +58,8 @@ int pthread_create(pthread_t *thread, const pthread_attr_t *attr,
 
 ### 深入理解参数 thread
 
+在下面的例子当中我们将使用 pthread_self 得到线程的 id ，并且通过保存线程 id 的地址的变量 t 得到线程的 id ，对两个得到的结果进行比较。
+
 ```c
 
 
@@ -85,9 +87,71 @@ int main() {
 
 ![01](../../images/pthread/03.png)
 
-参数 t 和线程 id 之间的关系如下所示：
+根据上面程序打印的结果我们可以知道，变量 `pthread_t t` 保存的就是线程 id 的地址， 参数 t 和线程 id 之间的关系如下所示：
 
 ![01](../../images/pthread/04.png)
+
+在上面的代码当中我们首先对 t 取地址，然后将其转化为一个 long 类型的指针，然后解引用就可以得到对应地址的值了，也就是线程的ID。
+
+### 深入理解参数 arg
+
+在下面的程序当中我们定义了一个结构体用于保存一些字符出的信息，然后创建一个这个结构体的对象，将这个对象的指针作为参数传递给线程要执行的函数，并且在线程内部打印字符串当中的内容。
+
+```c
+
+
+#include <stdio.h>
+#include <pthread.h>
+#include <malloc.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+typedef struct info {
+  char s[1024]; // 保存字符信息
+  int  size;    // 保存字符串的长度
+}info_t;
+
+static
+void* func(void* arg) {
+  info_t* in = (info_t*)arg;
+  in->s[in->size] = '\0';
+  printf("string in arg = %s\n", in->s);
+  return NULL;
+}
+
+int main() {
+
+  info_t* in = malloc(sizeof(info_t)); // 申请内存空间
+  // 保存 HelloWorld 这个字符串 并且设置字符串的长度
+  in->s[0] = 'H';
+  in->s[1] = 'e';
+  in->s[2] = 'l';
+  in->s[3] = 'l';
+  in->s[4] = 'o';
+  in->s[5] = 'W';
+  in->s[6] = 'o';
+  in->s[7] = 'r';
+  in->s[8] = 'l';
+  in->s[9] = 'd';
+  in->size = 10;
+  pthread_t t;									// 将 in 作为参数传递给函数 func
+  pthread_create(&t, NULL, func, (void*)in); 
+  pthread_join(t, NULL);
+  free(in); // 释放内存空间
+  return 0;
+}
+```
+
+上面程序的执行结果如下所示：
+
+![01](../../images/pthread/05.png)
+
+可以看到函数参数已经做到了正确传递。
+
+### 深入理解参数 attr
+
+
 
 
 
