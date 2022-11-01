@@ -228,6 +228,8 @@ int main() {
 
 ![01](../../images/pthread/08.png)
 
+#### 设置线程栈空间的大小
+
 现在如果我们有一个需求，需要的栈空间大于 8MB，我们应该怎么办呢？这就是我们所需要谈到的 attr，这个变量是一个 **pthread_attr_t** 对象，这个对象的主要作用就是用于设置线程的各种属性的，其中就包括线程的栈的大小，在下面的程序当中我们将线程的栈空间的大小设置成 24MB，并且使用程序进行测试。
 
 ```c
@@ -268,7 +270,57 @@ int main() {
 - 使用各种各样的函数对属性 attr 进行操作，比如 `pthread_attr_setstacksize`，这个函数的作用就是用于设置线程的栈空间的大小。
 - 使用 `pthread_attr_destroy` 释放线程属性相关的系统资源。
 
-多个线程的执行流和大致的内存布局如下图所示：
+#### 自己为线程的栈申请空间
+
+在上一小节当中我们通过函数 `pthread_attr_setstacksize` 给栈空间设置了新的大小，并且使用程序检查验证了新设置的栈空间大小，在这一小节当中我们将介绍使用我们自己申请的内存空间也可以当作线程的栈使用。我们将使用两种方法取验证这一点：
+
+- 使用 `malloc` 函数申请内存空间，这部分空间主要在堆当中。
+- 使用 `mmap` 系统调用在共享库的映射区申请内存空间。
+
+##### 使用 malloc 函数申请内存空间
+
+```c
+
+#include <stdio.h>
+#include <pthread.h>
+#include <stdlib.h>
+
+#define MiB * 1 << 20
+
+int times = 0;
+static
+void* stack_overflow(void* args) {
+  printf("times = %d\n", ++times);
+  char s[1 << 20]; // 1 MiB
+  stack_overflow(NULL);
+  return NULL;
+}
+
+int main() {
+  pthread_attr_t attr;
+  pthread_attr_init(&attr);
+  void* stack = malloc(2 MiB); // 使用 malloc 函数申请内存空间 申请的空间大小为 2 MiB 
+  pthread_t t;
+  pthread_attr_setstack(&attr, stack, 2 MiB); // 使用属性设置函数设置栈的位置 栈的最低地址为 stack 栈的大小等于 2 MiB 
+  pthread_create(&t, &attr, stack_overflow, NULL);
+  pthread_join(t, NULL);
+  pthread_attr_destroy(&attr); // 释放系统资源
+  free(stack); // 释放堆空间
+  return 0;
+}
+```
+
+上述程序的执行结果如下图所示：
+
+![01](../../images/pthread/10.png)
+
+从上面的执行结果可以看出来我们设置的栈空间的大小为 2MB 成功了。在上面的程序当中我们主要使用 `pthread_attr_setstack` 函数设置栈的低地址和栈空间的大小。我们申请的内存空间内存布局大致如下图所示：
+
+![01](../../images/pthread/11.png)
+
+
+
+根据前面知识的学习我们可以知道多个线程的执行流和大致的内存布局如下图所示：
 
 ![01](../../images/pthread/02.png)
 
