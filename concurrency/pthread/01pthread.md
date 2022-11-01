@@ -165,7 +165,6 @@ int main() {
 
 
 #include <stdio.h>
-#include <pthread.h>
 #include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -181,10 +180,7 @@ void* func(void* arg) {
 
 int main() {
 
-  pthread_t t;
-  pthread_create(&t, NULL, func, NULL);
-  pthread_join(t, NULL);
-  // func(NULL);
+  func(NULL);
   return 0;
 }
 ```
@@ -198,6 +194,79 @@ int main() {
 ![01](../../images/pthread/07.png)
 
 事实上在 linux 操作系统当中程序的栈空间的大小默认最大为 8 MB。
+
+现在我们来测试一下，当我们创建一个线程的时候，线程的栈的大小大概是多少：
+
+```c
+
+
+#include <stdio.h>
+#include <pthread.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <unistd.h>
+int times = 1;
+
+void* func(void* arg) {
+  printf("times = %d\n", times);
+  times++;
+  char s[1 << 20]; // 申请 1MB 内存空间（分配在栈空间上）
+  func(NULL);
+  return NULL;
+}
+
+int main() {
+
+  pthread_t t;
+  pthread_create(&t, NULL, func, NULL);
+  pthread_join(t, NULL);
+  return 0;
+}
+```
+
+上面的程序执行结果如下图所示，可以看到当我们创建一个线程的时候栈的最大的大小也是 8MB。
+
+![01](../../images/pthread/08.png)
+
+现在如果我们有一个需求，需要的栈空间大于 8MB，我们应该怎么办呢？这就是我们所需要谈到的 attr，这个变量是一个 **pthread_attr_t** 对象，这个对象的主要作用就是用于设置线程的各种属性的，其中就包括线程的栈的大小，在下面的程序当中我们将线程的栈空间的大小设置成 24MB，并且使用程序进行测试。
+
+```c
+
+#include <stdio.h>
+#include <pthread.h>
+#include <stdlib.h>
+
+#define MiB * 1 << 20
+
+int times = 0;
+void* stack_overflow(void* args) {
+  printf("times = %d\n", ++times);
+  char s[1 << 20]; // 1 MiB
+  stack_overflow(NULL);
+  return NULL;
+}
+
+int main() {
+  pthread_attr_t attr;
+  pthread_attr_init(&attr); // 对变量 attr 进行初始化操作
+  pthread_attr_setstacksize(&attr, 24 MiB); // 设置栈帧大小为 24 MiB 这里使用了一个小的 trick 大家可以看一下 MiB 的宏定义
+  pthread_t t;
+  pthread_create(&t, &attr, stack_overflow, NULL);
+  pthread_join(t, NULL);
+  pthread_attr_destroy(&attr); // 释放线程属性的相关资源
+  return 0;
+}
+```
+
+上面的程序执行结果如下图所示：
+
+![01](../../images/pthread/09.png)
+
+从上面程序的执行结果来看我们设置的 24 MB 的栈空间大小起到了效果，我们可以通过线程的递归次数可以看出来我们确实申请了那么大的空间。在上面的程序当中我们对属性的操作如下，这也是对属性操作的一般流程：
+
+- 使用 `pthread_attr_init` 对属性变量进行初始化操作。
+- 使用各种各样的函数对属性 attr 进行操作，比如 `pthread_attr_setstacksize`，这个函数的作用就是用于设置线程的栈空间的大小。
+- 使用 `pthread_attr_destroy` 释放线程属性相关的系统资源。
 
 多个线程的执行流和大致的内存布局如下图所示：
 
