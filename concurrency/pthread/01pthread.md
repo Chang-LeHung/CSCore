@@ -56,11 +56,38 @@ int pthread_create(pthread_t *thread, const pthread_attr_t *attr,
 - 参数 start_routine 是一个返回类型为 void* 参数类型为 void* 的函数指针，指向线程需要执行的函数，线程执行完成这个函数之后线程就会退出。
 - 参数 arg ，传递给函数 start_routine 的一个参数，在上一条当中我们提到了 start_routine 有一个参数，是一个 void 类型的指针，这个参数也是一个 void 类型的指针，在后文当中我们使用一个例子说明这个参数的使用方法。
 
+### 深入理解参数 thread
+
+```c
 
 
+#include <stdio.h>
+#include <pthread.h>
 
+void* func(void* arg) {
 
+  printf("线程自己打印线程\tid = %ld\n", pthread_self());
 
+  return NULL;
+}
+
+int main() {
+
+  pthread_t t;
+  pthread_create(&t, NULL, func, NULL);
+  printf("主线程打印线程 t 的线程 id = %ld\n", *(long*)(&t));
+  pthread_join(t, NULL);
+  return 0;
+}
+```
+
+上面程序的执行结果如下图所示：
+
+![01](../../images/pthread/03.png)
+
+参数 t 和线程 id 之间的关系如下所示：
+
+![01](../../images/pthread/04.png)
 
 
 
