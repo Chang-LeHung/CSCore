@@ -25,7 +25,7 @@ int main() {
   pthread_create(&t, NULL, func, NULL); // 创建线程并且执行函数 func 
 
   // wait unit thread t finished
-  pthread_join(t, NULL);
+  pthread_join(t, NULL); // 主线程等待线程 t 执行完成然后主线程才继续往下执行
 
   printf("thread t has finished\n");
   return 0;
@@ -35,10 +35,32 @@ int main() {
 编译上述程序：
 
 ```shell
-clang helloworld.c -o helloworld.out -g -lpthread
+clang helloworld.c -o helloworld.out -lpthread
 或者
-gcc helloworld.c -o helloworld.out -g -lpthread
+gcc helloworld.c -o helloworld.out -lpthread
+```
+
+在上面的代码当中主线程（可以认为是执行主函数的线程）首先定义一个线程，然后创建线程并且执行函数 func ，当创建完成之后，主线程使用 pthread_join 阻塞自己，直到等待线程 t 执行完成之后主线程才会继续往下执行。
+
+我们现在仔细分析一下 `pthread_create` 的函数签名，并且对他的参数进行详细分析：
+
+```c
+int pthread_create(pthread_t *thread, const pthread_attr_t *attr,
+                          void *(*start_routine) (void *), void *arg);
 ```
 
 
 
+
+
+
+
+
+
+单个线程的执行流和大致的内存布局如下所示：
+
+![01](../../images/pthread/01.png)
+
+多个线程的执行流和大致的内存布局如下图所示：
+
+![01](../../images/pthread/02.png)
