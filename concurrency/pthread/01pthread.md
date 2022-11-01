@@ -318,13 +318,59 @@ int main() {
 
 ![01](../../images/pthread/11.png)
 
+##### 使用 mmap 申请内存作为栈空间
 
+```c
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <pthread.h>
+#include <stdlib.h>
+#include <sys/mman.h>
 
-根据前面知识的学习我们可以知道多个线程的执行流和大致的内存布局如下图所示：
+#define MiB * 1 << 20
+#define STACK_SIZE 2 MiB
+
+int times = 0;
+
+static
+void* stack_overflow(void* args) {
+  printf("times = %d\n", ++times);
+  char s[1 << 20]; // 1 MiB
+  stack_overflow(NULL);
+  return NULL;
+}
+
+int main() {
+  pthread_attr_t attr;
+  pthread_attr_init(&attr);
+  void* stack = mmap(NULL, STACK_SIZE, PROT_READ | PROT_WRITE,
+                MAP_PRIVATE | MAP_ANONYMOUS | MAP_STACK, -1, 0);
+  if (stack == MAP_FAILED)
+      perror("mapped error:");
+  pthread_t t;
+  pthread_attr_setstack(&attr, stack, STACK_SIZE);
+  pthread_create(&t, &attr, stack_overflow, NULL);
+  pthread_join(t, NULL);
+  pthread_attr_destroy(&attr);
+  free(stack);
+  return 0;
+}
+```
+
+在上面的程序当中我们使用 mmap 系统调用在共享库空间申请了一段内存空间，并且将其做为栈空间，我们在这里就不将程序执行的结果放出来了，上面整个程序和前面的程序相差不大，只是在申请内存方面发生了变化，总体的方向是不变的。
+
+根据前面知识的学习，我们可以知道多个线程可以共享同一个进程虚拟地址空间，我们只需要给每个线程申请一个栈空间让线程执行起来就行，基于此我们可以知道多个线程的执行流和大致的内存布局如下图所示：
 
 ![01](../../images/pthread/02.png)
 
+在上图当中不同的线程拥有不同的栈空间和每个线程自己的寄存器现场，正如上图所示，栈空间可以是在堆区也可以是在共享库的映射区域，只需要给线程提供栈空间即可。
+
 ## 关于栈大小程序的一个小疑惑
+
+在上文当中我们使用了一个小程序去测试线程的栈空间的大小，并且打印函数 `func` 的调用次数，每一次调用的时候我们都会申请 1MB 大小的栈空间变量。现在我们看下面两个程序，在下面两个程序只有 `func` 函数有区别，而在 `func` 函数当中主要的区别就是:
+
+- 在第一个程序当中是先申请内存空间，然后再打印变量 `times` 的值。
+- 在第二个程序当中是先打印变量 `times` 的值，然后再申请内存空间。
 
 ```c
 
@@ -350,7 +396,6 @@ int main() {
   pthread_t t;
   pthread_create(&t, NULL, func, NULL);
   pthread_join(t, NULL);
-  // func(NULL);
   return 0;
 }
 ```
@@ -379,11 +424,58 @@ int main() {
   pthread_t t;
   pthread_create(&t, NULL, func, NULL);
   pthread_join(t, NULL);
-  // func(NULL);
   return 0;
 }
 ```
 
+由于上面两个程序的输出结果是一样的，所以我就只放出一个程序的输出结果了：
 
+![01](../../images/pthread/12.png)
 
-![01](../../images/funny/cat.webp)
+但是不对呀！如果是后申请内存空间的话，程序的输出应该能够打印 `times = 8` 啊，因为之前只申请了 7MB 的空间，我们打印 `times = 8` 的时候还没有执行到语句 `char s[1 << 20];` ，那为什么也只打印到 7 呢？
+
+![](../../images/funny/cat.webp)
+
+出现上面问题的主要原因就需要看编译器给我们编译后的程序是如何申请内存空间的。我们将上面的函数 `func` 的汇编代码展示出来：
+
+```assembly
+00000000004005e0 <func>:
+  4005e0:       55                      push   %rbp
+  4005e1:       48 89 e5                mov    %rsp,%rbp
+  4005e4:       48 81 ec 20 00 10 00    sub    $0x100020,%rsp
+  4005eb:       48 8d 04 25 3c 07 40    lea    0x40073c,%rax
+  4005f2:       00 
+  4005f3:       48 89 7d f8             mov    %rdi,-0x8(%rbp)
+  4005f7:       8b 34 25 40 10 60 00    mov    0x601040,%esi
+  4005fe:       48 89 c7                mov    %rax,%rdi
+  400601:       b0 00                   mov    $0x0,%al
+  400603:       e8 c8 fe ff ff          callq  4004d0 <printf@plt>
+  400608:       48 bf 00 00 00 00 00    movabs $0x0,%rdi
+  40060f:       00 00 00 
+  400612:       8b 34 25 40 10 60 00    mov    0x601040,%esi
+  400619:       81 c6 01 00 00 00       add    $0x1,%esi
+  40061f:       89 34 25 40 10 60 00    mov    %esi,0x601040
+  400626:       89 85 ec ff ef ff       mov    %eax,-0x100014(%rbp)
+  40062c:       e8 af ff ff ff          callq  4005e0 <func>
+  400631:       48 bf 00 00 00 00 00    movabs $0x0,%rdi
+  400638:       00 00 00 
+  40063b:       48 89 85 e0 ff ef ff    mov    %rax,-0x100020(%rbp)
+  400642:       48 89 f8                mov    %rdi,%rax
+  400645:       48 81 c4 20 00 10 00    add    $0x100020,%rsp
+  40064c:       5d                      pop    %rbp
+  40064d:       c3                      retq
+```
+
+上面的汇编代码是上面的程序在 x86_64 平台下得到的，我们需要注意一行汇编指令 `sub    $0x100020,%rsp` ，这条指令的主要作用就是将栈顶往下扩展（栈是从上往下生长的）1 MB 字节（事实上会多一点，因为还有其他操作需要一些栈空间），事实上就是给变量 s 申请 1MB 的栈空间。
+
+好了，看到这里就破案了，原来编译器申请栈空间的方式是将栈顶寄存器 rsp ，往虚拟地址空间往下移动，而编译器在函数执行刚开始的时候就申请了这么大的空间，因此不管是先申请空间再打印，还是先打印再申请空间，在程序被编译成汇编指令之后，函数 `func` 在函数刚开始就申请了对应的空间，因此才出现了都只打印到 `times = 7` 。
+
+## 总结
+
+在本篇文章当中主要给大家介绍了线程的基本元素和一些状态，还重点介绍了各种与线程相关属性的函数，主要使用的各种函数如下：
+
+- pthread_create，用与创建线程
+- pthread_attr_init，初始话线程的基本属性。
+
+希望大家有所收获！
+
