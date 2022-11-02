@@ -396,9 +396,106 @@ int main() {
 }
 ```
 
-编译执行上面的程序是可以通过的，也就是说程序正确执行了，而且 assert 也通过了。
+在上面的程序当中我们在主线程当中使用函数 `pthread_cancel` 函数取消线程的执行，编译执行上面的程序是可以通过的，也就是说程序正确执行了，而且 assert 也通过了。我们先不仔细去分析上面的代码的执行流和函数的意义。我们先需要了解一个线程的基本特性。
+
+与线程取消执行相关的一共有两个属性，分别是：
+
+- 取消执行的状态，线程的取消执行的状态一共有两个：
+  - PTHREAD_CANCEL_ENABLE：这个状态表示这个线程是可以取消的，也是线程创建时候的默认状态。
+  - PTHREAD_CANCEL_DISABLE：这个状态表示线程是不能够取消的，如果有一个线程发送了一个取消请求，那么这个发送取消消息的线程将会被阻塞直到线程的取消状态变成 PTHREAD_CANCEL_ENABLE 。
+- 取消执行的类型，取消线程执行的类型也有两种：
+  - PTHREAD_CANCEL_DEFERRED：当一个线程的取消状态是这个的时候，线程的取消就会被延迟执行，知道线程调用一个是取消点的（cancellation point）函数，比如 sleep 和 pthread_testcancel ，所有的线程的默认取消执行的类型就是这个类型。
+  - PTHREAD_CANCEL_ASYNCHRONOUS：如果线程使用的是这个取消类型那么线程可以在任何时候被取消执行，当他接收到了一个取消信号的时候，马上就会被取消执行，事实上这个信号的实现是使用 tgkill 这个系统调用实现的。
+
+事实上我们很少回去使用 PTHREAD_CANCEL_ASYNCHRONOUS ，因为这样杀死一个线程会导致线程还有很多资源没有释放，会给系统带来很大的灾难，比如线程使用 malloc 申请的内存空间没有释放，申请的锁和信号量没有释放，尤其是锁和信号量没有释放，很容易造成死锁的现象。
+
+有了以上的知识基础我们现在可以来谈一谈前面的两个函数了：
+
+- pthread_cancel(t) ：是给线程 t 发送一个取消请求。
+- pthread_testcancel()：这个函数是一个取消点，当执行这个函数的时候，程序就会取消执行。
+
+现在我们使用默认的线程状态和类型创建一个线程执行死循环，看看线程是否能够被取消掉：
+
+```c
 
 
+#include <stdio.h>
+#include <pthread.h>
+#include <assert.h>
+#include <unistd.h>
+
+void* task(void* arg) {
+  while(1) {
+    
+  }
+  return NULL;
+}
+
+int main() {
+
+  void* res;
+  pthread_t t1;
+  pthread_create(&t1, NULL, task, NULL);
+  int s = pthread_cancel(t1);
+  if(s != 0) // s == 0 mean call successfully
+    fprintf(stderr, "cancel failed\n");
+  pthread_join(t1, &res);
+  assert(res == PTHREAD_CANCELED);
+  return 0;
+}
+```
+
+在上面的代码当中我们启动了一个线程不断的去进行进行死循环的操作，程序的执行结果为程序不会终止，因为主线程在等待线程的结束，但是线程在进行死循环，而且线程执行死循环的时候没有调用一个是取消点的函数，因此程序不会终止取消。
+
+下面我们更改程序，将线程的取消类型设置为 **PTHREAD_CANCEL_ASYNCHRONOUS** ，在看看程序的执行结果：
+
+```c
+
+
+#include <stdio.h>
+#include <pthread.h>
+#include <assert.h>
+#include <unistd.h>
+
+void* task(void* arg) {
+  pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
+  while(1) {
+    
+  }
+  return NULL;
+}
+
+int main() {
+
+  void* res;
+  pthread_t t1;
+  pthread_create(&t1, NULL, task, NULL);
+  int s = pthread_cancel(t1);
+  if(s != 0) // s == 0 mean call successfully
+    fprintf(stderr, "cancel failed\n");
+  pthread_join(t1, &res);
+  assert(res == PTHREAD_CANCELED);
+  return 0;
+}
+```
+
+在上面的程序当中我们在线程执行的函数当中使用 `pthread_setcanceltype` 将线程的取消类型设置成 PTHREAD_CANCEL_ASYNCHRONOUS 这样的话就能够在其他线程使用 pthread_cancel 的时候就能够立即取消线程的执行。
+
+```c
+int pthread_setcanceltype(int type, int *oldtype)
+```
+
+上方是 pthread_setcanceltype 的函数签名，在前面的使用当中我们只使用了第一个参数，第二个参数我们是设置成 NULL，第二个参数我们可以传入一个 int 类型的指针，然后会在将线程的取消类型设置成 type 之前将前一个 type 拷贝到 oldtype 所指向的内存当中。
+
+type: 有两个参数：PTHREAD_CANCEL_ASYNCHRONOUS 和 PTHREAD_CANCEL_DEFERRED 。
+
+```c
+int pthread_setcancelstate(int state, int *oldstate);
+```
+
+设置取消状态的函数签名和上一个函数签名差不多，参数的含义也是差不多，type 表示需要设置的取消状态，有两个参数：PTHREAD_CANCEL_ENABLE 和 PTHREAD_CANCEL_DISABLE ，参数 oldstate 是指原来的线程的取消状态，如果你传入一个 int 类型的指针的话就会将原来的状态保存到指针指向的位置。
+
+其实关于线程的一些细节还有比较多的内容限于篇幅，在本篇文章当中主要给大家介绍这些细节。
 
 ## 关于栈大小程序的一个小疑惑
 
@@ -511,6 +608,20 @@ int main() {
 
 - pthread_create，用与创建线程
 - pthread_attr_init，初始话线程的基本属性。
+- pthread_attr_destroy，释放属性相关资源。
+- pthread_join，用于等待线程执行完成。
+- pthread_attr_setstacksize，用于设置线程执行栈的大小。
+- pthread_attr_setstack，设置线程执行栈的栈顶和栈的大小。
+- pthread_testcancel，用于检测线程是否被取消了，是一个取消点。
+- pthread_cancel，取消一个线程的执行。
 
 希望大家有所收获！
+
+---
+
+更多精彩内容合集可访问项目：<https://github.com/Chang-LeHung/CSCore>
+
+关注公众号：一无是处的研究僧，了解更多计算机（Java、Python、计算机系统基础、算法与数据结构）知识。
+
+![](https://img2022.cnblogs.com/blog/2519003/202207/2519003-20220703200459566-1837431658.jpg)
 
