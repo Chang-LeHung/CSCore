@@ -365,6 +365,41 @@ int main() {
 
 在上图当中不同的线程拥有不同的栈空间和每个线程自己的寄存器现场，正如上图所示，栈空间可以是在堆区也可以是在共享库的映射区域，只需要给线程提供栈空间即可。
 
+## 深入理解线程的状态
+
+在 `pthread` 当中给我们提供了一个函数 `pthread_cancel` 可以取消一个正在执行的线程，取消正在执行的线程之后会将线程的退出状态（返回值）设置成宏定义 `PTHREAD_CANCELED` 。我们使用下面的例子去理解一下线程取消的过程：
+
+```c
+#include <stdio.h>
+#include <pthread.h>
+#include <assert.h>
+
+void* task(void* arg) {
+
+	while(1) {
+    pthread_testcancel(); // 测试是否被取消执行了
+  }
+  return NULL;
+}
+
+int main() {
+
+  void* res;
+  pthread_t t;
+  pthread_create(&t, NULL, task, NULL);
+  int s = pthread_cancel(t); // 取消函数的执行
+  if(s != 0)
+    fprintf(stderr, "cancel failed\n");
+  pthread_join(t, &res);
+  assert(res == PTHREAD_CANCELED);
+  return 0;
+}
+```
+
+编译执行上面的程序是可以通过的，也就是说程序正确执行了，而且 assert 也通过了。
+
+
+
 ## 关于栈大小程序的一个小疑惑
 
 在上文当中我们使用了一个小程序去测试线程的栈空间的大小，并且打印函数 `func` 的调用次数，每一次调用的时候我们都会申请 1MB 大小的栈空间变量。现在我们看下面两个程序，在下面两个程序只有 `func` 函数有区别，而在 `func` 函数当中主要的区别就是:
