@@ -222,6 +222,14 @@
   - [github阅读](concurrency/openmp/01introduction.md)
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247487188&idx=1&sn=474ac3ef08d47439af963ae4376647a4&chksm=cf0c92ddf87b1bcb969da565e65338829281c7ffc320f0669344dfc7b4fcd4ff7699c55eb1dd&token=1196984540&lang=zh_CN#rd)
 
+## 🔖Pthread 并发编程
+
+- Pthread 并发编程（一）——深入剖析线程基本元素和状态
+  - [github阅读](concurrency/pthread/01pthread.md)
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247487224&idx=1&sn=7182b759b029146c3708908b7b0d7e08&chksm=cf0c92f1f87b1be7bc7d90d2d5f7672633a18fe46def5be014691972bffaa36af60c28ee0b6e&token=1654743819&lang=zh_CN#rd)
+
+
+
 ## 🔖计算机系统基础
 
 ### 工具使用
