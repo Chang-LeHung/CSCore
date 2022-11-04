@@ -1,0 +1,988 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>Linux命令系列之top——里面藏着很多鲜为人知的宝藏知识 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-anchor-navigation-ex/style/plugin.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-panel/icons.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-panel/panel.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-theme-comscore/test.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="02ls.html" />
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    Makefile
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../../tools/makefile/02.html">
+            
+                <a href="../../tools/makefile/02.html">
+            
+                    
+                    彻底掌握Makefile（二）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../../tools/makefile/03.html">
+            
+                <a href="../../tools/makefile/03.html">
+            
+                    
+                    彻底掌握Makefile（三）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../../tools/makefile/04.html">
+            
+                <a href="../../tools/makefile/04.html">
+            
+                    
+                    Makfile总结
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../../tools/makefile/01.html">
+            
+                <a href="../../tools/makefile/01.html">
+            
+                    
+                    彻底掌握Makefile（一）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    Des
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../../des/des.html">
+            
+                <a href="../../des/des.html">
+            
+                    
+                    DES算法——从小白到登堂入室
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    Container
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../../container/03-array容器设计与实现.html">
+            
+                <a href="../../container/03-array容器设计与实现.html">
+            
+                    
+                    数组容器(ArrayList)设计与Java实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../../container/04-arraylist源码剖析.html">
+            
+                <a href="../../container/04-arraylist源码剖析.html">
+            
+                    
+                    ArrayList源码深度剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../../container/01-链表设计与实现.html">
+            
+                <a href="../../container/01-链表设计与实现.html">
+            
+                    
+                    链表设计与实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../../container/05-hashmap设计与实现(上篇">
+            
+                <span>
+            
+                    
+                    HashMap（Python字典）设计原理与实现（上篇）——哈希表的原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../../container/02-linkedlist源码剖析.html">
+            
+                <a href="../../container/02-linkedlist源码剖析.html">
+            
+                    
+                    LinkedList源码深度剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../../container/06-hashmap设计与实现(下篇">
+            
+                <span>
+            
+                    
+                    HashMap设计原理与实现（下篇）200行带你写自己的HashMap！！！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../../container/07-hashmap源码剖析.html">
+            
+                <a href="../../container/07-hashmap源码剖析.html">
+            
+                    
+                    HashMap源码深度剖析，手把手带你分析每一行代码！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../../container/08-arraydeque源码剖析.html">
+            
+                <a href="../../container/08-arraydeque源码剖析.html">
+            
+                    
+                    ArrayDeque（JDK双端队列）源码深度剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.9" data-path="../../container/09-arrayqueue源码剖析.html">
+            
+                <a href="../../container/09-arrayqueue源码剖析.html">
+            
+                    
+                    深入剖析（JDK）ArrayQueue源码
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    Java
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../../concurrency/java/06futuretask.html">
+            
+                <a href="../../concurrency/java/06futuretask.html">
+            
+                    
+                    60行自己动手写FutureTask
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../../concurrency/java/12blockingqueuesrc.html">
+            
+                <a href="../../concurrency/java/12blockingqueuesrc.html">
+            
+                    
+                    JDK数组阻塞队列源码深入剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../../concurrency/java/08synchronizedusage.html">
+            
+                <a href="../../concurrency/java/08synchronizedusage.html">
+            
+                    
+                    深入学习Synchronized各种使用方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../../concurrency/java/02并发的噩梦.html">
+            
+                <a href="../../concurrency/java/02并发的噩梦.html">
+            
+                    
+                    并发程序的噩梦——数据竞争
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.5" data-path="../../concurrency/java/09synchronized.html">
+            
+                <a href="../../concurrency/java/09synchronized.html">
+            
+                    
+                    Synchronized锁升级原理与过程深入剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.6" data-path="../../concurrency/java/14threadpool.html">
+            
+                <a href="../../concurrency/java/14threadpool.html">
+            
+                    
+                    彻底了解线程池的原理——40行从零开始自己写线程池
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.7" data-path="../../concurrency/java/15threadpoolv2.html">
+            
+                <a href="../../concurrency/java/15threadpoolv2.html">
+            
+                    
+                    彻底了解线程池原理——动手写一个低配版的ThreadPoolExecutor
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.8" data-path="../../concurrency/java/05falsesharing.html">
+            
+                <a href="../../concurrency/java/05falsesharing.html">
+            
+                    
+                    并发刺客（False Sharing）——并发程序的隐藏杀手
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.9" data-path="../../concurrency/java/01初始java并发.html">
+            
+                <a href="../../concurrency/java/01初始java并发.html">
+            
+                    
+                    并发开篇——带你从0到1建立并发知识体系的基石
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.10" data-path="../../concurrency/java/04volatile.html">
+            
+                <a href="../../concurrency/java/04volatile.html">
+            
+                    
+                    万字长文：从计算机本源深入探寻volatile和Java内存模型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.11" data-path="../../concurrency/java/10spinlock.html">
+            
+                <a href="../../concurrency/java/10spinlock.html">
+            
+                    
+                    从零开始自己动手写自旋锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.12" data-path="../../concurrency/java/03自己动手写并发工具类.html">
+            
+                <a href="../../concurrency/java/03自己动手写并发工具类.html">
+            
+                    
+                    30行自己写并发工具类(Semaphore, CyclicBarrier, CountDownLatch)是什么体验？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.13" data-path="../../concurrency/java/11blockingqueue.html">
+            
+                <a href="../../concurrency/java/11blockingqueue.html">
+            
+                    
+                    从零开始自己动手写阻塞队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.14" data-path="../../concurrency/java/07futuretasksrc.html">
+            
+                <a href="../../concurrency/java/07futuretasksrc.html">
+            
+                    
+                    FutureTask源码深度剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.15" data-path="../../concurrency/java/13locksupport.html">
+            
+                <a href="../../concurrency/java/13locksupport.html">
+            
+                    
+                    60行自己动手写LockSupport是什么体验？
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                    Ml
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../../ml/01线性回归.html">
+            
+                <a href="../../ml/01线性回归.html">
+            
+                    
+                    深入剖析线性回归
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" >
+            
+                <span>
+            
+                    
+                    Advanced
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../advanced/01staticloader.html">
+            
+                <a href="../advanced/01staticloader.html">
+            
+                    
+                    静态加载器
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    Command
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.8.1" data-path="01top.html">
+            
+                <a href="01top.html">
+            
+                    
+                    Linux命令系列之top——里面藏着很多鲜为人知的宝藏知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="02ls.html">
+            
+                <a href="02ls.html">
+            
+                    
+                    Linux命令系列之ls——原来最简单的ls这么复杂
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >Linux命令系列之top——里面藏着很多鲜为人知的宝藏知识</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <div id="anchor-navigation-ex-navbar"><i class="fa fa-navicon"></i><ul><li><span class="title-icon "></span><a href="#linux&#x547D;&#x4EE4;&#x7CFB;&#x5217;&#x4E4B;top&#x2014;&#x2014;&#x91CC;&#x9762;&#x85CF;&#x7740;&#x5F88;&#x591A;&#x9C9C;&#x4E3A;&#x4EBA;&#x77E5;&#x7684;&#x5B9D;&#x85CF;&#x77E5;&#x8BC6;"><b></b>Linux&#x547D;&#x4EE4;&#x7CFB;&#x5217;&#x4E4B;top&#x2014;&#x2014;&#x91CC;&#x9762;&#x85CF;&#x7740;&#x5F88;&#x591A;&#x9C9C;&#x4E3A;&#x4EBA;&#x77E5;&#x7684;&#x5B9D;&#x85CF;&#x77E5;&#x8BC6;</a></li><ul><li><span class="title-icon "></span><a href="#&#x7B80;&#x4ECB;"><b></b>&#x7B80;&#x4ECB;</a></li><li><span class="title-icon "></span><a href="#top&#x547D;&#x4EE4;&#x8F93;&#x51FA;&#x5185;&#x5BB9;&#x8BE6;&#x7EC6;&#x5256;&#x6790;"><b></b>top&#x547D;&#x4EE4;&#x8F93;&#x51FA;&#x5185;&#x5BB9;&#x8BE6;&#x7EC6;&#x5256;&#x6790;</a></li><li><span class="title-icon "></span><a href="#top&#x547D;&#x4EE4;&#x4EA4;&#x4E92;&#x64CD;&#x4F5C;"><b></b>top&#x547D;&#x4EE4;&#x4EA4;&#x4E92;&#x64CD;&#x4F5C;</a></li></ul></ul></div><a href="#linux&#x547D;&#x4EE4;&#x7CFB;&#x5217;&#x4E4B;top&#x2014;&#x2014;&#x91CC;&#x9762;&#x85CF;&#x7740;&#x5F88;&#x591A;&#x9C9C;&#x4E3A;&#x4EBA;&#x77E5;&#x7684;&#x5B9D;&#x85CF;&#x77E5;&#x8BC6;" id="anchorNavigationExGoTop"><i class="fa fa-arrow-up"></i></a><h1 id="linux&#x547D;&#x4EE4;&#x7CFB;&#x5217;&#x4E4B;top&#x2014;&#x2014;&#x91CC;&#x9762;&#x85CF;&#x7740;&#x5F88;&#x591A;&#x9C9C;&#x4E3A;&#x4EBA;&#x77E5;&#x7684;&#x5B9D;&#x85CF;&#x77E5;&#x8BC6;"><a name="linux&#x547D;&#x4EE4;&#x7CFB;&#x5217;&#x4E4B;top&#x2014;&#x2014;&#x91CC;&#x9762;&#x85CF;&#x7740;&#x5F88;&#x591A;&#x9C9C;&#x4E3A;&#x4EBA;&#x77E5;&#x7684;&#x5B9D;&#x85CF;&#x77E5;&#x8BC6;" class="anchor-navigation-ex-anchor" href="#linux&#x547D;&#x4EE4;&#x7CFB;&#x5217;&#x4E4B;top&#x2014;&#x2014;&#x91CC;&#x9762;&#x85CF;&#x7740;&#x5F88;&#x591A;&#x9C9C;&#x4E3A;&#x4EBA;&#x77E5;&#x7684;&#x5B9D;&#x85CF;&#x77E5;&#x8BC6;"><i class="fa fa-link" aria-hidden="true"></i></a>Linux&#x547D;&#x4EE4;&#x7CFB;&#x5217;&#x4E4B;top&#x2014;&#x2014;&#x91CC;&#x9762;&#x85CF;&#x7740;&#x5F88;&#x591A;&#x9C9C;&#x4E3A;&#x4EBA;&#x77E5;&#x7684;&#x5B9D;&#x85CF;&#x77E5;&#x8BC6;</h1>
+<h2 id="&#x7B80;&#x4ECB;"><a name="&#x7B80;&#x4ECB;" class="anchor-navigation-ex-anchor" href="#&#x7B80;&#x4ECB;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x7B80;&#x4ECB;</h2>
+<p>top&#x547D;&#x4EE4;&#x662F;&#x6211;&#x4EEC;&#x7ECF;&#x5E38;&#x7528;&#x6765;&#x67E5;&#x770B;&#x7CFB;&#x7EDF;&#x4FE1;&#x606F;&#x7684;&#x4E00;&#x4E2A;&#x6307;&#x4EE4;&#xFF0C;&#x5B83;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A;&#x52A8;&#x6001;&#x7684;&#x800C;&#x4E14;&#x662F;&#x5B9E;&#x65F6;&#x7684;&#x501F;&#x53E3;&#x5E2E;&#x52A9;&#x6211;&#x4EEC;&#x53BB;&#x67E5;&#x770B;&#x7CFB;&#x7EDF;&#x6267;&#x884C;&#x65F6;&#x7684;&#x8FDB;&#x7A0B;&#x3001;&#x7EBF;&#x7A0B;&#x548C;&#x7CFB;&#x7EDF;&#x53C2;&#x6570;&#x7684;&#x4FE1;&#x606F;&#x3002;</p>
+<h2 id="top&#x547D;&#x4EE4;&#x8F93;&#x51FA;&#x5185;&#x5BB9;&#x8BE6;&#x7EC6;&#x5256;&#x6790;"><a name="top&#x547D;&#x4EE4;&#x8F93;&#x51FA;&#x5185;&#x5BB9;&#x8BE6;&#x7EC6;&#x5256;&#x6790;" class="anchor-navigation-ex-anchor" href="#top&#x547D;&#x4EE4;&#x8F93;&#x51FA;&#x5185;&#x5BB9;&#x8BE6;&#x7EC6;&#x5256;&#x6790;"><i class="fa fa-link" aria-hidden="true"></i></a>top&#x547D;&#x4EE4;&#x8F93;&#x51FA;&#x5185;&#x5BB9;&#x8BE6;&#x7EC6;&#x5256;&#x6790;</h2>
+<p>&#x9996;&#x5148;&#x6211;&#x4EEC;&#x5148;&#x770B;&#x4E00;&#x4E0B;top&#x547D;&#x4EE4;&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#xFF1A;
+<img src="../../images/linux/command/01.png" alt=""></p>
+<p>&#x6211;&#x4EEC;&#x73B0;&#x5728;&#x4E00;&#x4E00;&#x5206;&#x6790;&#x8FD9;&#x4E9B;&#x5B57;&#x6BB5;&#x7684;&#x542B;&#x4E49;&#xFF1A;</p>
+<h4 id="&#x7B2C;&#x4E00;&#x884C;"><a name="&#x7B2C;&#x4E00;&#x884C;" class="anchor-navigation-ex-anchor" href="#&#x7B2C;&#x4E00;&#x884C;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x7B2C;&#x4E00;&#x884C;</h4>
+<ul>
+<li><p><code>12:53:04</code>&#x8868;&#x793A;&#x5F53;&#x524D;&#x65F6;&#x95F4;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x5F53;&#x524D;&#x771F;&#x5B9E;&#x7684;&#x65F6;&#x95F4;&#x3002;</p>
+</li>
+<li><p><code>up 157 days 13:35</code>&#xFF0C;&#x8868;&#x793A;&#x8FD9;&#x4E2A;&#x7CFB;&#x7EDF;&#x4ECE;&#x542F;&#x52A8;&#x5230;&#x73B0;&#x5728;&#x7684;&#x65F6;&#x95F4;&#xFF0C;&#x4E0A;&#x56FE;&#x663E;&#x793A;&#x7684;&#x542B;&#x4E49;&#x5C31;&#x662F;&#x8FD9;&#x4E2A;&#x7CFB;&#x7EDF;&#x4ECE;157&#x5929;13&#x4E2A;&#x5C0F;&#x65F6;35&#x5206;&#x949F;&#x4EE5;&#x524D;&#x5C31;&#x542F;&#x52A8;&#x4E86;&#x3002;</p>
+</li>
+<li><code>5 users</code> &#x8868;&#x793A;&#x5F53;&#x524D;&#x5728;&#x4F7F;&#x7528;&#x8FD9;&#x4E2A;&#x673A;&#x5668;&#x7684;&#x7528;&#x6237;&#x6570;&#x91CF;&#x3002;</li>
+<li><code>load average: 0.00, 0.00, 0.00</code> &#xFF0C;&#x8FD9;&#x4E2A;&#x503C;&#x8868;&#x793A;&#x7CFB;&#x7EDF;&#x8FC7;&#x53BB;1&#x5206;&#x949F;&#xFF0C;5&#x5206;&#x949F;&#xFF0C;15&#x5206;&#x949F;&#x7684;&#x7CFB;&#x7EDF;&#x8D1F;&#x8F7D;&#x3002;&#x73B0;&#x5728;&#x6709;&#x4E00;&#x4E2A;&#x95EE;&#x9898;&#x5C31;&#x662F;&#xFF0C;&#x4EC0;&#x4E48;&#x662F;&#x8FD9;&#x91CC;&#x8C08;&#x5230;&#x7684;&#x7CFB;&#x7EDF;&#x8D1F;&#x8F7D;&#x3002;&#x6240;&#x8C13;&#x7CFB;&#x7EDF;&#x8D1F;&#x8F7D;&#xFF0C;&#x6211;&#x4EEC;&#x62FF;&#x4E00;&#x5206;&#x949F;&#x6765;&#x4E3E;&#x4F8B;&#x5B50;&#xFF0C;&#x6211;&#x4EEC;&#x5C06;&#x4E00;&#x5206;&#x949F;&#x4E00;&#x4E2A;CPU&#x65F6;&#x95F4;&#x5B9A;&#x4E49;&#x4E3A;t&#xFF0C;&#x5728;&#x8FD9;&#x4E00;&#x5206;&#x949F;&#x4E4B;&#x5185;&#x603B;&#x5171;&#x6D88;&#x8017;&#x7684;CPU&#x65F6;&#x95F4;&#x4E3A;c&#xFF0C;&#x90A3;&#x4E48;&#x5728;&#x8FD9;&#x4E00;&#x5206;&#x949F;&#x4E4B;&#x5185;&#x7684;&#x8D1F;&#x8F7D;&#x4E3A;$\frac{c}{t}$&#xFF0C;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#x8FD9;&#x4E2A;&#x6D88;&#x8017;&#x7684;CPU&#x65F6;&#x95F4;c&#x662F;&#x53EF;&#x4EE5;&#x5927;&#x4E8E;t&#x7684;&#xFF0C;&#x56E0;&#x4E3A;&#x4E00;&#x4E2A;&#x7A0B;&#x5E8F;&#x53EF;&#x80FD;&#x4F7F;&#x7528;&#x4E86;&#x591A;&#x4E2A;CPU&#xFF08;&#x5E76;&#x53D1;&#x7A0B;&#x5E8F;&#xFF0C;&#x4E5F;&#x53EF;&#x80FD;&#x662F;&#x591A;&#x4E2A;&#x8FDB;&#x7A0B;&#x540C;&#x65F6;&#x5728;&#x4F7F;&#x7528;&#x4E0D;&#x540C;&#x7684;CPU&#xFF09;&#x3002;</li>
+</ul>
+<p><img src="../../images/linux/command/02.png" alt="02"></p>
+<p>&#x6BD4;&#x5982;&#x4E0A;&#x9762;&#x56FE;&#x4E2D;&#x7684;1&#x5206;&#x949F;&#x5185;&#x7684;&#x8D1F;&#x8F7D;&#x5927;&#x7EA6;&#x662F;10&#xFF0C;&#x90A3;&#x4E48;&#x5728;&#x8FC7;&#x53BB;&#x7684;&#x4E00;&#x5206;&#x949F;&#x4E4B;&#x5185;&#x7CFB;&#x7EDF;&#x5F53;&#x4E2D;&#x5404;&#x79CD;&#x7A0B;&#x5E8F;&#x6240;&#x6D88;&#x8017;&#x7684;CPU&#x65F6;&#x95F4;&#x4E3A;$c = 10.04 \times t$&#x3002;&#x4ED6;&#x8868;&#x793A;&#x7684;&#x610F;&#x601D;&#x5C31;&#x662F;&#x5728;&#x8FC7;&#x53BB;&#x7684;1&#x5206;&#x949F;&#x4E4B;&#x5185;&#xFF0C;CPU&#x65F6;&#x95F4;&#x7684;&#x6D88;&#x8017;&#x53EF;&#x4EE5;&#x770B;&#x4F5C;&#x5927;&#x7EA6;&#x6709;10&#x4E2A;CPU&#x5728;&#x6EE1;&#x8D1F;&#x8377;&#x8FD0;&#x8F6C;&#x3002;<strong>&#x6CE8;&#x610F;&#xFF1A;</strong>&#x8FD9;&#x91CC;&#x662F;&#x53EF;&#x4EE5;&#x770B;&#x4F5C;&#x662F;10&#x4E2A;CPU&#x5728;&#x6EE1;&#x8D1F;&#x8377;&#x7684;&#x8FD0;&#x8F6C;&#xFF0C;&#x5176;&#x5B9E;&#x771F;&#x5B9E;&#x60C5;&#x51B5;&#x53EF;&#x4EE5;&#x662F;&#x5728;&#x8FC7;&#x53BB;&#x7684;&#x4E00;&#x5206;&#x949F;&#x4E4B;&#x5185;&#x6709;20&#x4E2A;CPU&#x5728;&#x8FDB;&#x884C;&#x8BA1;&#x7B97;&#xFF0C;&#x7136;&#x540E;&#x6BCF;&#x4E2A;CPU&#x7684;&#x8BA1;&#x7B97;&#x65F6;&#x95F4;&#x4E3A;$\frac{1}{2}t$&#xFF0C;&#x6216;&#x8005;&#x5176;&#x4ED6;&#x76F8;&#x540C;&#x7684;CPU&#x6D88;&#x8017;&#x60C5;&#x51B5;&#x3002;</p>
+<h4 id="&#x7B2C;&#x4E8C;&#x884C;"><a name="&#x7B2C;&#x4E8C;&#x884C;" class="anchor-navigation-ex-anchor" href="#&#x7B2C;&#x4E8C;&#x884C;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x7B2C;&#x4E8C;&#x884C;</h4>
+<ul>
+<li>&#x7B2C;&#x4E8C;&#x884C;&#x4E3B;&#x8981;&#x8868;&#x793A;&#x5F53;&#x524D;&#x7CFB;&#x7EDF;&#x5F53;&#x4E2D;&#x4EFB;&#x52A1;&#x7684;&#x76F8;&#x5173;&#x60C5;&#x51B5;&#xFF0C;&#x6240;&#x8C13;&#x4EFB;&#x52A1;&#x5C31;&#x662F;&#x5F53;&#x524D;&#x7CFB;&#x7EDF;&#x5F53;&#x4E2D;&#x4E00;&#x5171;&#x6709;&#x591A;&#x5C11;&#x4E2A;&#x8FDB;&#x7A0B;&#x3002;</li>
+<li><code>652 totoal</code>&#xFF0C;&#x8FD9;&#x4E2A;&#x8868;&#x793A;&#x5F53;&#x524D;&#x7CFB;&#x7EDF;&#x5F53;&#x4E2D;&#x4E00;&#x5171;&#x6709;652&#x4E2A;&#x8FDB;&#x7A0B;&#x3002;</li>
+<li><code>1 runnung</code>&#xFF0C;&#x8868;&#x793A;&#x6709;&#x4E00;&#x4E2A;&#x8FDB;&#x7A0B;&#x6B63;&#x5728;&#x6267;&#x884C;&#x3002;</li>
+<li><code>651 sleeping</code>&#xFF0C;&#x8868;&#x793A;&#x6709;651&#x4E2A;&#x8FDB;&#x7A0B;&#x5904;&#x4E8E;&#x7761;&#x7720;&#x72B6;&#x6001;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x4E0D;&#x9700;&#x8981;&#x4F7F;&#x7528;CPU&#x7684;&#x72B6;&#x6001;&#x3002;</li>
+<li><code>0 stoped</code>&#xFF0C;&#x8868;&#x793A;&#x6709;0&#x4E2A;&#x8FDB;&#x7A0B;&#x5904;&#x4E8E;<code>stopped</code>&#x72B6;&#x6001;&#xFF0C;&#x8FD9;&#x4E2A;&#x72B6;&#x6001;&#x5C31;&#x662F;&#x88AB;&#x505C;&#x4E0B;&#x6765;&#x7684;&#x8FDB;&#x7A0B;&#xFF0C;&#x6BD4;&#x5982;&#x8BF4;&#x901A;&#x8FC7;ctrl+z&#x8BA9;&#x4E00;&#x4E2A;&#x8FDB;&#x7A0B;&#x505C;&#x4E0B;&#x6765;&#xFF0C;&#x4F60;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x7ED9;&#x8FD9;&#x4E2A;&#x8FDB;&#x7A0B;&#x53D1;&#x9001;&#x4E00;&#x4E2A;&#x4FE1;&#x53F7;SIGCONT&#x8BA9;&#x8FD9;&#x4E2A;&#x8FDB;&#x7A0B;&#x6062;&#x590D;&#x6267;&#x884C;&#xFF0C;linux&#x5F53;&#x4E2D;&#x8FDB;&#x7A0B;&#x7684;&#x72B6;&#x6001;&#x53D8;&#x6362;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</li>
+</ul>
+<p><img src="../../images/linux/command/03.png" alt=""></p>
+<ul>
+<li><code>0 zombie</code>&#xFF0C;&#x8FD9;&#x4E2A;&#x5C31;&#x8868;&#x793A;&#x50F5;&#x5C38;&#x8FDB;&#x7A0B;&#x7684;&#x4E2A;&#x6570;&#xFF0C;&#x8FD9;&#x91CC;&#x662F;0&#x4E2A;&#x50F5;&#x5C38;&#x8FDB;&#x7A0B;&#xFF0C;&#x6240;&#x8C13;&#x50F5;&#x5C38;&#x8FDB;&#x7A0B;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x8FDB;&#x7A0B;&#x6267;&#x884C;&#x5B8C;&#x6210;&#x4E86;&#xFF0C;&#x5BF9;&#x4E8E;C&#x7A0B;&#x5E8F;&#x6765;&#x8BF4;&#x4F60;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E3A;&#x4F60;&#x7684;<code>main</code>&#x51FD;&#x6570;&#x6267;&#x884C;&#x5B8C;&#x6210;&#x4E86;&#xFF08;&#x8FD9;&#x4E2A;&#x4E0D;&#x591F;&#x51C6;&#x786E;&#xFF0C;&#x5176;&#x5B9E;<code>main</code>&#x51FD;&#x6570;&#x6267;&#x884C;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#x8FD8;&#x4F1A;&#x6709;&#x5176;&#x4ED6;&#x51FD;&#x6570;&#x9700;&#x8981;&#x6267;&#x884C;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x91CC;&#x4F60;&#x53EF;&#x4EE5;&#x5927;&#x81F4;&#x8FD9;&#x4E48;&#x7406;&#x89E3;&#xFF09;&#xFF0C;&#x5982;&#x679C;&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#xFF08;&#x51FD;&#x6570;&#x6267;&#x884C;&#x5B8C;&#x6210;&#xFF09;&#xFF0C;&#x8FD9;&#x4E2A;&#x8FDB;&#x7A0B;&#x7684;&#x7236;&#x8FDB;&#x7A0B;&#x5374;&#x6CA1;&#x6709;&#x63A5;&#x53D7;&#x5B50;&#x8FDB;&#x7A0B;&#x53D1;&#x9001;&#x7ED9;&#x4ED6;&#x7684;&#x4FE1;&#x53F7;&#xFF08;&#x5B50;&#x8FDB;&#x7A0B;&#x5728;&#x6267;&#x884C;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#x4F1A;&#x7ED9;&#x7236;&#x8FDB;&#x7A0B;&#x53D1;&#x9001;&#x4FE1;&#x53F7;&#xFF0C;&#x7236;&#x8FDB;&#x7A0B;&#x9700;&#x8981;&#x901A;&#x8FC7;wait&#x7B49;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x53BB;&#x63A5;&#x53D7;&#x8FD9;&#x4E2A;&#x4FE1;&#x53F7;&#xFF09;&#xFF0C;&#x90A3;&#x4E48;&#x5B50;&#x8FDB;&#x7A0B;&#x5C31;&#x5904;&#x4E8E;zombie&#x72B6;&#x6001;&#xFF0C;&#x5904;&#x4E8E;&#x8FD9;&#x4E2A;&#x72B6;&#x6001;&#x7684;&#x8FDB;&#x7A0B;&#x5C31;&#x9700;&#x8981;&#x7236;&#x8FDB;&#x7A0B;&#x63A5;&#x53D7;&#x5B83;&#x53D1;&#x9001;&#x7684;&#x4FE1;&#x53F7;&#xFF0C;&#x7136;&#x540E;&#x5B50;&#x8FDB;&#x7A0B;&#x7684;&#x7CFB;&#x7EDF;&#x8D44;&#x6E90;&#x5C31;&#x53EF;&#x4EE5;&#x88AB;&#x56DE;&#x6536;&#x4E86;&#xFF0C;&#x7136;&#x540E;&#x5B50;&#x8FDB;&#x7A0B;&#x4F1A;&#x5F7B;&#x5E95;&#x6D88;&#x4EA1;&#x3002;</li>
+</ul>
+<p>&#x6211;&#x4EEC;&#x73B0;&#x5728;&#x82B1;&#x4E00;&#x70B9;&#x65F6;&#x95F4;&#x6765;&#x8C08;&#x4E00;&#x8C08;linux&#x5F53;&#x4E2D;&#x7684;&#x8FDB;&#x7A0B;&#x72B6;&#x6001;&#x3002;</p>
+<ul>
+<li><p><code>Ready</code>&#xFF0C;&#x5F53;&#x8FDB;&#x7A0B;&#x88AB;&#x521B;&#x5EFA;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#x4ED6;&#x5C31;&#x5904;&#x4E8E;<code>Ready</code>&#x72B6;&#x6001;&#xFF0C;&#x5728;&#x8FD9;&#x4E2A;&#x72B6;&#x6001;&#x4E0B;&#x7684;&#x8FDB;&#x7A0B;&#x53EA;&#x5DEE;CPU&#x4E86;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#xFF0C;&#x4ED6;&#x73B0;&#x5728;&#x53EA;&#x9700;&#x8981;&#x88AB;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x8C03;&#x5EA6;&#x83B7;&#x53D6;CPU&#x7136;&#x540E;&#x4ED6;&#x5C31;&#x53EF;&#x4EE5;&#x6267;&#x884C;&#x4E86;&#x3002;</p>
+</li>
+<li><p><code>Running</code>&#xFF0C;&#x5F53;&#x8FDB;&#x7A0B;&#x4ECE;<code>Ready</code>&#x72B6;&#x6001;&#x83B7;&#x53D6;CPU&#x7684;&#x6267;&#x884C;&#x6743;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x8FDB;&#x7A0B;&#x5C31;&#x5904;&#x4E8E;Running&#x72B6;&#x6001;&#xFF0C;&#x8FD9;&#x4E2A;&#x72B6;&#x6001;&#x8868;&#x793A;&#x8FDB;&#x7A0B;&#x6B63;&#x5728;&#x6267;&#x884C;&#x3002;</p>
+</li>
+<li><code>traced</code>&#xFF0C;&#x8FD9;&#x4E2A;&#x72B6;&#x6001;&#x4E3B;&#x8981;&#x662F;&#x4E00;&#x4E2A;&#x8FDB;&#x7A0B;&#x5904;&#x4E8E;&#x8C03;&#x8BD5;&#x72B6;&#x6001;&#xFF0C;&#x8FD9;&#x4E2A;&#x72B6;&#x6001;&#x9700;&#x8981;&#x8C03;&#x8BD5;&#x7684;&#x8FDB;&#x7A0B;&#x7ED9;&#x8FD9;&#x4E2A;&#x88AB;&#x8C03;&#x8BD5;&#x7684;&#x8FDB;&#x7A0B;&#x53D1;&#x9001;&#x4FE1;&#x53F7;&#xFF0C;&#x7136;&#x540E;&#x548C;&#x8FD9;&#x4E2A;&#x8FDB;&#x7A0B;&#x624D;&#x53EF;&#x4EE5;&#x7EE7;&#x7EED;&#x6267;&#x884C;&#x3002;</li>
+<li><code>Zombie</code>&#xFF0C;&#x5F53;&#x8FDB;&#x7A0B;&#x6267;&#x884C;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#xFF0C;&#x7236;&#x8FDB;&#x7A0B;&#x63A5;&#x53D7;&#x5B50;&#x8FDB;&#x7A0B;&#x53D1;&#x9001;&#x7684;&#x4FE1;&#x53F7;&#x4E4B;&#x524D;&#xFF0C;&#x8FDB;&#x7A0B;&#x5C31;&#x5904;&#x4E8E;&#x8FD9;&#x4E2A;&#x72B6;&#x6001;&#x3002;</li>
+<li><code>Suspended</code>&#xFF0C;&#x8FD9;&#x4E2A;&#x72B6;&#x6001;&#x8868;&#x793A;&#x8FDB;&#x7A0B;&#x88AB;&#x6302;&#x8D77;&#xFF0C;&#x5F53;&#x8FDB;&#x7A0B;&#x8BF7;&#x6C42;IO&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x9700;&#x8981;&#x963B;&#x585E;&#x7B49;&#x5F85;IO&#x8BF7;&#x6C42;&#x5B8C;&#x6210;&#xFF0C;&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#x7684;&#x8FDB;&#x7A0B;&#x72B6;&#x6001;&#x5C31;&#x662F;<code>Suspened</code>&#x72B6;&#x6001;&#x3002;</li>
+</ul>
+<h4 id="&#x7B2C;&#x4E09;&#x884C;"><a name="&#x7B2C;&#x4E09;&#x884C;" class="anchor-navigation-ex-anchor" href="#&#x7B2C;&#x4E09;&#x884C;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x7B2C;&#x4E09;&#x884C;</h4>
+<p>&#x8FD9;&#x4E00;&#x884C;&#x4E3B;&#x8981;&#x662F;&#x5404;&#x79CD;&#x65F6;&#x95F4;&#x6240;&#x5360;&#x7684;&#x767E;&#x5206;&#x6BD4;&#x7684;&#x7EDF;&#x8BA1;&#xFF0C;&#x8FD9;&#x4E2A;&#x6570;&#x636E;&#x7684;&#x7EDF;&#x8BA1;&#x65F6;&#x95F4;&#x533A;&#x95F4;&#x662F;&#xFF0C;&#x4ECE;&#x672C;&#x6B21;&#x5237;&#x65B0;&#x5230;&#x4E0A;&#x4E00;&#x6B21;&#x5237;&#x65B0;&#x4E4B;&#x95F4;&#xFF0C;&#x5B9E;&#x5728;&#x8FD9;&#x4E2A;&#x533A;&#x95F4;&#x7EDF;&#x8BA1;&#x7684;&#x6570;&#x636E;</p>
+<ul>
+<li><code>us</code>&#xFF0C;&#x8FD0;&#x884C;&#x6CA1;&#x6709;&#x6307;&#x5B9A;&#x4F18;&#x5148;&#x7EA7;&#x7684;&#x7528;&#x6237;&#x8FDB;&#x7A0B;&#x6240;&#x6D88;&#x8017;&#x7684;CPU&#x65F6;&#x95F4;&#x6240;&#x5360;&#x767E;&#x5206;&#x6BD4;&#xFF0C;&#x9ED8;&#x8BA4;&#x7684;&#x7EC8;&#x7AEF;&#x6267;&#x884C;&#x7684;&#x7A0B;&#x5E8F;&#x90FD;&#x662F;&#x6CA1;&#x6709;&#x6307;&#x5B9A;&#x4F18;&#x5148;&#x7EA7;&#x7684;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<code>nice</code>&#x8FD9;&#x4E2A;&#x547D;&#x4EE4;&#x6765;&#x6539;&#x53D8;&#x7A0B;&#x5E8F;&#x6267;&#x884C;&#x7684;&#x4F18;&#x5148;&#x7EA7;&#xFF1A;<code>sudo nice -n -10 ./time</code>&#x3002;</li>
+<li><code>sy</code>&#xFF0C;&#x8FD0;&#x884C;&#x5185;&#x6838;&#x8FDB;&#x7A0B;&#x6240;&#x6D88;&#x8017;&#x7684;CPU&#x65F6;&#x95F4;&#x6240;&#x5360;&#x7684;&#x767E;&#x5206;&#x6BD4;&#x3002;</li>
+<li><code>ni</code>&#xFF0C;&#x8FD0;&#x884C;&#x6307;&#x5B9A;&#x4E86;&#x4FEE;&#x6539;&#x8FC7;&#x4F18;&#x5148;&#x7EA7;&#x4E4B;&#x540E;&#x7684;&#x7528;&#x6237;&#x8FDB;&#x7A0B;&#x6240;&#x5360;&#x7684;CPU&#x65F6;&#x95F4;&#x767E;&#x5206;&#x6BD4;&#x3002;&#x8FD9;&#x91CC;&#x53EF;&#x4EE5;&#x7ED3;&#x5408;PR&#x548C;NI&#x4E24;&#x4E2A;&#x5B57;&#x6BB5;&#x8FDB;&#x884C;&#x5206;&#x6790;&#xFF0C;&#x6211;&#x4EEC;&#x73B0;&#x5728;&#x6267;&#x884C;<code>sudo nice -n 10 ./a.out</code>&#x547D;&#x4EE4;&#xFF0C;&#x5728;./a.out&#x5F53;&#x4E2D;&#x6211;&#x542F;&#x52A8;&#x4E86;10&#x4E2A;&#x6B7B;&#x5FAA;&#x73AF;&#x7684;&#x7EBF;&#x7A0B;&#xFF0C;&#x6211;&#x4EEC;&#x6765;&#x770B;&#x4E00;&#x4E0B;&#x5B83;&#x7684;top&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#xFF1A;</li>
+</ul>
+<p><img src="../../images/linux/command/04.png" alt="04"></p>
+<p>&#x4ECE;&#x4E0A;&#x9762;&#x7684;&#x7ED3;&#x679C;&#x6765;&#x770B;&#x6211;&#x4EEC;&#x901A;&#x8FC7;nice&#x547D;&#x4EE4;&#x4FEE;&#x6539;&#x6765;&#x8FDB;&#x7A0B;&#x4F18;&#x5148;&#x7EA7;&#xFF0C;&#x4F46;&#x662F;&#x9700;&#x8981;&#x4E3B;&#x8981;&#x7684;&#x662F;&#x4E00;&#x4E2A;&#x8FDB;&#x7A0B;&#x7684;PR&#x503C;&#x8D8A;&#x5927;&#x4ED6;&#x7684;&#x4F18;&#x5148;&#x7EA7;&#x8D8A;&#x4F4E;&#xFF0C;NI&#x503C;&#x8D8A;&#x5927;&#x4F18;&#x5148;&#x7EA7;&#x8D8A;&#x4F4E;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#x6211;&#x4EEC;&#x4E0A;&#x9762;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x964D;&#x4F4E;&#x4E86;&#x8FDB;&#x7A0B;&#x6267;&#x884C;&#x7684;&#x4F18;&#x5148;&#x7EA7;&#x4E86;&#xFF0C;&#x4F46;&#x662F;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x5230;ni&#x7684;&#x503C;&#x662F;&#x53D1;&#x751F;&#x53D8;&#x5316;&#x4E86;&#x7684;&#xFF0C;&#x8FD9;&#x4E5F;&#x5370;&#x8BC1;&#x4E86;&#x4E0A;&#x9762;&#x6211;&#x4EEC;&#x6240;&#x8C08;&#x5230;&#x7684;ni&#x503C;&#x53D1;&#x751F;&#x53D8;&#x5316;&#x7684;&#x8FC7;&#x7A0B;&#x3002;&#x6211;&#x4EEC;&#x518D;&#x6765;&#x770B;&#x4E00;&#x4E0B;&#x6CA1;&#x6709;&#x8BBE;&#x7F6E;&#x4F18;&#x5148;&#x7EA7;&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x76F4;&#x63A5;&#x6267;&#x884C;<code>sudo ./a.out</code>&#xFF1A;</p>
+<p><img src="../../images/linux/command/05.png" alt="04"></p>
+<p>&#x4F46;&#x662F;&#x5728;&#x5B9E;&#x9A8C;&#x6D4B;&#x8BD5;&#x7684;&#x8FC7;&#x7A0B;&#x5F53;&#x4E2D;&#x53D1;&#x73B0;&#x4E86;&#x4E00;&#x4E2A;&#x5947;&#x602A;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x4F46;&#x6211;&#x4EEC;&#x63D0;&#x5347;&#x8FDB;&#x7A0B;&#x7684;&#x4F18;&#x5148;&#x7EA7;&#xFF08;&#x63D0;&#x5347;&#x4F18;&#x5148;&#x7EA7;&#x9700;&#x8981;&#x7BA1;&#x7406;&#x5458;&#x6743;&#x9650;&#xFF09;&#x7684;&#x65F6;&#x5019;ni&#x7684;&#x503C;&#x6CA1;&#x6709;&#x53D1;&#x751F;&#x53D8;&#x5316;&#xFF0C;&#x56E0;&#x6B64;&#x4E0A;&#x9762;&#x6240;&#x8C08;&#x5230;&#x7684;ni&#x7684;&#x53D8;&#x5316;&#x5E94;&#x8BE5;&#x53EA;&#x9002;&#x7528;&#x4E8E;&#x666E;&#x901A;&#x7528;&#x6237;&#x7684;&#x8FDB;&#x7A0B;&#xFF08;&#x56E0;&#x4E3A;&#x964D;&#x4F4E;&#x4F18;&#x5148;&#x7EA7;&#x4E0D;&#x9700;&#x8981;&#x7BA1;&#x7406;&#x5458;&#x6743;&#x9650;&#xFF09;&#x3002;</p>
+<p><img src="../../images/linux/command/06.png" alt="04"></p>
+<ul>
+<li><code>id</code>&#xFF0C; idle&#x8FDB;&#x7A0B;&#x6267;&#x884C;&#x6240;&#x5360;&#x7684;CPU&#x65F6;&#x95F4;&#x767E;&#x5206;&#x6BD4;&#xFF0C;&#x5F53;&#x7CFB;&#x7EDF;&#x5F53;&#x4E2D;&#x6CA1;&#x6709;&#x8DB3;&#x591F;&#x7684;&#x8FDB;&#x7A0B;&#x8BA9;CPU&#x6267;&#x884C;&#x7684;&#x65F6;&#x5019;&#xFF0C;idle&#x8FDB;&#x7A0B;&#x4F1A;&#x88AB;&#x8C03;&#x5EA6;&#x5230;CPU&#x4E0A;&#x8FDB;&#x884C;&#x6267;&#x884C;&#xFF0C;&#x8FD9;&#x4E2A;idle&#x8FDB;&#x7A0B;&#x662F;&#x4E3A;&#x4E86;&#x8BA9;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x80FD;&#x591F;&#x826F;&#x597D;&#x7684;&#x6267;&#x884C;&#x8D77;&#x6765;&#x6240;&#x8BBE;&#x7F6E;&#x7684;&#xFF0C;idle&#x8FDB;&#x7A0B;&#x4E3B;&#x8981;&#x6267;&#x884C;HLT&#x6307;&#x4EE4;&#xFF0C;&#x8FD9;&#x4E2A;&#x6307;&#x4EE4;&#x4E3B;&#x8981;&#x662F;&#x8BA9;CPU&#x8282;&#x80FD;&#xFF0C;&#x4E0D;&#x9700;&#x8981;CPU&#x6EE1;&#x8D1F;&#x8377;&#x8FD0;&#x8F6C;&#xFF0C;&#x56E0;&#x4E3A;&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#x6CA1;&#x6709;&#x5177;&#x4F53;&#x7684;&#x8FDB;&#x7A0B;&#x9700;&#x8981;&#x6267;&#x884C;&#xFF0C;&#x8FD9;&#x4E2A;&#x767E;&#x5206;&#x6BD4;&#x8D8A;&#x5927;&#x8BF4;&#x660E;&#x7CFB;&#x7EDF;&#x8D1F;&#x8F7D;&#x8D8A;&#x8F7B;&#xFF0C;CPU&#x4E0D;&#x7E41;&#x5FD9;&#x3002;</li>
+<li><code>wa</code>&#xFF0C;&#x8FD9;&#x4E2A;&#x5F88;&#x597D;&#x89E3;&#x91CA;&#xFF0C;&#x7B49;&#x5F85;IO&#x7684;&#x65F6;&#x95F4;&#x3002;</li>
+<li><code>hi</code>&#xFF0C;&#x5904;&#x7406;&#x786C;&#x4EF6;&#x4E2D;&#x65AD;&#x6240;&#x6D88;&#x8017;&#x7684;&#x65F6;&#x95F4;&#x3002;</li>
+<li><code>si</code>&#xFF0C;&#x5904;&#x7406;&#x8F6F;&#x4EF6;&#x4E2D;&#x65AD;&#x6240;&#x6D88;&#x8017;&#x7684;&#x65F6;&#x95F4;</li>
+<li><code>st</code>&#xFF0C;&#x8FD9;&#x4E2A;&#x65F6;&#x95F4;&#x7A0D;&#x5FAE;&#x6709;&#x70B9;&#x590D;&#x6742;&#xFF0C;IBM&#x89E3;&#x91CA;&#x539F;&#x6587;&#x4E3A;&#xFF1A;</li>
+</ul>
+<blockquote>
+<p>Steal time is the percentage of time a virtual CPU waits for a real CPU while the hypervisor is servicing another virtual processor.</p>
+</blockquote>
+<p>&#x8FD9;&#x4E2A;&#x4E3B;&#x8981;&#x662F;&#x865A;&#x62DF;&#x673A;&#x7684;&#x865A;&#x62DF;CPU&#x7B49;&#x5F85;&#x771F;&#x5B9E;&#x7269;&#x7406;CPU&#x7684;&#x65F6;&#x95F4;&#xFF0C;&#x53EF;&#x4EE5;&#x5927;&#x81F4;&#x8BA4;&#x4E3A;&#x662F;<code>Ready</code>&#x72B6;&#x6001;&#x5230;<code>Running</code>&#x72B6;&#x6001;&#x7684;&#x7B49;&#x5F85;&#x65F6;&#x95F4;&#xFF0C;&#x5982;&#x679C;&#x8FD9;&#x4E2A;&#x503C;&#x8D8A;&#x5927;&#x8BF4;&#x660E;&#x865A;&#x62DF;&#x673A;&#x8FD0;&#x884C;&#x72B6;&#x6001;&#x8D8A;&#x4E0D;&#x597D;&#xFF0C;&#x56E0;&#x4E3A;&#x5B83;&#x7B49;&#x5F85;&#x771F;&#x5B9E;CPU&#x7684;&#x65F6;&#x95F4;&#x5F88;&#x957F;&#x3002;</p>
+<h4 id="&#x7B2C;&#x56DB;&#x884C;"><a name="&#x7B2C;&#x56DB;&#x884C;" class="anchor-navigation-ex-anchor" href="#&#x7B2C;&#x56DB;&#x884C;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x7B2C;&#x56DB;&#x884C;</h4>
+<p>&#x8FD9;&#x4E00;&#x884C;&#x8868;&#x793A;&#x7684;&#x662F;&#x7269;&#x7406;&#x5185;&#x5B58;&#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x5355;&#x4F4D;&#x662F;KiB&#x3002;</p>
+<ul>
+<li>total, &#x8868;&#x793A;&#x4E00;&#x5171;&#x6709;&#x591A;&#x5C11;&#x5185;&#x5B58;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x7269;&#x7406;&#x5185;&#x5B58;&#x5927;&#x5C0F;&#x3002;</li>
+<li>free, &#x8868;&#x793A;&#x8FD8;&#x6709;&#x591A;&#x5C11;&#x7269;&#x7406;&#x5185;&#x5B58;&#x6CA1;&#x6709;&#x4F7F;&#x7528;&#x3002;</li>
+<li>used, &#x8868;&#x793A;&#x4F7F;&#x7528;&#x4E86;&#x591A;&#x5C11;&#x7269;&#x7406;&#x5185;&#x5B58;&#x3002;</li>
+<li>buff/cache, &#x8868;&#x793A;&#x7528;&#x4E8E;&#x7528;&#x4E8E;&#x7F13;&#x5B58;&#x7684;&#x7269;&#x7406;&#x5185;&#x5B58;&#x7684;&#x5927;&#x5C0F;&#x3002;</li>
+</ul>
+<h4 id="&#x7B2C;&#x4E94;&#x884C;"><a name="&#x7B2C;&#x4E94;&#x884C;" class="anchor-navigation-ex-anchor" href="#&#x7B2C;&#x4E94;&#x884C;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x7B2C;&#x4E94;&#x884C;</h4>
+<p>&#x8FD9;&#x4E00;&#x884C;&#x4E3B;&#x8981;&#x8868;&#x793A;&#x7684;&#x662F;&#x5BF9;&#x6362;&#x533A;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x6240;&#x8C13;&#x5BF9;&#x6362;&#x533A;&#x5C31;&#x662F;&#x5F53;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x53D1;&#x73B0;&#x5185;&#x5B58;&#x6EE1;&#x4E86;&#x4E4B;&#x540E;&#xFF0C;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x4F1A;&#x9009;&#x62E9;&#x90E8;&#x5206;&#x4E0D;&#x5E38;&#x4F7F;&#x7528;&#x7684;&#x9875;&#x9762;&#x5C06;&#x5B83;&#x653E;&#x5230;&#x78C1;&#x76D8;&#x5F53;&#x4E2D;&#x5F53;&#x9700;&#x8981;&#x4F7F;&#x7528;&#x7684;&#x65F6;&#x5019;&#x518D;&#x5C06;&#x8FD9;&#x90E8;&#x5206;&#x6570;&#x636E;&#x4ECE;&#x78C1;&#x76D8;&#x5F53;&#x4E2D;&#x8BFB;&#x53D6;&#x51FA;&#x6765;&#x3002;</p>
+<ul>
+<li>total, &#x8868;&#x793A;&#x5BF9;&#x6362;&#x533A;&#x7684;&#x603B;&#x5927;&#x5C0F;&#x3002;</li>
+<li>free, &#x8868;&#x793A;&#x5BF9;&#x6362;&#x533A;&#x5F53;&#x4E2D;&#x8FD8;&#x6709;&#x591A;&#x5C11;&#x7A7A;&#x95F4;&#x6CA1;&#x6709;&#x4F7F;&#x7528;&#x3002;</li>
+<li>used, &#x8868;&#x793A;&#x5BF9;&#x6362;&#x533A;&#x5F53;&#x4E2D;&#x6709;&#x591A;&#x5C11;&#x7A7A;&#x95F4;&#x88AB;&#x4F7F;&#x7528;&#x4E86;&#x3002;</li>
+<li>&#x6700;&#x540E;&#x4E00;&#x9879; avail Mem &#x662F;&#x4E00;&#x4E2A;&#x53EF;&#x7528;&#x4E8E;&#x542F;&#x52A8;&#x65B0;&#x7A0B;&#x5E8F;&#x7684;&#x5185;&#x5B58;&#x5927;&#x5C0F;&#x7684;&#x4F30;&#x8BA1;&#x503C;&#x3002;</li>
+</ul>
+<h4 id="&#x8868;&#x5934;&#x5185;&#x5BB9;&#x542B;&#x4E49;"><a name="&#x8868;&#x5934;&#x5185;&#x5BB9;&#x542B;&#x4E49;" class="anchor-navigation-ex-anchor" href="#&#x8868;&#x5934;&#x5185;&#x5BB9;&#x542B;&#x4E49;"><i class="fa fa-link" aria-hidden="true"></i></a>&#x8868;&#x5934;&#x5185;&#x5BB9;&#x542B;&#x4E49;</h4>
+<ul>
+<li>PID&#xFF0C;&#x8868;&#x793A;&#x8FDB;&#x7A0B;&#x53F7;&#xFF0C;&#x5C31;&#x662F;&#x6BCF;&#x4E2A;&#x8FDB;&#x7A0B;&#x7684;ID&#x3002;</li>
+<li>USER&#xFF0C;&#x5C31;&#x662F;&#x7528;&#x6237;&#x7684;&#x540D;&#x79F0;&#x3002;</li>
+<li>PR&#xFF0C;&#x4F18;&#x5148;&#x7EA7;&#x503C;&#x3002;</li>
+<li>NI&#xFF0C;nice&#x503C;&#xFF0C;&#x901A;&#x8FC7;&#x7A0B;&#x5E8F;&#x7ED9;&#x8FDB;&#x7A0B;&#x8BBE;&#x7F6E;&#x7684;&#x3002;</li>
+<li>VIRT&#xFF0C;&#x8FDB;&#x7A0B;&#x4F7F;&#x7528;&#x7684;&#x865A;&#x62DF;&#x5185;&#x5B58;&#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x5355;&#x4F4D;&#x662F;KiB&#x3002;</li>
+<li>RES&#xFF0C;&#x5E38;&#x9A7B;&#x5185;&#x5B58;&#x7684;&#x5185;&#x5B58;&#x5927;&#x5C0F;&#xFF0C;&#x5355;&#x4F4D;&#x662F;KiB&#x3002;</li>
+<li>SHR&#xFF0C;&#x5171;&#x4EAB;&#x5185;&#x5B58;&#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x5355;&#x4F4D;&#x662F;KiB&#x3002;</li>
+<li>S&#xFF0C;&#x8868;&#x793A;&#x8FDB;&#x7A0B;&#x7684;&#x72B6;&#x6001;&#xFF0C;&#x6709;&#x4E00;&#x4E0B;&#x51E0;&#x4E2A;&#x72B6;&#x6001;&#x3002;<ul>
+<li>D&#xFF0C;&#x4E0D;&#x80FD;&#x591F;&#x4E2D;&#x65AD;&#x7684;&#x7761;&#x7720;&#x72B6;&#x6001;&#x3002;</li>
+<li>R&#xFF0C;&#x8868;&#x793A;&#x7A0B;&#x5E8F;&#x6B63;&#x5728;CPU&#x4E0A;&#x6267;&#x884C;&#x3002;</li>
+<li>S&#xFF0C;&#x8868;&#x793A;&#x8FDB;&#x7A0B;&#x6B63;&#x5728;&#x7761;&#x7720;&#x3002;</li>
+<li>T&#xFF0C;&#x8FDB;&#x7A0B;&#x88AB;&#x4FE1;&#x53F7;&#x505C;&#x6B62;&#x6267;&#x884C;&#x3002;</li>
+<li>t&#xFF0C;&#x8868;&#x793A;&#x8FDB;&#x7A0B;&#x6B63;&#x5728;&#x88AB;&#x8C03;&#x8BD5;&#x5668;&#x8FFD;&#x8E2A;&#xFF0C;&#x8C03;&#x8BD5;&#x5668;&#x5C06;&#x8FD9;&#x4E2A;&#x8FDB;&#x7A0B;&#x505C;&#x4E86;&#x4E0B;&#x6765;&#x3002;</li>
+<li>Z&#xFF0C;zombie&#x8868;&#x793A;&#x662F;&#x4E00;&#x4E2A;&#x50F5;&#x5C38;&#x8FDB;&#x7A0B;&#x3002;</li>
+</ul>
+</li>
+<li>%CPU&#xFF0C;&#x4E0A;&#x6B21;&#x4E00;&#x5237;&#x65B0;&#x4E4B;&#x524D;&#x5BF9;&#x5E94;&#x7684;&#x8FDB;&#x7A0B;&#x5BF9;CPU&#x7684;&#x5360;&#x6709;&#x7387;&#xFF0C;&#x8FD9;&#x4E2A;&#x503C;&#x662F;&#x53EF;&#x4EE5;&#x7A81;&#x7834;100%&#x7684;&#xFF0C;&#x56E0;&#x4E3A;&#x4E00;&#x4E2A;&#x8FDB;&#x7A0B;&#x53EF;&#x4EE5;&#x6709;&#x591A;&#x4E2A;&#x8FDB;&#x7A0B;&#xFF0C;&#x6BD4;&#x5982;&#x4E0B;&#x9762;&#x8FD9;&#x6837;&#xFF0C;&#x6211;&#x4EEC;&#x5F00;&#x542F;10&#x4E2A;&#x7EBF;&#x7A0B;&#x8FDB;&#x884C;&#x6B7B;&#x5FAA;&#x73AF;&#xFF1A;</li>
+</ul>
+<pre><code class="lang-c++">
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;pthread.h&gt;</span></span>
+
+
+<span class="hljs-function"><span class="hljs-keyword">void</span>* <span class="hljs-title">func</span><span class="hljs-params">(<span class="hljs-keyword">void</span> * args)</span> </span>{
+  <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>)
+  {
+    <span class="hljs-comment">/* code */</span>
+  }
+
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> num_threads 10</span>
+  <span class="hljs-keyword">pthread_t</span> t[num_threads];
+  <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; num_threads; i++) {
+    pthread_create(&amp;t[i], <span class="hljs-literal">NULL</span>, func, <span class="hljs-literal">NULL</span>);
+  }
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">size_t</span> i = <span class="hljs-number">0</span>; i &lt; num_threads; i++)
+  {
+    pthread_join(t[i], <span class="hljs-literal">NULL</span>);
+  }
+
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x6267;&#x884C;&#x4E0A;&#x9762;&#x7684;&#x7A0B;&#x5E8F;&#x4E4B;&#x540E;&#xFF0C;top&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="../../images/linux/command/07.png" alt="04"></p>
+<p>&#x4ECE;&#x4E0A;&#x9762;&#x7684;&#x8FD9;&#x4E2A;&#x7ED3;&#x679C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x77E5;&#x9053;CPU&#x7684;&#x5360;&#x6709;&#x7387;&#x662F;&#x53EF;&#x4EE5;&#x8D85;&#x8FC7;%100&#x7684;&#xFF0C;&#x8FD9;&#x4E2A;&#x503C;&#x7684;&#x8BA1;&#x7B97;&#x4E3B;&#x8981;&#x662F;&#x5728;&#x5237;&#x65B0;&#x4E4B;&#x95F4;&#x5185;&#x4E00;&#x4E2A;&#x8FDB;&#x7A0B;&#x6D88;&#x8017;&#x7684;CPU&#x65F6;&#x95F4;&#x548C;&#x5728;&#x8FD9;&#x6BB5;&#x65F6;&#x95F4;&#x5185;&#x4E00;&#x4E2A;CPU&#x80FD;&#x591F;&#x4EA7;&#x751F;&#x7684;CPU&#x65F6;&#x95F4;&#x7684;&#x6BD4;&#x503C;&#x3002;</p>
+<ul>
+<li>%MEM&#xFF0C;&#x8FD9;&#x4E2A;&#x4E3B;&#x8981;&#x662F;&#x8FDB;&#x7A0B;&#x4F7F;&#x7528;&#x7684;&#x5185;&#x5B58;&#x5360;&#x7528;&#x5B9E;&#x9645;&#x7684;&#x53EF;&#x7528;&#x7684;&#x7269;&#x7406;&#x5185;&#x5B58;&#x7684;&#x6BD4;&#x4F8B;&#x3002;</li>
+<li>TIME+&#xFF0C;&#x8FD9;&#x4E2A;&#x8868;&#x793A;&#x81EA;&#x4ECE;&#x8FDB;&#x7A0B;&#x542F;&#x52A8;&#x4EE5;&#x6765;&#x7D2F;&#x8BA1;&#x6D88;&#x8017;&#x7684;CPU&#x65F6;&#x95F4;&#x3002;</li>
+<li>COMMAND&#xFF0C;&#x8FD9;&#x4E2A;&#x8868;&#x793A;&#x542F;&#x52A8;&#x8FDB;&#x7A0B;&#x7684;&#x65F6;&#x5019;&#x6267;&#x884C;&#x7684;&#x547D;&#x4EE4;&#x3002;</li>
+</ul>
+<h2 id="top&#x547D;&#x4EE4;&#x4EA4;&#x4E92;&#x64CD;&#x4F5C;"><a name="top&#x547D;&#x4EE4;&#x4EA4;&#x4E92;&#x64CD;&#x4F5C;" class="anchor-navigation-ex-anchor" href="#top&#x547D;&#x4EE4;&#x4EA4;&#x4E92;&#x64CD;&#x4F5C;"><i class="fa fa-link" aria-hidden="true"></i></a>top&#x547D;&#x4EE4;&#x4EA4;&#x4E92;&#x64CD;&#x4F5C;</h2>
+<ul>
+<li>c&#xFF0C;&#x8BE6;&#x7EC6;&#x663E;&#x793A;&#x547D;&#x4EE4;&#x884C;&#x7684;&#x5185;&#x5BB9;&#xFF0C;&#x4F60;&#x5728;&#x4EA4;&#x4E92;&#x6A21;&#x5F0F;&#x4E0B;&#x76F4;&#x63A5;&#x6309;&#x4E0B;&#x952E;&#x76D8;&#x4E0A;&#x7684;c&#x5373;&#x53EF;&#x3002;</li>
+</ul>
+<p><img src="../../images/linux/command/08.png" alt="04"></p>
+<ul>
+<li>o&#xFF0C;&#x5728;&#x4EA4;&#x4E92;&#x6A21;&#x5F0F;&#x4E0B;&#x5148;&#x6309;&#x4E0B;&#x952E;&#x76D8;&#x4E0A;&#x7684;o&#xFF0C;&#x7136;&#x540E;&#x5C31;&#x53EF;&#x4EE5;&#x8F93;&#x5165;&#x8FC7;&#x6EE4;&#x6761;&#x4EF6;&#xFF0C;&#x5728;&#x8FD9;&#x91CC;&#x63A9;&#x9970;&#x7684;&#x662F;COMMAND=a.out&#x7684;&#x8FDB;&#x7A0B;&#xFF1A;</li>
+</ul>
+<p><img src="../../images/linux/command/09.png" alt="04"></p>
+<ul>
+<li>k&#xFF0C;shell&#x7ED9;&#x6211;&#x4EEC;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A;&#x975E;&#x5E38;&#x65B9;&#x4FBF;&#x7684;&#x64CD;&#x4F5C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5728;&#x4EA4;&#x4E92;&#x6A21;&#x5F0F;&#x4E0B;&#x9009;&#x62E9;&#x6211;&#x4EEC;&#x60F3;&#x8981;&#x6740;&#x6B7B;&#x7684;&#x8FDB;&#x7A0B;&#xFF0C;&#x6BD4;&#x5982;&#x5728;&#x4E0B;&#x56FE;&#x5F53;&#x4E2D;&#x6211;&#x4EEC;&#x6740;&#x6B7B;&#x8FDB;&#x7A0B;135020&#x3002;</li>
+</ul>
+<p>&#x6211;&#x4EEC;&#x5148;&#x5728;&#x4EA4;&#x4E92;&#x6A21;&#x5F0F;&#x4E0B;&#x5148;&#x6309;&#x4E0B;&#x952E;&#x76D8;&#x4E0A;&#x7684;k&#xFF0C;&#x7136;&#x540E;&#x8F93;&#x5165;&#x8FDB;&#x7A0B;&#x53F7;&#xFF0C;&#x7136;&#x540E;&#x8F93;&#x5165;&#x56DE;&#x8F66;&#xFF0C;&#x518D;&#x8F93;&#x5165;&#x60F3;&#x53D1;&#x9001;&#x7684;&#x4FE1;&#x53F7;&#x7C7B;&#x578B;&#x3002;</p>
+<p>&#x8F93;&#x5165;&#x8FDB;&#x7A0B;&#x53F7;</p>
+<p><img src="../../images/linux/command/10.png" alt="04"></p>
+<p>&#x518D;&#x8F93;&#x5165;&#x60F3;&#x8981;&#x53D1;&#x9001;&#x7684;&#x4FE1;&#x53F7;&#xFF1A;</p>
+<p><img src="../../images/linux/command/11.png" alt="04"></p>
+<p>&#x8FD9;&#x91CC;&#x53EF;&#x4EE5;&#x8F93;&#x5165;&#x4EE3;&#x8868;&#x4FE1;&#x53F7;&#x7684;&#x6570;&#x5B57;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x8F93;&#x5165;&#x4EE3;&#x8868;&#x4FE1;&#x53F7;&#x7684;&#x540D;&#x5B57;&#xFF0C;&#x4E0D;&#x540C;&#x7684;&#x4FE1;&#x53F7;&#x7684;&#x540D;&#x5B57;&#x548C;&#x4EE3;&#x8868;&#x8F93;&#x5165;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-C++"> <span class="hljs-number">1</span>) SIGHUP     <span class="hljs-number">2</span>) SIGINT     <span class="hljs-number">3</span>) SIGQUIT     <span class="hljs-number">4</span>) SIGILL     <span class="hljs-number">5</span>) SIGTRAP
+ <span class="hljs-number">6</span>) SIGABRT     <span class="hljs-number">7</span>) SIGBUS     <span class="hljs-number">8</span>) SIGFPE     <span class="hljs-number">9</span>) SIGKILL    <span class="hljs-number">10</span>) SIGUSR1
+<span class="hljs-number">11</span>) SIGSEGV    <span class="hljs-number">12</span>) SIGUSR2    <span class="hljs-number">13</span>) SIGPIPE    <span class="hljs-number">14</span>) SIGALRM    <span class="hljs-number">15</span>) SIGTERM
+<span class="hljs-number">16</span>) SIGSTKFLT    <span class="hljs-number">17</span>) SIGCHLD    <span class="hljs-number">18</span>) SIGCONT    <span class="hljs-number">19</span>) SIGSTOP    <span class="hljs-number">20</span>) SIGTSTP
+<span class="hljs-number">21</span>) SIGTTIN    <span class="hljs-number">22</span>) SIGTTOU    <span class="hljs-number">23</span>) SIGURG    <span class="hljs-number">24</span>) SIGXCPU    <span class="hljs-number">25</span>) SIGXFSZ
+<span class="hljs-number">26</span>) SIGVTALRM    <span class="hljs-number">27</span>) SIGPROF    <span class="hljs-number">28</span>) SIGWINCH    <span class="hljs-number">29</span>) SIGIO    <span class="hljs-number">30</span>) SIGPWR
+<span class="hljs-number">31</span>) SIGSYS    <span class="hljs-number">34</span>) SIGRTMIN    <span class="hljs-number">35</span>) SIGRTMIN+<span class="hljs-number">1</span>    <span class="hljs-number">36</span>) SIGRTMIN+<span class="hljs-number">2</span>    <span class="hljs-number">37</span>) SIGRTMIN+<span class="hljs-number">3</span>
+<span class="hljs-number">38</span>) SIGRTMIN+<span class="hljs-number">4</span>    <span class="hljs-number">39</span>) SIGRTMIN+<span class="hljs-number">5</span>    <span class="hljs-number">40</span>) SIGRTMIN+<span class="hljs-number">6</span>    <span class="hljs-number">41</span>) SIGRTMIN+<span class="hljs-number">7</span>    <span class="hljs-number">42</span>) SIGRTMIN+<span class="hljs-number">8</span>
+<span class="hljs-number">43</span>) SIGRTMIN+<span class="hljs-number">9</span>    <span class="hljs-number">44</span>) SIGRTMIN+<span class="hljs-number">10</span>    <span class="hljs-number">45</span>) SIGRTMIN+<span class="hljs-number">11</span>    <span class="hljs-number">46</span>) SIGRTMIN+<span class="hljs-number">12</span>    <span class="hljs-number">47</span>) SIGRTMIN+<span class="hljs-number">13</span>
+<span class="hljs-number">48</span>) SIGRTMIN+<span class="hljs-number">14</span>    <span class="hljs-number">49</span>) SIGRTMIN+<span class="hljs-number">15</span>    <span class="hljs-number">50</span>) SIGRTMAX<span class="hljs-number">-14</span>    <span class="hljs-number">51</span>) SIGRTMAX<span class="hljs-number">-13</span>    <span class="hljs-number">52</span>) SIGRTMAX<span class="hljs-number">-12</span>
+<span class="hljs-number">53</span>) SIGRTMAX<span class="hljs-number">-11</span>    <span class="hljs-number">54</span>) SIGRTMAX<span class="hljs-number">-10</span>    <span class="hljs-number">55</span>) SIGRTMAX<span class="hljs-number">-9</span>    <span class="hljs-number">56</span>) SIGRTMAX<span class="hljs-number">-8</span>    <span class="hljs-number">57</span>) SIGRTMAX<span class="hljs-number">-7</span>
+<span class="hljs-number">58</span>) SIGRTMAX<span class="hljs-number">-6</span>    <span class="hljs-number">59</span>) SIGRTMAX<span class="hljs-number">-5</span>    <span class="hljs-number">60</span>) SIGRTMAX<span class="hljs-number">-4</span>    <span class="hljs-number">61</span>) SIGRTMAX<span class="hljs-number">-3</span>    <span class="hljs-number">62</span>) SIGRTMAX<span class="hljs-number">-2</span>
+<span class="hljs-number">63</span>) SIGRTMAX<span class="hljs-number">-1</span>    <span class="hljs-number">64</span>) SIGRTMAX
+</code></pre>
+<ul>
+<li>u&#xFF0C;&#x901A;&#x8FC7;&#x7528;&#x6237;&#x8FC7;&#x6EE4;&#xFF0C;&#x5728;&#x4EA4;&#x4E92;&#x6A21;&#x5F0F;&#x4E0B;&#x6309;&#x4E0B;&#x952E;&#x76D8;&#x4E0A;&#x7684;u&#x952E;&#xFF0C;&#x7136;&#x540E;&#x5C31;&#x53EF;&#x4EE5;&#x8F93;&#x5165;&#x4F60;&#x60F3;&#x770B;&#x90A3;&#x4E2A;&#x7528;&#x6237;&#x7684;&#x8FDB;&#x7A0B;&#xFF0C;&#x8F93;&#x5165;&#x5BF9;&#x5E94;&#x7684;&#x7528;&#x6237;&#x540D;&#x79F0;&#x5373;&#x53EF;&#xFF0C;&#x6BD4;&#x5982;&#x8BF4;&#x770B;root&#x7528;&#x6237;&#x7684;&#x8FDB;&#x7A0B;&#xFF1A;</li>
+</ul>
+<p><img src="../../images/linux/command/12.png" alt="04"></p>
+<p>&#x7136;&#x540E;&#x6211;&#x4EEC;&#x5C31;&#x53EA;&#x80FD;&#x591F;&#x770B;&#x5230;root&#x7528;&#x6237;&#x7684;&#x8FDB;&#x7A0B;&#x4E86;&#x3002;</p>
+<p><img src="../../images/linux/command/13.png" alt="04"></p>
+<ul>
+<li>h&#xFF0C;&#x67E5;&#x770B;&#x5E2E;&#x52A9;&#x4FE1;&#x606F;&#xFF1A;</li>
+</ul>
+<p><img src="../../images/linux/command/14.png" alt="04"></p>
+<ul>
+<li>i&#xFF0C;&#x8FC7;&#x6EE4;&#x6389;CPU&#x5229;&#x7528;&#x7387;&#x5F88;&#x4F4E;&#x7684;&#x8FDB;&#x7A0B;&#xFF0C;&#x5F88;&#x591A;&#x65F6;&#x5019;&#x6211;&#x4EEC;&#x5728;&#x8FDB;&#x884C;&#x7CFB;&#x7EDF;&#x5206;&#x6790;&#x7684;&#x65F6;&#x5019;&#x9700;&#x8981;&#x53BB;&#x5224;&#x65AD;&#x90A3;&#x4E2A;&#x8FDB;&#x7A0B;CPU&#x5360;&#x6709;&#x7387;&#x9AD8;&#xFF0C;&#x56E0;&#x6B64;i&#x662F;&#x4E00;&#x4E2A;&#x975E;&#x5E38;&#x6709;&#x6548;&#x7684;&#x65B9;&#x5F0F;&#x8FC7;&#x6EE4;&#x6389;&#x5E72;&#x6270;&#x8FDB;&#x7A0B;&#x3002;</li>
+</ul>
+<hr>
+<p>&#x4EE5;&#x4E0A;&#x5C31;&#x662F;&#x672C;&#x7BC7;&#x6587;&#x7AE0;&#x7684;&#x6240;&#x6709;&#x5185;&#x5BB9;&#x4E86;&#xFF0C;&#x6211;&#x662F;<strong>LeHung</strong>&#xFF0C;&#x6211;&#x4EEC;&#x4E0B;&#x671F;&#x518D;&#x89C1;&#xFF01;&#xFF01;&#xFF01;&#x66F4;&#x591A;&#x7CBE;&#x5F69;&#x5185;&#x5BB9;&#x5408;&#x96C6;&#x53EF;&#x8BBF;&#x95EE;&#x9879;&#x76EE;&#xFF1A;<a href="https://github.com/Chang-LeHung/CSCore" target="_blank">https://github.com/Chang-LeHung/CSCore</a></p>
+<p>&#x5173;&#x6CE8;&#x516C;&#x4F17;&#x53F7;&#xFF1A;<strong>&#x4E00;&#x65E0;&#x662F;&#x5904;&#x7684;&#x7814;&#x7A76;&#x50E7;</strong>&#xFF0C;&#x4E86;&#x89E3;&#x66F4;&#x591A;&#x8BA1;&#x7B97;&#x673A;&#xFF08;Java&#x3001;Python&#x3001;&#x8BA1;&#x7B97;&#x673A;&#x7CFB;&#x7EDF;&#x57FA;&#x7840;&#x3001;&#x7B97;&#x6CD5;&#x4E0E;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF09;&#x77E5;&#x8BC6;&#x3002;</p>
+<p><img src="https://img2022.cnblogs.com/blog/2519003/202207/2519003-20220703200459566-1837431658.jpg" alt=""></p>
+
+<script>console.log("plugin-popup....");document.onclick = function(e){ e.target.tagName === "IMG" && window.open(e.target.src,e.target.src)}</script><style>img{cursor:pointer}</style>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                
+                <a href="02ls.html" class="navigation navigation-next navigation-unique" aria-label="Next page: Linux命令系列之ls——原来最简单的ls这么复杂">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"Linux命令系列之top——里面藏着很多鲜为人知的宝藏知识","level":"1.8.1","depth":2,"next":{"title":"Linux命令系列之ls——原来最简单的ls这么复杂","level":"1.8.2","depth":2,"path":"linux/command/02ls.md","ref":"./linux/command/02ls.md","articles":[]},"previous":{"title":"Command","level":"1.8","depth":1,"ref":"","articles":[{"title":"Linux命令系列之top——里面藏着很多鲜为人知的宝藏知识","level":"1.8.1","depth":2,"path":"linux/command/01top.md","ref":"./linux/command/01top.md","articles":[]},{"title":"Linux命令系列之ls——原来最简单的ls这么复杂","level":"1.8.2","depth":2,"path":"linux/command/02ls.md","ref":"./linux/command/02ls.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["popup","anchor-navigation-ex","theme-comscore","panel"],"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @Chang-LeHung","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"copyright":"Copyright &#169; aleen42","minHeaderCount":"2","minHeaderDeep":"2"},"panel":{},"search":{},"popup":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"highlight":{},"anchor-navigation-ex":{"showLevelIcon":false,"mode":"float","pageTop":{"level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"showLevel":false,"tocLevel1Icon":"fa fa-hand-o-right","tocLevel2Icon":"fa fa-hand-o-right","tocLevel3Icon":"fa fa-hand-o-right","showGoTop":true,"printLog":false,"multipleH1":false,"multipleH2":false,"associatedWithSummary":true,"multipleH3":false,"float":{"floatIcon":"fa fa-navicon","level1Icon":"","level2Icon":"","level3Icon":"","showLevelIcon":false},"multipleH4":false},"theme-comscore":{},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"linux/command/01top.md","mtime":"2022-10-10T17:27:18.152Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2022-11-04T15:29:04.446Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-theme-comscore/test.js"></script>
+        
+    
+
+    </body>
+</html>
+

@@ -1,0 +1,31 @@
+{
+  "plugins": [
+      "popup",
+      "anchor-navigation-ex",
+      "theme-comscore",
+      "panel"
+    ],
+  "pluginsConfig": {
+    "anchor-navigation-ex": {
+      "tocLevel1Icon": "fa fa-hand-o-right",
+      "tocLevel2Icon": "fa fa-hand-o-right",
+      "tocLevel3Icon": "fa fa-hand-o-right",
+      "multipleH1": false,
+      "multipleH2": false,
+      "multipleH3": false,
+      "multipleH4": false,
+      "showLevelIcon": false,
+      "showLevel": false
+    },
+  "tbfed-pagefooter": {
+      "copyright": "Copyright @Chang-LeHung",
+      "modify_label": "该文件修订时间：",
+      "modify_format": "YYYY-MM-DD HH:mm:ss"
+    },
+  "page-treeview": {
+      "copyright": "Copyright &#169; aleen42",
+      "minHeaderCount": "2",
+      "minHeaderDeep": "2"
+    }
+  }
+}
