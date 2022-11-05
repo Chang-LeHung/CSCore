@@ -79,53 +79,53 @@
 - 庖丁解牛斐波拉契数列和背包问题——详细解析两个问题优化过程（超多问题优化干货，不看血亏），带你从最基本最核心的问题看懂动态规划！！
   
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484109&idx=1&sn=4cd2040eacb04710694282192edeafc4&chksm=cf0c9ec4f87b17d2093a429755c0b3177ddeb39a96d77e210b03fe03f5a76968b7062234594a&token=1155116583&lang=zh_CN#rd)
-  - [github阅读](./datastructr&algorithm/01-动态规划.md)
+  - [github阅读](./da/01-动态规划.md)
 - 你真的懂01背包问题吗？01背包的这几问你能答出来吗？
   
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484416&idx=1&sn=d8aa70bc642c94a127ea67409808980f&chksm=cf0c9809f87b111f2fb092adba83da7e5463a8f5eaa92914ddb975065428a1a80a7d6bc53f3a&token=883596793&lang=zh_CN#rd)
-  - [github阅读](./datastructr&algorithm/02-01背包问题.md)
+  - [github阅读](./da/02-01背包问题.md)
 - 面试官：完全背包都不会，是你自己走还是我送你？
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484544&idx=1&sn=c4de17583010430fa519ecd1703bedea&chksm=cf0c9889f87b119fe5621bacf417b163020dcd8a7c0ed63df94de20ba67ae742b4d86e22ae16&token=883596793&lang=zh_CN#rd)
-  - [github阅读](./datastructr&algorithm/03完全背包.md)
+  - [github阅读](./da/03完全背包.md)
 - 深入剖析多重背包问题（上篇）
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484627&idx=1&sn=ac975cb31ba1af89425558cfe4442258&chksm=cf0c98daf87b11cc4178c55864ba8eeecd741aaa49bde712aca1c5999f7dbbbbd0997beb6cc2&token=1311889589&lang=zh_CN#rd)
-  - [github阅读](./datastructr&algorithm/04多重背包v1.md)
+  - [github阅读](./da/04多重背包v1.md)
 - 深入剖析多重背包问题（下篇）
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247484703&idx=1&sn=d0fb3c949b99a803a30a5dd1452d7bce&chksm=cf0c9916f87b10002e32bf8acfa298c1201d33793c80beb538ac099024868373e4c7a5b35a53&token=1311889589&lang=zh_CN#rd)
-  - [github阅读](./datastructr&algorithm/04多重背包v2.md)
+  - [github阅读](./da/04多重背包v2.md)
 - 完全背包转化为多重背包
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486630&idx=1&sn=3132f69c0fb2207e9d4677f304eba63d&chksm=cf0c90aff87b19b9c427ff6d76e31666aef8feb8e02373b07fbaea7642c386b232f76ac80c16&token=1278893481&lang=zh_CN#rd)
-  - [github阅读](./datastructr&algorithm/14深入剖析完全背包.md)
+  - [github阅读](./da/14深入剖析完全背包.md)
 - 深入浅出零钱兑换问题——背包问题的套壳
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247485777&idx=1&sn=69ffd91b7669704c03127ecb9a18381c&chksm=cf0c9558f87b1c4e3df12503c6d933c5693f05dba9c60df278db1601026d3bd14221bda5ef64&token=1645117295&lang=zh_CN#rd)
-  - [github阅读](./datastructr&algorithm/13零钱兑换.md)
+  - [github阅读](./da/13零钱兑换.md)
 - 深入剖析斐波拉契数列
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247485229&idx=1&sn=3d4abd19abfcc42f33de534cdaf4b6dc&chksm=cf0c9b24f87b1232ef3ad1bd3d9fc07467a7e5a003e7e8876fcf5091403d47bd43948a836004&token=1125062744&lang=zh_CN#rd)
-  - [github阅读](./datastructr&algorithm/05深入剖析斐波拉契数列.md)
+  - [github阅读](./da/05深入剖析斐波拉契数列.md)
 
 #### 股票问题
 
 - 这种动态规划你见过吗——状态机动态规划之股票问题(上)
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247485286&idx=1&sn=3d0a6a1c2e62ba770d8427c6dd732973&chksm=cf0c9b6ff87b1279d46c775001fd77b8e1437d4001a6c8a1ca8db090eadb4174af1058a1aadf&token=1125062744&lang=zh_CN#rd)
-  - [github阅读](./datastructr&algorithm/09状态机动态规划.md)
+  - [github阅读](./da/09状态机动态规划.md)
 - 这种动态规划你见过吗——状态机动态规划之股票问题(中)
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247485500&idx=1&sn=f9283ccc6e0c909641eadb9c761f6d1b&chksm=cf0c9435f87b1d23f1361bdd62946d3e6bb79b1415718fd15150bd47215b5ab490510bb51967&token=1092368950&lang=zh_CN#rd)
-  - [github阅读](./datastructr&algorithm/10状态机动态规划02.md)
+  - [github阅读](./da/10状态机动态规划02.md)
 - 这种动态规划你见过吗——状态机动态规划之股票问题(下)
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247485619&idx=1&sn=d9cd4f7abfbedd9cd638e0952acc4826&chksm=cf0c94baf87b1dacd06e2f36ef91a2bc22e05bf8d746727cb39ba2a378a50a07a3fbc8f241c7&token=1092368950&lang=zh_CN#rd)
-  - [github阅读](./datastructr&algorithm/11状态机动态规划03.md)
+  - [github阅读](./da/11状态机动态规划03.md)
 - 状态机动态规划之股票问题总结
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486020&idx=1&sn=d54b40cc6219855b9708d3fd62023a78&chksm=cf0c964df87b1f5bc42a940a72628b0bb3f251811bdee093e2e94438437d214f8c538f37fba7&token=1645117295&lang=zh_CN#rd)
-  - [github阅读](./datastructr&algorithm/12状态机动态规划总结.md)
+  - [github阅读](./da/12状态机动态规划总结.md)
 
 ### 回溯
 
 - 通过组合问题看透回溯法
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247486751&idx=1&sn=8e9cedd729d01ff8867fcb2c085ecbe3&chksm=cf0c9116f87b18002551eefcd773f4762d79d2c06614b304437bfcd382e14afa031d29cc4dcc&mpshare=1&scene=22&srcid=0921yRhazbXlqGuEZagKb0p9&sharer_sharetime=1663737871952&sharer_shareid=236a49567847c05f78e6b440ce6dabff#rd)
-  - [github阅读](./datastructr&algorithm/backtrace/01combinations.md)
+  - [github阅读](./da/backtrace/01combinations.md)
 - [力扣39]组合总和
   - [微信公众号阅读](https://mp.weixin.qq.com/s/7A8-rmw0l5Y8c8SnQ5vqwQ)
-  - [github阅读](./datastructr&algorithm/backtrace/02combinations.md)
+  - [github阅读](./da/backtrace/02combinations.md)
 
 ### 数据结构
 
@@ -133,7 +133,7 @@
 
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247485085&idx=1&sn=27950d2ccfa01419c7b434a676cdd5a3&chksm=cf0c9a94f87b138225ddbf0538c8af6de3a22f4e155329735c46369ec01860837df77e8234b7&token=969171239&lang=zh_CN#rd)
 
-  - [github阅读](./datastructr&algorithm/07表达式求值.md)
+  - [github阅读](./da/07表达式求值.md)
 
 ## 🔖Java
 
