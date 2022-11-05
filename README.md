@@ -3,13 +3,10 @@
 <P style="text-align: center;"> <img src="images/logo.png"></img></p>
 
 <p> 
-
   <a href="https://github.com/Chang-LeHung/CSCore/blob/main/qrcode2.jpg"><img src="https://img.shields.io/badge/微信公众号-一无是处的研究僧-379d2e.svg" height="25px" alt="LinkedIn"> </a>
   <a href="https://juejin.cn/user/1636513656355735"><img src="https://img.shields.io/badge/稀土掘金-一无是处的研究僧-1907f8.svg" height="25px" alt="稀土掘金"></a>
   <a href="https://www.zhihu.com/people/lbj-31-91"><img src="https://img.shields.io/badge/知乎-0079FF.svg?style=plastic&logo=zhihu&logoColor=white" height="25px" alt="知乎"></a>
   <a href="https://www.cnblogs.com/Chang-LeHung/"><img src="https://img.shields.io/badge/博客园-一无是处的研究僧-4b89cf.svg?style=plastic&logo=cnblogs&logoColor=white" height="25px" alt="博客园"></a>
-
-</p> 
 
 # 🚀CSCore（所有内容都将持续更新...）
 
