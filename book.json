@@ -3,7 +3,10 @@
       "popup",
       "anchor-navigation-ex",
       "theme-comscore",
-      "panel"
+      "panel",
+      "callouts",
+      "fontsettings",
+      "intopic-toc"
     ],
   "pluginsConfig": {
     "anchor-navigation-ex": {
