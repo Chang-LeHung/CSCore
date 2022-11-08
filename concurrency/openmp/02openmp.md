@@ -23,6 +23,7 @@ int main() {
       data++;
       usleep(10);
     }
+    // omp_get_thread_num 函数返回线程的 id 号 这个数据从 0 开始，0, 1, 2, 3, 4, ...
     printf("data = %d tid = %d\n", data, omp_get_thread_num());
   }
 
@@ -43,4 +44,42 @@ int main() {
 ## 解决求和问题的各种办法
 
 ### 使用数组巧妙解决并发程序当中的数据竞争问题
+
+在上面的程序当中我们使用了一个函数 `omp_get_thread_num` 这个函数可以返回线程的 id 号，我们可以根据这个 id 做一些文章，如下面的程序：
+
+```c
+
+
+#include <stdio.h>
+#include <omp.h>
+#include <unistd.h>
+
+static int data;
+
+static int tarr[2];
+
+int main() {
+  #pragma omp parallel num_threads(2)
+  {
+    int tid = omp_get_thread_num();
+    for(int i = 0; i < 10000; i++) {
+      tarr[tid]++;
+      usleep(10);
+    }
+    printf("tarr[%d] = %d tid = %d\n", tid, tarr[tid], tid);
+  }
+  data = tarr[0] + tarr[1];
+  printf("In main function data = %d\n", data);
+  return 0;
+}
+```
+
+在上面的程序当中我们额外的使用了一个数组 `tarr` 用于保存线程的本地的和，然后在最后在主线程里面讲线程本地得到的和相加起来，这样的话我们得到的结果就是正确的了。
+
+```shell
+$./lockfree01.out
+tarr[1] = 10000 tid = 1
+tarr[0] = 10000 tid = 0
+In main function data = 20000
+```
 
