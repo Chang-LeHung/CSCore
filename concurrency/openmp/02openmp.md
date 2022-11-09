@@ -126,3 +126,58 @@ int main() {
 如果有 4 个线程的话，那么就有 4 个线程本地的 data（每个线程一个 data）。那么规约（reduction）操作的结果等于：
 
 (((data1 + data2) + data3) + data4) 其中 datai 表示第 i 个线程的得到的 data 。
+
+除了后面的两种方法解决多个线程同时对一个数据进行操作的问题的之外我们还有一些其他的办法去解决这个问题，我们在下一篇文章当中进行仔细分析。
+
+## 深入剖析 reduction 子句
+
+我们在写多线程程序的时候可能会存在这种需求，每个线程都会得到一个数据的结果，然后在最后需要将每个线程得到的数据进行求和，相乘，或者逻辑操作等等，在这种情况下我们可以使用 reduction 子句进行操作。redcution 子句的语法格式如下：
+
+```shell
+reduction(操作符:变量)
+```
+
+当我们使用 reduction 子句的时候线程使用的是与外部变量同名的变量，那么这个同名的变量的初始值应该设置成什么呢？具体的设置规则如下所示：
+
+| 运算符      | 初始值           |
+| ----------- | ---------------- |
+| +/加法      | 0                |
+| */乘法      | 1                |
+| &&/逻辑与   | 1                |
+| \|\|/逻辑或 | 0                |
+| min/最小值  | 对应类型的最小值 |
+| max/最大值  | 对应类型的最大值 |
+| &/按位与    | 所有位都是 1      |
+| \|/按位或   | 所有位都是 0      |
+| ^/按位异或           |   所有位都是 0               |
+
+下面我们使用各种不同的例子去分析上面的所有的条目：
+
+#### 加法+操作符
+
+```c
+
+
+#include <stdio.h>
+#include <omp.h>
+
+static int data;
+
+int main() {
+
+  #pragma omp parallel num_threads(2) reduction(+:data)
+  {
+    if(omp_get_thread_num() == 0) {
+      data = 10;
+    }else if(omp_get_thread_num() == 1){
+      data = 20;
+    }
+    printf("data = %d tid = %d\n", data, omp_get_thread_num());
+  }
+  printf("data = %d\n", data);
+  return 0;
+}
+```
+
+
+
