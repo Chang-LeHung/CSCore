@@ -145,18 +145,19 @@ reduction(操作符:变量)
 | */乘法      | 1                |
 | &&/逻辑与   | 1                |
 | \|\|/逻辑或 | 0                |
-| min/最小值  | 对应类型的最小值 |
-| max/最大值  | 对应类型的最大值 |
+| min/最小值  | 对应类型的最大值 |
+| max/最大值  | 对应类型的最小值 |
 | &/按位与    | 所有位都是 1      |
 | \|/按位或   | 所有位都是 0      |
 | ^/按位异或           |   所有位都是 0               |
 
 下面我们使用各种不同的例子去分析上面的所有的条目：
 
-#### 加法+操作符
+### 加法+操作符
+
+我们使用下面的程序去测试使用加法规约的正确性，并且在并行域当中打印进行并行域之前变量的值。
 
 ```c
-
 
 #include <stdio.h>
 #include <omp.h>
@@ -167,17 +168,217 @@ int main() {
 
   #pragma omp parallel num_threads(2) reduction(+:data)
   {
+    printf("初始值 : data = %d tid = %d\n", data, omp_get_thread_num());
     if(omp_get_thread_num() == 0) {
       data = 10;
     }else if(omp_get_thread_num() == 1){
       data = 20;
     }
-    printf("data = %d tid = %d\n", data, omp_get_thread_num());
+    printf("变化后的值 : data = %d tid = %d\n", data, omp_get_thread_num());
+  }
+  printf("规约之后的值 : data = %d\n", data);
+  return 0;
+}
+```
+
+上面的程序的输出结果如下所示：
+
+```
+初始值 : data = 0 tid = 0
+变化后的值 : data = 10 tid = 0
+初始值 : data = 0 tid = 1
+变化后的值 : data = 20 tid = 1
+规约之后的值 : data = 30
+```
+
+从上面的输出结果我们可以知道当进入并行域之后我们的变量的初始值等于 0 ，第一个线程的线程 id 号等于 0 ，它将 data 的值赋值成 10 ，第二个线程的线程 id 号 等于 1，它将 data 的值赋值成 20 。在出并行域之前会将两个线程得到的 data 值进行规约操作，在上面的代码当中也就是+操作，并且将这个值赋值给全局变量 data 。
+
+### 乘法*操作符
+
+```c
+
+
+#include <stdio.h>
+#include <omp.h>
+
+static int data = 2;
+
+int main() {
+
+  #pragma omp parallel num_threads(2) reduction(*:data)
+  {
+    printf("初始值 : data = %d tid = %d\n", data, omp_get_thread_num());
+    if(omp_get_thread_num() == 0) {
+      data = 10;
+    }else if(omp_get_thread_num() == 1){
+      data = 20;
+    }
+    printf("变化后的值 : data = %d tid = %d\n", data, omp_get_thread_num());
+  }
+  printf("规约之后的值 : data = %d\n", data);
+  return 0;
+}
+```
+
+上面的程序输出结果如下所示：
+
+```
+初始值 : data = 1 tid = 0
+变化后的值 : data = 10 tid = 0
+初始值 : data = 1 tid = 1
+变化后的值 : data = 20 tid = 1
+规约之后的值 : data = 400
+```
+
+从上面的程序的输出结果来看，当我们使用*操作符的时候，我们可以看到程序当中 data 的初始值确实被初始化成了 1 ，而且最终在主函数当中的输出结果也是符合预期的，因为 400 = 2 * 10 * 20，其中 2 只在全局变量初始化的时候的值。
+
+### 逻辑与&&操作符
+
+```c
+
+
+#include <stdio.h>
+#include <omp.h>
+
+static int data = 100;
+
+int main() {
+
+  #pragma omp parallel num_threads(2) reduction(&&:data)
+  {
+    printf("data =\t %d tid = %d\n", data, omp_get_thread_num());
+    if(omp_get_thread_num() == 0) {
+      data = 10;
+    }else if(omp_get_thread_num() == 1){
+      data = 20;
+    }
   }
   printf("data = %d\n", data);
   return 0;
 }
 ```
+
+上面的程序的输出结果如下所示：
+
+```
+初始化值 : data = 1 tid = 0
+初始化值 : data = 1 tid = 1
+在主函数当中 : data = 1
+```
+
+从上面的输出结果我们可以知道，程序当中数据的初始化的值是没有问题的，你可能会疑惑为什么主函数当中的 data 值等于 1，这其实就是 C 语言当中对 && 操作服的定义，如果最终的结果为真，那么值就等于 1，即 100 && 10 && 20 == 1，你可以写一个程序去验证这一点。
+
+### 或||操作符
+
+```c
+
+
+#include <stdio.h>
+#include <omp.h>
+
+static int data = 100;
+
+int main() {
+
+  #pragma omp parallel num_threads(2) reduction(||:data)
+  {
+    printf("初始化值 : data = %d tid = %d\n", data, omp_get_thread_num());
+    if(omp_get_thread_num() == 0) {
+      data = 0;
+    }else if(omp_get_thread_num() == 1){
+      data = 0;
+    }
+  }
+  printf("在主函数当中 : data = %d\n", data);
+  return 0;
+}
+```
+
+上面的程序输出结果如下所示：
+
+```
+初始化值 : data = 1 tid = 0
+初始化值 : data = 1 tid = 1
+在主函数当中 : data = 1
+```
+
+从上面的结果看出，数据初始化的值是正确的，主函数当中得到的数据也是正确的，因为 100 || 0 || 0 == 1，这个也是 C 语言的条件或得到的结果。
+
+### MIN 最小值
+
+```c
+
+
+#include <stdio.h>
+#include <omp.h>
+
+static int data = 1000;
+
+int main() {
+
+  printf("Int 类型的最大值等于 %d\n", __INT32_MAX__);
+  #pragma omp parallel num_threads(2) reduction(min:data)
+  {
+    printf("data =\t\t     %d tid = %d\n", data, omp_get_thread_num());
+    if(omp_get_thread_num() == 0) {
+      data = 10;
+    }else if(omp_get_thread_num() == 1){
+      data = 20;
+    }
+  }
+  printf("data = %d\n", data);
+  return 0;
+}
+```
+
+上面的程序执行结果如下所示：
+
+```
+Int 类型的最大值等于   2147483647
+data =               2147483647 tid = 0
+data =               2147483647 tid = 1
+data = 10
+```
+
+可以看出来初始化的值是正确的，当我们求最小值的时候，数据被正确的初始化成对应数据的最大值了，然后我们需要去比较这几个值的最小值，即 min(1000, 0, 20) == 10 ，因此在主函数当中的到的值等于 10。
+
+### MAX 最大值
+
+```c
+
+
+#include <stdio.h>
+#include <omp.h>
+
+static int data = 1000;
+
+int main() {
+
+  #pragma omp parallel num_threads(2) reduction(max:data)
+  {
+    printf("data = %d tid = %d\n", data, omp_get_thread_num());
+    if(omp_get_thread_num() == 0) {
+      data = 10;
+    }else if(omp_get_thread_num() == 1){
+      data = 20;
+    }
+  }
+  printf("data = %d\n", data);
+  return 0;
+}
+```
+
+上面的程序输出结果如下所示：
+
+```
+data = -2147483648 tid = 0
+data = -2147483648 tid = 1
+data = 1000
+```
+
+可以看出程序被正确的初始化成最小值了，主函数当中输出的数据应该等于 max(1000, 10, 20) 因此也满足条件。
+
+
 
 
 
