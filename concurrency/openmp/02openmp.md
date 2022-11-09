@@ -1,8 +1,8 @@
-# OpenMP 教程（一）——OpenMP 当中的数据环境
+# OpenMP 教程（一）——OpenMP 当中的 reduction 子句
 
 ## 前言
 
-在前面的教程[OpenMP入门](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247487188&idx=1&sn=474ac3ef08d47439af963ae4376647a4&chksm=cf0c92ddf87b1bcb969da565e65338829281c7ffc320f0669344dfc7b4fcd4ff7699c55eb1dd&token=1178892963&lang=zh_CN#rd)当中我们简要介绍了 OpenMP 的一些基础的使用方法，在本篇文章当中我们将从一些基础的问题逐渐介绍在 OpenMP 当中和数据的环境相关的指令和子句。
+在前面的教程[OpenMP入门](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247487188&idx=1&sn=474ac3ef08d47439af963ae4376647a4&chksm=cf0c92ddf87b1bcb969da565e65338829281c7ffc320f0669344dfc7b4fcd4ff7699c55eb1dd&token=1178892963&lang=zh_CN#rd)当中我们简要介绍了 OpenMP 的一些基础的使用方法，在本篇文章当中我们将从一些基础的问题开始，然后仔细介绍在 OpenMP 当中 reduction 子句的各种使用方法。
 
 ## 从并发求和开始
 
@@ -378,7 +378,154 @@ data = 1000
 
 可以看出程序被正确的初始化成最小值了，主函数当中输出的数据应该等于 max(1000, 10, 20) 因此也满足条件。
 
+### & 按位与
+
+```c
 
 
+#include <stdio.h>
+#include <omp.h>
 
+static int data = 15;
+
+int main() {
+
+  #pragma omp parallel num_threads(2) reduction(&:data)
+  {
+    printf("data = %d tid = %d\n", data, omp_get_thread_num());
+    if(omp_get_thread_num() == 0) {
+      data = 8;
+    }else if(omp_get_thread_num() == 1){
+      data = 12;
+    }
+  }
+  printf("data = %d\n", data);
+  return 0;
+}
+```
+
+上面的程序输出结果如下：
+
+```
+data = -1 tid = 0
+data = -1 tid = 1
+data = 8
+```
+
+首先我们需要知道上面几个数据的比特位表示：
+
+```
+-1 = 1111_1111_1111_1111_1111_1111_1111_1111
+8  = 0000_0000_0000_0000_0000_0000_0000_1000
+12 = 0000_0000_0000_0000_0000_0000_0000_1100
+15 = 0000_0000_0000_0000_0000_0000_0000_1111
+```
+
+我们知道当我们使用 & 操作符的时候初始值是比特为全部等于 1 的数据，也就是 -1，最终进行按位与操作的数据为 15、8、12，即在主函数当中输出的结果等于  (8 & 12 & 15) == 8，因为只有第四个比特位全部为 1，因此最终的结果等于 8 。
+
+### |按位或
+
+```c
+
+
+#include <stdio.h>
+#include <omp.h>
+
+static int data = 1;
+
+int main() {
+
+  #pragma omp parallel num_threads(2) reduction(|:data)
+  {
+    printf("data = %d tid = %d\n", data, omp_get_thread_num());
+    if(omp_get_thread_num() == 0) {
+      data = 8;
+    }else if(omp_get_thread_num() == 1){
+      data = 12;
+    }
+  }
+  printf("data = %d\n", data);
+  return 0;
+}
+```
+
+上面的程序输出结果如下所示：
+
+```
+data = 0 tid = 0
+data = 0 tid = 1
+data = 13
+```
+
+我们还是需要了解一下上面的数据的比特位表示：
+
+```
+0  = 0000_0000_0000_0000_0000_0000_0000_0000
+1  = 0000_0000_0000_0000_0000_0000_0000_0001
+8  = 0000_0000_0000_0000_0000_0000_0000_1000
+12 = 0000_0000_0000_0000_0000_0000_0000_1100
+13 = 0000_0000_0000_0000_0000_0000_0000_1101
+```
+
+线程初始化的数据等于 0 ，这个和前面谈到的所有的比特位都设置成 0 是一致的，我们对上面的数据进行或操作之后得到的结果和对应的按位或得到的结果是相符的。
+
+### ^按位异或
+
+```c
+
+
+#include <stdio.h>
+#include <omp.h>
+
+static int data = 1;
+
+int main() {
+
+  #pragma omp parallel num_threads(2) reduction(^:data)
+  {
+    printf("data = %d tid = %d\n", data, omp_get_thread_num());
+    if(omp_get_thread_num() == 0) {
+      data = 8;
+    }else if(omp_get_thread_num() == 1){
+      data = 12;
+    }
+  }
+  printf("data = %d\n", data);
+  return 0;
+}
+```
+
+上面的程序的输出结果如下所示：
+
+```
+data = 0 tid = 0
+data = 0 tid = 1
+data = 5
+```
+
+各个数据的比特位表示：
+
+```
+0  = 0000_0000_0000_0000_0000_0000_0000_0000
+1  = 0000_0000_0000_0000_0000_0000_0000_0001
+8  = 0000_0000_0000_0000_0000_0000_0000_1000
+12 = 0000_0000_0000_0000_0000_0000_0000_1100
+5  = 0000_0000_0000_0000_0000_0000_0000_0101
+```
+
+大家可以自己对照的进行异或操作，得到的结果是正确的。
+
+## 总结
+
+在本篇文章当中我们主要使用一个例子介绍了如何解决并发程序当中的竞争问题，然后也使用了 reduction 子句去解决这个问题，随后介绍了在 OpenMP 当中 reduction 各种规约符号的使用！
+
+在本篇文章当中主要给大家介绍了 OpenMP 的基本使用和程序执行的基本原理，在后续的文章当中我们将仔细介绍各种 `OpenMP` 的子句和指令的使用方法，希望大家有所收获！
+
+---
+
+更多精彩内容合集可访问项目：<https://github.com/Chang-LeHung/CSCore>
+
+关注公众号：一无是处的研究僧，了解更多计算机（Java、Python、计算机系统基础、算法与数据结构）知识。
+
+![](../../qrcode2.jpg)
 
