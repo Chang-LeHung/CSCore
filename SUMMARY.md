@@ -56,6 +56,8 @@
       
 * OpenMP
     * [OpenMP 入门](concurrency/openmp/01introduction.md)
+    * [OpenMP 教程（一）——OpenMP 当中的 reduction 子句
+](concurrency/openmp/02openmp.md)
       
 * Pthread
     * [Pthread 并发编程（一）——深入剖析线程基本元素和状态](concurrency/pthread/01pthread.md)
