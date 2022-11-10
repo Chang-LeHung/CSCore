@@ -218,6 +218,9 @@
 - OpenMP 入门
   - [github阅读](concurrency/openmp/01introduction.md)
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247487188&idx=1&sn=474ac3ef08d47439af963ae4376647a4&chksm=cf0c92ddf87b1bcb969da565e65338829281c7ffc320f0669344dfc7b4fcd4ff7699c55eb1dd&token=1196984540&lang=zh_CN#rd)
+- OpenMP 教程（一）——OpenMP 当中的 reduction 子句
+  - [github阅读](concurrency/openmp/02openmp.md)
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247487255&idx=1&sn=b64270e26fc8a7384e32967b4694e595&chksm=cf0c931ef87b1a08f8d3c463131e7c62cde02137068a49cb13bec750cfea3dbee3e5ab47cbe7&token=1082635354&lang=zh_CN#rd)
 
 ## 🔖Pthread 并发编程
 
