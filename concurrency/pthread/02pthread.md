@@ -39,14 +39,23 @@
 
 当一个线程调用 pthread_join(T, ret)，当这个函数返回的时候就表示线程 T 已经终止了，执行完成。那么就可以释放与线程 T 的相关的系统资源。
 
+如果一个线程的状态是 detached 状态的话，当线程结束的时候与这个线程相关的资源会被自动释放掉，将资源归还给系统，也就不需要其他的线程调用 pthread_join 来释放线程的资源。
+
 pthread_join 函数签名如下：
 ```
 int pthread_join(pthread_t thread, void **retval);
 ```
+
 - thread 表示等待的线程。
 - retval 如果 retval 不等于 NULL 则在 pthread_join 函数内部会将线程 thead 的退出状态拷贝到 retval 指向的地址。如果线程被取消了，那么 PTHREAD_CANCELED 将会被放在 retval 指向的地址。
-  
+- 函数的返回值
+  - EDEADLK 表示检测到死锁了，比入两个线程都调用 pthread_join 函数等待对方执行完成。
+  - EINVAL 线程不是一个 joinable 的线程，一种常见的情况就是 pthread_join 一个 detached 线程。
+  - EINVAL 当调用 pthrea_join 等待的线程正在被别的线程调用 pthread_join 等待。
+  - ESRCH 如果参数 thread 是一个无效的线程，比如没有使用 pthread_create 进行创建。
+  - 0 表示函数调用成功。
 
+在下面的程序当中我们使用 pthread_join 函数去等待一个 detached 线程：
 ```c
 #include <stdio.h>
 #include <error.h>
@@ -59,7 +68,54 @@ pthread_t t1, t2;
 void* thread_1(void* arg) {
 
   int ret = pthread_detach(pthread_self());
+  sleep(2);
+  if(ret != 0)
+    perror("");
+  return NULL;
+}
+
+
+int main() {
+
+  pthread_create(&t1, NULL, thread_1, NULL);
   sleep(1);
+  int ret = pthread_join(t1, NULL);
+  if(ret == ESRCH)
+    printf("No thread with the ID thread could be found.\n");
+  else if(ret == EINVAL) {
+    printf("thread is not a joinable thread or Another thread is already waiting to join with this thread\n");
+  }
+  return 0;
+}
+
+```
+上面的程序的输出结果如下所示：
+
+```
+$ ./join.out
+thread is not a joinable thread or Another thread is already waiting to join with this thread
+```
+在上面的程序当中我们在一个 detached 状态的线程上使用 pthread_join 函数，因此函数的返回值是 EINVAL 表示线程不是一个 joinable 的线程。
+
+在上面的程序当中 pthread_self() 返回当前正在执行的线程，返回的数据类型是 pthread_t ，函数 pthread_detach(thread) 的主要作用是将传入的线程 thread 的状态变成 detached 状态。
+
+我们再来看一个错误的例子，我们在一个无效的线程上调用 pthread_join 函数
+
+```c
+
+
+#include <stdio.h>
+#include <error.h>
+#include <errno.h>
+#include <pthread.h>
+#include <unistd.h>
+
+pthread_t t1, t2;
+
+void* thread_1(void* arg) {
+
+  int ret = pthread_detach(pthread_self());
+  sleep(2);
   if(ret != 0)
     perror("");
   return NULL;
@@ -72,10 +128,11 @@ int main() {
   sleep(1);
   int ret = pthread_join(t2, NULL);
   if(ret == ESRCH)
-    printf("No thread with the ID thread could be found\n");
+    printf("No thread with the ID thread could be found.\n");
   else if(ret == EINVAL) {
-    printf("thread is not a joinable thread\n");
+    printf("thread is not a joinable thread or Another thread is already waiting to join with this thread\n");
   }
   return 0;
 }
+
 ```
