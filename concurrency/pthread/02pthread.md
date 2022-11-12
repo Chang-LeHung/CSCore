@@ -32,7 +32,7 @@
 
 在所有的 pthread 的接口当中，只有当函数的返回值是 0 的时候表示调用成功。
 
-## 通过例子理解线程的基本属性
+## 线程的属性
 
 ### 线程等待
 在 pthread 的实现当中，每个线程都两个特性：joinable 和 detached，当我们启动一个线程的时候 (pthread_create) 线程的默认属性是 joinable，所谓 joinable 是表示线程是可以使用 pthread_join 进行同步的。
@@ -54,6 +54,7 @@ int pthread_join(pthread_t thread, void **retval);
   - EINVAL 当调用 pthrea_join 等待的线程正在被别的线程调用 pthread_join 等待。
   - ESRCH 如果参数 thread 是一个无效的线程，比如没有使用 pthread_create 进行创建。
   - 0 表示函数调用成功。
+
 
 在下面的程序当中我们使用 pthread_join 函数去等待一个 detached 线程：
 ```c
@@ -136,3 +137,62 @@ int main() {
 }
 
 ```
+上面的程序的输出结果如下：
+
+```
+$./oin01.out
+No thread with the ID thread could be found.
+```
+在上面的程序当中我们并没有使用 t2 创建一个线程但是在主线程执行的代码当中，我们使用 pthread_join 去等待他，因此函数的返回值是一个 EINVAL 。
+
+我们再来看一个使用 retval 例子：
+```c
+#include <stdio.h>
+#include <pthread.h>
+#include <sys/types.h>
+
+void* func(void* arg)
+{
+  pthread_exit((void*)100);
+  return NULL;
+}
+
+int main() {
+  pthread_t t;
+  pthread_create(&t, NULL, func, NULL);
+  
+  void* ret;
+  pthread_join(t, &ret);
+  printf("ret = %ld\n", (u_int64_t)(ret));
+  return 0;
+}
+```
+上面的程序的输出结果如下所示：
+```
+$./understandthread/join03.out
+ret = 100
+```
+在上面的程序当中我们使用一个参数 ret 去获取线程的退出码，从上面的结果我们可以知道，我们得到了正确的结果。
+
+如果我们没有在线程执行的函数当中使用 pthread_exit 函数当中明确的指出线程的退出码，线程的退出码就是函数的返回值。比如下面的的程序：
+```c
+#include <stdio.h>
+#include <pthread.h>
+#include <sys/types.h>
+
+void* func(void* arg)
+{
+  return (void*)100;
+}
+
+int main() {
+  pthread_t t;
+  pthread_create(&t, NULL, func, NULL);
+  
+  void* ret;
+  pthread_join(t, &ret);
+  printf("ret = %ld\n", (u_int64_t)(ret));
+  return 0;
+}
+```
+上面的程序的输出结果也是 100 ，这与我们期待的结果是一致的。
