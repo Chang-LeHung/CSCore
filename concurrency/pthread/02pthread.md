@@ -29,4 +29,53 @@
   - 信号掩码。
   - 线程自己的优先级。
   - errno。
-  - 
+
+在所有的 pthread 的接口当中，只有当函数的返回值是 0 的时候表示调用成功。
+
+## 通过例子理解线程的基本属性
+
+### 线程等待
+在 pthread 的实现当中，每个线程都两个特性：joinable 和 detached，当我们启动一个线程的时候 (pthread_create) 线程的默认属性是 joinable，所谓 joinable 是表示线程是可以使用 pthread_join 进行同步的。
+
+当一个线程调用 pthread_join(T, ret)，当这个函数返回的时候就表示线程 T 已经终止了，执行完成。那么就可以释放与线程 T 的相关的系统资源。
+
+pthread_join 函数签名如下：
+```
+int pthread_join(pthread_t thread, void **retval);
+```
+- thread 表示等待的线程。
+- retval 如果 retval 不等于 NULL 则在 pthread_join 函数内部会将线程 thead 的退出状态拷贝到 retval 指向的地址。如果线程被取消了，那么 PTHREAD_CANCELED 将会被放在 retval 指向的地址。
+  
+
+```c
+#include <stdio.h>
+#include <error.h>
+#include <errno.h>
+#include <pthread.h>
+#include <unistd.h>
+
+pthread_t t1, t2;
+
+void* thread_1(void* arg) {
+
+  int ret = pthread_detach(pthread_self());
+  sleep(1);
+  if(ret != 0)
+    perror("");
+  return NULL;
+}
+
+
+int main() {
+
+  pthread_create(&t1, NULL, thread_1, NULL);
+  sleep(1);
+  int ret = pthread_join(t2, NULL);
+  if(ret == ESRCH)
+    printf("No thread with the ID thread could be found\n");
+  else if(ret == EINVAL) {
+    printf("thread is not a joinable thread\n");
+  }
+  return 0;
+}
+```
