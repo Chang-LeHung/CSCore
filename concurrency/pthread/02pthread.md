@@ -196,3 +196,103 @@ int main() {
 }
 ```
 上面的程序的输出结果也是 100 ，这与我们期待的结果是一致的。
+
+### 获取线程的栈帧
+
+在多线程的程序当中，每个线程拥有自己的栈帧和PC寄存器（执行的代码的位置，在 x86_86 里面就是 rip 寄存器的值）。在下面的程序当中我们可以得到程序在执行时候的三个寄存器 rsp, rbp, rip 的值，我们可以看到，两个线程执行时候的输出是不一致的，这个也从侧面反映出来线程是拥有自己的栈帧和PC值的。
+
+```c
+#include <stdio.h>
+#include <pthread.h>
+#include <sys/types.h>
+
+u_int64_t rsp;
+u_int64_t rbp;
+u_int64_t rip;
+
+void find_rip() {
+  asm volatile(
+    "movq 8(%%rbp), %0;"
+    :"=r"(rip)::
+  );
+}
+
+void* func(void* arg) {
+  printf("In func\n");
+  asm volatile(             \
+    "movq %%rsp, %0;"       \
+    "movq %%rbp, %1;"       \
+    :"=m"(rsp), "=m"(rbp):: \
+  );
+  find_rip();
+  printf("stack frame: rsp = %p rbp = %p rip = %p\n", (void*)rsp, (void*)rbp, (void*) rip);
+  return NULL;
+}
+
+int main() {
+  printf("================\n");
+  printf("In main\n");
+  asm volatile(             \
+    "movq %%rsp, %0;"       \
+    "movq %%rbp, %1;"       \
+    :"=m"(rsp), "=m"(rbp):: \
+  );
+  find_rip();
+  printf("stack frame: rsp = %p rbp = %p rip = %p\n", (void*)rsp, (void*)rbp, (void*) rip);
+  printf("================\n");
+  pthread_t t;
+  pthread_create(&t, NULL, func, NULL);
+  pthread_join(t, NULL);
+  return 0;
+}
+
+```
+
+上面的程序的输出结果如下所示：
+
+```
+================
+In main
+stack frame: rsp = 0x7ffc47096d50 rbp = 0x7ffc47096d80 rip = 0x4006c6
+================
+In func
+stack frame: rsp = 0x7f0a60d43ee0 rbp = 0x7f0a60d43ef0 rip = 0x400634
+```
+
+从上面的结果来看主线程和线程 t 执行的是不同的函数，而且两个函数的栈帧差距还是很大的，我们计算一下 0x7ffc47096d80 - 0x7f0a60d43ef0 = 1038949363344 = 968G 的内存，因此很明显这两个线程使用的是不同的栈帧。
+
+### 线程的线程号
+
+在 pthread 当中的一个线程对应一个内核的线程，内核和 pthread 都给线程维护了一个线程的 id 号，我们可以使用 gettid 获取操作系统给我们维护的线程号，使用函数 pthread_self 得到 pthread 线程库给我们维护的线程号！
+
+```c
+
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <unistd.h>
+#include <pthread.h>
+#include <sys/types.h>
+
+void* func(void* arg) {
+  printf("pthread id = %ld tid = %d\n", pthread_self(), (int)gettid());
+  return NULL;
+}
+
+int main() {
+  pthread_t t;
+  pthread_create(&t, NULL, func, NULL);
+  pthread_join(t, NULL);
+  return 0;
+}
+```
+
+上面的程序的输出结果如下：
+
+```
+pthread id = 140063790135040 tid = 161643
+```
+
+
+
+
+
