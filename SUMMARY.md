@@ -12,7 +12,7 @@
 * 高级容器
     * [从零开始自己动手写阻塞队列](/concurrency/java/11blockingqueue.md)
     * [JDK数组阻塞队列源码深入剖析](/concurrency/java/12blockingqueuesrc.md)
-      
+    
 * 动态规划
     * [庖丁解牛斐波拉契数列和背包问题——详细解析两个问题优化过程（超多问题优化干货，不看血亏），带你从最基本最核心的问题看懂动态规划！！](./da/01-动态规划.md)
     * [你真的懂01背包问题吗？01背包的这几问你能答出来吗？](./da/02-01背包问题.md)
@@ -22,19 +22,19 @@
     * [完全背包转化为多重背包](./da/14深入剖析完全背包.md)
     * [深入浅出零钱兑换问题——背包问题的套壳](./da/13零钱兑换.md)
     * [深入剖析斐波拉契数列](./da/05深入剖析斐波拉契数列.md)
-      
+    
 * 股票问题
     * [这种动态规划你见过吗——状态机动态规划之股票问题(上)](./da/09状态机动态规划.md)
     * [这种动态规划你见过吗——状态机动态规划之股票问题(中)](./da/10状态机动态规划02.md)
     * [这种动态规划你见过吗——状态机动态规划之股票问题(下)](./da/11状态机动态规划03.md)
     * [状态机动态规划之股票问题总结](./da/12状态机动态规划总结.md)
-      
+    
 * 回溯
     * [通过组合问题看透回溯法](./da/backtrace/01combinations.md)
     
 * 数据结构
     * [深入剖析前缀、中缀、后缀表达式以及表达式求值](./da/07表达式求值.md)
-      
+    
 * 并发
     * [并发开篇——带你从0到1建立并发知识体系的基石](./concurrency/java/01初始java并发.md)
     * [并发程序的噩梦——数据竞争](./concurrency/java/02并发的噩梦.md)
@@ -53,15 +53,16 @@
     * [自己动手写线程池——向JDK线程池进发](concurrency/java/18threadpoolmorecloseJDK.md)
     * [从零开始自己动手写阻塞队列](/concurrency/java/11blockingqueue.md)
     * [JDK数组阻塞队列源码深入剖析](/concurrency/java/12blockingqueuesrc.md)
-      
+    
 * OpenMP
     * [OpenMP 入门](concurrency/openmp/01introduction.md)
     * [OpenMP 教程（一）——OpenMP 当中的 reduction 子句
-](concurrency/openmp/02openmp.md)
-      
+    ](concurrency/openmp/02openmp.md)
+    
 * Pthread
     * [Pthread 并发编程（一）——深入剖析线程基本元素和状态](concurrency/pthread/01pthread.md)
-      
+    * [Pthread 并发编程（二）——自底向上深入理解线程](concurrency/pthread/02pthread.md)
+    
 * Makefile
     * [彻底掌握Makefile（一）](./tools/makefile/01.md)
     * [彻底掌握Makefile（二）](./tools/makefile/02.md)
@@ -69,7 +70,7 @@
 
 * DES
     * [DES加密算法从入门到入坟](./des/des.md)
-      
+    
 * 命令行&系统编程&SHELL
     * [Linux命令系列之top——里面藏着很多鲜为人知的宝藏知识](linux/command/01top.md)
     * [Linux命令系列之ls——原来最简单的ls这么复杂](linux/command/02ls.md)
