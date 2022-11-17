@@ -91,6 +91,112 @@ pthread_cancel 函数会发送一个取消请求到指定的线程，线程是�
 
 两种取消类型：
 
-- PTHREAD_CANCEL_DEFERRED 如果线程的取消类型是这个，那么线程将会在下一次调用一个取消点的函数时候取消执行，取消点函数有 read, write, pread, pwrite 等函数，更多的可以网上搜索。
+- PTHREAD_CANCEL_DEFERRED 如果线程的取消类型是这个，那么线程将会在下一次调用一个取消点的函数时候取消执行，取消点函数有 read, write, pread, pwrite, sleep 等函数，更多的可以网上搜索。
 - PTHREAD_CANCEL_ASYNCHRONOUS 这个取消类型线程就会立即响应发送过来的请求，本质上在 pthread 实现的代码当中是会给线程发送一个信号，然后接受取消请求的线程在信号处理函数当中进行退出。
+
+### 让线程取消机制无效
+
+```c
+
+#include <stdio.h>
+#include <pthread.h>
+#include <unistd.h>
+
+void* func(void* arg)
+{
+  pthread_setcancelstate(PTHREAD_CANCEL_DISABLE, NULL);
+  sleep(1);
+  return NULL;
+}
+
+int main() {
+  pthread_t t;
+  pthread_create(&t, NULL, func, NULL);
+  pthread_cancel(t);
+  void* res;
+  pthread_join(t, &res);
+  if(res == PTHREAD_CANCELED)
+  {
+    printf("thread was canceled\n");
+  }
+  return 0;
+}
+```
+
+上面的程序不会执行这句话 `printf("thread was canceled\n");` 因为在线程当中设置了线程的状态为不开启线程取消机制，因此主线程发送的取消请求无效。
+
+在上面的代码当中使用的函数 pthread_setcancelstate 的函数签名如下：
+
+```c
+int pthread_setcancelstate(int state, int *oldstate)
+```
+
+其中第二个参数我们可以传入一个 int 类型的指针，然后会将旧的状态存储到这个值当中。
+
+### 取消点测试
+
+在前文当中我们谈到了，线程的取消机制是默认开启的，但是当一个线程发送取消请求之后，只有等到下一个是取消点的函数的时候，线程才会真正退出取消执行。
+
+```c
+
+#include <stdio.h>
+#include <pthread.h>
+#include <unistd.h>
+
+void* func(void* arg)
+{
+  // 默认是 enable  线程的取消机制是开启的
+  while(1);
+  return NULL;
+}
+
+int main() {
+  pthread_t t;
+  pthread_create(&t, NULL, func, NULL);
+  pthread_cancel(t);
+  void* res;
+  pthread_join(t, &res);
+  if(res == PTHREAD_CANCELED)
+  {
+    printf("thread was canceled\n");
+  }
+  return 0;
+}
+```
+
+如果我们去执行上面的代码我们会发现程序会进行循环，不会退出，因为虽然主线程给线程 t 发送了一个取消请求，但是线程 t 一直在进行死循环操作，并没有执行任何一个函数，更不用提是一个取消点函数了。
+
+如果我们修改上面的代码成下面这样，那么线程就会正常执行退出：
+
+```c
+
+#include <stdio.h>
+#include <pthread.h>
+#include <unistd.h>
+
+void* func(void* arg)
+{
+  // 默认是 enable  线程的取消机制是开启的
+  while(1)
+  {
+    sleep(1);
+  }
+  return NULL;
+}
+
+int main() {
+  pthread_t t;
+  pthread_create(&t, NULL, func, NULL);
+  pthread_cancel(t);
+  void* res;
+  pthread_join(t, &res);
+  if(res == PTHREAD_CANCELED)
+  {
+    printf("thread was canceled\n");
+  }
+  return 0;
+}
+```
+
+上面的代码唯一修改的地方就是在线程 t 当中的死循环处调用了 sleep 函数，而 sleep 函数是一个取消点函数，因此当主线程给线程 t 发送一个取消请求之后，线程 t 就会在下一次调用 sleep 函数彻底取消执行，退出，并且线程的退出状态为 PTHREAD_CANCELED ，因此主线程会执行代码 `printf("thread was canceled\n");`。
 
