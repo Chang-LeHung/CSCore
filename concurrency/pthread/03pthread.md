@@ -283,6 +283,8 @@ pthread_cleanup_pop 的作用是将 clean-up handlers 栈顶的函数弹出，�
 
 - 你可以会问为什么 pthread 要给我提供这些机制，试想一下如果在我们的线程当中申请了一些资源，但是突然接收到了其他线程发送过来的取消执行的请求，那么这些资源改如何释放呢？clean-up handlers 就给我们提供了一种机制帮助我们去释放这些资源。
 
+- 如果线程执行的函数使用 return 语句返回，那么 clean-up handlers 将不会被调用。
+
 下面我们使用一个例子去了解上面的函数：
 
 ```c
@@ -308,7 +310,7 @@ void* func(void* arg)
   pthread_cleanup_push(handler2, &i2); // 函数在栈顶
 
   printf("In func\n");
-  pthread_cleanup_pop(0); // 栈顶的函数 因为传入的参数等于 0 因此栈顶的函数 handler2 不会被调用 
+  pthread_cleanup_pop(0); // 栈顶的函数 因为传入的参数等于 0 虽然栈顶的函数会被弹出 但是栈顶的函数 handler2 不会被调用 
   pthread_cleanup_pop(1); // 因为传入的参数等于 0 因此栈顶的函数 handler1 会被调用 
   return NULL;
 }
@@ -329,5 +331,17 @@ In func
 in handler1 i1 = 1
 ```
 
+在上面的程序当中我们首先创建了一个线程，让线程执行函数 func，然后加入了两个函数 handler1 和 handler2 作为 clean-up handler 。如果你使用了一个 pthread_cleanup_push 必须配套一个对应的 pthread_cleanup_pop 函数。
 
+在函数 func 当中我们首先加入了两个 handler 到 clean-up handler 栈当中，现在栈当中的数据结结构如下所示：
+
+![13](../../images/pthread/13.png)
+
+随后我们会执行语句 `pthread_cleanup_pop(0)` ，因为参数 execute == 0 因此会从栈当中弹出这个函数，但是不会执行。
+
+![13](../../images/pthread/14.png)
+
+同样的道理，在执行语句 `pthread_cleanup_pop(1)` 的时候不仅会弹出函数并且还会执行这个函数。
+
+![13](../../images/pthread/15.png)
 
