@@ -85,13 +85,13 @@ pthread_cancel 函数会发送一个取消请求到指定的线程，线程是�
 
 两种线程的取消状态：
 
-- PTHREAD_CANCEL_ENABLE 线程默认是开启响应取消请求，这个状态是表示会响应其他线程发送过来的取消请求，但是具体是如何响应，取决于线程的取消类型。
+- PTHREAD_CANCEL_ENABLE 线程默认是开启响应取消请求，这个状态是表示会响应其他线程发送过来的取消请求，但是具体是如何响应，取决于线程的取消类型，默认的线程状态就是这个值。
 
 - PTHREAD_CANCEL_DISABLE 当开启这个选项的时候，调用这个方法的线程就不会响应其他线程发送过来的取消请求。
 
 两种取消类型：
 
-- PTHREAD_CANCEL_DEFERRED 如果线程的取消类型是这个，那么线程将会在下一次调用一个取消点的函数时候取消执行，取消点函数有 read, write, pread, pwrite, sleep 等函数，更多的可以网上搜索。
+- PTHREAD_CANCEL_DEFERRED 如果线程的取消类型是这个，那么线程将会在下一次调用一个取消点的函数时候取消执行，取消点函数有 read, write, pread, pwrite, sleep 等函数，更多的可以网上搜索，线程的默认取消类型就是这个类型。
 - PTHREAD_CANCEL_ASYNCHRONOUS 这个取消类型线程就会立即响应发送过来的请求，本质上在 pthread 实现的代码当中是会给线程发送一个信号，然后接受取消请求的线程在信号处理函数当中进行退出。
 
 ### 让线程取消机制无效
@@ -177,6 +177,7 @@ int main() {
 void* func(void* arg)
 {
   // 默认是 enable  线程的取消机制是开启的
+  // 线程的默认取消类型是 PTHREAD_CANCEL_DEFERRED
   while(1)
   {
     sleep(1);
@@ -199,4 +200,134 @@ int main() {
 ```
 
 上面的代码唯一修改的地方就是在线程 t 当中的死循环处调用了 sleep 函数，而 sleep 函数是一个取消点函数，因此当主线程给线程 t 发送一个取消请求之后，线程 t 就会在下一次调用 sleep 函数彻底取消执行，退出，并且线程的退出状态为 PTHREAD_CANCELED ，因此主线程会执行代码 `printf("thread was canceled\n");`。
+
+### 异步取消
+
+现在我们来测试一下 PTHREAD_CANCEL_ASYNCHRONOUS 会出现什么情况：
+
+```c
+
+#include <stdio.h>
+#include <pthread.h>
+#include <unistd.h>
+
+void* func(void* arg)
+{
+  // 默认是 enable  线程的取消机制是开启的
+  // 设置取消机制为异步取消
+  pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
+  while(1);
+  return NULL;
+}
+
+int main() {
+  pthread_t t;
+  pthread_create(&t, NULL, func, NULL);
+  pthread_cancel(t);
+  void* res;
+  pthread_join(t, &res);
+  if(res == PTHREAD_CANCELED)
+  {
+    printf("thread was canceled\n");
+  }
+  return 0;
+}
+```
+
+上面的程序是可以正确输出字符串 `thread was canceled` 的，因为在线程执行的函数 func 当中，我们设置了线程的取消机制为异步机制，因为线程的默认取消类型是 PTHREAD_CANCEL_DEFERRED ，因此我们需要修改一下线程的默认取消类型，将其修改为 PTHREAD_CANCEL_ASYNCHRONOUS，即开始异步取消模式。
+
+从上面的例子当中我们就可以体会到线程取消的两种类型的不同效果了。
+
+## 线程取消的后续过程
+
+当一个线程接受到其他线程发送过来的一个取消请求之后，如果线程响应这个取消请求，即线程退出，那么下面的几件事儿将会依次发生：
+
+- clean-up handlers 将会倒序执行，我们在文章的后续当中将会举具体的例子对这一点进行说明。
+- 线程私有数据的析构函数将会执行，如果有多个析构函数那么执行顺序不一定。
+- 线程终止执行，即线程退出。
+
+## clean-up handlers
+
+首先我们需要了解一下什么是 clean-up handlers。clean-up handlers 是一个或多个函数当线程被取消的时候这个函数将会被执行。如果没有 clean-up handlers 函数被设置，那么将不会调用。
+
+###  clean-up handlers 接口
+
+在 pthread 当中，有两个函数与 clean-up handlers 相关：
+
+```c
+ void pthread_cleanup_push(void (*routine)(void *), void *arg);
+ void pthread_cleanup_pop(int execute);
+```
+
+首先我们来看一下函数 pthread_cleanup_push 的作用：这个函数是将传进来的参数——一个函数指针 routine 放入线程取消的 clean-up handlers 的栈中，即将函数放到栈顶。
+
+pthread_cleanup_pop 的作用是将 clean-up handlers 栈顶的函数弹出，如果 execute 是一个非 0 的值，那么将会执行栈顶的函数，如果 execute == 0 ，那么将不会执行弹出来的函数。
+
+上面两个函数有以下特性：
+
+- 如果线程被取消了：
+
+  - clean-up handlers 将会倒序依次执行，因为存储 clean-up handlers 的是一个栈结构。
+
+  - 线程私有数据的析构函数将会执行，如果有多个析构函数那么执行顺序不一定。
+
+  - 线程终止执行，即线程退出。
+
+- 如果线程调用 pthread_exit 函数进行退出：
+
+  - clean-up handlers 同样的，将会倒序依次执行。
+  - 线程私有数据的析构函数将会执行，如果有多个析构函数那么执行顺序不一定。
+  - 线程终止执行，即线程退出。
+
+- 需要注意的是，如果在线程被取消或者调用 pthread_exit 之前，线程调用 pthread_cleanup_pop 函数弹出一些 handler 那么这些 handler 将不会被执行，如果线程被取消或者调用 pthread_exit 退出，线程只会调用当前存在于栈中的 handler 。
+
+- 你可以会问为什么 pthread 要给我提供这些机制，试想一下如果在我们的线程当中申请了一些资源，但是突然接收到了其他线程发送过来的取消执行的请求，那么这些资源改如何释放呢？clean-up handlers 就给我们提供了一种机制帮助我们去释放这些资源。
+
+下面我们使用一个例子去了解上面的函数：
+
+```c
+
+
+#include <stdio.h>
+#include <pthread.h>
+
+void handler1(void* arg)
+{
+  printf("in handler1 i1 = %d\n", *(int*)arg);
+}
+
+void handler2(void* arg)
+{
+  printf("in handler2 i2 = %d\n", *(int*)arg);
+}
+
+void* func(void* arg)
+{
+  int i1 = 1, i2 = 2;
+  pthread_cleanup_push(handler1, &i1); // 函数在栈底
+  pthread_cleanup_push(handler2, &i2); // 函数在栈顶
+
+  printf("In func\n");
+  pthread_cleanup_pop(0); // 栈顶的函数 因为传入的参数等于 0 因此栈顶的函数 handler2 不会被调用 
+  pthread_cleanup_pop(1); // 因为传入的参数等于 0 因此栈顶的函数 handler1 会被调用 
+  return NULL;
+}
+
+int main() 
+{
+  pthread_t t;
+  pthread_create(&t, NULL, func, NULL);
+  pthread_join(t, NULL);
+  return 0;
+}
+```
+
+上面的函数的执行结果如下所示：
+
+```
+In func
+in handler1 i1 = 1
+```
+
+
 
