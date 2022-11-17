@@ -263,7 +263,7 @@ int main() {
 
 pthread_cleanup_pop 的作用是将 clean-up handlers 栈顶的函数弹出，如果 execute 是一个非 0 的值，那么将会执行栈顶的函数，如果 execute == 0 ，那么将不会执行弹出来的函数。
 
-上面两个函数有以下特性：
+以下几点是与上面两个函数密切相关的特点：
 
 - 如果线程被取消了：
 
@@ -345,3 +345,118 @@ in handler1 i1 = 1
 
 ![13](../../images/pthread/15.png)
 
+### pthread_exit 与 clean-up handler
+
+在前面的内容当中我们提到了，如果线程调用 pthread_exit 函数进行退出，clean-up handlers 将会倒序依次执行。我们使用下面的程序可以验证这一点：
+
+```c
+#include <stdio.h>
+#include <pthread.h>
+
+void handler1(void* arg)
+{
+  printf("in handler1 i1 = %d\n", *(int*)arg);
+}
+
+void handler2(void* arg)
+{
+  printf("in handler2 i2 = %d\n", *(int*)arg);
+}
+
+
+void* func(void* arg)
+{
+  int i1 = 1, i2 = 2;
+  pthread_cleanup_push(handler1, &i1);
+  pthread_cleanup_push(handler2, &i2);
+
+  printf("In func\n");
+  pthread_exit(NULL);
+  pthread_cleanup_pop(0);
+  pthread_cleanup_pop(1);
+  return NULL;
+}
+
+int main() 
+{
+  pthread_t t;
+  pthread_create(&t, NULL, func, NULL);
+  pthread_join(t, NULL);
+  return 0;
+}
+```
+
+上面的程序的输出结果如下所示：
+
+```
+In func
+in handler2 i2 = 2
+in handler1 i1 = 1
+```
+
+从上面程序的输出结果来看确实 clean-up handler 被逆序调用了。
+
+### pthread_cancel与 clean-up handler
+
+在前面的内容当中我们提到了，如果线程调用 pthread_cancel 函数进行退出，clean-up handlers 将会倒序依次执行。我们使用下面的程序可以验证这一点：
+
+```c
+
+
+#include <stdio.h>
+#include <pthread.h>
+#include <unistd.h>
+
+void handler1(void* arg)
+{
+  printf("in handler1 i1 = %d\n", *(int*)arg);
+}
+
+void handler2(void* arg)
+{
+  printf("in handler2 i2 = %d\n", *(int*)arg);
+}
+
+
+void* func(void* arg)
+{
+  int i1 = 1, i2 = 2;
+  pthread_cleanup_push(handler1, &i1);
+  pthread_cleanup_push(handler2, &i2);
+
+  printf("In func\n");
+  sleep(1);
+  pthread_cleanup_pop(0);
+  pthread_cleanup_pop(1);
+  return NULL;
+}
+
+int main() 
+{
+  pthread_t t;
+  pthread_create(&t, NULL, func, NULL);
+  pthread_cancel(t);
+  void* res;
+  pthread_join(t, &res);
+  if(res == PTHREAD_CANCELED)
+  {
+    printf("thread was cancelled\n");
+  }
+  return 0;
+}
+```
+
+上面程序的数据结果如下所示：
+
+```
+In func
+in handler2 i2 = 2
+in handler1 i1 = 1
+thread was cancelled
+```
+
+从上面的输出结果来看，线程确实被取消了，而且 clean-up handler 确实也被逆序调用了。
+
+## 线程私有数据
+
+![13](../../images/pthread/16.webp)
