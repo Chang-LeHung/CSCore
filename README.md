@@ -227,6 +227,9 @@
 - Pthread 并发编程（一）——深入剖析线程基本元素和状态
   - [github阅读](concurrency/pthread/01pthread.md)
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247487224&idx=1&sn=7182b759b029146c3708908b7b0d7e08&chksm=cf0c92f1f87b1be7bc7d90d2d5f7672633a18fe46def5be014691972bffaa36af60c28ee0b6e&token=1654743819&lang=zh_CN#rd)
+- Pthread 并发编程（二）——自底向上深入理解线程
+  - [github阅读](concurrency/pthread/02pthread.md)
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247487280&idx=1&sn=8f6fbfbf61a4d41a1d37975f045f0ce8&chksm=cf0c9339f87b1a2fb44555628dc9be56528a0579932b1483c664a412e0d9421985bae8688461&token=3656969&lang=zh_CN#rd)
 
 
 
