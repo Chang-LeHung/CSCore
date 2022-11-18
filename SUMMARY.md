@@ -62,6 +62,7 @@
 * Pthread
     * [Pthread 并发编程（一）——深入剖析线程基本元素和状态](concurrency/pthread/01pthread.md)
     * [Pthread 并发编程（二）——自底向上深入理解线程](concurrency/pthread/02pthread.md)
+    * [Pthread 并发编程（三）——深入理解线程取消机制](concurrency/pthread/03pthread.md)
     
 * Makefile
     * [彻底掌握Makefile（一）](./tools/makefile/01.md)
