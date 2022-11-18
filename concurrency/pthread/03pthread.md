@@ -457,6 +457,192 @@ thread was cancelled
 
 从上面的输出结果来看，线程确实被取消了，而且 clean-up handler 确实也被逆序调用了。
 
-## 线程私有数据
+## 线程私有数据（thread local）
+
+在 pthread 当中给我们提供了一种机制用于设置线程的私有数据，我们可以通过这个机制很方便的去处理一下线程私有的数据和场景。与这个机制有关的主要有四个函数：
+
+```c
+int pthread_key_create(pthread_key_t *key,void(*destructor)(void*));
+int pthread_key_delete(pthread_key_t key);
+int pthread_setspecific(pthread_key_t key, const void * value);
+void * pthread_getspecific(pthread_key_t key);
+```
+
+- pthread_key_create : 这个函数的作用主要是创建一个全局的，所有线程可见的一个 key ，然后所有的线程可以通过这个 key 创建一个线程私有的数据，并且我们可以设置一个析构函数 destructor，当程序退出或者被取消的时候，如果这个析构函数不等于 NULL ，而且线程私有数据不等于 NULL，那么就会被调用，并且将线程私有私有数据作为参数传递给析构函数。
+- pthread_key_delete : 删除使用 pthread_key_create 创建的 key 。
+- pthread_setspecific : 通过这个函数设置对应 key 的具体的数据，传入的参数是一个指针 value，如果我们在后续的代码当中想要使用这个变量的话，那么就可以使用函数 pthread_getspecific 得到对应的指针。
+- pthread_getspecific : 得到使用 pthread_setspecific 函数当中设置的指针 value 。
+
+我们现在使用一个具体的例子深入理解线程私有数据：
+
+```c
+
+
+
+#include <stdio.h>
+#include <pthread.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+pthread_key_t key;
+
+void key_destructor1(void* arg) 
+{
+  printf("arg = %d thread id = %lu\n", *(int*)arg, pthread_self());
+  free(arg);
+}
+
+
+void thread_local() 
+{
+  int* q = pthread_getspecific(key);
+  printf("q == %d thread id = %lu\n", *q, pthread_self());
+}
+
+
+void* func1(void* arg)
+{
+  printf("In func1\n");
+  int* s = malloc(sizeof(int));
+  *s = 100;
+  pthread_setspecific(key, s);
+  thread_local();
+  printf("Out func1\n");
+  return NULL;
+}
+
+void* func2(void* arg)
+{
+  printf("In func2\n");
+  int* s = malloc(sizeof(int));
+  *s = -100;
+  pthread_setspecific(key, s);
+  thread_local();
+  printf("Out func2\n");
+  return NULL;
+}
+
+int main() {
+  pthread_key_create(&key, key_destructor1);
+  pthread_t t1, t2;
+  pthread_create(&t1, NULL, func1, NULL);
+  pthread_create(&t2, NULL, func2, NULL);
+
+  pthread_join(t1, NULL);
+  pthread_join(t2, NULL);
+  pthread_key_delete(key);
+  return 0;
+}
+```
+
+上面的程序的执行的一种结果如下：
+
+```
+In func1
+In func2
+q == -100 thread id = 140082109499136
+Out func2
+arg = -100 thread id = 140082109499136
+q == 100 thread id = 140082117891840
+Out func1
+arg = 100 thread id = 140082117891840
+```
+
+在上面的程序当中我们首先定一个全局变量 key，然后使用 pthread_key_create 函数进行创建，启动了两个线程分别执行函数 func1 和 func2 ，在两个函数当中都创建了一个线程私有变量（使用函数 pthread_setspecific 进行创建），然后这两个线程都调用了同一个函数 thread_local ，但是根据上面的输出结果我们可以知道，虽然是两个线程调用的函数都相同，但是不同的线程调用输出的结果是不同的（通过观察线程的 id 就可以知道了），而且结果是我们设置的线程局部变量，现在我们应该能够体会这线程私有数据的效果了。
+
+在前面的内容当中我们提到了，当一个线程被取消的时候，第二步操作就是调用线程私有数据的析构函数。
+
+```c
+
+
+
+#include <stdio.h>
+#include <pthread.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+pthread_key_t key;
+
+void key_destructor1(void* arg) 
+{
+  printf("arg = %d thread id = %lu\n", *(int*)arg, pthread_self());
+  free(arg);
+}
+
+
+void thread_local() 
+{
+  int* q = pthread_getspecific(key);
+  printf("q == %d thread id = %lu\n", *q, pthread_self());
+}
+
+void* func1(void* arg)
+{
+  printf("In func1\n");
+  int* s = malloc(sizeof(int));
+  *s = 100;
+  pthread_setspecific(key, s);
+  thread_local();
+  printf("Out func1\n");
+  sleep(2);
+  printf("func1 finished\n");
+  return NULL;
+}
+
+void* func2(void* arg)
+{
+  printf("In func2\n");
+  int* s = malloc(sizeof(int));
+  *s = -100;
+  pthread_setspecific(key, s);
+  thread_local();
+  printf("Out func2\n");
+  sleep(2);
+  printf("func2 finished\n");
+  return NULL;
+}
+
+
+int main() {
+  pthread_key_create(&key, key_destructor1);
+  pthread_t t1, t2;
+  pthread_create(&t1, NULL, func1, NULL);
+  pthread_create(&t2, NULL, func2, NULL);
+  sleep(1);
+  pthread_cancel(t1);
+  pthread_cancel(t2);
+  void* res1, *res2;
+  pthread_join(t1, &res1);
+  pthread_join(t2, &res2);
+  if(res1 == PTHREAD_CANCELED) 
+  {
+    printf("thread1 was canceled\n");
+  }
+
+  if(res2 == PTHREAD_CANCELED) 
+  {
+    printf("thread2 was canceled\n");
+  }
+  pthread_key_delete(key);
+  return 0;
+}
+```
+
+上面的程序的输出结果如下所示：
+
+```
+In func1
+In func2
+q == 100 thread id = 139947700033280
+Out func1
+q == -100 thread id = 139947691640576
+Out func2
+arg = 100 thread id = 139947700033280
+arg = -100 thread id = 139947691640576
+thread1 was canceled
+thread2 was canceled
+```
+
+
 
 ![13](../../images/pthread/16.webp)
