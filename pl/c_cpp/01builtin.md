@@ -424,6 +424,8 @@ bits = 4
 
 因此统计一下对应数字的比特位等于 1 的个数可以知道，内嵌函数 __builtin_popcount 的输出结果是没错的。
 
+-  \_\_builtin_popcountl 和 \_\_builtin_popcountl，这两个函数的作用和 __builtin_popcount 的作用是一样的，但是这两个函数是用于 long 和 long long 类型的参数。
+
 - __builtin_ctz : 统计一个数据尾部比特位等于 0 的个数，具体是在遇到第一个 1 之前，已经遇到了几个 1 。
 
 ```c
@@ -458,4 +460,6 @@ int main()
 ```
 
 根据上面不同数据的二进制表示以及上方程序的输出结果可以知道 __builtin_ctz 的输出就是尾部等于 0 的个数。
+
+- \_\_builtin_ctzl 和 \_\_builtin_ctzll 与 __builtin_ctz 的作用是一样的，但是这两个函数是用于 long 和 long long 类型的数据。
 
