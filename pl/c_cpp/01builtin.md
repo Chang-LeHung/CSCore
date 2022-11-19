@@ -463,3 +463,57 @@ int main()
 
 - \_\_builtin_ctzl 和 \_\_builtin_ctzll 与 __builtin_ctz 的作用是一样的，但是这两个函数是用于 long 和 long long 类型的数据。
 
+上面谈到的 __builtin_ctz 这个内嵌函数我们可以用于求一个数据的 lowbit 的值，我们知道一个数据的 lowbit 就是最低位的比特所表示的数据，他的求解函数如下：
+
+```c
+int lowbit(int x)
+{
+  return (x) & (-x);
+}
+```
+
+我们也可以使用上面的内嵌函数去实现，看下面的代码，我们使用上面的内嵌函数定义一个宏去实现 lowbit：
+
+```c
+#include <stdio.h>
+
+#define lowbit(x) (1 << (__builtin_ctz(x)))
+
+int lowbit(int x)
+{
+  return (x) & (-x);
+}
+
+int main()
+{
+  for(int i = 0; i < 16; ++i)
+  {
+    printf("macro = %d function = %d\n", lowbit(i), lowbit2(i));
+  }
+  return 0;
+}
+```
+
+上面的程序的输出结果如下所示：
+
+```c
+macro = 1 function = 0
+macro = 1 function = 1
+macro = 2 function = 2
+macro = 1 function = 1
+macro = 4 function = 4
+macro = 1 function = 1
+macro = 2 function = 2
+macro = 1 function = 1
+macro = 8 function = 8
+macro = 1 function = 1
+macro = 2 function = 2
+macro = 1 function = 1
+macro = 4 function = 4
+macro = 1 function = 1
+macro = 2 function = 2
+macro = 1 function = 1
+```
+
+可以看到我们使用内嵌函数和自己定义的 lowbit 函数实现的结果是一样的。
+
