@@ -389,7 +389,9 @@ finished in main function
 
 根据上面的分析我就大致就可以理解了上述的代码的流程了。
 
-## builtin_popcount 和 builtin_ctz
+## 与二进制相关的内嵌函数
+
+### __builtin_popcount 
 
 在 gcc 内部给我们提供了很多用于比特操作的内嵌函数，比如说如果我们想统计一下一个数据二进制表示有多少个为 1 的比特位。
 
@@ -426,7 +428,9 @@ bits = 4
 
 -  \_\_builtin_popcountl 和 \_\_builtin_popcountl，这两个函数的作用和 __builtin_popcount 的作用是一样的，但是这两个函数是用于 long 和 long long 类型的参数。
 
-- __builtin_ctz : 统计一个数据尾部比特位等于 0 的个数，具体是在遇到第一个 1 之前，已经遇到了几个 1 。
+### __builtin_ctz
+
+- __builtin_ctz : 从右往左数，统计一个数据尾部比特位等于 0 的个数，具体是在遇到第一个 1 之前，已经遇到了几个 1 。
 
 ```c
 #include <stdio.h>
@@ -516,4 +520,64 @@ macro = 1 function = 1
 ```
 
 可以看到我们使用内嵌函数和自己定义的 lowbit 函数实现的结果是一样的。
+
+### __builtin_clz
+
+这个是用于统计一个数据的二进制表示，从左往右数遇到第一个比特位等于 1 之前已经遇到了多少个 0。
+
+```c
+
+#include <stdio.h>
+
+int main()
+{
+  for(int i = 1; i < 16; ++i) 
+  {
+    printf("i = %2d and result = %2d\n", i, __builtin_clz(i));
+  }
+  printf("i = %2d and result = %2d\n", -1, __builtin_clz(-1));
+  return 0;
+}
+```
+
+上面的程序输出结果如下所示：
+
+```c
+i =  1 and result = 31 // 高位有 31 个 0
+i =  2 and result = 30 // 高位有 30 个 0
+i =  3 and result = 30
+i =  4 and result = 29
+i =  5 and result = 29
+i =  6 and result = 29
+i =  7 and result = 29
+i =  8 and result = 28
+i =  9 and result = 28
+i = 10 and result = 28
+i = 11 and result = 28
+i = 12 and result = 28
+i = 13 and result = 28
+i = 14 and result = 28
+i = 15 and result = 28
+i = -1 and result =  0 // 高位没有 0
+```
+
+我们可以将上面的数据 i 对应他的二进制表示，就可以知道从左往右数遇到第一个等于 1 的比特位之前会有多少个 0 ，我们拿 -1 进行分析，因为在计算机当中数据的都是使用补码进行表示，而 -1 的补码如下所示：
+
+```c
+-1 = 1111_1111_1111_1111_1111_1111_1111_1111
+```
+
+因此 高位没有 0，所以返回的结果等于 0。
+
+## 总结
+
+在本篇文章当中主要给大家介绍一些在 gcc 当中比较有意思的内嵌函数，大家可以玩一下～～～～😂
+
+---
+
+更多精彩内容合集可访问项目：<https://github.com/Chang-LeHung/CSCore>
+
+关注公众号：一无是处的研究僧，了解更多计算机（Java、Python、计算机系统基础、算法与数据结构）知识。
+
+![](../../qrcode2.jpg)
 
