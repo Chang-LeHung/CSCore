@@ -265,12 +265,11 @@ fun_a return address = 0x4005d2
 From inline assembly return address = 0x4005d2
 ```
 
-从上面的输出结果我们可以看到，我们自己使用内敛汇编直接得到寄存器 rbp 的和内嵌函数返回的值是一致的，这也从侧面反映出来了内嵌函数的作用。
+从上面的输出结果我们可以看到，我们自己使用内敛汇编直接得到寄存器 rbp 的和内嵌函数返回的值是一致的，这也从侧面反映出来了内嵌函数的作用。在上面的代码当中定义定义的宏 return_address 的作用就是将寄存器 rbp 的值保存到变量 rbp 当中。
 
-在上面的代码当中定义定义的宏 return_address 的作用就是将寄存器 rbp 的值保存到变量 rbp 当中。
+除了得到当前栈帧的 rbp 的值之外我们还可以，函数的调用函数的 rbp，调用函数的调用函数的 rbp，当然可以直接使用 builtin 函数实现，除此之外我们还可以使用内敛汇编去实现这一点：
 
 ```c
-
 
 #include <stdio.h>
 #include <sys/types.h>
@@ -283,15 +282,15 @@ From inline assembly return address = 0x4005d2
       "movq %%rcx, %0;"           \
       :"=m"(rbp)::"rcx"           \
     );                            \
-    printf("From inline assembly return address = %p\n", (u_int64_t*)*(u_int64_t*)(rbp + 8));
+    printf("From inline assembly main return address = %p\n", (u_int64_t*)*(u_int64_t*)(rbp + 8));
 
 void func_a()
 {
-  printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
+  printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> In func_a\n");
   void* p = __builtin_return_address(1);
-  printf("fun_a return address = %p\n", p);
+  printf("main return address = %p\n", p);
   return_address
-  printf("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
+  printf("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Out func_a\n");
 }
 
 
@@ -304,15 +303,21 @@ int main()
 }
 ```
 
-
+上面的程序的输出结果如下所示
 
 ```c
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-fun_a return address = 0x7fb35c1a70b3
-From inline assembly return address = 0x7fb35c1a70b3
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-main function return address = 0x7fb35c1a70b3
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> In func_a
+main return address = 0x7f9aec6c80b3
+From inline assembly main return address = 0x7f9aec6c80b3
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Out func_a
+main function return address = 0x7f9aec6c80b3
 ```
+
+我们可以看到上面的输出，我们自己用内敛汇编实现的结果和 __builtin_return_address 的返回结果是一样的，这也验证了我们实现的正确性。要想理解上面的代码首先我们需要理解函数调用的时候形成的栈帧，如下图所示：
+
+![01](../../images/pl/02.png)
+
+根据上图我们可以知道在 func_a 函数当中，rbp 指向的地址存放的是上一个函数的 rbp 寄存器的值，因此我们可以使用间接寻址，找到调用 func_a 的主函数的 rbp 的值，即以在函数 func_a 当中 rbp 寄存器的值为地址，找到这个地址的值就是主函数的 rbp 的值。
 
 至此我们已经知道了，__builtin_return_address 的返回结果是当前函数的返回地址，也就是当前函数执行完成返回之后执行的下一条指令，我们可以利用这一点做出一个非常好玩的东西，直接跳转到返回地址执行不执行当前函数的后续代码：
 
@@ -326,9 +331,9 @@ void func_a()
   void* rbp      = __builtin_frame_address(0);  // 得到当前函数的栈帧的栈底
   void* last_rbp = __builtin_frame_address(1);	// 得到调用函数的栈帧的栈底
   asm volatile(
-    "leaq 16(%1), %%rsp;" // 恢复 rsp 寄存器的值
-    "movq %2, %%rbp;"     // 恢复 rbp 寄存器的值
-    "jmp *%0;"            // 直接跳转
+    "leaq 16(%1), %%rsp;" // 恢复 rsp 寄存器的值 ⓷
+    "movq %2, %%rbp;"     // 恢复 rbp 寄存器的值 ⓸
+    "jmp *%0;"            // 直接跳转						⓹
     ::"r"(p), "r"(rbp), "r"(last_rbp): 
   );
   printf("finished in func_a\n"); // ①
@@ -377,3 +382,10 @@ finished in main function
 恢复主函数的 rbp 寄存器的值很好理解，因为我们只需要通过内嵌函数直接得到即可，但是主函数的 rsp 寄存器的值可能有一点复杂，s首先我们需要知道，主函数和 func_a 的两个与栈帧有关的寄存器的指向，他们的指向如下图所示：
 
 ![01](../../images/pl/02.png)
+
+- 根据上文的分析我们可以直接通过在函数 func_a 当中直接使用 __builtin_frame_address(1) 得到主函数的 rbp 值，然后将其直接赋值给 rbp 寄存器就可以了，我们就恢复了主函数栈底的值，对应的语句位上面代码的 ⓸。
+- 根据上文的分析我们可以直接通过在函数 func_a 当中直接使用 __builtin_return_address(0) 得到 func_a 的返回地址，我们可以直接 jmp 到这条指令执行，但是在 jmp 之前我们需要先恢复主函数的栈帧，对应的语句位上面的 ⓹。
+- 根据上图我们可以分析到主函数 rsp 的值就是函数 func_a 中 rbp 寄存器的值加上 16，因为 rip 和 rbp 分别占 8 个字节，因此我们通过 ⓷ 恢复主函数的 rsp 的值。
+
+根据上面的分析我就大致就可以理解了上述的代码的流程了。
+
