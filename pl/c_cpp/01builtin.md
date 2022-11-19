@@ -170,6 +170,8 @@ caller frame address = 0x7ffdadbe6ff0
 
 ### 使用内嵌函数实现
 
+这个内嵌函数的主要作用就是得到函数的返回地址，首先我们需要知道的是，当我们进行函数调用的时候我们需要知道当这个函数执行完成之后返回到什么地方，因为 cpu 只会一条指令一条指令的执行，我们需要告诉 cpu 下一条指令的位置，因此当我们进行函数调用的时候需要保存调用函数的 call 指令下一条指令的位置，并且将它保存在栈上，当被调用函数执行完成之后继续回到调用函数的下一条指令的位置执行，因为我们已经将这个下一条指令的地址放到栈上了，当调用函数执行完成之后直接从栈当中取出这个值即可。
+
 __builtin_return_address 的签名如下：
 
 ```c
@@ -181,8 +183,6 @@ __builtin_return_address(x) // x 是一个整数
 - x = 0 : 表示当前函数的返回地址。
 - x = 1 : 表示当前函数的调用函数的返回地址，比如说 main 函数调用 func_a 如果在 func_a 里面调用这个内嵌方法，那么返回的就是 main 函数的返回值。
 - x = 2 : 表示当前函数的调用函数的调用函数的返回地址。
-
-这个内嵌函数的主要作用就是得到函数的返回地址，首先我们需要知道的是，当我们进行函数调用的时候我们需要知道当这个函数执行完成之后返回到什么地方，因为 cpu 只会一条指令一条指令的执行，我们需要告诉 cpu 下一条指令的位置，因此当我们进行函数调用的时候需要保存调用函数的 call 指令下一条指令的位置，并且将它保存在栈上，当被调用函数执行完成之后继续回到调用函数的下一条指令的位置执行，因为我们已经将这个下一条指令的地址放到栈上了，当调用函数执行完成之后直接从栈当中取出这个值即可。
 
 ```c
 
@@ -215,10 +215,106 @@ fun_a return address = 0x400592
 In func_a main return address = 0x7fc5c57c90b3
 ```
 
-
+从上面的输出结果我们可以知道
 
 ### 使用内敛汇编实现
 
 如果我们调用一个函数的时候（在x86里面执行 call 指令）首先会将下一条指令的地址压栈（在 32 位系统上就是将 eip 压栈，在 64 位系统上就是将 rip 压栈），然后形成调用函数的栈帧。然后将 rbp 寄存器的值指向下图当中的位置。
 
 ![01](../../images/pl/01.png)
+
+```c
+
+#include <stdio.h>
+#include <sys/types.h>
+
+#define return_address            \
+    u_int64_t rbp;                \
+    asm volatile(                 \
+      "movq %%rbp, %0":"=m"(rbp)::\
+    );                            \
+    printf("From inline assembly return address = %p\n", (u_int64_t*)*(u_int64_t*)(rbp + 8));
+
+void func_a()
+{
+  printf("In func_a\n");
+  void* p = __builtin_return_address(0);
+  printf("fun_a return address = %p\n", p);
+  return_address
+}
+
+int main()
+{
+  printf("In main function\n");
+  void* p = __builtin_return_address(0);
+  printf("main return address = %p\n", p);
+  return_address
+  func_a();
+  return 0;
+}
+```
+
+上面的程序的输出结果如下所示：
+
+```c
+In main function
+main return address = 0x7fe6a7b050b3
+From inline assembly return address = 0x7fe6a7b050b3
+In func_a
+fun_a return address = 0x4005d2
+From inline assembly return address = 0x4005d2
+```
+
+从上面的输出结果我们可以看到，我们自己使用内敛汇编直接得到寄存器 rbp 的和内嵌函数返回的值是一致的，这也从侧面反映出来了内嵌函数的作用。
+
+
+
+
+
+```c
+
+
+#include <stdio.h>
+#include <sys/types.h>
+
+#define return_address            \
+    u_int64_t rbp;                \
+    asm volatile(                 \
+      "movq %%rbp, %%rcx;"        \
+      "movq (%%rcx), %%rcx;"      \
+      "movq %%rcx, %0;"           \
+      :"=m"(rbp)::"rcx"           \
+    );                            \
+    printf("From inline assembly return address = %p\n", (u_int64_t*)*(u_int64_t*)(rbp + 8));
+
+void func_a()
+{
+  printf(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
+  void* p = __builtin_return_address(1);
+  printf("fun_a return address = %p\n", p);
+  return_address
+  printf("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
+}
+
+
+int main()
+{
+  func_a();
+  void* p = __builtin_return_address(0);
+  printf("main function return address = %p\n", p);
+  return 0;
+}
+```
+
+
+
+```c
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+fun_a return address = 0x7fb35c1a70b3
+From inline assembly return address = 0x7fb35c1a70b3
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+main function return address = 0x7fb35c1a70b3
+```
+
+
+
