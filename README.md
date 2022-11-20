@@ -230,6 +230,9 @@
 - Pthread 并发编程（二）——自底向上深入理解线程
   - [github阅读](concurrency/pthread/02pthread.md)
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247487280&idx=1&sn=8f6fbfbf61a4d41a1d37975f045f0ce8&chksm=cf0c9339f87b1a2fb44555628dc9be56528a0579932b1483c664a412e0d9421985bae8688461&token=3656969&lang=zh_CN#rd)
+- Pthread 并发编程（三）——深入理解线程取消机制
+  - [github阅读](concurrency/pthread/03pthread.md)
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247487309&idx=1&sn=04315e54a0512c85abe7a41e1f8449c5&chksm=cf0c9344f87b1a52cc86d0770db672b9ec50bf7a912253c7cd91a441ee3dea40676df4bc68b0&token=325122026&lang=zh_CN#rd)
 
 
 
