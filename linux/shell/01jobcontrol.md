@@ -111,7 +111,7 @@ int main()
 void sig(int signo) // signo 这个参数就是对应信号的数字表示 SIGINT 信号对应的数字为 2
 {
   char s[1024];
-  sprintf(s, "received a signal %d\n", getpid());
+  sprintf(s, "received a signal %d\n", getpid()); // 输出内容并且答应进程的进程号
   write(STDOUT_FILENO, s, strlen(s));
 }
 
@@ -143,6 +143,8 @@ received a signal 3704
 received a signal 3704
 received a signal 3705
 received a signal 3702
-^\[1]    3702 quit (core dumped)  ./job5.out
 ```
 
+从上面的输出结果我们可以看到，前台进程组的所有进程都收到了 SIGINT 信号。
+
+>在任一时刻，会话中的其中一个进程组会成为终端的前台进程组，其他进程组会成为后台进程组。只有前台进程组中的进程才能从控制终端中读取输入。当用户在控制终端中输入其中一个信号生成终端字符之后，该信号会被发送到前台进程组中的所有成员。这些字符包括生成 SIGINT 的中断字符（通常是 Control-C）、生成 SIGQUIT 的退出字符（通常是 Control-\）、生成 SIGSTP 的挂起字符（通常是 Control-Z）。
