@@ -50,3 +50,52 @@ parent process group id = 3766993
 ```
 
 在上面的输出当中，PID，PPID，PGID 分别表示进程的进程号，父进程号和进程组号，CMD 表示执行程序时候的命令。首先我们知道的是 ps 命令进程是 shell 进程的子进程（上面的进程号等于 3766993 的进程就是 shell 进程），从上面的输出结果也可以得知这一点（ ps 的 PPID 就是 shell 的 PID）。
+
+通过上面两个例子我们可以知道，确实当我们执行程序的时候 shell 会创建一个新的进程组，事实上只要是在终端里面执行的程序，都会创建一个新的进程组。如果你熟悉 linux 的话，那么肯定用过 & 符号，这个符号就是将任务放在后台执行，这样创建的进程组就是后台进程组。
+
+## 终端进程的下场
+
+### 预备知识
+
+为了后面我们进行验证的时候大家能够了解清楚程序的行为，我们首先介绍一下信号处理函数的使用，所谓信号处理函数就是，当进程收到一个由其他进程或者操作系统内核发送的信号的时候，我们可以定义一个函数去处理信号，也就是定义收到信号的行为：
+
+```c
+
+#include <stdio.h>
+#include <signal.h>
+#include <unistd.h>
+#include <string.h>
+
+void sig(int signo)
+{
+  char* s = "received a signal\n";
+  write(STDOUT_FILENO, s, strlen(s));
+}
+
+int main()
+{
+  // 注册收到 SIGINT 信号的时候，我们应该使用什么处理函数
+  // 当进程收到 SIGINT 信号的时候，会调用函数 sig 
+  signal(SIGINT, sig);
+  while(1);
+  return 0;
+}
+```
+
+上面的程序的输出结果如下所示：
+
+```shell
+➜  daemon git:(master) ✗ ./job4.out 
+^Creceived a signal
+^Creceived a signal
+^Creceived a signal
+^Creceived a signal
+^Creceived a signal
+^Creceived a signal
+^Creceived a signal
+```
+
+从上面的终端的输出结果我们可以知道，当我们在终端输入 SIGINT 的时候，进程会收到一个 SIGINT 信号，然后会调用信号处理函数 sig ，并且执行函数体。
+
+
+
