@@ -1,4 +1,4 @@
-# 你在终端启动的进程，最后都是什么下场？
+# 你在终端启动的进程，最后都是什么下场？（上）
 
 ## 前言
 
@@ -53,7 +53,7 @@ parent process group id = 3766993
 
 通过上面两个例子我们可以知道，确实当我们执行程序的时候 shell 会创建一个新的进程组，事实上只要是在终端里面执行的程序，都会创建一个新的进程组。如果你熟悉 linux 的话，那么肯定用过 & 符号，这个符号就是将任务放在后台执行，这样创建的进程组就是后台进程组。
 
-## 前台进程组的死亡
+## 前台进程的死亡情况列表
 
 前台进程组的死亡一般来说有四种情况：
 
@@ -62,7 +62,7 @@ parent process group id = 3766993
 - 当控制进程 也就是 shell 进程终止(比如说被杀掉了)的时候，内核会发送 SIGHUP 信号给前台进程组中的所有进程。
 - 当退出终端的时候，shell 会发送 SIGHUP 信号给前台进程组。
 
-### 初探信号
+## 初探信号
 
 大家如果经常使用 linux 的话，一定会有过这种情况：当你在终端执行一个程序的时候，你突然遇到某些问题不想执行他了，然后你会疯狂按 ctrl + c ，让这个程序退出。那当你在终端按下 ctrl + c 的时候程序一定会停止嘛？如果程序退出了，那是什么原因导致他退出的呢？事实上，当你在终端按下 ctrl + c 的时候，内核会想前台进程组所有的进程发送一个 SIGINT 信号，注意这里是前台进程组中的所有进程，但是通常我们在终端里执行的就是一个单进程任务，但是如果我们执行的程序是多进程的话，那么这个进程组里面的所有进程都会收到一个来自操作系统内核的 SIGINT 信号。
 
@@ -158,7 +158,7 @@ received a signal 3702
 
 >在任一时刻，会话（当我们登录服务器的时候就会产生一个会话，我们使用一些远程登录软件的时候通常会看到 session 的字样们就是表示会话）中的其中一个进程组会成为终端的前台进程组，其他进程组会成为后台进程组。只有前台进程组中的进程才能从控制终端中读取输入。当用户在控制终端中输入其中一个信号生成终端字符之后，该信号会被发送到前台进程组中的所有成员。这些字符包括生成 SIGINT 的中断字符（通常是 Control-C）、生成 SIGQUIT 的退出字符（通常是 Control-\）、生成 SIGSTP 的挂起字符（通常是 Control-Z）。
 
-### 是谁给前台进程组发送的 SIGINT 信号
+## 是谁给前台进程组发送的 SIGINT 信号
 
 在上面的内容当中我们提到了：
 
@@ -222,11 +222,65 @@ pid = 12842
 
 事实上这个 0 号进程就是位于内核的终端驱动程序，init 的进程号是 1 ，内核的进程号等于 0 ，是不是可以理解呢？😂
 
-### Shell 被杀掉导致前台进程死亡
+## Shell 被杀掉导致前台进程死亡
 
-### 退出终端导致前台进程组死亡
+当 shell 进程被杀掉退出的时候，内核会发送 SIGHUP 给所有的前台进程
 
-## 孤儿进程组的离奇死亡
+## 退出终端导致前台进程组死亡
 
-## 后台进程组的死亡
+在前面的文章当中我们提到了，当一个终端终止执行，比如说被 kill -9 杀死，那么内核就会发送 SIGHUP 信号给前台进程组当中的所有的进程，现在我们使用下面的程序来复现这个现象：
+
+```c
+
+#define _GNU_SOURCE
+#include <unistd.h>
+#include <error.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <stdio.h>
+#include <time.h>
+#include <string.h>
+#include <stdlib.h>
+#include <signal.h>
+#include <assert.h>
+
+void my_handler (int signo, siginfo_t *si, void*ucontext)
+{
+  char s[1024];
+  int fd = open("text.txt", O_APPEND | O_RDWR | O_CREAT, 0644);
+  if(fd == -1)
+  {
+    perror("");
+    abort();
+  }
+  sprintf(s, "发送信号的进程号 = %d 信号 = %d\n", si->si_pid, signo);
+  write(fd, s, strlen(s));
+  close(fd);
+  fsync(fd);
+  _exit(0);
+}
+
+int main()
+{
+  printf("pid = %d\n", getpid());
+  struct sigaction demo;
+  demo.sa_sigaction = my_handler;
+  demo.sa_flags |= SA_SIGINFO;
+  demo.sa_flags &= ~SA_RESETHAND;
+  sigaction(SIGINT, &demo, NULL);
+  sigaction(SIGHUP, &demo, NULL);
+  while(1);
+  return 0;
+}
+```
+
+在上面的程序当中我们给 SIGHUP 定义了一个信号处理器 my_handler ，当进程收到 SIGHUP 信号的时候就会调用这个函数，然后往 text.txt 文件当中写入数据，我们再次查看文件就能够知道是哪个进程给前台进程组发送的信号了。
+
+在下面的图片当中，首先我们启动一个 shell 进程，进程号等于 2842，然后启动程序 job6.out（就是上面的代码），然后在右侧的终端执行 kill -9 命令，杀死左侧的终端程序，最终 job6.out 会收到一个来自内核的 SIGHUP 信号，因此会在 text.txt 文件当中写入信息。
+
+![1](../../images/linux/shell/1.png)
+
+我们现在再次查看 text.txt 文件当中的信息：
+
+![1](../../images/linux/shell/2.png)
 
