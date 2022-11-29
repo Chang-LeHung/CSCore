@@ -55,7 +55,9 @@ parent process group id = 3766993
 
 ## 终端进程的下场
 
-### 预备知识
+### 初探信号
+
+大家如果经常使用 linux 的话，一定会有过这种情况：当你在终端执行一个程序的时候，你突然遇到某些问题不想执行他了，然后你会疯狂按 ctrl + c ，让这个程序退出。那当你在终端按下 ctrl + c 的时候程序一定会停止嘛？如果程序退出了，那是什么原因导致他退出的呢？事实上，当你在终端按下 ctrl + c 的时候，内核会想前台进程组所有的进程发送一个 SIGINT 信号，注意这里是前台进程组中的所有进程，但是通常我们在终端里执行的就是一个单进程任务，但是如果我们执行的程序是多进程的话，那么这个进程组里面的所有进程都会收到一个来自操作系统内核的 SIGINT 信号。
 
 为了后面我们进行验证的时候大家能够了解清楚程序的行为，我们首先介绍一下信号处理函数的使用，所谓信号处理函数就是，当进程收到一个由其他进程或者操作系统内核发送的信号的时候，我们可以定义一个函数去处理信号，也就是定义收到信号的行为：
 
@@ -66,7 +68,7 @@ parent process group id = 3766993
 #include <unistd.h>
 #include <string.h>
 
-void sig(int signo)
+void sig(int signo) // signo 这个参数就是对应信号的数字表示 SIGINT 信号对应的数字为 2
 {
   char* s = "received a signal\n";
   write(STDOUT_FILENO, s, strlen(s));
@@ -97,5 +99,50 @@ int main()
 
 从上面的终端的输出结果我们可以知道，当我们在终端输入 SIGINT 的时候，进程会收到一个 SIGINT 信号，然后会调用信号处理函数 sig ，并且执行函数体。
 
+现在我们执行一个多进程的任务试试：
 
+```c
+
+#include <stdio.h>
+#include <signal.h>
+#include <unistd.h>
+#include <string.h>
+
+void sig(int signo) // signo 这个参数就是对应信号的数字表示 SIGINT 信号对应的数字为 2
+{
+  char s[1024];
+  sprintf(s, "received a signal %d\n", getpid());
+  write(STDOUT_FILENO, s, strlen(s));
+}
+
+int main()
+{
+  // 注册收到 SIGINT 信号的时候，我们应该使用什么处理函数
+  // 当进程收到 SIGINT 信号的时候，会调用函数 sig 
+  signal(SIGINT, sig);
+  fork();
+  fork();
+  while(1);
+  return 0;
+}
+```
+
+在上面的程序当中，我们 fork 的两次，一共有四个进程，上面的程序输出的结果如下所示：
+
+```shell
+➜  daemon git:(master) ✗ ./job5.out 
+^Creceived a signal 3702
+received a signal 3703
+received a signal 3705
+received a signal 3704
+^Creceived a signal 3703
+received a signal 3702
+received a signal 3705
+received a signal 3704
+^Creceived a signal 3703
+received a signal 3704
+received a signal 3705
+received a signal 3702
+^\[1]    3702 quit (core dumped)  ./job5.out
+```
 
