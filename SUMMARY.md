@@ -83,5 +83,6 @@
     * [深入剖析Sgementation fault原理](linux/programming/03segprincinple.md)
     * [进程最后的遗言](linux/programming/04processdie.md)
     * [Shell揭秘——程序退出状态码](linux/command/04exitstatus.md)
+    * [你在终端启动的进程，最后都是什么下场？（上）](linux/shell/01jobcontrol.md)
 * 计算机系统基础
     * [gcc 好玩的 builtin 函数](pl/c_cpp/01builtin.md)
