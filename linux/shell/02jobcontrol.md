@@ -191,6 +191,54 @@ usage(void)
 
 ## 后台进程和终端的纠缠
 
-后台进程是不能够从终端读取内容的，当我们从终端当中读的时候内核就会给这个后台进程发送一个 SIGTTIN 信号，这个条件主要是避免多个不同的进程都读终端。如果后台进程从终端当中进行读，那么这个进程就会收到一个 SIGINT 信号，这个信号的默认行为就是退出程序。
+后台进程是不能够从终端读取内容的，当我们从终端当中读的时候内核就会给这个后台进程发送一个 SIGTTIN 信号，这个条件主要是避免多个不同的进程都读终端。如果后台进程从终端当中进行读，那么这个进程就会收到一个 SIGTTIN 信号，这个信号的默认行为就是退出程序。
+
+我们可以使用下面的程序进程测试：
+
+```c
+
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <unistd.h>
+#include <signal.h>
+#include <string.h>
+
+
+void sig(int no, siginfo_t* si, void* ucontext)
+{
+  char s[1024];
+  sprintf(s, "signal number = %d sending pid = %d\n", no, si->si_pid);
+  write(STDOUT_FILENO, s, strlen(s));
+  sync();
+  _exit(0);
+}
+
+int main()
+{
+  struct sigaction action;
+  action.sa_flags |= SA_SIGINFO;
+  action.sa_sigaction = sig;
+  action.sa_flags &= ~(SA_RESETHAND);
+  sigaction(SIGTTIN, &action, NULL);
+  while(1)
+  {
+    char c = getchar();
+  }
+  return 0;
+}
+```
+
+然后我们在终端输入命令，并且对应的输出如下：
+
+```shell
+➜  daemon git:(master) ✗ ./job11.out&
+[1] 47688
+signal number = 21 sending pid = 0                                                                                
+[1]  + 47688 done       ./job11.out
+```
+
+从上面程序的输出结果我们可以知道，当我们在程序当中使用函数 getchar 读入字符的时候，程序就会收到来自内核的信号 SIGTTIN，根据下面的信号名和编号表可以知道，内核发送的信号位 SIGTTIN。
+
+![6](../../images/linux/shell/8.png)
 
 ![6](../../images/linux/shell/7.png)
