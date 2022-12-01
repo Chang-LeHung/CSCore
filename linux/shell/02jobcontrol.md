@@ -241,4 +241,59 @@ signal number = 21 sending pid = 0
 
 ![6](../../images/linux/shell/8.png)
 
+当我们在终端当中进行写操作的时候会收到信号 SIGTTOU，但是默认后台进程是可以往终端当中写的，如果我们想要进程不能够往终端当中写，当进程往终端当中写数据的时候就收到信号 SIGTTOU，我们可以使用命令 stty 进行设置。我们使用一个例子看看具体的情况：
+
+```c
+
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <unistd.h>
+#include <signal.h>
+#include <string.h>
+
+
+void sig(int no, siginfo_t* si, void* ucontext)
+{
+  char s[1024];
+  sprintf(s, "signal number = %d sending pid = %d\n", no, si->si_pid);
+  write(STDOUT_FILENO, s, strlen(s));
+  sync();
+  _exit(0);
+}
+
+int main()
+{
+  struct sigaction action;
+  action.sa_flags |= SA_SIGINFO;
+  action.sa_sigaction = sig;
+  action.sa_flags &= ~(SA_RESETHAND);
+  sigaction(SIGTTOU, &action, NULL);
+  while(1)
+  {
+    sleep(1);
+    printf("c");
+    fflush(stdout);
+  }
+  return 0;
+}
+```
+
+上面是一个比较简单的信号程序，不断的往终端当中输出字符 `c`，我们可以看一下程序的执行情况（job12 就是上面的代码）：
+
+```shell
+➜  daemon git:(master) ✗ ./job12.out
+ccccccccccccccccccccccccccccc^C
+➜  daemon git:(master) ✗ stty TOSTOP
+stty: invalid argument ‘TOSTOP’
+Try 'stty --help' for more information.
+➜  daemon git:(master) ✗ stty tostop 
+➜  daemon git:(master) ✗ ./job12.out&
+[1] 48467
+➜  daemon git:(master) ✗ signal number = 22 sending pid = 0
+
+[1]  + 48467 done       ./job12.out
+```
+
+
+
 ![6](../../images/linux/shell/7.png)
