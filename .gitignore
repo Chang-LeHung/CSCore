@@ -3,3 +3,4 @@ _book
 .git .gitignore .gitmodules
 .DS_Store
 node_modules
+vedio/**
