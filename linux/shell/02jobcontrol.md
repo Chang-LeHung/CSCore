@@ -76,3 +76,116 @@ int main(int argc, char* argv[], char* argvp[])
 
 从上面的程序的输出结果我们就可以知道，在我们按下 ctrl + c 之后进程会收到一个来自内核的 SIGINT 信号，但是并没有执行我们设置的函数 sig ，因此验证了我们在上文当中谈到的结论！
 
+有心的同学可能会发现当我们在终端使用 nohup 命令的时候会生成一个 "nohup.out" 文件，记录我们的程序的输出内容，我们可以在 nohup 的源代码当中发现一点蛛丝马迹，我们可以看一下 nohup 命令的完整源代码：
+
+```c
+#if 0
+#ifndef lint
+static const char copyright[] =
+"@(#) Copyright (c) 1989, 1993\n\
+	The Regents of the University of California.  All rights reserved.\n";
+#endif /* not lint */
+
+#ifndef lint
+static char sccsid[] = "@(#)nohup.c	8.1 (Berkeley) 6/6/93";
+#endif /* not lint */
+#endif
+#include <sys/cdefs.h>
+__FBSDID("FreeBSD");
+
+#include <sys/param.h>
+#include <sys/stat.h>
+
+#include <err.h>
+#include <errno.h>
+#include <fcntl.h>
+#include <signal.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
+static void dofile(void);
+static void usage(void);
+
+#define	FILENAME	"nohup.out" // 定义输出文件的文件名
+/*
+ * POSIX mandates that we exit with:
+ * 126 - If the utility was found, but failed to execute.
+ * 127 - If any other error occurred. 
+ */
+#define	EXIT_NOEXEC	126
+#define	EXIT_NOTFOUND	127
+#define	EXIT_MISC	127
+
+int
+main(int argc, char *argv[])
+{
+	int exit_status;
+
+	while (getopt(argc, argv, "") != -1)
+		usage();
+	argc -= optind;
+	argv += optind;
+	if (argc < 1)
+		usage();
+
+	if (isatty(STDOUT_FILENO))
+		dofile();
+	if (isatty(STDERR_FILENO) && dup2(STDOUT_FILENO, STDERR_FILENO) == -1)
+		/* may have just closed stderr */
+		err(EXIT_MISC, "%s", argv[0]);
+
+	(void)signal(SIGHUP, SIG_IGN);
+
+	execvp(*argv, argv);
+	exit_status = (errno == ENOENT) ? EXIT_NOTFOUND : EXIT_NOEXEC;
+	err(exit_status, "%s", argv[0]);
+}
+
+static void
+dofile(void)
+{
+	int fd;
+	char path[MAXPATHLEN];
+	const char *p;
+
+	/*
+	 * POSIX mandates if the standard output is a terminal, the standard
+	 * output is appended to nohup.out in the working directory.  Failing
+	 * that, it will be appended to nohup.out in the directory obtained
+	 * from the HOME environment variable.  If file creation is required,
+	 * the mode_t is set to S_IRUSR | S_IWUSR.
+	 */
+	p = FILENAME;
+  // 在这里打开 nohup.out 文件
+	fd = open(p, O_RDWR | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
+	if (fd != -1)
+    // 如果文件打开成功直接进行文件描述符的替代，将标准输出重定向到文件 nohup.out 
+		goto dupit;
+	if ((p = getenv("HOME")) != NULL && *p != '\0' &&
+	    (size_t)snprintf(path, sizeof(path), "%s/%s", p, FILENAME) <
+	    sizeof(path)) {
+		fd = open(p = path, O_RDWR | O_CREAT | O_APPEND,
+		    S_IRUSR | S_IWUSR);
+		if (fd != -1)
+			goto dupit;
+	}
+	errx(EXIT_MISC, "can't open a nohup.out file");
+
+dupit:
+	if (dup2(fd, STDOUT_FILENO) == -1)
+		err(EXIT_MISC, NULL);
+	(void)fprintf(stderr, "appending output to %s\n", p);
+}
+
+static void
+usage(void)
+{
+	(void)fprintf(stderr, "usage: nohup [--] utility [arguments]\n");
+	exit(EXIT_MISC);
+}
+```
+
+在源代码当中的宏 FILENAME 定义的文件名就是 nohup.out，在上面的代码当中，如果判断当前进程的标准输出是一个终端设备就会打开文件 nohup.out 然后将进程的标准输出重定向到文件 nohup.out ，因此我们在程序当中使用 printf 的输出就都会被重定向到文件 nohup.out 当中，看到这里就破案了，原来如此。
+
