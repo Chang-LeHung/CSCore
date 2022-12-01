@@ -294,6 +294,6 @@ Try 'stty --help' for more information.
 [1]  + 48467 done       ./job12.out
 ```
 
-
+![jobcontrol](../../vedio/jobcontrol.gif)
 
 ![6](../../images/linux/shell/7.png)
