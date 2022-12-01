@@ -47,3 +47,32 @@ main(int argc, char *argv[])
 
 这里需要注意一点的是关于 execvp 函数，也就是 execve 这一类系统调用，只有当我们使用 SIG_IGN 忽略信号的时候，才会在 execvp 系列函数当中起作用，如果是我们自己定义的信号处理器 (handler)，那么在我们执行完 execvp 这个系统调用之后，所有的我们自己定义的信号处理器的行为都将失效，所有被重新用新的函数定义的信号都会恢复成信号的默认行为。
 
+比如说下面这个程序：
+
+```c
+#include <stdio.h>
+#include <signal.h>
+#include <unistd.h>
+#include <string.h>
+
+void sig(int no)
+{
+  char* s = "Hello World\n";
+  write(STDOUT_FILENO, s, strlen(s));
+  sync();
+}
+
+int main(int argc, char* argv[], char* argvp[])
+{
+
+  signal(SIGINT, sig);
+  execvp(argv[1], argv);
+}
+```
+
+在上面的程序当中我们定义了一个信号处理器 sig 函数，如果接受到 SIGINT 信号那么就会执行 sig 函数，但是我们前面说了，因为只有 SIG_IGN 才能在 execvp 函数执行之后保持，如果是自定函数的话，那么这个信号的行为就会被重置成默认行为，SIGINT 的默认行为是退出程序，现在我们使用上面的程序去加载执行一个死循环的程序，执行结果如下：
+
+![6](../../images/linux/shell/6.png)
+
+从上面的程序的输出结果我们就可以知道，在我们按下 ctrl + c 之后进程会收到一个来自内核的 SIGINT 信号，但是并没有执行我们设置的函数 sig ，因此验证了我们在上文当中谈到的结论！
+
