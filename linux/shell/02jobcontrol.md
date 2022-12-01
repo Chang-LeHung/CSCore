@@ -35,12 +35,15 @@ main(int argc, char *argv[])
 		/* may have just closed stderr */
 		err(EXIT_MISC, "%s", argv[0]);
 
-	(void)signal(SIGHUP, SIG_IGN);
+	(void)signal(SIGHUP, SIG_IGN); // 在这里忽略 SIGHUP 这个信号
 
-	execvp(*argv, argv);
+	execvp(*argv, argv); // 执行我们在命令行当中指定的程序
 	exit_status = (errno == ENOENT) ? EXIT_NOTFOUND : EXIT_NOEXEC;
 	err(exit_status, "%s", argv[0]);
 }
 ```
 
 在上面的程序当中我们可以看到，在 main 函数当中，nohup 首先创建使用 signal 命令忽略了 SIGHUP 信号，SIG_IGN 就是忽略这个信号，然后使用 execvp 执行我们在命令行当中指定的程序。
+
+这里需要注意一点的是关于 execvp 函数，也就是 execve 这一类系统调用，只有当我们使用 SIG_IGN 忽略信号的时候，才会在 execvp 系列函数当中起作用，如果是我们自己定义的信号处理器 (handler)，那么在我们执行完 execvp 这个系统调用之后，所有的我们自己定义的信号处理器的行为都将失效，所有被重新用新的函数定义的信号都会恢复成信号的默认行为。
+
