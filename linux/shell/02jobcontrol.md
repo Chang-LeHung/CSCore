@@ -294,6 +294,10 @@ Try 'stty --help' for more information.
 [1]  + 48467 done       ./job12.out
 ```
 
-![jobcontrol](../../vedio/jobcontrol.gif)
+![jobcontrol](../../vedio/job3.gif)
+
+现在我们使用 `stty tostop` 命令重新设置一下终端的属性，然后重新进程测试：
+
+![jobcontrol](../../vedio/job2.gif)
 
 ![6](../../images/linux/shell/7.png)
