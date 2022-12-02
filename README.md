@@ -290,6 +290,9 @@
 - 进程最后的遗言
   - [github阅读](linux/programming/04processdie.md)
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247487171&idx=1&sn=223653d52a0bb1cccd6b8852359ce6d9&chksm=cf0c92caf87b1bdc874036c0c75ce8b2d4d89fd74ada1689552926377c8d504219d223e8663e&token=308651918&lang=zh_CN#rd)
+- 你在终端启动的进程，最后都是什么下场？（上）
+  - [github阅读](linux/shell/01jobcontrol.md)
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247487367&idx=1&sn=430b3afe8399ed32cf832d942b305a5d&chksm=cf0c938ef87b1a9803b2db922463612e5729579802d733ad6fd778d0c0d8439766b43af2801e&token=1948688554&lang=zh_CN#rd)
 
 #### Shell
 
