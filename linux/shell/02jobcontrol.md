@@ -341,10 +341,10 @@ I am a process of foregroup process
 I am a process of foregroup process
 I am a process of foregroup process
 ^Z
-[1]  + 5832 suspended  ./job13.out
-➜  daemon git:(master) ✗ bg %1
-[1]  + 5832 continued  ./job13.out
-➜  daemon git:(master) ✗ fg %1
+[1]  + 5832 suspended  ./job13.out # 在这里我们按下 ctrl + z 给进程发送 SIGTSTP 信号 让进程暂停执行
+➜  daemon git:(master) ✗ bg %1 # bg 命令默认是给进程发送一个 SIGCONT 因为在上一行当中信号 SIGTSTP 让进程暂停执行了 因此进程在收到信号 SIGCONT 之后会继续执行（SIGCONT 的作用就是让一个暂停的进程继续执行）
+[1]  + 5832 continued  ./job13.out # 因为进程还是在后台当中，因此进程继续执行还是在后台执行，所以依然没有输出
+➜  daemon git:(master) ✗ fg %1 # 这条命令是让后台进程组当中的第一个作业到前台执行，因此进程开始打印输出
 [1]  + 5832 running    ./job13.out
 I am a process of foregroup process
 I am a process of foregroup process
