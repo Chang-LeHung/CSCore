@@ -303,7 +303,58 @@ int main()
 
 ## 后台进程和终端的命令交互
 
+在前文当中我们谈到了当我们在一条命令后面加上 & 的话，那么这个程序将会变成后台进程。那么有没有办法将一个后台进程变成前台进程呢？
 
+当然有办法，我们可以使用 fg ——一个 shell 的内置命令，将一个后台进程变成前台进程。我们使用下面的程序进行验证：
+
+```c
+
+#include <stdio.h>
+#include <unistd.h>
+
+int main()
+{
+  while(1)
+  {
+    sleep(1);
+    // tcgetpgrp 返回前台进程组的进程组号
+    // getpgid(0) 得到当前进程组的进程组号
+    // 如果两个结果相等则说明当前进程组是前台进程组
+    // 反之则是后台进程组
+    if(getpgid(0) == tcgetpgrp(STDOUT_FILENO))
+    {
+      printf("I am a process of foregroup process\n");
+    }
+  }
+  return 0;
+}
+```
+
+然后我们在终端当中执行这个程序，对应的几个结果如下所示：
+
+```shell
+➜  daemon git:(master) ✗ ./job13.out&
+[1] 5832
+➜  daemon git:(master) ✗ fg   
+[1]  + 5832 running    ./job13.out
+I am a process of foregroup process
+I am a process of foregroup process
+I am a process of foregroup process
+^Z
+[1]  + 5832 suspended  ./job13.out
+➜  daemon git:(master) ✗ bg %1
+[1]  + 5832 continued  ./job13.out
+➜  daemon git:(master) ✗ fg %1
+[1]  + 5832 running    ./job13.out
+I am a process of foregroup process
+I am a process of foregroup process
+^C
+➜  daemon git:(master) ✗ 
+```
+
+![6](../../images/linux/shell/9.png)
+
+在上面的输出结果当中，我们首先在后台启动一个进程，因为是在后台所以当前进程组不是前台进程组，因此不会在终端当中打印输出，而当我们使用 fg 命令将后台当中的第一个作业（当我们输入命令之后，终端打印的[]当中的数字就是表示作业号，默认是从 1 开始的，因为我们值启动一个后台进程（执行一条命令就是开启一个作业），因此作业号等于 1）放到前台来执行，在上面的例子当中，命令 fg 和 fg %1 的效果是一样的。
 
 ## 总结
 
