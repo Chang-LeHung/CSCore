@@ -281,11 +281,6 @@ int main()
 上面是一个比较简单的信号程序，不断的往终端当中输出字符 `c`，我们可以看一下程序的执行情况（job12 就是上面的代码）：
 
 ```shell
-➜  daemon git:(master) ✗ ./job12.out
-ccccccccccccccccccccccccccccc^C
-➜  daemon git:(master) ✗ stty TOSTOP
-stty: invalid argument ‘TOSTOP’
-Try 'stty --help' for more information.
 ➜  daemon git:(master) ✗ stty tostop 
 ➜  daemon git:(master) ✗ ./job12.out&
 [1] 48467
@@ -294,10 +289,24 @@ Try 'stty --help' for more information.
 [1]  + 48467 done       ./job12.out
 ```
 
+在上面的输出结果当中我们使用命令 `stty tostop` 主要是用于启动当有后台进程往终端当中写内容的时候，向这个进程发送 SIGTTOU 信号，这个信号的默认行为也是终止进程的执行。
+
+首先看一下当我们没有使用 `stty tostop` 命令的时候程序的行为。
+
 ![jobcontrol](../../vedio/job3.gif)
 
 现在我们使用 `stty tostop` 命令重新设置一下终端的属性，然后重新进程测试：
 
 ![jobcontrol](../../vedio/job2.gif)
+
+从上面的输出结果我们可以看到当我们在终端当中，默认是允许进程往终端当中进行输出的，但是当我们使用命令 `stty tostop` 之后，如果还有后台进程往终端当中进行输出，那么这个进程就会收到一个 SIGTTOU 信号。
+
+## 后台进程和终端的命令交互
+
+
+
+## 总结
+
+根据我们在前文当中所谈到的内容，我们可以将终端与前后台交互的行为总结成下面的一张图。
 
 ![6](../../images/linux/shell/7.png)
