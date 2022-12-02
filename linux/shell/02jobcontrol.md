@@ -307,31 +307,32 @@ int main()
 
 当然有办法，我们可以使用 fg ——一个 shell 的内置命令，将一个后台进程变成前台进程。在正式进行验证之前我们需要来了解三个命令：
 
-- jobs 这条命令主要是用于查看当前所有的后台进程组，也就是所有的后台作业。
-- fg 
-- bg 
+- jobs 这条命令主要是用于查看当前所有的后台进程组，也就是所有的后台作业,。
+- fg  这条命令主要是将一个后台进程放到前台来运行。
+- bg  这条命令主要是让一个终端的后台程序继续执行。
+
+具体的例子如下所示：
 
 ```shell
-➜  daemon git:(master) ✗ jobs 
-➜  daemon git:(master) ✗ sleep 110 &
+➜  daemon git:(master) ✗ sleep 110 & # 创建一个后台进程 每当创建一个后台作业 shell 都会给这个作业分配一个作业号 就是 [] 当中的数字，从 1 开始
 [1] 7467
-➜  daemon git:(master) ✗ sleep 111 &
+➜  daemon git:(master) ✗ sleep 111 & # 创建一个后台进程
 [2] 7485
-➜  daemon git:(master) ✗ sleep 112 &
+➜  daemon git:(master) ✗ sleep 112 & # 创建一个后台即成
 [3] 7503
-➜  daemon git:(master) ✗ jobs 
+➜  daemon git:(master) ✗ jobs # 查看所有的后台进程 其中 + 表示当前作业 可以认为是最近一次使用 & 生成的作业 - 表示上一个作业 可以认为是倒数第二个使用 & 生成的作业
 [1]    running    sleep 110
 [2]  - running    sleep 111
 [3]  + running    sleep 112
-➜  daemon git:(master) ✗ fg 
+➜  daemon git:(master) ✗ fg # fg 的使用方式为 fg %num 如果不指定 %num 的话，默认就是将当前作业放到前台 饿我们在上面已经谈到了 当前作业为 sleep 112 因此将这个进程恢复到前台
 [3]  - 7503 running    sleep 112
-^C
-➜  daemon git:(master) ✗ jobs 
+^C # 终止这个作业
+➜  daemon git:(master) ✗ jobs  # 因为终止了作业 sleep 112 因此后台进程组只剩下两个了
 [1]    running    sleep 110
 [2]  + running    sleep 111
-➜  daemon git:(master) ✗ fg  
+➜  daemon git:(master) ✗ fg  # 在将最近一次提交的作业放到前台
 [2]  - 7485 running    sleep 111
-^C
+^C # 终止这个任务的执行
 ➜  daemon git:(master) ✗ sleep 112 &
 [2] 7760
 ➜  daemon git:(master) ✗ jobs 
@@ -352,9 +353,7 @@ int main()
 ➜  daemon git:(master) ✗ 
 ```
 
-
-
-接下来我们使用下面的程序进行验证：
+接下来我们使用下面的程序进行验证，下面的程序的主要目的就是判断当前进程是否是前台进程，如果是则打印消息，如果不是那么就一直进行死循环：
 
 ```c
 
@@ -382,9 +381,9 @@ int main()
 然后我们在终端当中执行这个程序，对应的几个结果如下所示：
 
 ```shell
-➜  daemon git:(master) ✗ ./job13.out&
+➜  daemon git:(master) ✗ ./job13.out& # 先将这个程序放到后台运行，因为不是前台程序因此不会打印消息
 [1] 5832
-➜  daemon git:(master) ✗ fg   
+➜  daemon git:(master) ✗ fg    # 将这个程序放到前台执行，因为到了前台因此上面的程序会输出消息
 [1]  + 5832 running    ./job13.out
 I am a process of foregroup process
 I am a process of foregroup process
@@ -401,12 +400,27 @@ I am a process of foregroup process
 ➜  daemon git:(master) ✗ 
 ```
 
-![6](../../images/linux/shell/9.png)
-
-在上面的输出结果当中，我们首先在后台启动一个进程，因为是在后台所以当前进程组不是前台进程组，因此不会在终端当中打印输出，而当我们使用 fg 命令将后台当中的最近条件的一个作业（当我们输入命令之后，终端打印的[]当中的数字就是表示作业号，默认是从 1 开始的，因为我们只启动一个后台进程（执行一条命令就是开启一个作业），因此作业号等于 1）放到前台来执行，在上面的例子当中，命令 fg 和 fg %1 的效果是一样的。
+在上面的输出结果当中，我们首先在后台启动一个进程，因为是在后台所以当前进程组不是前台进程组，因此不会在终端当中打印输出，而当我们使用 fg 命令将后台当中的最近生成的一个作业（当我们输入命令之后，终端打印的[]当中的数字就是表示作业号，默认是从 1 开始的，因为我们只启动一个后台进程（执行一条命令就是开启一个作业），因此作业号等于 1）放到前台来执行，在上面的例子当中，命令 fg 和 fg %1 的效果是一样的。
 
 ## 总结
 
-根据我们在前文当中所谈到的内容，我们可以将终端与前后台交互的行为总结成下面的一张图。
+在本篇文章当中主要给大家介绍了后台进程的一些生与死的情况，总体来说有以下内容：
+
+- 当我们退出终端的时候，shell 会给所有前台和后台进程组发送一个 SIGHUP 信号，nohup 命令的原理就是让程序忽略这个 SIGHUP 信号。
+- 当后台进程从终端当中读的时候内核会给这个进程发送一个 SIGTTIN 信号。
+- 当我们设置了 ssty tostop 之后，如果我们往终端当中进行写操作的话，那么内核会给这个进程发送一个 SIGTTOU 信号，这两个信号的默认行为都是终止这个进程的执行。
+- 我们可以使用 jobs fg bg 命令让终端和后台进程进行交互操作，fg 将一个后台进程放到前台执行，如果这个进行暂停执行的话， shell 还会给这个进程发送一个 SIGCONT 信号让这个进程继续执行，bg 可以让一个后台暂停执行的进程恢复执行，本质也是给这个后台进程发送一个 SIGCONT 信号。
+- 综合上面的分析，上面的结果可以使用下面的图进行表示分析。
 
 ![6](../../images/linux/shell/7.png)
+
+
+
+---
+
+以上就是本篇文章的所有内容了，我是**LeHung**，我们下期再见！！！更多精彩内容合集可访问项目：<https://github.com/Chang-LeHung/CSCore>
+
+关注公众号：**一无是处的研究僧**，了解更多计算机（Java、Python、计算机系统基础、算法与数据结构）知识。
+
+![](https://img2022.cnblogs.com/blog/2519003/202207/2519003-20220703200459566-1837431658.jpg)
+
