@@ -305,7 +305,56 @@ int main()
 
 在前文当中我们谈到了当我们在一条命令后面加上 & 的话，那么这个程序将会变成后台进程。那么有没有办法将一个后台进程变成前台进程呢？
 
-当然有办法，我们可以使用 fg ——一个 shell 的内置命令，将一个后台进程变成前台进程。我们使用下面的程序进行验证：
+当然有办法，我们可以使用 fg ——一个 shell 的内置命令，将一个后台进程变成前台进程。在正式进行验证之前我们需要来了解三个命令：
+
+- jobs 这条命令主要是用于查看当前所有的后台进程组，也就是所有的后台作业。
+- fg 
+- bg 
+
+```shell
+➜  daemon git:(master) ✗ jobs 
+➜  daemon git:(master) ✗ sleep 110 &
+[1] 7467
+➜  daemon git:(master) ✗ sleep 111 &
+[2] 7485
+➜  daemon git:(master) ✗ sleep 112 &
+[3] 7503
+➜  daemon git:(master) ✗ jobs 
+[1]    running    sleep 110
+[2]  - running    sleep 111
+[3]  + running    sleep 112
+➜  daemon git:(master) ✗ fg 
+[3]  - 7503 running    sleep 112
+^C
+➜  daemon git:(master) ✗ jobs 
+[1]    running    sleep 110
+[2]  + running    sleep 111
+➜  daemon git:(master) ✗ fg  
+[2]  - 7485 running    sleep 111
+^C
+➜  daemon git:(master) ✗ sleep 112 &
+[2] 7760
+➜  daemon git:(master) ✗ jobs 
+[1]  - running    sleep 110
+[2]  + running    sleep 112
+➜  daemon git:(master) ✗ sleep 112 &
+[3] 7870
+➜  daemon git:(master) ✗ sleep 112 &
+[4] 7888
+➜  daemon git:(master) ✗ jobs 
+[1]    running    sleep 110
+[2]    running    sleep 112
+[3]  - running    sleep 112
+[4]  + running    sleep 112
+➜  daemon git:(master) ✗ fg %1 
+[1]    7467 running    sleep 110
+^C
+➜  daemon git:(master) ✗ 
+```
+
+
+
+接下来我们使用下面的程序进行验证：
 
 ```c
 
@@ -348,13 +397,13 @@ I am a process of foregroup process
 [1]  + 5832 running    ./job13.out
 I am a process of foregroup process
 I am a process of foregroup process
-^C
+^C # 在这里输入 ctrl + c 命令，让前台进程组当中所有进程停止执行
 ➜  daemon git:(master) ✗ 
 ```
 
 ![6](../../images/linux/shell/9.png)
 
-在上面的输出结果当中，我们首先在后台启动一个进程，因为是在后台所以当前进程组不是前台进程组，因此不会在终端当中打印输出，而当我们使用 fg 命令将后台当中的第一个作业（当我们输入命令之后，终端打印的[]当中的数字就是表示作业号，默认是从 1 开始的，因为我们值启动一个后台进程（执行一条命令就是开启一个作业），因此作业号等于 1）放到前台来执行，在上面的例子当中，命令 fg 和 fg %1 的效果是一样的。
+在上面的输出结果当中，我们首先在后台启动一个进程，因为是在后台所以当前进程组不是前台进程组，因此不会在终端当中打印输出，而当我们使用 fg 命令将后台当中的最近条件的一个作业（当我们输入命令之后，终端打印的[]当中的数字就是表示作业号，默认是从 1 开始的，因为我们只启动一个后台进程（执行一条命令就是开启一个作业），因此作业号等于 1）放到前台来执行，在上面的例子当中，命令 fg 和 fg %1 的效果是一样的。
 
 ## 总结
 
