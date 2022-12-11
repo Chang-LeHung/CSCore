@@ -293,6 +293,12 @@
 - 你在终端启动的进程，最后都是什么下场？（上）
   - [github阅读](linux/shell/01jobcontrol.md)
   - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247487367&idx=1&sn=430b3afe8399ed32cf832d942b305a5d&chksm=cf0c938ef87b1a9803b2db922463612e5729579802d733ad6fd778d0c0d8439766b43af2801e&token=1948688554&lang=zh_CN#rd)
+- 你在终端启动的进程，最后都是什么下场？（下）
+  - [github阅读](linux/shell/02jobcontrol.md)
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247487384&idx=1&sn=c26c264bfc76b48654e7af30bfa3bff9&chksm=cf0c9391f87b1a872ab868f7825a7797421ae8c5c1da30c556af89473e378bff13584b61e63f&token=1091993681&lang=zh_CN#rd)
+- 孤儿进程与终端的关系
+  - [github阅读](linux/shell/03jobcontrol.md)
+
 
 #### Shell
 
