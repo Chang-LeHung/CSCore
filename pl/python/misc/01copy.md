@@ -48,3 +48,12 @@ print(f"{a = } \t|\t {b = }")
 
 ## Python 内部数据在内存上的逻辑分布
 
+首先我们介绍一下一个比较好用的关于数据在内存上的逻辑分布的网站，https://pythontutor.com/visualize.html#mode=display，我们在这个网站上运行第一份代码：
+
+![01copy](../../../vedio/python/01copy.gif)
+
+从上面的输出结果来看 a 和 b 指向的是同一个内存当中的数据对象。
+
+![01](../../../images/python/01.png)
+
+![01](../../../images/python/02.png)
