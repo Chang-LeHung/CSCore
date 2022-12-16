@@ -344,8 +344,43 @@ a = [[1, 2, 3], 2, 3, 4] 	|	 b = [[1, 2, 3], 2, 3, 4]
 a = [[100, 2, 3], 2, 3, 4] 	|	 b = [[1, 2, 3], 2, 3, 4]
 ```
 
-
-
 ## 撕开 Python 对象的神秘面纱
 
-我们
+我们现在简要看一下 Cpython 是如何实现 list 数据结构的，在 list 当中到底定义了一些什么东西：
+
+```c
+typedef struct {
+    PyObject_VAR_HEAD
+    /* Vector of pointers to list elements.  list[0] is ob_item[0], etc. */
+    PyObject **ob_item;
+
+    /* ob_item contains space for 'allocated' elements.  The number
+     * currently in use is ob_size.
+     * Invariants:
+     *     0 <= ob_size <= allocated
+     *     len(list) == ob_size
+     *     ob_item == NULL implies ob_size == allocated == 0
+     * list.sort() temporarily sets allocated to -1 to detect mutations.
+     *
+     * Items must normally not be NULL, except during construction when
+     * the list is not yet visible outside the function that builds it.
+     */
+    Py_ssize_t allocated;
+} PyListObject;
+```
+
+在上面定义的结构体当中 ：
+
+- allocated 表示分配的内存空间的数量，也就是能够存储指针的数量，当所有的空间用完之后需要再次申请内存空间。
+- ob_item 指向内存当中真正存储指向 python 对象指针的数组，比如说我们想得到列表当中第一个对象的指针的话就是 list->ob_item[0]，如果要得到真正的数据的话就是 *(list->ob_item[0])。
+- PyObject_VAR_HEAD 是一个宏，会在结构体当中定一个子结构题，这个子结构题的定义如下：
+
+```c
+typedef struct {
+    PyObject ob_base;
+    Py_ssize_t ob_size; /* Number of items in variable part */
+} PyVarObject;
+```
+
+- 这里我们不去谈对象 PyObject 了，主要说一下 ob_size，他表示列表当中存储了多少个数据，这个和 allocated 不一样，allocated 表示 ob_item 指向的数组一共有多少个空间，ob_size 表示这个数组存储了多少个数据 ob_size <= allocated。
+
