@@ -87,3 +87,5 @@
     * [你在终端启动的进程，最后都是什么下场？（下）](linux/shell/02jobcontrol.md)
 * 计算机系统基础
     * [gcc 好玩的 builtin 函数](pl/c_cpp/01builtin.md)
+* python
+    * [深入理解 python 对象拷贝和内存布局](pl/python/misc/01copy.md)
