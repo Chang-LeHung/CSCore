@@ -162,6 +162,92 @@ i = 2 id(a[i]) = 4312613232 id(b[i]) = 4312613232
 
 ## 可变和不可变对象与对象拷贝
 
+在 python 当中主要有两大类对象，可变对象和不可变对象，所谓可变对象就是对象的内容可以发生改变，不可变对象就是对象的内容不能够发生改变。
+
+- 可变对象：比如说列表(list)，字典(dict)，集合(set)，字节数组(bytearray)，类的实例对象。
+- 不可变对象：整型(int)，浮点型(float)，复数(complex)，字符串，元祖(tuple)，不可变集合(frozenset)，字节(bytes)。
+
+看到这里你可能会有疑问了，整数和字符串不是可以修改吗？
+
+```python
+a = 10
+a = 100
+a = "hello"
+a = "world"
+```
+
+比如下面的代码是正确的，并不会发生错误，但是事实上其实 a 指向的对象是发生了变化的，第一个对象指向整型或者字符串的时候，如果重新赋一个新的不同的整数或者字符串对象的话，python 会创建一个新的对象，我们可以使用下面的代码进行验证：
+
+```python
+a = 10
+print(f"{id(a) = }")
+a = 100
+print(f"{id(a) = }")
+a = "hello"
+print(f"{id(a) = }")
+a = "world"
+print(f"{id(a) = }")
+```
+
+上面的程序的输出结果如下所示：
+
+```python
+id(a) = 4365566480
+id(a) = 4365569360
+id(a) = 4424109232
+id(a) = 4616350128
+```
+
+可以看到的是当重新赋值之后变量指向的内存对象是发生了变化的（因为内存地址发生了变化），这就是不可变对象，虽然可以对变量重新赋值，但是得到的是一个新对象并不是在原来的对象上进行修改的！
+
+我们现在来看一下可变对象列表发生修改之后内存地址是怎么发生变化的：
+
+```python
+data = []
+print(f"{id(data) = }")
+data.append(1)
+print(f"{id(data) = }")
+data.append(1)
+print(f"{id(data) = }")
+data.append(1)
+print(f"{id(data) = }")
+data.append(1)
+print(f"{id(data) = }")
+```
+
+上面的代码输出结果如下所示：
+
+```python
+id(data) = 4614905664
+id(data) = 4614905664
+id(data) = 4614905664
+id(data) = 4614905664
+id(data) = 4614905664
+```
+
+从上面的输出结果来看可以知道，当我们往列表当中加入新的数据之后（修改了列表），列表本身的地址并没有发生变化，这就是可变对象。
+
+我们在前面谈到了深拷贝和浅拷贝，我们现在来分析一下下面的代码：
+
+```python
+data = [1, 2, 3]
+data_copy = copy.copy(data)
+data_deep = copy.deepcopy(data)
+print(f"{id(data ) = } | {id(data_copy) = } | {id(data_deep) = }")
+print(f"{id(data[0]) = } | {id(data_copy[0]) = } | {id(data_deep[0]) = }")
+print(f"{id(data[1]) = } | {id(data_copy[1]) = } | {id(data_deep[1]) = }")
+print(f"{id(data[2]) = } | {id(data_copy[2]) = } | {id(data_deep[2]) = }")
+```
+
+上面的代码输出结果如下所示：
+
+```python
+id(data ) = 4620333952 | id(data_copy) = 4619860736 | id(data_deep) = 4621137024
+id(data[0]) = 4365566192 | id(data_copy[0]) = 4365566192 | id(data_deep[0]) = 4365566192
+id(data[1]) = 4365566224 | id(data_copy[1]) = 4365566224 | id(data_deep[1]) = 4365566224
+id(data[2]) = 4365566256 | id(data_copy[2]) = 4365566256 | id(data_deep[2]) = 4365566256
+```
+
 
 
 ## 撕开 Python 对象的神秘面纱
