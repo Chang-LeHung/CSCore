@@ -248,6 +248,29 @@ id(data[1]) = 4365566224 | id(data_copy[1]) = 4365566224 | id(data_deep[1]) = 43
 id(data[2]) = 4365566256 | id(data_copy[2]) = 4365566256 | id(data_deep[2]) = 4365566256
 ```
 
+看到这里你肯定会非常疑惑，为什么深拷贝和浅拷贝指向的内存对象是一样的呢？前列我们可以理解，因为浅拷贝拷贝的是引用，因此他们指向的对象是同一个，但是为什么深拷贝之后指向的内存对象和浅拷贝也是一样的呢？这正是因为列表当中的数据是整型数据，他是一个不可变对象，如果对 data 或者 data_copy 指向的对象进行修改，那么将会指向一个新的对象并不会直接修改原来的对象，因此对于不可变对象其实是不用开辟一块新的内存空间在重新赋值的，因为这块内存中的对象是不会发生改变的。
 
+我们在来看一个可拷贝的对象：
+
+```python
+data = [[1], [2], [3]]
+data_copy = copy.copy(data)
+data_deep = copy.deepcopy(data)
+print(f"{id(data ) = } | {id(data_copy) = } | {id(data_deep) = }")
+print(f"{id(data[0]) = } | {id(data_copy[0]) = } | {id(data_deep[0]) = }")
+print(f"{id(data[1]) = } | {id(data_copy[1]) = } | {id(data_deep[1]) = }")
+print(f"{id(data[2]) = } | {id(data_copy[2]) = } | {id(data_deep[2]) = }")
+```
+
+上面的代码输出结果如下所示：
+
+```python
+id(data ) = 4619403712 | id(data_copy) = 4617239424 | id(data_deep) = 4620032640
+id(data[0]) = 4620112640 | id(data_copy[0]) = 4620112640 | id(data_deep[0]) = 4620333952
+id(data[1]) = 4619848128 | id(data_copy[1]) = 4619848128 | id(data_deep[1]) = 4621272448
+id(data[2]) = 4620473280 | id(data_copy[2]) = 4620473280 | id(data_deep[2]) = 4621275840
+```
+
+从上面程序的输出结果我们可以看到，当列表当中保存的是一个可变对象的时候，如果我们进行深拷贝将创建一个全新的对象（深拷贝的对象内存地址和浅拷贝的不一样）。
 
 ## 撕开 Python 对象的神秘面纱
