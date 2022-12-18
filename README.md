@@ -213,6 +213,10 @@
 
 ## 🔖Python
 
+- 深入理解python对象拷贝和内存布局
+  - [github阅读](pl/python/misc/01copy.md)
+  - [微信公众号阅读](https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&mid=2247487426&idx=1&sn=ce56ad79f3108c9bd76d97a87666979a&chksm=cf0c93cbf87b1addfa6845118c24bf729bc09bb71195d56fed730fc6d6ff32b644d04c6ec220&token=1191447622&lang=zh_CN#rd)
+
 ## 🔖OpenMP
 
 - OpenMP 入门
