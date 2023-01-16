@@ -58,7 +58,8 @@
     * [OpenMP 入门](concurrency/openmp/01introduction.md)
     * [OpenMP 教程（一）——OpenMP 当中的 reduction 子句
     ](concurrency/openmp/02openmp.md)
-    * [OpenMP 常见的动态库函数使用](concurrency/openmp/03runtime1.md)
+    * [OpenMP 常见的动态库函数使用（上）](concurrency/openmp/03runtime1.md)
+    * [Openmp Runtime 库函数汇总（下）——深入剖析锁🔒原理与实现](concurrency/openmp/04runtime2.md)
     
 * Pthread
     * [Pthread 并发编程（一）——深入剖析线程基本元素和状态](concurrency/pthread/01pthread.md)
