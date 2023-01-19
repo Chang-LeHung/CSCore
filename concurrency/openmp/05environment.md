@@ -40,7 +40,7 @@ tid = 6
 tid = 7
 ```
 
-- OMP_DISPLAY_ENV，这个环境变量的作用就是程序在执行的时候首先会打印 OpenMP 相关的环境变量。如何这个环境变量值等于 TRUE 就会打印环境变量的值，如果是 FLASE 就不会打印。
+- OMP_DISPLAY_ENV，这个环境变量的作用就是程序在执行的时候首先会打印 OpenMP 相关的环境变量。如果这个环境变量值等于 TRUE 就会打印环境变量的值，如果是 FLASE 就不会打印。
 
 ```shell
 ➜  cmake-build-hun git:(master) ✗ export OMP_DISPLAY_ENV=TRUE   
@@ -76,9 +76,9 @@ int omp_get_dynamic(void);
 
 omp_set_dynamic 使用这个函数表示是否设置动态调整线程的个数，如果传入的参数不等于 0 表示开始，如果参数等于 0 就表示关闭动态调整。
 
-我们现在来谈一谈 dynamic 动态调整线程个数以优化系统资源的使用是什么意思，这个意思就是 OpenMP 创建的线程个数在同一个时刻不会超过你系统的处理器的个数，因为 OpenMP 常常用在数据密集型任务当中，这类任务对 CPU 的需求大，因此为来充分利用资源，只会创建处理器个数的线程个数。
+我们现在来谈一谈 dynamic 动态调整线程个数以优化系统资源的使用是什么意思，这个意思就是 OpenMP 创建的线程个数在同一个时刻不会超过你系统的处理器的个数，因为 OpenMP 常常用在数据密集型任务当中，这类任务对 CPU 的需求大，因此为了充分利用资源，只会创建处理器个数的线程个数。
 
-下面我们使用一个例子来验证上面锁谈到的内容。
+下面我们使用一个例子来验证上面所谈到的内容。
 
 ```c
 #include <omp.h>
@@ -99,7 +99,7 @@ int main(int argc, char* argv[])
 
 上面的代码如果我们没有设置 OMP_DYNAMIC=TRUE 或者没有使用 omp_set_dynamic(1) 去启动态调整的话，那么上面的 printf 语句会被执行 33 次，但是如果你进行了设置，也就是启动了动态调整线程的个数的话，那么创建的线程个数就是 min(33, num_processors) ，后者是你的机器的处理器的个数，比如如果处理器的核的个数是 16 那么就只会有 16 个线程执行并行域当中的代码。
 
-- OMP_NESTED，这个表示是否开启并行域的嵌套模式，这个环境变量要么是 `TRUE` 或者 `FALSE` ，如果这个环境变量的值为 `TRUE` 那么能够嵌套的最大的并行域的数量受到环境变量 OMP_MAX_ACTIVE_LEVELS 的限制，与这个环境变量相关的一个动态库函数为 `void omp_set_nested(int nested);` ，表示是否开启嵌套的并行动态库。
+- OMP_NESTED，这个表示是否开启并行域的嵌套模式，这个环境变量要么是 `TRUE` 或者 `FALSE` ，如果这个环境变量的值为 `TRUE` 那么能够嵌套的最大的并行域的数量受到环境变量 OMP_MAX_ACTIVE_LEVELS 的限制，与这个环境变量相关的一个动态库函数为 `void omp_set_nested(int nested);` ，表示是否开启嵌套的并行域。
 - OMP_NUM_THREADS，这个表示设置并行域的线程个数，与这个环境变量相关的有 num_threads 这个子句和动态库函数 `void omp_set_num_threads(int num_threads);`也是相关的。他们的优先级为：num_threads > omp_set_num_threads > OMP_NUM_THREADS。这个环境变量的值必须是一个大于 0 的整数，关于他们的优先级你可以认为离并行域越远的就优先级越低，反之越高。
 - OMP_STACKSIZE，这个环境变量的主要作用就是设置一个线程的栈空间的大小。
 - OMP_WAIT_POLICY，这个参数的主要作用就是控制当线程没有拿到锁的时候是自旋获取锁还是进入内核被挂起。这个参数主要有两个值，active 或者 passive。
@@ -146,7 +146,7 @@ KiB Swap: 12499968+total, 11869649+free,  6303184 used. 11600438+avail Mem
 112290 root      20   0  133868   1576   1452 R  1600  0.0  11:52.84 wait_policy
 ```
 
-根据上面的输出结果我们可以看到我们的预测是对的，所有的线程事都活跃的在使用 CPU。
+根据上面的输出结果我们可以看到我们的预测是对的，所有的线程都活跃的在使用 CPU。
 
 现在我们再来看一下如果我们使用 PASSIVE 的情况会是怎么样的？根据前面的描述如果线程没有获取到锁那么就会被挂起，因为只能够有一个线程获取到锁，其余 15 个线程都将被挂起，因此 CPU 的使用率应该是  100 % 左右，这个线程就是那个获取到锁的线程。
 
@@ -180,11 +180,11 @@ KiB Swap: 12499968+total, 11869649+free,  6303184 used. 11600710+avail Mem
 
   另外如果 OpenMP 的线程的个数大于可用的 CPU 的核心的个数的时候，1000 和 100 次就是 GOMP_SPINCOUNT 的值，对应OMP_WAIT_POLICY=ACTIVE 和 OMP_WAIT_POLICY 没有定义。
 
-- OMP_MAX_TASK_PRIORITY，这个是设置 OpenMP 任务的优先级的最大值，这个值应该是一个大雨等于 0 的值，如果没有定义，默认优先级的值就是 0 。
+- OMP_MAX_TASK_PRIORITY，这个是设置 OpenMP 任务的优先级的最大值，这个值应该是一个大于等于 0 的值，如果没有定义，默认优先级的值就是 0 。
 
 - OMP_MAX_ACTIVE_LEVELS，这个参数的主要作用是设置最大的嵌套的并行域的个数。
 
-- GOMP_CPU_AFFINITY，这个环境变量的左右就是将线程绑定到特定的 CPU 核心上。该变量应包含以空格分隔或逗号分隔的CPU列表。此列表可能包含不同类型的条目：任意顺序的单个CPU编号、CPU范围（M-N）或具有一定步长的范围（M-N:S）。CPU编号从零开始。例如，GOMP_CPU_AFFINITY=“0 3 1-2 4-15:2”将分别将初始线程绑定到CPU 0，第二个绑定到CPU 3，第三个绑定到CPU1，第四个绑定到CPU 2，第五个绑定到CPU 4，第六个到第十个绑定到ccu 6、8、10、12和14，然后从列表的开头开始重新分配。GOMP_CPU_AFFINITY=0将所有线程绑定到CPU 0。
+- GOMP_CPU_AFFINITY，这个环境变量的作用就是将线程绑定到特定的 CPU 核心上。该变量应包含以空格分隔或逗号分隔的CPU列表。此列表可能包含不同类型的条目：任意顺序的单个CPU编号、CPU范围（M-N）或具有一定步长的范围（M-N:S）。CPU编号从零开始。例如，GOMP_CPU_AFFINITY=“0 3 1-2 4-15:2”将分别将初始线程绑定到CPU 0，第二个绑定到CPU 3，第三个绑定到CPU1，第四个绑定到CPU 2，第五个绑定到CPU 4，第六个到第十个绑定到ccu 6、8、10、12和14，然后从列表的开头开始重新分配。GOMP_CPU_AFFINITY=0将所有线程绑定到CPU 0。
 
 我们现在来使用一个例子查看环境变量的使用。我们的测试程序如下：
 
@@ -221,7 +221,7 @@ int main()
   10750 lehung     20   0 27304   852   756 R 400.  0.0  2:30.53 ./a.out
 ```
 
-从上面 htop 命令的输出结果可以看到 0 - 3 四个核心都跑满了，我们现在在来看一下如果我们使用 GOMP_CPU_AFFINITY 环境变量使用线程绑定的方式 CPU 的负载将会是什么样！下面我们将所有的线程绑定到 0 1 两个核心，那么根据我们之前的分析 0 号核心上将会有第一个和第三个线程，1 号核心将会有第二个和第四个线程在上面运行。
+从上面 htop 命令的输出结果可以看到 0 - 3 四个核心都跑满了，我们现在来看一下如果我们使用 GOMP_CPU_AFFINITY 环境变量使用线程绑定的方式 CPU 的负载将会是什么样！下面我们将所有的线程绑定到 0 1 两个核心，那么根据我们之前的分析 0 号核心上将会有第一个和第三个线程，1 号核心将会有第二个和第四个线程在上面运行。
 
 ```shell
 ➜  tmp export GOMP_CPU_AFFINITY="0 1"
@@ -250,7 +250,7 @@ int sched_getaffinity(pid_t pid, size_t cpusetsize,
 
 感兴趣的同学可能查看一下上面的两个函数的手册。
 
-- OMP_SCHEDULE，这个环境变量主要是用在 OpenMP 关于 for 循环的调度上的，他的规则为 OMP_SCHEDULE=type[,chunk]，其中 type 的取之可以为 static, dynamic, guided, auto 。并且 chunk size 是可选的，而且他的值是一个正整数。如果这个环境变量没有定义，默认的调度方式是 dynamic 并且 chunk size = 1 。
+- OMP_SCHEDULE，这个环境变量主要是用在 OpenMP 关于 for 循环的调度上的，他的规则为 OMP_SCHEDULE=type[,chunk]，其中 type 的取值可以为 static, dynamic, guided, auto 。并且 chunk size 是可选的，而且他的值是一个正整数。如果这个环境变量没有定义，默认的调度方式是 dynamic 并且 chunk size = 1 。
 
 ## 总结
 
@@ -261,6 +261,3 @@ int sched_getaffinity(pid_t pid, size_t cpusetsize,
 更多精彩内容合集可访问项目：<https://github.com/Chang-LeHung/CSCore>
 
 关注公众号：一无是处的研究僧，了解更多计算机（Java、Python、计算机系统基础、算法与数据结构）知识。
-
-![](https://img2022.cnblogs.com/blog/2519003/202207/2519003-20220703200459566-1837431658.jpg)
-
