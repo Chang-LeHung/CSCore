@@ -61,6 +61,7 @@
     * [OpenMP 常见的动态库函数使用（上）](concurrency/openmp/03runtime1.md)
     * [Openmp 常见的动态库函数使用（下）——深入剖析锁🔒原理与实现](concurrency/openmp/04runtime2.md)
     * [Openmp 环境变量使用总结](concurrency/openmp/05environment.md)
+    * [深入理解 OpenMP 线程同步机制](concurrency/openmp/06sync.md)
     
 * Pthread
     * [Pthread 并发编程（一）——深入剖析线程基本元素和状态](concurrency/pthread/01pthread.md)
