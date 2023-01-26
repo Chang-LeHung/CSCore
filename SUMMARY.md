@@ -64,6 +64,7 @@
     * [深入理解 OpenMP 线程同步机制](concurrency/openmp/06sync.md)
     * [OpenMP 原子指令设计与实现](concurrency/openmp/07atomic.md)
     * [Parallel Construct 实现原理与源码分析](concurrency/openmp/08parallel.md)
+    * [OpenMP 线程同步 Construct 实现原理以及源码分析（上）](concurrency/openmp/09sync.md)
     
 * Pthread
     * [Pthread 并发编程（一）——深入剖析线程基本元素和状态](concurrency/pthread/01pthread.md)
