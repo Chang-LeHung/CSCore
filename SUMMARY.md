@@ -66,6 +66,7 @@
     * [Parallel Construct 实现原理与源码分析](concurrency/openmp/08parallel.md)
     * [OpenMP 线程同步 Construct 实现原理以及源码分析（上）](concurrency/openmp/09sync.md)
     * [OpenMP 线程同步 Construct 实现原理以及源码分析（下）](concurrency/openmp/10sync.md)
+    * [OpenMP For Construct dynamic 调度方式实现原理和源码分析](concurrency/openmp/11for_dynamic.md)
     
 * Pthread
     * [Pthread 并发编程（一）——深入剖析线程基本元素和状态](concurrency/pthread/01pthread.md)
