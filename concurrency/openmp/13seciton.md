@@ -169,7 +169,7 @@ gomp_iter_dynamic_next (long *pstart, long *pend)
 
 ## 总结
 
-在本篇文章当中主要介绍了 OpenMP 当中 sections 的实现原理和相关的动态库函数分析，关于 sections 重点在编译器会如何对 sections 的编译指导语句进行处理的，动态库函数和 for 循环的动态调度方式是一样的，只不过 chunk size 设置成 1，分块的起始位置等于 1，分块的最终值是 section 代码块的个数，最终在动态调度的方式使用 CAS 不断获取 section 的执行权，指导所有的 section 被执行完成。
+在本篇文章当中主要介绍了 OpenMP 当中 sections 的实现原理和相关的动态库函数分析，关于 sections 重点在编译器会如何对 sections 的编译指导语句进行处理的，动态库函数和 for 循环的动态调度方式是一样的，只不过 chunk size 设置成 1，分块的起始位置等于 1，分块的最终值是 section 代码块的个数，最终在动态调度的方式使用 CAS 不断获取 section 的执行权，直到所有的 section 被执行完成。
 
 ---
 
