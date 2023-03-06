@@ -69,6 +69,7 @@
     * [OpenMP For Construct dynamic 调度方式实现原理和源码分析](concurrency/openmp/11for_dynamic.md)
     * [OpenMP For Construct guided 调度方式实现原理和源码分析](concurrency/openmp/12guided.md)
     * [OpenMP Sections Construct 实现原理以及源码分析](concurrency/openmp/13seciton.md)
+    * [OpenMP task construct 实现原理以及源码分析](concurrency/openmp/14task.md)
     
 * Pthread
     * [Pthread 并发编程（一）——深入剖析线程基本元素和状态](concurrency/pthread/01pthread.md)
