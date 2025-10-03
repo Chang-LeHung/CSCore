@@ -1,0 +1,1747 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>你在终端启动的进程，最后都是什么下场？（上） · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="02jobcontrol.html" />
+    
+    
+    <link rel="prev" href="../command/04exitstatus.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    基础容器
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../../container/01-链表设计与实现.html">
+            
+                <a href="../../container/01-链表设计与实现.html">
+            
+                    
+                    链表设计与Java实现——自己动手写LinkedList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../../container/02-linkedlist源码剖析.html">
+            
+                <a href="../../container/02-linkedlist源码剖析.html">
+            
+                    
+                    LinekdList源码深度剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../../container/03-array容器设计与实现.html">
+            
+                <a href="../../container/03-array容器设计与实现.html">
+            
+                    
+                    数组容器(ArrayList)设计与Java实现——自己动手写ArrayList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../../container/04-arraylist源码剖析.html">
+            
+                <a href="../../container/04-arraylist源码剖析.html">
+            
+                    
+                    ArrayList源码剖析，从扩容原理，到迭代器和fast-fail机制，你想要的这都有！！！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../../container/05-hashmap设计与实现.html">
+            
+                <a href="../../container/05-hashmap设计与实现.html">
+            
+                    
+                    HashMap设计原理与实现（上篇）——哈希表的原理，如何从0到1设计一个HashMap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../../container/06-hashmap设计与实现.html">
+            
+                <a href="../../container/06-hashmap设计与实现.html">
+            
+                    
+                    HashMap设计原理与实现（下篇）200行代码带你写自己的HashMap！！！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../../container/07-hashmap源码剖析.html">
+            
+                <a href="../../container/07-hashmap源码剖析.html">
+            
+                    
+                    HashMap源码深度剖析，手把手带你分析每一行代码，包会！！！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="../../container/08-arraydeque源码剖析.html">
+            
+                <a href="../../container/08-arraydeque源码剖析.html">
+            
+                    
+                    ArrayDeque（JDK双端队列）源码深度剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="../../container/09-arrayqueue源码剖析.html">
+            
+                <a href="../../container/09-arrayqueue源码剖析.html">
+            
+                    
+                    深入剖析（JDK）ArrayQueue 源码
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    高级容器
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../../concurrency/java/11blockingqueue.html">
+            
+                <a href="../../concurrency/java/11blockingqueue.html">
+            
+                    
+                    从零开始自己动手写阻塞队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../../concurrency/java/12blockingqueuesrc.html">
+            
+                <a href="../../concurrency/java/12blockingqueuesrc.html">
+            
+                    
+                    JDK数组阻塞队列源码深入剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    动态规划
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../../da/01-动态规划.html">
+            
+                <a href="../../da/01-动态规划.html">
+            
+                    
+                    庖丁解牛斐波拉契数列和背包问题——详细解析两个问题优化过程（超多问题优化干货，不看血亏），带你从最基本最核心的问题看懂动态规划！！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../../da/02-01背包问题.html">
+            
+                <a href="../../da/02-01背包问题.html">
+            
+                    
+                    你真的懂01背包问题吗？01背包的这几问你能答出来吗？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../../da/03完全背包.html">
+            
+                <a href="../../da/03完全背包.html">
+            
+                    
+                    面试官：完全背包都不会，是你自己走还是我送你？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../../da/04多重背包v1.html">
+            
+                <a href="../../da/04多重背包v1.html">
+            
+                    
+                    深入剖析多重背包问题（上篇）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../../da/04多重背包v2.html">
+            
+                <a href="../../da/04多重背包v2.html">
+            
+                    
+                    深入剖析多重背包问题（下篇）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../../da/14深入剖析完全背包.html">
+            
+                <a href="../../da/14深入剖析完全背包.html">
+            
+                    
+                    完全背包转化为多重背包
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../../da/13零钱兑换.html">
+            
+                <a href="../../da/13零钱兑换.html">
+            
+                    
+                    深入浅出零钱兑换问题——背包问题的套壳
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../../da/05深入剖析斐波拉契数列.html">
+            
+                <a href="../../da/05深入剖析斐波拉契数列.html">
+            
+                    
+                    深入剖析斐波拉契数列
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    股票问题
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../../da/09状态机动态规划.html">
+            
+                <a href="../../da/09状态机动态规划.html">
+            
+                    
+                    这种动态规划你见过吗——状态机动态规划之股票问题(上)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../../da/10状态机动态规划02.html">
+            
+                <a href="../../da/10状态机动态规划02.html">
+            
+                    
+                    这种动态规划你见过吗——状态机动态规划之股票问题(中)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../../da/11状态机动态规划03.html">
+            
+                <a href="../../da/11状态机动态规划03.html">
+            
+                    
+                    这种动态规划你见过吗——状态机动态规划之股票问题(下)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../../da/12状态机动态规划总结.html">
+            
+                <a href="../../da/12状态机动态规划总结.html">
+            
+                    
+                    状态机动态规划之股票问题总结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                    回溯
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../../da/backtrace/01combinations.html">
+            
+                <a href="../../da/backtrace/01combinations.html">
+            
+                    
+                    通过组合问题看透回溯法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" >
+            
+                <span>
+            
+                    
+                    数据结构
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../../da/07表达式求值.html">
+            
+                <a href="../../da/07表达式求值.html">
+            
+                    
+                    深入剖析前缀、中缀、后缀表达式以及表达式求值
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    并发
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../../concurrency/java/01初始java并发.html">
+            
+                <a href="../../concurrency/java/01初始java并发.html">
+            
+                    
+                    并发开篇——带你从0到1建立并发知识体系的基石
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../../concurrency/java/02并发的噩梦.html">
+            
+                <a href="../../concurrency/java/02并发的噩梦.html">
+            
+                    
+                    并发程序的噩梦——数据竞争
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" data-path="../../concurrency/java/03自己动手写并发工具类.html">
+            
+                <a href="../../concurrency/java/03自己动手写并发工具类.html">
+            
+                    
+                    30行自己写并发工具类(Semaphore, CyclicBarrier, CountDownLatch)是什么体验?
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="../../concurrency/java/04volatile.html">
+            
+                <a href="../../concurrency/java/04volatile.html">
+            
+                    
+                    万字长文：从计算机本源深入探寻volatile和Java内存模型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5" data-path="../../concurrency/java/05falsesharing.html">
+            
+                <a href="../../concurrency/java/05falsesharing.html">
+            
+                    
+                    并发刺客（False Sharing）——并发程序的隐藏杀手
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.6" data-path="../../concurrency/java/06futuretask.html">
+            
+                <a href="../../concurrency/java/06futuretask.html">
+            
+                    
+                    60行从零开始自己动手写FutureTask是什么体验？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.7" data-path="../../concurrency/java/07futuretasksrc.html">
+            
+                <a href="../../concurrency/java/07futuretasksrc.html">
+            
+                    
+                    FutureTask源码深度剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.8" data-path="../../concurrency/java/08synchronizedusage.html">
+            
+                <a href="../../concurrency/java/08synchronizedusage.html">
+            
+                    
+                    深入学习Synchronized各种使用方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.9" data-path="../../concurrency/java/09synchronized.html">
+            
+                <a href="../../concurrency/java/09synchronized.html">
+            
+                    
+                    Synchronized锁升级原理与过程深入剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.10" data-path="../../concurrency/java/10spinlock.html">
+            
+                <a href="../../concurrency/java/10spinlock.html">
+            
+                    
+                    从零开始自己动手写自旋锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.11" data-path="../../concurrency/java/13locksupport.html">
+            
+                <a href="../../concurrency/java/13locksupport.html">
+            
+                    
+                    60行自己动手写LockSupport是什么体验？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.12" data-path="../../concurrency/java/14threadpool.html">
+            
+                <a href="../../concurrency/java/14threadpool.html">
+            
+                    
+                    彻底了解线程池的原理——40行从零开始自己写线程池
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.13" data-path="../../concurrency/java/16retalkingthreadpool.html">
+            
+                <a href="../../concurrency/java/16retalkingthreadpool.html">
+            
+                    
+                    再谈线程池——深入剖析线程池的前世今生
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.14" data-path="../../concurrency/java/17threadpoolimplementation.html">
+            
+                <a href="../../concurrency/java/17threadpoolimplementation.html">
+            
+                    
+                    自己动手写乞丐版线程池
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.15" data-path="../../concurrency/java/18threadpoolmorecloseJDK.html">
+            
+                <a href="../../concurrency/java/18threadpoolmorecloseJDK.html">
+            
+                    
+                    自己动手写线程池——向JDK线程池进发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.16" data-path="../../concurrency/java/11blockingqueue.html">
+            
+                <a href="../../concurrency/java/11blockingqueue.html">
+            
+                    
+                    从零开始自己动手写阻塞队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.17" data-path="../../concurrency/java/12blockingqueuesrc.html">
+            
+                <a href="../../concurrency/java/12blockingqueuesrc.html">
+            
+                    
+                    JDK数组阻塞队列源码深入剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" >
+            
+                <span>
+            
+                    
+                    OpenMP
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../../concurrency/openmp/01introduction.html">
+            
+                <a href="../../concurrency/openmp/01introduction.html">
+            
+                    
+                    OpenMP 入门
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../../concurrency/openmp/02openmp.html">
+            
+                <a href="../../concurrency/openmp/02openmp.html">
+            
+                    
+                    OpenMP 教程（一）——OpenMP 当中的 reduction 子句
+
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../../concurrency/openmp/03runtime1.html">
+            
+                <a href="../../concurrency/openmp/03runtime1.html">
+            
+                    
+                    OpenMP 常见的动态库函数使用（上）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../../concurrency/openmp/04runtime2.html">
+            
+                <a href="../../concurrency/openmp/04runtime2.html">
+            
+                    
+                    Openmp 常见的动态库函数使用（下）——深入剖析锁🔒原理与实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../../concurrency/openmp/05environment.html">
+            
+                <a href="../../concurrency/openmp/05environment.html">
+            
+                    
+                    Openmp 环境变量使用总结
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6" data-path="../../concurrency/openmp/06sync.html">
+            
+                <a href="../../concurrency/openmp/06sync.html">
+            
+                    
+                    深入理解 OpenMP 线程同步机制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.7" data-path="../../concurrency/openmp/07atomic.html">
+            
+                <a href="../../concurrency/openmp/07atomic.html">
+            
+                    
+                    OpenMP 原子指令设计与实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.8" data-path="../../concurrency/openmp/08parallel.html">
+            
+                <a href="../../concurrency/openmp/08parallel.html">
+            
+                    
+                    Parallel Construct 实现原理与源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.9" data-path="../../concurrency/openmp/09sync.html">
+            
+                <a href="../../concurrency/openmp/09sync.html">
+            
+                    
+                    OpenMP 线程同步 Construct 实现原理以及源码分析（上）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.10" data-path="../../concurrency/openmp/10sync.html">
+            
+                <a href="../../concurrency/openmp/10sync.html">
+            
+                    
+                    OpenMP 线程同步 Construct 实现原理以及源码分析（下）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.11" data-path="../../concurrency/openmp/11for_dynamic.html">
+            
+                <a href="../../concurrency/openmp/11for_dynamic.html">
+            
+                    
+                    OpenMP For Construct dynamic 调度方式实现原理和源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.12" data-path="../../concurrency/openmp/12guided.html">
+            
+                <a href="../../concurrency/openmp/12guided.html">
+            
+                    
+                    OpenMP For Construct guided 调度方式实现原理和源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.13" data-path="../../concurrency/openmp/13seciton.html">
+            
+                <a href="../../concurrency/openmp/13seciton.html">
+            
+                    
+                    OpenMP Sections Construct 实现原理以及源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.14" data-path="../../concurrency/openmp/14task.html">
+            
+                <a href="../../concurrency/openmp/14task.html">
+            
+                    
+                    OpenMP task construct 实现原理以及源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" >
+            
+                <span>
+            
+                    
+                    Pthread
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../../concurrency/pthread/01pthread.html">
+            
+                <a href="../../concurrency/pthread/01pthread.html">
+            
+                    
+                    Pthread 并发编程（一）——深入剖析线程基本元素和状态
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../../concurrency/pthread/02pthread.html">
+            
+                <a href="../../concurrency/pthread/02pthread.html">
+            
+                    
+                    Pthread 并发编程（二）——自底向上深入理解线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../../concurrency/pthread/03pthread.html">
+            
+                <a href="../../concurrency/pthread/03pthread.html">
+            
+                    
+                    Pthread 并发编程（三）——深入理解线程取消机制
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    Makefile
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../../tools/makefile/01.html">
+            
+                <a href="../../tools/makefile/01.html">
+            
+                    
+                    彻底掌握Makefile（一）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../../tools/makefile/02.html">
+            
+                <a href="../../tools/makefile/02.html">
+            
+                    
+                    彻底掌握Makefile（二）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.3" data-path="../../tools/makefile/03.html">
+            
+                <a href="../../tools/makefile/03.html">
+            
+                    
+                    彻底掌握Makefile（三）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" >
+            
+                <span>
+            
+                    
+                    DES
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../../des/des.html">
+            
+                <a href="../../des/des.html">
+            
+                    
+                    DES加密算法从入门到入坟
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" >
+            
+                <span>
+            
+                    
+                    命令行&系统编程&SHELL
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.13.1" data-path="../command/01top.html">
+            
+                <a href="../command/01top.html">
+            
+                    
+                    Linux命令系列之top——里面藏着很多鲜为人知的宝藏知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.2" data-path="../command/02ls.html">
+            
+                <a href="../command/02ls.html">
+            
+                    
+                    Linux命令系列之ls——原来最简单的ls这么复杂
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.3" data-path="../command/03mkls.html">
+            
+                <a href="../command/03mkls.html">
+            
+                    
+                    自己动手写ls命令——Java版
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.4" data-path="../command/05ps.html">
+            
+                <a href="../command/05ps.html">
+            
+                    
+                    这才是使用ps命令的正确姿势
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.5" data-path="../command/06kill.html">
+            
+                <a href="../command/06kill.html">
+            
+                    
+                    如何优雅的杀掉一个进程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.6" data-path="../programming/01exit.html">
+            
+                <a href="../programming/01exit.html">
+            
+                    
+                    C语言中这么骚的退出程序的方式你知道几个？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.7" data-path="../programming/02sgementation.html">
+            
+                <a href="../programming/02sgementation.html">
+            
+                    
+                    你的哪些骚操作会导致Segmentation Fault😂
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.8" data-path="../programming/03segprincinple.html">
+            
+                <a href="../programming/03segprincinple.html">
+            
+                    
+                    深入剖析Sgementation fault原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.9" data-path="../programming/04processdie.html">
+            
+                <a href="../programming/04processdie.html">
+            
+                    
+                    进程最后的遗言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.10" data-path="../command/04exitstatus.html">
+            
+                <a href="../command/04exitstatus.html">
+            
+                    
+                    Shell揭秘——程序退出状态码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.13.11" data-path="01jobcontrol.html">
+            
+                <a href="01jobcontrol.html">
+            
+                    
+                    你在终端启动的进程，最后都是什么下场？（上）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.12" data-path="02jobcontrol.html">
+            
+                <a href="02jobcontrol.html">
+            
+                    
+                    你在终端启动的进程，最后都是什么下场？（下）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" >
+            
+                <span>
+            
+                    
+                    计算机系统基础
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.14.1" data-path="../../pl/c_cpp/01builtin.html">
+            
+                <a href="../../pl/c_cpp/01builtin.html">
+            
+                    
+                    gcc 好玩的 builtin 函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" >
+            
+                <span>
+            
+                    
+                    python
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../../pl/python/misc/01copy.html">
+            
+                <a href="../../pl/python/misc/01copy.html">
+            
+                    
+                    深入理解 python 对象拷贝和内存布局
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >你在终端启动的进程，最后都是什么下场？（上）</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="&#x4F60;&#x5728;&#x7EC8;&#x7AEF;&#x542F;&#x52A8;&#x7684;&#x8FDB;&#x7A0B;&#xFF0C;&#x6700;&#x540E;&#x90FD;&#x662F;&#x4EC0;&#x4E48;&#x4E0B;&#x573A;&#xFF1F;&#xFF08;&#x4E0A;&#xFF09;">&#x4F60;&#x5728;&#x7EC8;&#x7AEF;&#x542F;&#x52A8;&#x7684;&#x8FDB;&#x7A0B;&#xFF0C;&#x6700;&#x540E;&#x90FD;&#x662F;&#x4EC0;&#x4E48;&#x4E0B;&#x573A;&#xFF1F;&#xFF08;&#x4E0A;&#xFF09;</h1>
+<h2 id="&#x524D;&#x8A00;">&#x524D;&#x8A00;</h2>
+<p>&#x5728;&#x672C;&#x7BC7;&#x6587;&#x7AE0;&#x5F53;&#x4E2D;&#xFF0C;&#x4E3B;&#x8981;&#x7ED9;&#x5927;&#x5BB6;&#x4ECB;&#x7ECD;&#x6211;&#x4EEC;&#x5728;&#x7EC8;&#x7AEF;&#x542F;&#x52A8;&#x7684;&#x8FDB;&#x7A0B;&#x90FD;&#x662F;&#x600E;&#x4E48;&#x7ED3;&#x675F;&#x7684;&#xFF0C;&#x5728;&#x6211;&#x4EEC;&#x767B;&#x5F55;&#x7EC8;&#x7AEF;&#x548C;&#x9000;&#x51FA;&#x7EC8;&#x7AEF;&#x90FD;&#x53D1;&#x751F;&#x4E86;&#x4EC0;&#x4E48;&#xFF1F;</p>
+<h2 id="&#x57FA;&#x672C;&#x4ECB;&#x7ECD;">&#x57FA;&#x672C;&#x4ECB;&#x7ECD;</h2>
+<p>&#x9996;&#x5148;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x4E86;&#x89E3;&#x7684;&#x6982;&#x5FF5;&#x5C31;&#x662F;&#x5F53;&#x6211;&#x4EEC;&#x4F7F;&#x7528; ssh &#x767B;&#x5F55;&#x670D;&#x52A1;&#x5668;&#x7684;&#x65F6;&#x5019;&#x5C31;&#x4F1A;&#x4EA7;&#x751F;&#x4E00;&#x4E2A;&#x4F1A;&#x8BDD;&#x3002;&#x5F53;&#x6211;&#x4EEC;&#x5728;&#x7EC8;&#x7AEF;&#x542F;&#x52A8;&#x4E00;&#x4E2A;&#x7A0B;&#x5E8F;&#x4E4B;&#x540E;&#x4F1A;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x8FDB;&#x7A0B;&#x7EC4;&#xFF0C;&#x8FDB;&#x7A0B;&#x7EC4;&#x7684;&#x9996;&#x8FDB;&#x7A0B;&#x4E3A;&#x8981;&#x6267;&#x884C;&#x7684;&#x7A0B;&#x5E8F;&#xFF0C;&#x8FD9;&#x4E2A;&#x8FDB;&#x7A0B;&#x7EC4;&#x53EF;&#x4EE5;&#x662F;&#x4E00;&#x4E2A;&#x8FDB;&#x7A0B;&#x4E5F;&#x53EF;&#x4EE5;&#x662F;&#x591A;&#x4E2A;&#x8FDB;&#x7A0B;&#xFF0C;&#x6574;&#x4E2A;&#x8FDB;&#x7A0B;&#x7EC4;&#x5728; shell &#x770B;&#x6765;&#x4E5F;&#x662F;&#x4E00;&#x4E2A;&#x4F5C;&#x4E1A;&#xFF08;Job&#xFF09;&#x3002;&#x5982;&#x679C;&#x4F60;&#x4E0D;&#x4F7F;&#x7528; &amp; &#x7B26;&#x53F7;&#x53BB;&#x6267;&#x884C;&#x4E00;&#x4E2A;&#x7A0B;&#x5E8F;&#xFF0C;&#x90A3;&#x4E48; shell &#x5C31;&#x4F1A;&#x6267;&#x884C;&#x8FD9;&#x4E2A;&#x7A0B;&#x5E8F;&#xFF0C;&#x7136;&#x540E;&#x8FD9;&#x4E2A;&#x7A0B;&#x5E8F;&#x5C31;&#x6210;&#x4E3A;&#x4E00;&#x4E2A;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#xFF08;&#x53EF;&#x4EE5;&#x662F;&#x4E00;&#x4E2A;&#x8FDB;&#x7A0B;&#x4E5F;&#x53EF;&#x4EE5;&#x662F;&#x591A;&#x4E2A;&#x8FDB;&#x7A0B;&#xFF09;&#xFF0C;&#x5F53;&#x6211;&#x4EEC;&#x5728;&#x7EC8;&#x7AEF;&#x5F53;&#x4E2D;&#x6267;&#x884C;&#x7684;&#x547D;&#x4EE4;&#x52A0;&#x4E0A; &amp; &#x7B26;&#x53F7;&#xFF0C;&#x90A3;&#x4E48;&#x8FD9;&#x4E2A;&#x4F5C;&#x4E1A;&#xFF08;Job&#xFF09;&#x5C31;&#x4F1A;&#x6210;&#x4E3A;&#x4E00;&#x4E2A;&#x540E;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#x3002;</p>
+<p>&#x4F1A;&#x8BDD;&#x3001;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#x548C;&#x540E;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#x4ED6;&#x4EEC;&#x4E4B;&#x95F4;&#x7684;&#x5173;&#x7CFB;&#x5927;&#x81F4;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="../../images/linux/shell/5.png" alt="1"></p>
+<p>&#x4ECE;&#x4E0A;&#x9762;&#x7684;&#x56FE;&#x5F53;&#x4E2D;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;&#x4E00;&#x4E2A;&#x4F1A;&#x8BDD;&#x5F53;&#x4E2D;&#x6709;&#x5F88;&#x591A;&#x4E2A;&#x8FDB;&#x7A0B;&#x7EC4;&#xFF0C;&#x5206;&#x4E3A;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#x548C;&#x540E;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#xFF0C;&#x4F46;&#x662F;&#x540E;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#x53EF;&#x4EE5;&#x6709;&#x591A;&#x4E2A;&#xFF0C;&#x524D;&#x53F0;&#x5462;&#x8FDB;&#x7A0B;&#x7EC4;&#x6700;&#x591A;&#x53EA;&#x80FD;&#x6709;&#x4E00;&#x4E2A;&#xFF0C;&#x800C;&#x4E14;&#x6BCF;&#x4E00;&#x4E2A;&#x8FDB;&#x7A0B;&#x7EC4;&#x5F53;&#x4E2D;&#x53EF;&#x4EE5;&#x6709;&#x591A;&#x4E2A;&#x8FDB;&#x7A0B;&#xFF08;&#x5F53;&#x4F60;&#x5728;&#x6267;&#x884C;&#x7684;&#x7A0B;&#x5E8F;&#x5F53;&#x4E2D; fork &#x51FA;&#x5B50;&#x8FDB;&#x7A0B;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x542B;&#x6709;&#x591A;&#x4E2A;&#x8FDB;&#x7A0B;&#x7684;&#x8FDB;&#x7A0B;&#x7EC4;&#xFF09;&#x3002;</p>
+<p>&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x4F7F;&#x7528;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#x5177;&#x4F53;&#x53BB;&#x4E86;&#x89E3;&#x4E00;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-c">
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unistd.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+  <span class="hljs-comment">// &#x6253;&#x5370;&#x8FDB;&#x7A0B;&#x7684; id &#x53F7;</span>
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;process id = %d\n&quot;</span>, getpid());
+  <span class="hljs-comment">// &#x6253;&#x5370;&#x8FDB;&#x7A0B;&#x7684;&#x8FDB;&#x7A0B;&#x7EC4;&#x53F7; 0 &#x8868;&#x793A;&#x8FD4;&#x56DE;&#x5F53;&#x524D;&#x8FDB;&#x7A0B;&#x7684;&#x8FDB;&#x7A0B;&#x7EC4;&#x53F7;</span>
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;process group id = %d\n&quot;</span>, getpgid(<span class="hljs-number">0</span>));
+  <span class="hljs-comment">// &#x6253;&#x5370;&#x8FDB;&#x7A0B;&#x7684;&#x7236;&#x8FDB;&#x7A0B;&#x53F7;</span>
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;parent process id = %d\n&quot;</span>, getppid());
+  <span class="hljs-comment">// &#x6253;&#x5370;&#x7236;&#x8FDB;&#x7A0B;&#x7684;&#x8FDB;&#x7A0B;&#x7EC4;&#x53F7;</span>
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;parent process group id = %d\n&quot;</span>, getpgid(getppid()));
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x4E0A;&#x9762;&#x7684;&#x7A0B;&#x5E8F;&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre><code class="lang-shell">&#x279C;  daemon git:(master) &#x2717; ./job1.out 
+process id = 3773445
+process group id = 3773445
+parent process id = 3766993
+parent process group id = 3766993
+</code></pre>
+<p>&#x4ECE;&#x4E0A;&#x9762;&#x7A0B;&#x5E8F;&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x7A0B;&#x5E8F;&#x7684;&#x8FDB;&#x7A0B;&#x7EC4;&#x53F7;&#x548C;&#x7236;&#x8FDB;&#x7A0B;&#x7684;&#x8FDB;&#x7A0B;&#x7EC4;&#x53F7;&#x662F;&#x4E0D;&#x4E00;&#x6837;&#x7684;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x4E86;&#x89E3;&#x5230;&#x7684;&#x662F;&#xFF0C;job1 &#x7684;&#x7236;&#x8FDB;&#x7A0B;&#x5C31;&#x662F; shell &#xFF0C;&#x4F46;&#x662F;&#x4ED6;&#x4E0E; shell &#x7684;&#x8FDB;&#x7A0B;&#x7EC4;&#x662F;&#x4E0D;&#x4E00;&#x6837;&#x7684;&#xFF0C;shell &#x5728;&#x6267;&#x884C;&#x65B0;&#x7684;&#x7A0B;&#x5E8F;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x5B50;&#x8FDB;&#x7A0B;&#xFF0C;&#x7136;&#x540E;&#x4FEE;&#x6539;&#x5B50;&#x8FDB;&#x7A0B;&#x7684;&#x8FDB;&#x7A0B;&#x7EC4;&#x53F7;&#xFF0C;&#x800C;&#x4E14;&#x65B0;&#x7684;&#x8FDB;&#x7A0B;&#x7EC4;&#x7684;&#x7EC4;&#x53F7;&#x4E3A;&#x5B50;&#x8FDB;&#x7A0B;&#x7684;&#x8FDB;&#x7A0B;&#x53F7;&#x3002;</p>
+<p>&#x6216;&#x8005;&#x6211;&#x4EEC;&#x76F4;&#x63A5;&#x5728;&#x7EC8;&#x7AEF;&#x8F93;&#x5165;&#x547D;&#x4EE4;&#x4E5F;&#x53EF;&#x4EE5;&#x53D1;&#x73B0; shell &#x7684;&#x5B50;&#x8FDB;&#x7A0B;&#x7684;&#x8FDB;&#x7A0B;&#x7EC4;&#x53F7;&#x548C; shell &#x7684;&#x8FDB;&#x7A0B;&#x7EC4;&#x53F7;&#x662F;&#x4E0D;&#x4E00;&#x6837;&#x7684;&#xFF1A;</p>
+<pre><code class="lang-shell">&#x279C;  daemon git:(master) &#x2717; ps -o pid,ppid,pgid,tty,cmd
+    PID    PPID    PGID TT       CMD
+3766993 3757891 3766993 pts/1    /usr/bin/zsh -i
+3772829 3766993 3772829 pts/1    ps -o pid,ppid,pgid,tty,cmd
+</code></pre>
+<p>&#x5728;&#x4E0A;&#x9762;&#x7684;&#x8F93;&#x51FA;&#x5F53;&#x4E2D;&#xFF0C;PID&#xFF0C;PPID&#xFF0C;PGID &#x5206;&#x522B;&#x8868;&#x793A;&#x8FDB;&#x7A0B;&#x7684;&#x8FDB;&#x7A0B;&#x53F7;&#xFF0C;&#x7236;&#x8FDB;&#x7A0B;&#x53F7;&#x548C;&#x8FDB;&#x7A0B;&#x7EC4;&#x53F7;&#xFF0C;CMD &#x8868;&#x793A;&#x6267;&#x884C;&#x7A0B;&#x5E8F;&#x65F6;&#x5019;&#x7684;&#x547D;&#x4EE4;&#x3002;&#x9996;&#x5148;&#x6211;&#x4EEC;&#x77E5;&#x9053;&#x7684;&#x662F; ps &#x547D;&#x4EE4;&#x8FDB;&#x7A0B;&#x662F; shell &#x8FDB;&#x7A0B;&#x7684;&#x5B50;&#x8FDB;&#x7A0B;&#xFF08;&#x4E0A;&#x9762;&#x7684;&#x8FDB;&#x7A0B;&#x53F7;&#x7B49;&#x4E8E; 3766993 &#x7684;&#x8FDB;&#x7A0B;&#x5C31;&#x662F; shell &#x8FDB;&#x7A0B;&#xFF09;&#xFF0C;&#x4ECE;&#x4E0A;&#x9762;&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x4E5F;&#x53EF;&#x4EE5;&#x5F97;&#x77E5;&#x8FD9;&#x4E00;&#x70B9;&#xFF08; ps &#x7684; PPID &#x5C31;&#x662F; shell &#x7684; PID&#xFF09;&#x3002;</p>
+<p>&#x901A;&#x8FC7;&#x4E0A;&#x9762;&#x4E24;&#x4E2A;&#x4F8B;&#x5B50;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x77E5;&#x9053;&#xFF0C;&#x786E;&#x5B9E;&#x5F53;&#x6211;&#x4EEC;&#x6267;&#x884C;&#x7A0B;&#x5E8F;&#x7684;&#x65F6;&#x5019; shell &#x4F1A;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x8FDB;&#x7A0B;&#x7EC4;&#xFF0C;&#x4E8B;&#x5B9E;&#x4E0A;&#x53EA;&#x8981;&#x662F;&#x5728;&#x7EC8;&#x7AEF;&#x91CC;&#x9762;&#x6267;&#x884C;&#x7684;&#x7A0B;&#x5E8F;&#xFF0C;&#x90FD;&#x4F1A;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x8FDB;&#x7A0B;&#x7EC4;&#x3002;&#x5982;&#x679C;&#x4F60;&#x719F;&#x6089; linux &#x7684;&#x8BDD;&#xFF0C;&#x90A3;&#x4E48;&#x80AF;&#x5B9A;&#x7528;&#x8FC7; &amp; &#x7B26;&#x53F7;&#xFF0C;&#x8FD9;&#x4E2A;&#x7B26;&#x53F7;&#x5C31;&#x662F;&#x5C06;&#x4EFB;&#x52A1;&#x653E;&#x5728;&#x540E;&#x53F0;&#x6267;&#x884C;&#xFF0C;&#x8FD9;&#x6837;&#x521B;&#x5EFA;&#x7684;&#x8FDB;&#x7A0B;&#x7EC4;&#x5C31;&#x662F;&#x540E;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#x3002;</p>
+<h2 id="&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x7684;&#x6B7B;&#x4EA1;&#x60C5;&#x51B5;&#x5217;&#x8868;">&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x7684;&#x6B7B;&#x4EA1;&#x60C5;&#x51B5;&#x5217;&#x8868;</h2>
+<p>&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#x7684;&#x6B7B;&#x4EA1;&#x4E00;&#x822C;&#x6765;&#x8BF4;&#x6709;&#x56DB;&#x79CD;&#x60C5;&#x51B5;&#xFF1A;</p>
+<ul>
+<li>&#x7A0B;&#x5E8F;&#x6B63;&#x5E38;&#x7ED3;&#x675F;&#xFF0C;&#x6BD4;&#x5982;&#x4F60;&#x5728;&#x7EC8;&#x7AEF;&#x8F93;&#x5165; ls &#x547D;&#x4EE4;&#xFF0C;&#x6267;&#x884C;&#x5B8C;&#x6210;&#x2705;&#x4E4B;&#x540E;&#x4ED6;&#x5C31;&#x6B63;&#x5E38;&#x7ED3;&#x675F;&#x4E86;&#x3002;</li>
+<li>&#x5F53;&#x4F60;&#x5728;&#x7EC8;&#x7AEF;&#x8F93;&#x5165; ctrl + c &#x4E4B;&#x7C7B;&#x7684;&#x5B57;&#x7B26;&#x7684;&#x65F6;&#x5019;&#x5185;&#x6838;&#x4F1A;&#x7ED9;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#x53D1;&#x9001; SIGINT &#x4E4B;&#x7C7B;&#x7684;&#x4FE1;&#x53F7;&#x3002;</li>
+<li>&#x5F53;&#x63A7;&#x5236;&#x8FDB;&#x7A0B; &#x4E5F;&#x5C31;&#x662F; shell &#x8FDB;&#x7A0B;&#x7EC8;&#x6B62;(&#x6BD4;&#x5982;&#x8BF4;&#x88AB;&#x6740;&#x6389;&#x4E86;)&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x5185;&#x6838;&#x4F1A;&#x53D1;&#x9001; SIGHUP &#x4FE1;&#x53F7;&#x7ED9;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x8FDB;&#x7A0B;&#x3002;</li>
+<li>&#x5F53;&#x9000;&#x51FA;&#x7EC8;&#x7AEF;&#x7684;&#x65F6;&#x5019;&#xFF0C;shell &#x4F1A;&#x53D1;&#x9001; SIGHUP &#x4FE1;&#x53F7;&#x7ED9;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#x3002;</li>
+</ul>
+<h2 id="&#x521D;&#x63A2;&#x4FE1;&#x53F7;">&#x521D;&#x63A2;&#x4FE1;&#x53F7;</h2>
+<p>&#x5927;&#x5BB6;&#x5982;&#x679C;&#x7ECF;&#x5E38;&#x4F7F;&#x7528; linux &#x7684;&#x8BDD;&#xFF0C;&#x4E00;&#x5B9A;&#x4F1A;&#x6709;&#x8FC7;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#xFF1A;&#x5F53;&#x4F60;&#x5728;&#x7EC8;&#x7AEF;&#x6267;&#x884C;&#x4E00;&#x4E2A;&#x7A0B;&#x5E8F;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4F60;&#x7A81;&#x7136;&#x9047;&#x5230;&#x67D0;&#x4E9B;&#x95EE;&#x9898;&#x4E0D;&#x60F3;&#x6267;&#x884C;&#x4ED6;&#x4E86;&#xFF0C;&#x7136;&#x540E;&#x4F60;&#x4F1A;&#x75AF;&#x72C2;&#x6309; ctrl + c &#xFF0C;&#x8BA9;&#x8FD9;&#x4E2A;&#x7A0B;&#x5E8F;&#x9000;&#x51FA;&#x3002;&#x90A3;&#x5F53;&#x4F60;&#x5728;&#x7EC8;&#x7AEF;&#x6309;&#x4E0B; ctrl + c &#x7684;&#x65F6;&#x5019;&#x7A0B;&#x5E8F;&#x4E00;&#x5B9A;&#x4F1A;&#x505C;&#x6B62;&#x561B;&#xFF1F;&#x5982;&#x679C;&#x7A0B;&#x5E8F;&#x9000;&#x51FA;&#x4E86;&#xFF0C;&#x90A3;&#x662F;&#x4EC0;&#x4E48;&#x539F;&#x56E0;&#x5BFC;&#x81F4;&#x4ED6;&#x9000;&#x51FA;&#x7684;&#x5462;&#xFF1F;&#x4E8B;&#x5B9E;&#x4E0A;&#xFF0C;&#x5F53;&#x4F60;&#x5728;&#x7EC8;&#x7AEF;&#x6309;&#x4E0B; ctrl + c &#x7684;&#x65F6;&#x5019;&#xFF0C;&#x5185;&#x6838;&#x4F1A;&#x60F3;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#x6240;&#x6709;&#x7684;&#x8FDB;&#x7A0B;&#x53D1;&#x9001;&#x4E00;&#x4E2A; SIGINT &#x4FE1;&#x53F7;&#xFF0C;&#x6CE8;&#x610F;&#x8FD9;&#x91CC;&#x662F;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x8FDB;&#x7A0B;&#xFF0C;&#x4F46;&#x662F;&#x901A;&#x5E38;&#x6211;&#x4EEC;&#x5728;&#x7EC8;&#x7AEF;&#x91CC;&#x6267;&#x884C;&#x7684;&#x5C31;&#x662F;&#x4E00;&#x4E2A;&#x5355;&#x8FDB;&#x7A0B;&#x4EFB;&#x52A1;&#xFF0C;&#x4F46;&#x662F;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x6267;&#x884C;&#x7684;&#x7A0B;&#x5E8F;&#x662F;&#x591A;&#x8FDB;&#x7A0B;&#x7684;&#x8BDD;&#xFF0C;&#x90A3;&#x4E48;&#x8FD9;&#x4E2A;&#x8FDB;&#x7A0B;&#x7EC4;&#x91CC;&#x9762;&#x7684;&#x6240;&#x6709;&#x8FDB;&#x7A0B;&#x90FD;&#x4F1A;&#x6536;&#x5230;&#x4E00;&#x4E2A;&#x6765;&#x81EA;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x5185;&#x6838;&#x7684; SIGINT &#x4FE1;&#x53F7;&#x3002;</p>
+<p>&#x4E3A;&#x4E86;&#x540E;&#x9762;&#x6211;&#x4EEC;&#x8FDB;&#x884C;&#x9A8C;&#x8BC1;&#x7684;&#x65F6;&#x5019;&#x5927;&#x5BB6;&#x80FD;&#x591F;&#x4E86;&#x89E3;&#x6E05;&#x695A;&#x7A0B;&#x5E8F;&#x7684;&#x884C;&#x4E3A;&#xFF0C;&#x6211;&#x4EEC;&#x9996;&#x5148;&#x4ECB;&#x7ECD;&#x4E00;&#x4E0B;&#x4FE1;&#x53F7;&#x5904;&#x7406;&#x51FD;&#x6570;&#x7684;&#x4F7F;&#x7528;&#xFF0C;&#x6240;&#x8C13;&#x4FE1;&#x53F7;&#x5904;&#x7406;&#x51FD;&#x6570;&#x5C31;&#x662F;&#xFF0C;&#x5F53;&#x8FDB;&#x7A0B;&#x6536;&#x5230;&#x4E00;&#x4E2A;&#x7531;&#x5176;&#x4ED6;&#x8FDB;&#x7A0B;&#x6216;&#x8005;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x5185;&#x6838;&#x53D1;&#x9001;&#x7684;&#x4FE1;&#x53F7;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x53BB;&#x5904;&#x7406;&#x4FE1;&#x53F7;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x5B9A;&#x4E49;&#x6536;&#x5230;&#x4FE1;&#x53F7;&#x7684;&#x884C;&#x4E3A;&#xFF1A;</p>
+<pre><code class="lang-c">
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;signal.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unistd.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">sig</span><span class="hljs-params">(<span class="hljs-keyword">int</span> signo)</span> <span class="hljs-comment">// signo &#x8FD9;&#x4E2A;&#x53C2;&#x6570;&#x5C31;&#x662F;&#x5BF9;&#x5E94;&#x4FE1;&#x53F7;&#x7684;&#x6570;&#x5B57;&#x8868;&#x793A; SIGINT &#x4FE1;&#x53F7;&#x5BF9;&#x5E94;&#x7684;&#x6570;&#x5B57;&#x4E3A; 2</span>
+</span>{
+  <span class="hljs-keyword">char</span>* s = <span class="hljs-string">&quot;received a signal\n&quot;</span>;
+  write(STDOUT_FILENO, s, <span class="hljs-built_in">strlen</span>(s));
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+  <span class="hljs-comment">// &#x6CE8;&#x518C;&#x6536;&#x5230; SIGINT &#x4FE1;&#x53F7;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6211;&#x4EEC;&#x5E94;&#x8BE5;&#x4F7F;&#x7528;&#x4EC0;&#x4E48;&#x5904;&#x7406;&#x51FD;&#x6570;</span>
+  <span class="hljs-comment">// &#x5F53;&#x8FDB;&#x7A0B;&#x6536;&#x5230; SIGINT &#x4FE1;&#x53F7;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4F1A;&#x8C03;&#x7528;&#x51FD;&#x6570; sig </span>
+  signal(SIGINT, sig);
+  <span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>);
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x4E0A;&#x9762;&#x7684;&#x7A0B;&#x5E8F;&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre><code class="lang-shell">&#x279C;  daemon git:(master) &#x2717; ./job4.out 
+^Creceived a signal
+^Creceived a signal
+^Creceived a signal
+^Creceived a signal
+^Creceived a signal
+^Creceived a signal
+^Creceived a signal
+</code></pre>
+<p>&#x4ECE;&#x4E0A;&#x9762;&#x7684;&#x7EC8;&#x7AEF;&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x77E5;&#x9053;&#xFF0C;&#x5F53;&#x6211;&#x4EEC;&#x5728;&#x7EC8;&#x7AEF;&#x8F93;&#x5165; SIGINT &#x7684;&#x65F6;&#x5019;&#xFF0C;&#x8FDB;&#x7A0B;&#x4F1A;&#x6536;&#x5230;&#x4E00;&#x4E2A; SIGINT &#x4FE1;&#x53F7;&#xFF0C;&#x7136;&#x540E;&#x4F1A;&#x8C03;&#x7528;&#x4FE1;&#x53F7;&#x5904;&#x7406;&#x51FD;&#x6570; sig &#xFF0C;&#x5E76;&#x4E14;&#x6267;&#x884C;&#x51FD;&#x6570;&#x4F53;&#x3002;</p>
+<p>&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x6267;&#x884C;&#x4E00;&#x4E2A;&#x591A;&#x8FDB;&#x7A0B;&#x7684;&#x4EFB;&#x52A1;&#x8BD5;&#x8BD5;&#xFF1A;</p>
+<pre><code class="lang-c">
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;signal.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unistd.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">sig</span><span class="hljs-params">(<span class="hljs-keyword">int</span> signo)</span> <span class="hljs-comment">// signo &#x8FD9;&#x4E2A;&#x53C2;&#x6570;&#x5C31;&#x662F;&#x5BF9;&#x5E94;&#x4FE1;&#x53F7;&#x7684;&#x6570;&#x5B57;&#x8868;&#x793A; SIGINT &#x4FE1;&#x53F7;&#x5BF9;&#x5E94;&#x7684;&#x6570;&#x5B57;&#x4E3A; 2</span>
+</span>{
+  <span class="hljs-keyword">char</span> s[<span class="hljs-number">1024</span>];
+  <span class="hljs-built_in">sprintf</span>(s, <span class="hljs-string">&quot;received a signal %d\n&quot;</span>, getpid()); <span class="hljs-comment">// &#x8F93;&#x51FA;&#x5185;&#x5BB9;&#x5E76;&#x4E14;&#x7B54;&#x5E94;&#x8FDB;&#x7A0B;&#x7684;&#x8FDB;&#x7A0B;&#x53F7;</span>
+  write(STDOUT_FILENO, s, <span class="hljs-built_in">strlen</span>(s));
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+  <span class="hljs-comment">// &#x6CE8;&#x518C;&#x6536;&#x5230; SIGINT &#x4FE1;&#x53F7;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6211;&#x4EEC;&#x5E94;&#x8BE5;&#x4F7F;&#x7528;&#x4EC0;&#x4E48;&#x5904;&#x7406;&#x51FD;&#x6570;</span>
+  <span class="hljs-comment">// &#x5F53;&#x8FDB;&#x7A0B;&#x6536;&#x5230; SIGINT &#x4FE1;&#x53F7;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x4F1A;&#x8C03;&#x7528;&#x51FD;&#x6570; sig </span>
+  signal(SIGINT, sig);
+  fork();
+  fork();
+  <span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>);
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x5728;&#x4E0A;&#x9762;&#x7684;&#x7A0B;&#x5E8F;&#x5F53;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC; fork &#x7684;&#x4E24;&#x6B21;&#xFF0C;&#x4E00;&#x5171;&#x6709;&#x56DB;&#x4E2A;&#x8FDB;&#x7A0B;&#xFF0C;&#x4E0A;&#x9762;&#x7684;&#x7A0B;&#x5E8F;&#x8F93;&#x51FA;&#x7684;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre><code class="lang-shell">&#x279C;  daemon git:(master) &#x2717; ./job5.out 
+^Creceived a signal 3702
+received a signal 3703
+received a signal 3705
+received a signal 3704
+^Creceived a signal 3703
+received a signal 3702
+received a signal 3705
+received a signal 3704
+^Creceived a signal 3703
+received a signal 3704
+received a signal 3705
+received a signal 3702
+</code></pre>
+<p>&#x4ECE;&#x4E0A;&#x9762;&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#x7684;&#x6240;&#x6709;&#x8FDB;&#x7A0B;&#x90FD;&#x6536;&#x5230;&#x4E86; SIGINT &#x4FE1;&#x53F7;&#x3002;</p>
+<p>&#x4E8B;&#x5B9E;&#x4E0A;&#xFF0C;&#x6211;&#x4EEC;&#x6709;&#x5982;&#x4E0B;&#x89C4;&#x5219;&#xFF1A;</p>
+<blockquote>
+<p>&#x5728;&#x4EFB;&#x4E00;&#x65F6;&#x523B;&#xFF0C;&#x4F1A;&#x8BDD;&#xFF08;&#x5F53;&#x6211;&#x4EEC;&#x767B;&#x5F55;&#x670D;&#x52A1;&#x5668;&#x7684;&#x65F6;&#x5019;&#x5C31;&#x4F1A;&#x4EA7;&#x751F;&#x4E00;&#x4E2A;&#x4F1A;&#x8BDD;&#xFF0C;&#x6211;&#x4EEC;&#x4F7F;&#x7528;&#x4E00;&#x4E9B;&#x8FDC;&#x7A0B;&#x767B;&#x5F55;&#x8F6F;&#x4EF6;&#x7684;&#x65F6;&#x5019;&#x901A;&#x5E38;&#x4F1A;&#x770B;&#x5230; session &#x7684;&#x5B57;&#x6837;&#x4EEC;&#x5C31;&#x662F;&#x8868;&#x793A;&#x4F1A;&#x8BDD;&#xFF09;&#x4E2D;&#x7684;&#x5176;&#x4E2D;&#x4E00;&#x4E2A;&#x8FDB;&#x7A0B;&#x7EC4;&#x4F1A;&#x6210;&#x4E3A;&#x7EC8;&#x7AEF;&#x7684;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#xFF0C;&#x5176;&#x4ED6;&#x8FDB;&#x7A0B;&#x7EC4;&#x4F1A;&#x6210;&#x4E3A;&#x540E;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#x3002;&#x53EA;&#x6709;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#x4E2D;&#x7684;&#x8FDB;&#x7A0B;&#x624D;&#x80FD;&#x4ECE;&#x63A7;&#x5236;&#x7EC8;&#x7AEF;&#x4E2D;&#x8BFB;&#x53D6;&#x8F93;&#x5165;&#x3002;&#x5F53;&#x7528;&#x6237;&#x5728;&#x63A7;&#x5236;&#x7EC8;&#x7AEF;&#x4E2D;&#x8F93;&#x5165;&#x5176;&#x4E2D;&#x4E00;&#x4E2A;&#x4FE1;&#x53F7;&#x751F;&#x6210;&#x7EC8;&#x7AEF;&#x5B57;&#x7B26;&#x4E4B;&#x540E;&#xFF0C;&#x8BE5;&#x4FE1;&#x53F7;&#x4F1A;&#x88AB;&#x53D1;&#x9001;&#x5230;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x6210;&#x5458;&#x3002;&#x8FD9;&#x4E9B;&#x5B57;&#x7B26;&#x5305;&#x62EC;&#x751F;&#x6210; SIGINT &#x7684;&#x4E2D;&#x65AD;&#x5B57;&#x7B26;&#xFF08;&#x901A;&#x5E38;&#x662F; Control-C&#xFF09;&#x3001;&#x751F;&#x6210; SIGQUIT &#x7684;&#x9000;&#x51FA;&#x5B57;&#x7B26;&#xFF08;&#x901A;&#x5E38;&#x662F; Control-\&#xFF09;&#x3001;&#x751F;&#x6210; SIGSTP &#x7684;&#x6302;&#x8D77;&#x5B57;&#x7B26;&#xFF08;&#x901A;&#x5E38;&#x662F; Control-Z&#xFF09;&#x3002;</p>
+</blockquote>
+<h2 id="&#x662F;&#x8C01;&#x7ED9;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#x53D1;&#x9001;&#x7684;-sigint-&#x4FE1;&#x53F7;">&#x662F;&#x8C01;&#x7ED9;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#x53D1;&#x9001;&#x7684; SIGINT &#x4FE1;&#x53F7;</h2>
+<p>&#x5728;&#x4E0A;&#x9762;&#x7684;&#x5185;&#x5BB9;&#x5F53;&#x4E2D;&#x6211;&#x4EEC;&#x63D0;&#x5230;&#x4E86;&#xFF1A;</p>
+<ul>
+<li>&#x5F53;&#x6211;&#x4EEC;&#x6309;&#x4E0B;&#x4E2D;&#x65AD;&#x5B57;&#x7B26;&#xFF08;ctrl + c&#xFF09;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6240;&#x6709;&#x7684;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x90FD;&#x4F1A;&#x6536;&#x5230;&#x4E00;&#x4E2A; SIGINT &#x4FE1;&#x53F7;&#x3002;</li>
+<li>&#x5F53;&#x6211;&#x4EEC;&#x6309;&#x4E0B;&#x9000;&#x51FA;&#x5B57;&#x7B26;&#xFF08;ctrl + \&#xFF09;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6240;&#x6709;&#x7684;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x90FD;&#x4F1A;&#x6536;&#x5230;&#x4E00;&#x4E2A; SIGQUIT &#x4FE1;&#x53F7;&#x3002;</li>
+<li>&#x5F53;&#x6211;&#x4EEC;&#x6309;&#x4E0B;&#x6302;&#x8D77;&#x5B57;&#x7B26;&#xFF08;ctrl + Z&#xFF09;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6240;&#x6709;&#x7684;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x90FD;&#x4F1A;&#x6536;&#x5230;&#x4E00;&#x4E2A; SIGTSTP &#x4FE1;&#x53F7;&#x3002;</li>
+</ul>
+<p>&#x73B0;&#x5728;&#x7684;&#x95EE;&#x9898;&#x6765;&#x4E86;&#xFF0C;&#x662F;&#x8C01;&#x53D1;&#x9001;&#x7684;&#x8FD9;&#x4E9B;&#x4FE1;&#x53F7;&#x5462;&#xFF1F;&#x4E8B;&#x5B9E;&#x4E0A;&#x662F; 0 &#x53F7;&#x8FDB;&#x7A0B;&#x53D1;&#x9001;&#x7684;&#x8FD9;&#x4E9B;&#x4FE1;&#x53F7;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x7A0B;&#x5E8F;&#x53BB;&#x9A8C;&#x8BC1;&#x8FD9;&#x4E00;&#x70B9;&#x3002;</p>
+<pre><code class="lang-c">
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> _GNU_SOURCE</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unistd.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;error.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;errno.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;fcntl.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;time.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;signal.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">my_handler</span> <span class="hljs-params">(<span class="hljs-keyword">int</span> signo, siginfo_t *si, <span class="hljs-keyword">void</span>*ucontext)</span>
+</span>{
+  <span class="hljs-keyword">char</span> s[<span class="hljs-number">1024</span>];
+  <span class="hljs-comment">// si-&gt;si_pid &#x662F;&#x53D1;&#x9001;&#x4FE1;&#x53F7;&#x7684;&#x8FDB;&#x7A0B;&#x7684;&#x8FDB;&#x7A0B;&#x53F7;</span>
+  <span class="hljs-built_in">sprintf</span>(s, <span class="hljs-string">&quot;&#x53D1;&#x9001;&#x4FE1;&#x53F7;&#x7684;&#x8FDB;&#x7A0B;&#x53F7; = %d &#x4FE1;&#x53F7; = %d\n&quot;</span>, si-&gt;si_pid, signo);
+  write(STDOUT_FILENO, s, <span class="hljs-built_in">strlen</span>(s));
+  _exit(<span class="hljs-number">0</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;pid = %d\n&quot;</span>, getpid());
+  <span class="hljs-keyword">struct</span> sigaction demo;
+  demo.sa_sigaction = my_handler; <span class="hljs-comment">// &#x4FDD;&#x5B58;&#x4FE1;&#x53F7;&#x5904;&#x7406;&#x51FD;&#x6570;</span>
+  demo.sa_flags |= SA_SIGINFO; <span class="hljs-comment">// &#x8FD9;&#x4E2A;&#x8868;&#x793A;&#x4F7F;&#x7528;&#x4E09;&#x4E2A;&#x53C2;&#x6570;&#x7684;&#x4FE1;&#x53F7;&#x5904;&#x7406;&#x51FD;&#x6570; &#x4E4B;&#x524D;&#x4F7F;&#x7528; signal &#x7684;&#x4FE1;&#x53F7;&#x5904;&#x7406;&#x51FD;&#x6570;&#x503C;&#x6709;&#x4E00;&#x4E2A;&#x53C2;&#x6570;</span>
+  sigaction(SIGINT, &amp;demo, <span class="hljs-literal">NULL</span>);
+  sigaction(SIGQUIT, &amp;demo, <span class="hljs-literal">NULL</span>);
+  sigaction(SIGTSTP, &amp;demo, <span class="hljs-literal">NULL</span>);
+  <span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>);
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x4E0A;&#x9762;&#x7684;&#x7A0B;&#x5E8F;&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre><code class="lang-shell">&#x279C;  daemon git:(master) &#x2717; ./job2.out 
+pid = 12842
+^C&#x53D1;&#x9001;&#x4FE1;&#x53F7;&#x7684;&#x8FDB;&#x7A0B;&#x53F7; = 0 &#x4FE1;&#x53F7; = 2
+</code></pre>
+<p>&#x5728;&#x4E0A;&#x9762;&#x7684;&#x7A0B;&#x5E8F;&#x5F53;&#x4E2D;&#x6211;&#x4EEC;&#x4F7F;&#x7528; sigaction &#x53BB;&#x5B9A;&#x4E49;&#x6211;&#x4EEC;&#x81EA;&#x5DF1;&#x7684;&#x4FE1;&#x53F7;&#x5904;&#x7406;&#x51FD;&#x6570;&#xFF0C;&#x5728;&#x4E4B;&#x524D;&#x6211;&#x4EEC;&#x662F;&#x4F7F;&#x7528; signal &#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x53BB;&#x5B9A;&#x4E49;&#x4FE1;&#x53F7;&#x5904;&#x7406;&#x51FD;&#x6570;&#xFF0C;&#x5176;&#x5B9E; signal &#x4E5F;&#x662F;&#x901A;&#x8FC7; sigaction &#x5B9E;&#x73B0;&#x7684;&#xFF0C;sigaction &#x53EF;&#x4EE5;&#x8BA9;&#x6211;&#x4EEC;&#x5B9A;&#x4E49;&#x4E00;&#x4E9B;&#x66F4;&#x52A0;&#x7EC6;&#x8282;&#x7684;&#x5904;&#x7406;&#x3002;</p>
+<p>&#x4ECE;&#x4E0A;&#x9762;&#x7684;&#x51FD;&#x6570;&#x5B9A;&#x4E49;&#x6765;&#x770B;&#xFF0C;sigaction &#x548C; signal &#x4E0D;&#x4E00;&#x6837;&#x7684;&#x5730;&#x65B9;&#x5728;&#x4E8E;&#x4FE1;&#x53F7;&#x5904;&#x7406;&#x51FD;&#x6570;&#x6709;&#x4E09;&#x4E2A;&#x53C2;&#x6570;&#xFF0C;&#x7136;&#x540E;&#x6211;&#x4EEC;&#x5B9A;&#x4E49;&#x4E86;&#x4E09;&#x4E2A;&#x4FE1;&#x53F7; SIGINT&#x3001;SIGQUIT&#x548C;SIGTSTP&#xFF0C;&#x4ED6;&#x4EEC;&#x7684;&#x4FE1;&#x53F7;&#x5904;&#x7406;&#x51FD;&#x6570;&#x90FD;&#x662F; my_handler &#x3002;</p>
+<p>&#x4ECE;&#x4E0A;&#x9762;&#x7A0B;&#x5E8F;&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x77E5;&#x9053;&#x662F;&#x8FDB;&#x7A0B;&#x53F7;&#x7B49;&#x4E8E; 0 &#x7684;&#x8FDB;&#x7A0B;&#x53D1;&#x9001;&#x7684;&#xFF0C;&#x54CE;&#x6211;&#x4EEC;&#x77E5;&#x9053;&#x7684; init &#x7684;&#x8FDB;&#x7A0B;&#x53F7;&#x662F;&#x7B49;&#x4E8E; 1 &#xFF0C;&#x90A3;&#x4E48;&#x8FDB;&#x7A0B;&#x53F7;&#x7B49;&#x4E8E; 0 &#x7684;&#x8FDB;&#x7A0B;&#x662F;&#x5565;&#x5462;&#xFF1F;</p>
+<p><img src="../../images/funny/cat.webp" alt="cat"></p>
+<p>&#x4E8B;&#x5B9E;&#x4E0A;&#x8FD9;&#x4E2A; 0 &#x53F7;&#x8FDB;&#x7A0B;&#x5C31;&#x662F;&#x4F4D;&#x4E8E;&#x5185;&#x6838;&#x7684;&#x7EC8;&#x7AEF;&#x9A71;&#x52A8;&#x7A0B;&#x5E8F;&#xFF0C;init &#x7684;&#x8FDB;&#x7A0B;&#x53F7;&#x662F; 1 &#xFF0C;&#x5185;&#x6838;&#x7684;&#x8FDB;&#x7A0B;&#x53F7;&#x7B49;&#x4E8E; 0 &#xFF0C;&#x662F;&#x4E0D;&#x662F;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x5462;&#xFF1F;&#x1F602;</p>
+<h2 id="shell-&#x88AB;&#x6740;&#x6389;&#x5BFC;&#x81F4;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x6B7B;&#x4EA1;">Shell &#x88AB;&#x6740;&#x6389;&#x5BFC;&#x81F4;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x6B7B;&#x4EA1;</h2>
+<p>&#x5F53; shell &#x8FDB;&#x7A0B;&#x88AB;&#x6740;&#x6389;&#x9000;&#x51FA;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x5185;&#x6838;&#x4F1A;&#x53D1;&#x9001; SIGHUP &#x7ED9;&#x6240;&#x6709;&#x7684;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#xFF0C;&#x63A5;&#x4E0B;&#x6765;&#x6211;&#x4EEC;&#x590D;&#x73B0;&#x4E00;&#x4E0B;&#x8FD9;&#x4E2A;&#x7ED3;&#x679C;&#x3002;</p>
+<p>&#x5728;&#x524D;&#x9762;&#x7684;&#x6587;&#x7AE0;&#x5F53;&#x4E2D;&#x6211;&#x4EEC;&#x63D0;&#x5230;&#x4E86;&#xFF0C;&#x5F53;&#x4E00;&#x4E2A;&#x7EC8;&#x7AEF;&#x7EC8;&#x6B62;&#x6267;&#x884C;&#xFF0C;&#x6BD4;&#x5982;&#x8BF4;&#x88AB; kill -9 &#x6740;&#x6B7B;&#xFF0C;&#x90A3;&#x4E48;&#x5185;&#x6838;&#x5C31;&#x4F1A;&#x53D1;&#x9001; SIGHUP &#x4FE1;&#x53F7;&#x7ED9;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#x5F53;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x7684;&#x8FDB;&#x7A0B;&#xFF0C;&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x4F7F;&#x7528;&#x4E0B;&#x9762;&#x7684;&#x7A0B;&#x5E8F;&#x6765;&#x590D;&#x73B0;&#x8FD9;&#x4E2A;&#x73B0;&#x8C61;&#xFF1A;</p>
+<pre><code class="lang-c">
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> _GNU_SOURCE</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unistd.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;error.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;errno.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;fcntl.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;time.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;signal.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;assert.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">my_handler</span> <span class="hljs-params">(<span class="hljs-keyword">int</span> signo, siginfo_t *si, <span class="hljs-keyword">void</span>*ucontext)</span>
+</span>{
+  <span class="hljs-keyword">char</span> s[<span class="hljs-number">1024</span>];
+  <span class="hljs-keyword">int</span> fd = open(<span class="hljs-string">&quot;text.txt&quot;</span>, O_APPEND | O_RDWR | O_CREAT, <span class="hljs-number">0644</span>);
+  <span class="hljs-keyword">if</span>(fd == <span class="hljs-number">-1</span>)
+  {
+    perror(<span class="hljs-string">&quot;&quot;</span>);
+    <span class="hljs-built_in">abort</span>();
+  }
+  <span class="hljs-built_in">sprintf</span>(s, <span class="hljs-string">&quot;&#x53D1;&#x9001;&#x4FE1;&#x53F7;&#x7684;&#x8FDB;&#x7A0B;&#x53F7; = %d &#x4FE1;&#x53F7; = %d\n&quot;</span>, si-&gt;si_pid, signo);
+  write(fd, s, <span class="hljs-built_in">strlen</span>(s));
+  close(fd);
+  fsync(fd);
+  _exit(<span class="hljs-number">0</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;pid = %d\n&quot;</span>, getpid());
+  <span class="hljs-keyword">struct</span> sigaction demo;
+  demo.sa_sigaction = my_handler;
+  demo.sa_flags |= SA_SIGINFO;
+  demo.sa_flags &amp;= ~SA_RESETHAND;
+  sigaction(SIGINT, &amp;demo, <span class="hljs-literal">NULL</span>);
+  sigaction(SIGHUP, &amp;demo, <span class="hljs-literal">NULL</span>);
+  <span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>);
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x5728;&#x4E0A;&#x9762;&#x7684;&#x7A0B;&#x5E8F;&#x5F53;&#x4E2D;&#x6211;&#x4EEC;&#x7ED9; SIGHUP &#x5B9A;&#x4E49;&#x4E86;&#x4E00;&#x4E2A;&#x4FE1;&#x53F7;&#x5904;&#x7406;&#x5668; my_handler &#xFF0C;&#x5F53;&#x8FDB;&#x7A0B;&#x6536;&#x5230; SIGHUP &#x4FE1;&#x53F7;&#x7684;&#x65F6;&#x5019;&#x5C31;&#x4F1A;&#x8C03;&#x7528;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#xFF0C;&#x7136;&#x540E;&#x5F80; text.txt &#x6587;&#x4EF6;&#x5F53;&#x4E2D;&#x5199;&#x5165;&#x6570;&#x636E;&#xFF0C;&#x6211;&#x4EEC;&#x518D;&#x6B21;&#x67E5;&#x770B;&#x6587;&#x4EF6;&#x5C31;&#x80FD;&#x591F;&#x77E5;&#x9053;&#x662F;&#x54EA;&#x4E2A;&#x8FDB;&#x7A0B;&#x7ED9;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#x53D1;&#x9001;&#x7684;&#x4FE1;&#x53F7;&#x4E86;&#x3002;</p>
+<p>&#x5728;&#x4E0B;&#x9762;&#x7684;&#x56FE;&#x7247;&#x5F53;&#x4E2D;&#xFF0C;&#x9996;&#x5148;&#x6211;&#x4EEC;&#x542F;&#x52A8;&#x4E00;&#x4E2A; shell &#x8FDB;&#x7A0B;&#xFF0C;&#x8FDB;&#x7A0B;&#x53F7;&#x7B49;&#x4E8E; 2842&#xFF0C;&#x7136;&#x540E;&#x542F;&#x52A8;&#x7A0B;&#x5E8F; job6.out&#xFF08;&#x5C31;&#x662F;&#x4E0A;&#x9762;&#x7684;&#x4EE3;&#x7801;&#xFF09;&#xFF0C;&#x7136;&#x540E;&#x5728;&#x53F3;&#x4FA7;&#x7684;&#x7EC8;&#x7AEF;&#x6267;&#x884C; kill -9 &#x547D;&#x4EE4;&#xFF0C;&#x6740;&#x6B7B;&#x5DE6;&#x4FA7;&#x7684;&#x7EC8;&#x7AEF;&#x7A0B;&#x5E8F;&#xFF0C;&#x6700;&#x7EC8; job6.out &#x4F1A;&#x6536;&#x5230;&#x4E00;&#x4E2A;&#x6765;&#x81EA;&#x5185;&#x6838;&#x7684; SIGHUP &#x4FE1;&#x53F7;&#xFF0C;&#x56E0;&#x6B64;&#x4F1A;&#x5728; text.txt &#x6587;&#x4EF6;&#x5F53;&#x4E2D;&#x5199;&#x5165;&#x4FE1;&#x606F;&#x3002;</p>
+<p><img src="../../images/linux/shell/1.png" alt="1"></p>
+<p>&#x6211;&#x4EEC;&#x73B0;&#x5728;&#x518D;&#x6B21;&#x67E5;&#x770B; text.txt &#x6587;&#x4EF6;&#x5F53;&#x4E2D;&#x7684;&#x4FE1;&#x606F;&#xFF1A;</p>
+<p><img src="../../images/linux/shell/2.png" alt="1"></p>
+<p>&#x4ECE;&#x4E0A;&#x9762;&#x7684; text.txt &#x6587;&#x4EF6;&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x77E5;&#x9053;&#x4E86;&#xFF0C;&#x786E;&#x5B9E;&#x662F;&#x5185;&#x6838;&#x53D1;&#x9001;&#x7684; SIGHUP &#x4FE1;&#x53F7;&#xFF0C;SIGHUP &#x4FE1;&#x53F7;&#x5BF9;&#x5E94;&#x7684;&#x4FE1;&#x53F7;&#x6570;&#x503C;&#x5C31;&#x662F; 1&#xFF0C;&#x8FD9;&#x4E2A;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x7B26;&#x5408;&#x6211;&#x4EEC;&#x7684;&#x9884;&#x671F;&#x3002;</p>
+<h2 id="&#x9000;&#x51FA;&#x7EC8;&#x7AEF;&#x5BFC;&#x81F4;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#x6B7B;&#x4EA1;">&#x9000;&#x51FA;&#x7EC8;&#x7AEF;&#x5BFC;&#x81F4;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#x6B7B;&#x4EA1;</h2>
+<p>&#x6211;&#x4EEC;&#x5DF2;&#x7ECF;&#x5728;&#x524D;&#x6587;&#x5F53;&#x4E2D;&#x63D0;&#x5230;&#x4E86;&#xFF0C;&#x5F53;&#x6211;&#x4EEC;&#x9000;&#x51FA;&#x7EC8;&#x7AEF;&#x7684;&#x65F6;&#x5019; shell &#x4F1A;&#x7ED9;&#x6240;&#x6709;&#x7684;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#x53D1;&#x9001; SIGHUP &#x4FE1;&#x53F7;&#xFF0C;&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x6765;&#x590D;&#x73B0;&#x4E00;&#x4E0B;&#x8FD9;&#x4E2A;&#x73B0;&#x8C61;&#x3002;</p>
+<p>&#x5728;&#x4E0B;&#x9762;&#x7684;&#x56FE;&#x7247;&#x5F53;&#x4E2D;&#x6211;&#x4EEC;&#x4F7F;&#x7528; ps &#x547D;&#x4EE4;&#x5F97;&#x5230;&#x5F53;&#x524D; shell &#x7684;&#x8FDB;&#x7A0B;&#x53F7;&#xFF0C;&#x4ECE;&#x56FE;&#x7247;&#x7684;&#x7ED3;&#x679C;&#x6765;&#x770B;&#x5F53;&#x524D;&#x7684; shell &#x7684;&#x8FDB;&#x7A0B;&#x53F7;&#x7B49;&#x4E8E; 3892&#xFF0C;&#x7136;&#x540E;&#x6211;&#x4EEC;&#x5728;&#x7EC8;&#x7AEF;&#x6267;&#x884C;&#x7A0B;&#x5E8F; job6.out &#xFF0C;&#x548C;&#x4E0A;&#x4E2A;&#x4F8B;&#x5B50;&#x7684;&#x662F;&#x540C;&#x4E00;&#x4E2A;&#x7A0B;&#x5E8F;&#xFF0C;&#x7136;&#x540E;&#x6211;&#x4EEC;&#x9000;&#x51FA;&#x7EC8;&#x7AEF;&#xFF0C;&#x6839;&#x636E;&#x524D;&#x9762;&#x6211;&#x4EEC;&#x6240;&#x8C08;&#x5230;&#x7684;&#x5728;&#x9000;&#x51FA;&#x7EC8;&#x7AEF;&#x4E4B;&#x540E; shell &#x4F1A;&#x7ED9;&#x6240;&#x6709;&#x7684;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#x53D1;&#x9001; SIGHUP &#x4FE1;&#x53F7;&#xFF0C;&#x90A3;&#x4E48; job6.out &#x5C31;&#x4F1A;&#x8C03;&#x7528;&#x4FE1;&#x53F7;&#x5904;&#x7406;&#x51FD;&#x6570;&#xFF0C;&#x7136;&#x540E;&#x5C06;&#x4FE1;&#x606F;&#x5199;&#x5165; text.txt &#x3002;</p>
+<p><img src="../../images/linux/shell/3.png" alt="1"></p>
+<p>&#x6211;&#x4EEC;&#x73B0;&#x5728;&#x6765;&#x770B;&#x4E00;&#x4E0B; text.txt &#x5F53;&#x4E2D;&#x7684;&#x5185;&#x5BB9;&#xFF1A;</p>
+<p><img src="../../images/linux/shell/4.png" alt="1"></p>
+<p>&#x4ECE;&#x4E0A;&#x9762;&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x6765;&#x770B; job6.out &#x786E;&#x5B9E;&#x6536;&#x5230;&#x4E86;&#x4E00;&#x4E2A; SIGHUP &#x4FE1;&#x53F7;&#xFF0C;&#x5BF9;&#x5E94;&#x7684;&#x4FE1;&#x53F7;&#x503C;&#x7B49;&#x4E8E; 1&#xFF0C;&#x800C;&#x4E14;&#x53D1;&#x9001;&#x4FE1;&#x53F7;&#x7684;&#x8FDB;&#x7A0B;&#x53F7;&#x7B49;&#x4E8E; 3892&#xFF0C;&#x786E;&#x5B9E;&#x662F;&#x4E0A;&#x56FE;&#x5F53;&#x4E2D;&#x663E;&#x793A;&#x7684; shell &#x7684;&#x8FDB;&#x7A0B;&#x53F7;&#x3002;</p>
+<h2 id="&#x603B;&#x7ED3;">&#x603B;&#x7ED3;</h2>
+<p>&#x5728;&#x672C;&#x7BC7;&#x6587;&#x7AE0;&#x5F53;&#x4E2D;&#x4E3B;&#x8981;&#x7ED9;&#x5927;&#x5BB6;&#x4ECB;&#x7ECD;&#x4E86;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#x5F53;&#x4E2D;&#x7684;&#x8FDB;&#x7A0B;&#x9000;&#x51FA;&#x7684;&#x51E0;&#x79CD;&#x60C5;&#x51B5;&#xFF0C;&#x5E76;&#x4E14;&#x4F7F;&#x7528;&#x7A0B;&#x5E8F;&#x590D;&#x73B0;&#x4E86;&#x4ED6;&#x4EEC;&#xFF0C;&#x4E3B;&#x8981;&#x6709;&#x4EE5;&#x4E0B;&#x56DB;&#x79CD;&#x60C5;&#x51B5;&#xFF1A;</p>
+<ul>
+<li>&#x7A0B;&#x5E8F;&#x6B63;&#x5E38;&#x7ED3;&#x675F;&#xFF0C;&#x6BD4;&#x5982;&#x4F60;&#x5728;&#x7EC8;&#x7AEF;&#x8F93;&#x5165; ls &#x547D;&#x4EE4;&#xFF0C;&#x6267;&#x884C;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#x4ED6;&#x5C31;&#x6B63;&#x5E38;&#x7ED3;&#x675F;&#x4E86;&#x3002;</li>
+<li>&#x5F53;&#x4F60;&#x5728;&#x7EC8;&#x7AEF;&#x8F93;&#x5165; ctrl + c &#x4E4B;&#x7C7B;&#x7684;&#x5B57;&#x7B26;&#x7684;&#x65F6;&#x5019;&#x5185;&#x6838;&#x4F1A;&#x7ED9;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#x53D1;&#x9001; SIGINT &#x4E4B;&#x7C7B;&#x7684;&#x4FE1;&#x53F7;&#x3002;</li>
+<li>&#x5F53;&#x63A7;&#x5236;&#x8FDB;&#x7A0B; &#x4E5F;&#x5C31;&#x662F; shell &#x8FDB;&#x7A0B;&#x7EC8;&#x6B62;(&#x6BD4;&#x5982;&#x8BF4;&#x88AB;&#x6740;&#x6389;&#x4E86;)&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x5185;&#x6838;&#x4F1A;&#x53D1;&#x9001; SIGHUP &#x4FE1;&#x53F7;&#x7ED9;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#x4E2D;&#x7684;&#x6240;&#x6709;&#x8FDB;&#x7A0B;&#x3002;</li>
+<li>&#x5F53;&#x9000;&#x51FA;&#x7EC8;&#x7AEF;&#x7684;&#x65F6;&#x5019;&#xFF0C;shell &#x4F1A;&#x53D1;&#x9001; SIGHUP &#x4FE1;&#x53F7;&#x7ED9;&#x524D;&#x53F0;&#x8FDB;&#x7A0B;&#x7EC4;&#x3002;</li>
+</ul>
+<p>&#x603B;&#x7684;&#x6765;&#x8BF4;&#x6DF1;&#x5165;&#x53BB;&#x4E86;&#x89E3;&#x5176;&#x4E2D;&#x7684;&#x8FC7;&#x7A0B;&#x5BF9;&#x6211;&#x4EEC;&#x6765;&#x8BF4;&#x8FD8;&#x662F;&#x5F88;&#x6709;&#x88E8;&#x76CA;&#x7684;&#xFF0C;&#x5E0C;&#x671B;&#x5927;&#x5BB6;&#x6709;&#x6240;&#x6536;&#x83B7;&#xFF01;</p>
+<hr>
+<p>&#x4EE5;&#x4E0A;&#x5C31;&#x662F;&#x672C;&#x7BC7;&#x6587;&#x7AE0;&#x7684;&#x6240;&#x6709;&#x5185;&#x5BB9;&#x4E86;&#xFF0C;&#x6211;&#x662F;<strong>LeHung</strong>&#xFF0C;&#x6211;&#x4EEC;&#x4E0B;&#x671F;&#x518D;&#x89C1;&#xFF01;&#xFF01;&#xFF01;&#x66F4;&#x591A;&#x7CBE;&#x5F69;&#x5185;&#x5BB9;&#x5408;&#x96C6;&#x53EF;&#x8BBF;&#x95EE;&#x9879;&#x76EE;&#xFF1A;<a href="https://github.com/Chang-LeHung/CSCore" target="_blank">https://github.com/Chang-LeHung/CSCore</a></p>
+<p>&#x5173;&#x6CE8;&#x516C;&#x4F17;&#x53F7;&#xFF1A;<strong>&#x4E00;&#x65E0;&#x662F;&#x5904;&#x7684;&#x7814;&#x7A76;&#x50E7;</strong>&#xFF0C;&#x4E86;&#x89E3;&#x66F4;&#x591A;&#x8BA1;&#x7B97;&#x673A;&#xFF08;Java&#x3001;Python&#x3001;&#x8BA1;&#x7B97;&#x673A;&#x7CFB;&#x7EDF;&#x57FA;&#x7840;&#x3001;&#x7B97;&#x6CD5;&#x4E0E;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF09;&#x77E5;&#x8BC6;&#x3002;</p>
+<p><img src="https://img2022.cnblogs.com/blog/2519003/202207/2519003-20220703200459566-1837431658.jpg" alt=""></p>
+
+<script>console.log("plugin-popup....");document.onclick = function(e){ e.target.tagName === "IMG" && window.open(e.target.src,e.target.src)}</script><style>img{cursor:pointer}</style>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../command/04exitstatus.html" class="navigation navigation-prev " aria-label="Previous page: Shell揭秘——程序退出状态码">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="02jobcontrol.html" class="navigation navigation-next " aria-label="Next page: 你在终端启动的进程，最后都是什么下场？（下）">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"你在终端启动的进程，最后都是什么下场？（上）","level":"1.13.11","depth":2,"next":{"title":"你在终端启动的进程，最后都是什么下场？（下）","level":"1.13.12","depth":2,"path":"linux/shell/02jobcontrol.md","ref":"linux/shell/02jobcontrol.md","articles":[]},"previous":{"title":"Shell揭秘——程序退出状态码","level":"1.13.10","depth":2,"path":"linux/command/04exitstatus.md","ref":"linux/command/04exitstatus.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["popup","fontsettings","-sharing","-livereload"],"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @Chang-LeHung","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"copyright":"Copyright &#169; aleen42","minHeaderCount":"2","minHeaderDeep":"2"},"search":{},"popup":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"highlight":{},"anchor-navigation-ex":{"showLevelIcon":false,"showLevel":false,"tocLevel1Icon":"fa fa-hand-o-right","tocLevel2Icon":"fa fa-hand-o-right","tocLevel3Icon":"fa fa-hand-o-right","multipleH1":false,"multipleH2":false,"multipleH3":false,"multipleH4":false},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"linux/shell/01jobcontrol.md","mtime":"2025-10-03T17:39:52.152Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2025-10-03T18:28:09.654Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+
+    </body>
+</html>
+

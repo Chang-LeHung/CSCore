@@ -1,0 +1,1674 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>深入剖析前缀、中缀、后缀表达式以及表达式求值 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    基础容器
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../container/01-链表设计与实现.html">
+            
+                <a href="../container/01-链表设计与实现.html">
+            
+                    
+                    链表设计与Java实现——自己动手写LinkedList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../container/02-linkedlist源码剖析.html">
+            
+                <a href="../container/02-linkedlist源码剖析.html">
+            
+                    
+                    LinekdList源码深度剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../container/03-array容器设计与实现.html">
+            
+                <a href="../container/03-array容器设计与实现.html">
+            
+                    
+                    数组容器(ArrayList)设计与Java实现——自己动手写ArrayList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../container/04-arraylist源码剖析.html">
+            
+                <a href="../container/04-arraylist源码剖析.html">
+            
+                    
+                    ArrayList源码剖析，从扩容原理，到迭代器和fast-fail机制，你想要的这都有！！！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../container/05-hashmap设计与实现.html">
+            
+                <a href="../container/05-hashmap设计与实现.html">
+            
+                    
+                    HashMap设计原理与实现（上篇）——哈希表的原理，如何从0到1设计一个HashMap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../container/06-hashmap设计与实现.html">
+            
+                <a href="../container/06-hashmap设计与实现.html">
+            
+                    
+                    HashMap设计原理与实现（下篇）200行代码带你写自己的HashMap！！！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../container/07-hashmap源码剖析.html">
+            
+                <a href="../container/07-hashmap源码剖析.html">
+            
+                    
+                    HashMap源码深度剖析，手把手带你分析每一行代码，包会！！！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="../container/08-arraydeque源码剖析.html">
+            
+                <a href="../container/08-arraydeque源码剖析.html">
+            
+                    
+                    ArrayDeque（JDK双端队列）源码深度剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="../container/09-arrayqueue源码剖析.html">
+            
+                <a href="../container/09-arrayqueue源码剖析.html">
+            
+                    
+                    深入剖析（JDK）ArrayQueue 源码
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    高级容器
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../concurrency/java/11blockingqueue.html">
+            
+                <a href="../concurrency/java/11blockingqueue.html">
+            
+                    
+                    从零开始自己动手写阻塞队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../concurrency/java/12blockingqueuesrc.html">
+            
+                <a href="../concurrency/java/12blockingqueuesrc.html">
+            
+                    
+                    JDK数组阻塞队列源码深入剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    动态规划
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="01-动态规划.html">
+            
+                <a href="01-动态规划.html">
+            
+                    
+                    庖丁解牛斐波拉契数列和背包问题——详细解析两个问题优化过程（超多问题优化干货，不看血亏），带你从最基本最核心的问题看懂动态规划！！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="02-01背包问题.html">
+            
+                <a href="02-01背包问题.html">
+            
+                    
+                    你真的懂01背包问题吗？01背包的这几问你能答出来吗？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="03完全背包.html">
+            
+                <a href="03完全背包.html">
+            
+                    
+                    面试官：完全背包都不会，是你自己走还是我送你？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="04多重背包v1.html">
+            
+                <a href="04多重背包v1.html">
+            
+                    
+                    深入剖析多重背包问题（上篇）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="04多重背包v2.html">
+            
+                <a href="04多重背包v2.html">
+            
+                    
+                    深入剖析多重背包问题（下篇）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="14深入剖析完全背包.html">
+            
+                <a href="14深入剖析完全背包.html">
+            
+                    
+                    完全背包转化为多重背包
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="13零钱兑换.html">
+            
+                <a href="13零钱兑换.html">
+            
+                    
+                    深入浅出零钱兑换问题——背包问题的套壳
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="05深入剖析斐波拉契数列.html">
+            
+                <a href="05深入剖析斐波拉契数列.html">
+            
+                    
+                    深入剖析斐波拉契数列
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    股票问题
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="09状态机动态规划.html">
+            
+                <a href="09状态机动态规划.html">
+            
+                    
+                    这种动态规划你见过吗——状态机动态规划之股票问题(上)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="10状态机动态规划02.html">
+            
+                <a href="10状态机动态规划02.html">
+            
+                    
+                    这种动态规划你见过吗——状态机动态规划之股票问题(中)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="11状态机动态规划03.html">
+            
+                <a href="11状态机动态规划03.html">
+            
+                    
+                    这种动态规划你见过吗——状态机动态规划之股票问题(下)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="12状态机动态规划总结.html">
+            
+                <a href="12状态机动态规划总结.html">
+            
+                    
+                    状态机动态规划之股票问题总结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                    回溯
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="backtrace/01combinations.html">
+            
+                <a href="backtrace/01combinations.html">
+            
+                    
+                    通过组合问题看透回溯法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" >
+            
+                <span>
+            
+                    
+                    数据结构
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.7.1" data-path="07表达式求值.html">
+            
+                <a href="07表达式求值.html">
+            
+                    
+                    深入剖析前缀、中缀、后缀表达式以及表达式求值
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    并发
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../concurrency/java/01初始java并发.html">
+            
+                <a href="../concurrency/java/01初始java并发.html">
+            
+                    
+                    并发开篇——带你从0到1建立并发知识体系的基石
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../concurrency/java/02并发的噩梦.html">
+            
+                <a href="../concurrency/java/02并发的噩梦.html">
+            
+                    
+                    并发程序的噩梦——数据竞争
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" data-path="../concurrency/java/03自己动手写并发工具类.html">
+            
+                <a href="../concurrency/java/03自己动手写并发工具类.html">
+            
+                    
+                    30行自己写并发工具类(Semaphore, CyclicBarrier, CountDownLatch)是什么体验?
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="../concurrency/java/04volatile.html">
+            
+                <a href="../concurrency/java/04volatile.html">
+            
+                    
+                    万字长文：从计算机本源深入探寻volatile和Java内存模型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5" data-path="../concurrency/java/05falsesharing.html">
+            
+                <a href="../concurrency/java/05falsesharing.html">
+            
+                    
+                    并发刺客（False Sharing）——并发程序的隐藏杀手
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.6" data-path="../concurrency/java/06futuretask.html">
+            
+                <a href="../concurrency/java/06futuretask.html">
+            
+                    
+                    60行从零开始自己动手写FutureTask是什么体验？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.7" data-path="../concurrency/java/07futuretasksrc.html">
+            
+                <a href="../concurrency/java/07futuretasksrc.html">
+            
+                    
+                    FutureTask源码深度剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.8" data-path="../concurrency/java/08synchronizedusage.html">
+            
+                <a href="../concurrency/java/08synchronizedusage.html">
+            
+                    
+                    深入学习Synchronized各种使用方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.9" data-path="../concurrency/java/09synchronized.html">
+            
+                <a href="../concurrency/java/09synchronized.html">
+            
+                    
+                    Synchronized锁升级原理与过程深入剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.10" data-path="../concurrency/java/10spinlock.html">
+            
+                <a href="../concurrency/java/10spinlock.html">
+            
+                    
+                    从零开始自己动手写自旋锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.11" data-path="../concurrency/java/13locksupport.html">
+            
+                <a href="../concurrency/java/13locksupport.html">
+            
+                    
+                    60行自己动手写LockSupport是什么体验？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.12" data-path="../concurrency/java/14threadpool.html">
+            
+                <a href="../concurrency/java/14threadpool.html">
+            
+                    
+                    彻底了解线程池的原理——40行从零开始自己写线程池
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.13" data-path="../concurrency/java/16retalkingthreadpool.html">
+            
+                <a href="../concurrency/java/16retalkingthreadpool.html">
+            
+                    
+                    再谈线程池——深入剖析线程池的前世今生
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.14" data-path="../concurrency/java/17threadpoolimplementation.html">
+            
+                <a href="../concurrency/java/17threadpoolimplementation.html">
+            
+                    
+                    自己动手写乞丐版线程池
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.15" data-path="../concurrency/java/18threadpoolmorecloseJDK.html">
+            
+                <a href="../concurrency/java/18threadpoolmorecloseJDK.html">
+            
+                    
+                    自己动手写线程池——向JDK线程池进发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.16" data-path="../concurrency/java/11blockingqueue.html">
+            
+                <a href="../concurrency/java/11blockingqueue.html">
+            
+                    
+                    从零开始自己动手写阻塞队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.17" data-path="../concurrency/java/12blockingqueuesrc.html">
+            
+                <a href="../concurrency/java/12blockingqueuesrc.html">
+            
+                    
+                    JDK数组阻塞队列源码深入剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" >
+            
+                <span>
+            
+                    
+                    OpenMP
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../concurrency/openmp/01introduction.html">
+            
+                <a href="../concurrency/openmp/01introduction.html">
+            
+                    
+                    OpenMP 入门
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../concurrency/openmp/02openmp.html">
+            
+                <a href="../concurrency/openmp/02openmp.html">
+            
+                    
+                    OpenMP 教程（一）——OpenMP 当中的 reduction 子句
+
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../concurrency/openmp/03runtime1.html">
+            
+                <a href="../concurrency/openmp/03runtime1.html">
+            
+                    
+                    OpenMP 常见的动态库函数使用（上）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../concurrency/openmp/04runtime2.html">
+            
+                <a href="../concurrency/openmp/04runtime2.html">
+            
+                    
+                    Openmp 常见的动态库函数使用（下）——深入剖析锁🔒原理与实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../concurrency/openmp/05environment.html">
+            
+                <a href="../concurrency/openmp/05environment.html">
+            
+                    
+                    Openmp 环境变量使用总结
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6" data-path="../concurrency/openmp/06sync.html">
+            
+                <a href="../concurrency/openmp/06sync.html">
+            
+                    
+                    深入理解 OpenMP 线程同步机制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.7" data-path="../concurrency/openmp/07atomic.html">
+            
+                <a href="../concurrency/openmp/07atomic.html">
+            
+                    
+                    OpenMP 原子指令设计与实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.8" data-path="../concurrency/openmp/08parallel.html">
+            
+                <a href="../concurrency/openmp/08parallel.html">
+            
+                    
+                    Parallel Construct 实现原理与源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.9" data-path="../concurrency/openmp/09sync.html">
+            
+                <a href="../concurrency/openmp/09sync.html">
+            
+                    
+                    OpenMP 线程同步 Construct 实现原理以及源码分析（上）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.10" data-path="../concurrency/openmp/10sync.html">
+            
+                <a href="../concurrency/openmp/10sync.html">
+            
+                    
+                    OpenMP 线程同步 Construct 实现原理以及源码分析（下）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.11" data-path="../concurrency/openmp/11for_dynamic.html">
+            
+                <a href="../concurrency/openmp/11for_dynamic.html">
+            
+                    
+                    OpenMP For Construct dynamic 调度方式实现原理和源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.12" data-path="../concurrency/openmp/12guided.html">
+            
+                <a href="../concurrency/openmp/12guided.html">
+            
+                    
+                    OpenMP For Construct guided 调度方式实现原理和源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.13" data-path="../concurrency/openmp/13seciton.html">
+            
+                <a href="../concurrency/openmp/13seciton.html">
+            
+                    
+                    OpenMP Sections Construct 实现原理以及源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.14" data-path="../concurrency/openmp/14task.html">
+            
+                <a href="../concurrency/openmp/14task.html">
+            
+                    
+                    OpenMP task construct 实现原理以及源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" >
+            
+                <span>
+            
+                    
+                    Pthread
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../concurrency/pthread/01pthread.html">
+            
+                <a href="../concurrency/pthread/01pthread.html">
+            
+                    
+                    Pthread 并发编程（一）——深入剖析线程基本元素和状态
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../concurrency/pthread/02pthread.html">
+            
+                <a href="../concurrency/pthread/02pthread.html">
+            
+                    
+                    Pthread 并发编程（二）——自底向上深入理解线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../concurrency/pthread/03pthread.html">
+            
+                <a href="../concurrency/pthread/03pthread.html">
+            
+                    
+                    Pthread 并发编程（三）——深入理解线程取消机制
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    Makefile
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../tools/makefile/01.html">
+            
+                <a href="../tools/makefile/01.html">
+            
+                    
+                    彻底掌握Makefile（一）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../tools/makefile/02.html">
+            
+                <a href="../tools/makefile/02.html">
+            
+                    
+                    彻底掌握Makefile（二）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.3" data-path="../tools/makefile/03.html">
+            
+                <a href="../tools/makefile/03.html">
+            
+                    
+                    彻底掌握Makefile（三）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" >
+            
+                <span>
+            
+                    
+                    DES
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../des/des.html">
+            
+                <a href="../des/des.html">
+            
+                    
+                    DES加密算法从入门到入坟
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" >
+            
+                <span>
+            
+                    
+                    命令行&系统编程&SHELL
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.13.1" data-path="../linux/command/01top.html">
+            
+                <a href="../linux/command/01top.html">
+            
+                    
+                    Linux命令系列之top——里面藏着很多鲜为人知的宝藏知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.2" data-path="../linux/command/02ls.html">
+            
+                <a href="../linux/command/02ls.html">
+            
+                    
+                    Linux命令系列之ls——原来最简单的ls这么复杂
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.3" data-path="../linux/command/03mkls.html">
+            
+                <a href="../linux/command/03mkls.html">
+            
+                    
+                    自己动手写ls命令——Java版
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.4" data-path="../linux/command/05ps.html">
+            
+                <a href="../linux/command/05ps.html">
+            
+                    
+                    这才是使用ps命令的正确姿势
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.5" data-path="../linux/command/06kill.html">
+            
+                <a href="../linux/command/06kill.html">
+            
+                    
+                    如何优雅的杀掉一个进程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.6" data-path="../linux/programming/01exit.html">
+            
+                <a href="../linux/programming/01exit.html">
+            
+                    
+                    C语言中这么骚的退出程序的方式你知道几个？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.7" data-path="../linux/programming/02sgementation.html">
+            
+                <a href="../linux/programming/02sgementation.html">
+            
+                    
+                    你的哪些骚操作会导致Segmentation Fault😂
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.8" data-path="../linux/programming/03segprincinple.html">
+            
+                <a href="../linux/programming/03segprincinple.html">
+            
+                    
+                    深入剖析Sgementation fault原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.9" data-path="../linux/programming/04processdie.html">
+            
+                <a href="../linux/programming/04processdie.html">
+            
+                    
+                    进程最后的遗言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.10" data-path="../linux/command/04exitstatus.html">
+            
+                <a href="../linux/command/04exitstatus.html">
+            
+                    
+                    Shell揭秘——程序退出状态码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.11" data-path="../linux/shell/01jobcontrol.html">
+            
+                <a href="../linux/shell/01jobcontrol.html">
+            
+                    
+                    你在终端启动的进程，最后都是什么下场？（上）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.12" data-path="../linux/shell/02jobcontrol.html">
+            
+                <a href="../linux/shell/02jobcontrol.html">
+            
+                    
+                    你在终端启动的进程，最后都是什么下场？（下）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" >
+            
+                <span>
+            
+                    
+                    计算机系统基础
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.14.1" data-path="../pl/c_cpp/01builtin.html">
+            
+                <a href="../pl/c_cpp/01builtin.html">
+            
+                    
+                    gcc 好玩的 builtin 函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" >
+            
+                <span>
+            
+                    
+                    python
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../pl/python/misc/01copy.html">
+            
+                <a href="../pl/python/misc/01copy.html">
+            
+                    
+                    深入理解 python 对象拷贝和内存布局
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >深入剖析前缀、中缀、后缀表达式以及表达式求值</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="&#x6DF1;&#x5165;&#x5256;&#x6790;&#x524D;&#x7F00;&#x3001;&#x4E2D;&#x7F00;&#x3001;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x4EE5;&#x53CA;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;">&#x6DF1;&#x5165;&#x5256;&#x6790;&#x524D;&#x7F00;&#x3001;&#x4E2D;&#x7F00;&#x3001;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x4EE5;&#x53CA;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;</h1>
+<h2 id="&#x524D;&#x8A00;">&#x524D;&#x8A00;</h2>
+<p>&#x5728;&#x672C;&#x7BC7;&#x6587;&#x7AE0;&#x5F53;&#x4E2D;&#x4E3B;&#x8981;&#x8DDF;&#x5927;&#x5BB6;&#x4ECB;&#x7ECD;&#x4EE5;&#x4E0B;&#x51E0;&#x70B9;</p>
+<ul>
+<li>&#x524D;&#x7F00;&#x3001;&#x4E2D;&#x7F00;&#x548C;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x3002;</li>
+<li>&#x5982;&#x4F55;&#x5C06;&#x4E2D;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x8F6C;&#x5316;&#x6210;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x3002;</li>
+<li>&#x5982;&#x4F55;&#x4F7F;&#x7528;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x8FDB;&#x884C;&#x6C42;&#x503C;&#x3002;</li>
+</ul>
+<p>&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;&#x8FD9;&#x662F;&#x4E00;&#x4E2A;&#x6BD4;&#x8F83;&#x7ECF;&#x5178;&#x7684;&#x8BA1;&#x7B97;&#x673A;&#x7CFB;&#x7EDF;&#x57FA;&#x7840;&#x95EE;&#x9898;&#xFF0C;&#x4F46;&#x662F;&#x6574;&#x4E2A;&#x8FC7;&#x7A0B;&#x6BD4;&#x8F83;&#x62BD;&#x8C61;&#xFF0C;&#x672C;&#x6587;&#x4E3B;&#x8981;&#x901A;&#x8FC7;&#x56FE;&#x89E3;&#x7684;&#x65B9;&#x6CD5;&#x5E2E;&#x52A9;&#x5927;&#x5BB6;&#x7406;&#x89E3;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x3002;</p>
+<h2 id="&#x8868;&#x8FBE;&#x5F0F;&#x4ECB;&#x7ECD;">&#x8868;&#x8FBE;&#x5F0F;&#x4ECB;&#x7ECD;</h2>
+<p>&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x4E5F;&#x79F0;&#x4F5C;&#x9006;&#x6CE2;&#x5170;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;&#x524D;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x4E5F;&#x79F0;&#x4F5C;&#x6CE2;&#x5170;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;&#x8FD9;&#x4E2A;&#x662F;&#x56E0;&#x4E3A;&#x8FD9;&#x662F;&#x7531;&#x6CE2;&#x5170;&#x6570;&#x5B66;&#x5BB6;<strong>&#x6768;-&#x6B66;&#x5361;&#x8C22;&#x7EF4;&#x5947;</strong>&#x63D0;&#x51FA;&#x6765;&#x7684;&#xFF0C;&#x7528;&#x4E8E;&#x7B80;&#x5316;&#x547D;&#x9898;&#x903B;&#x8F91;&#x7684;&#x4E00;&#x79CD;&#x65B9;&#x6CD5;&#x3002;</p>
+<h3 id="&#x4E2D;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;">&#x4E2D;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;</h3>
+<p>&#x6211;&#x4EEC;&#x5E38;&#x89C1;&#x7684;&#x6570;&#x5B66;&#x8868;&#x8FBE;&#x5F0F;&#x5C31;&#x662F;&#x4E2D;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;&#x6BD4;&#x5982;&#x8BF4;&#xFF1A;$1 + 2$&#xFF0C;&#x50CF;&#x8FD9;&#x79CD;&#x6211;&#x4EEC;&#x4ECE;&#x5C0F;&#x5230;&#x5927;&#x7ECF;&#x5E38;&#x89C1;&#x5230;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x5C31;&#x53EB;&#x505A;&#x4E2D;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;&#x8FD9;&#x4E2A;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x7279;&#x70B9;&#x5C31;&#x662F;&#x5C06;<strong>&#x8FD0;&#x7B97;&#x7B26;</strong>&#xFF08;&#x52A0;&#x51CF;&#x4E58;&#x9664;&#xFF09;&#x653E;&#x5728;&#x4E24;&#x4E2A;&#x64CD;&#x4F5C;&#x6570;&#xFF08;&#x6570;&#x5B57;&#xFF09;&#x4E2D;&#x95F4;&#x3002;</p>
+<h3 id="&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;">&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;</h3>
+<p>&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x548C;&#x4E2D;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x6700;&#x5927;&#x533A;&#x522B;&#x5C31;&#x662F;&#xFF0C;&#x4ED6;&#x4E0D;&#x662F;&#x5C06;<strong>&#x8FD0;&#x7B97;&#x7B26;</strong>&#x653E;&#x5728;<strong>&#x64CD;&#x4F5C;&#x6570;</strong>&#x4E2D;&#x95F4;&#xFF0C;&#x800C;&#x662F;&#x5C06;<strong>&#x8FD0;&#x7B97;&#x7B26;</strong>&#x653E;&#x5728;<strong>&#x64CD;&#x4F5C;&#x6570;</strong>&#x540E;&#x9762;&#xFF0C;&#x6BD4;&#x5982;&#x4E0A;&#x9762;&#x7684;&#x4E2D;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;$1 + 2$&#x8F6C;&#x5316;&#x6210;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x5C31;&#x4E3A;$12+$&#x3002;</p>
+<h3 id="&#x524D;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;">&#x524D;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;</h3>
+<p>&#x524D;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x5C31;&#x662F;&#x5C06;<strong>&#x8FD0;&#x7B97;&#x7B26;</strong>&#x653E;&#x5728;<strong>&#x64CD;&#x4F5C;&#x6570;</strong>&#x7684;&#x524D;&#x9762;&#xFF0C;&#x6BD4;&#x5982;&#x4E0A;&#x9762;&#x7684;&#x4E2D;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;$1 + 2$&#x8F6C;&#x5316;&#x6210;&#x524D;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x4E4B;&#x540E;&#x4E3A;$+12$&#x3002;</p>
+<h3 id="&#x8868;&#x8FBE;&#x5F0F;&#x4E4B;&#x95F4;&#x8F6C;&#x5316;&#x7684;&#x4F8B;&#x5B50;">&#x8868;&#x8FBE;&#x5F0F;&#x4E4B;&#x95F4;&#x8F6C;&#x5316;&#x7684;&#x4F8B;&#x5B50;</h3>
+<p>&#x4E0A;&#x9762;&#x7684;&#x8868;&#x8FBE;&#x5F0F;&#x8FD8;&#x662F;&#x6BD4;&#x8F83;&#x7B80;&#x5355;&#xFF0C;&#x53EF;&#x80FD;&#x4E0D;&#x8DB3;&#x4EE5;&#x5E2E;&#x52A9;&#x5927;&#x5BB6;&#x597D;&#x597D;&#x7406;&#x89E3;&#x8868;&#x8FBE;&#x5F0F;&#x4E4B;&#x95F4;&#x7684;&#x8F6C;&#x5316;&#x8FC7;&#x7A0B;&#x3002;</p>
+<p>&#x4E2D;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#xFF1A;$A + B * (C - D) - E / F$</p>
+<p>&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x6765;&#x5C06;&#x4E0A;&#x9762;&#x7684;&#x4E2D;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x8F6C;&#x5316;&#x6210;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;&#x6211;&#x4EEC;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x8BA1;&#x7B97;&#x7684;&#x90E8;&#x5206;&#x5982;&#x4E0B;&#xFF08;&#x62EC;&#x53F7;&#x91CC;&#x9762;&#x7684;&#x4F18;&#x5148;&#x8BA1;&#x7B97;&#xFF09;&#xFF1A;</p>
+<p><img src="../images/expression/01.png" alt="01" style="zoom:80%;"></p>
+<p>&#x6839;&#x636E;&#x6211;&#x4EEC;&#x7684;&#x8F6C;&#x5316;&#x539F;&#x7406;&#xFF1A;&#x5C06;<strong>&#x8FD0;&#x7B97;&#x7B26;</strong>&#x653E;&#x5728;<strong>&#x64CD;&#x4F5C;&#x6570;</strong>&#x540E;&#x9762;&#xFF0C;</p>
+<p><img src="../images/expression/02.png" alt="01" style="zoom:80%;"></p>
+<p>&#x4E0A;&#x9762;&#x7684;&#x5F97;&#x5230;&#x7684;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x7EE7;&#x7EED;&#x8FDB;&#x884C;&#x8F6C;&#x5316;&#xFF08;&#x73B0;&#x5728;&#x9700;&#x8981;&#x8BA1;&#x7B97;$B$&#x4E58;&#x4EE5;&#x540E;&#x9762;&#x7684;&#x90A3;&#x4E2A;&#x90E8;&#x5206;&#xFF09;&#xFF1A;</p>
+<p><img src="../images/expression/05.png" alt="01" style="zoom:80%;"></p>
+<p>&#x7EE7;&#x7EED;&#x8FDB;&#x884C;&#x8F6C;&#x5316;&#xFF08;&#x4ECE;&#x5DE6;&#x5F80;&#x540E;&#x8FDB;&#x884C;&#x8BA1;&#x7B97;&#xFF09;&#xFF1A;</p>
+<p><img src="../images/expression/06.png" alt="01" style="zoom:80%;"></p>
+<p>&#x7EE7;&#x7EED;&#x8FDB;&#x884C;&#x8F6C;&#x5316;&#xFF08;&#x9664;&#x6CD5;&#x7684;&#x4F18;&#x5148;&#x7EA7;&#x6BD4;&#x51CF;&#x6CD5;&#x9AD8;&#xFF09;&#xFF1A;</p>
+<p><img src="../images/expression/07.png" alt="01" style="zoom:80%;"></p>
+<p>&#x5F97;&#x5230;&#x6700;&#x7EC8;&#x7684;&#x7ED3;&#x679C;&#xFF1A;</p>
+<p><img src="../images/expression/08.png" alt="01" style="zoom:80%;"></p>
+<h2 id="&#x7A0B;&#x5E8F;&#x5982;&#x4F55;&#x5C06;&#x4E2D;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x8F6C;&#x5316;&#x6210;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;">&#x7A0B;&#x5E8F;&#x5982;&#x4F55;&#x5C06;&#x4E2D;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x8F6C;&#x5316;&#x6210;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;</h2>
+<p>&#x5C06;&#x4E2D;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x8F6C;&#x5316;&#x6210;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x6709;&#x4EE5;&#x4E0B;&#x51E0;&#x6761;&#x89C4;&#x5219;&#xFF08;&#x4E0B;&#x9762;&#x7684;&#x6808;&#x662F;&#x5B58;&#x50A8;&#x64CD;&#x4F5C;&#x7B26;&#x7684;&#x6808;&#xFF0C;&#x800C;&#x4E14;&#x53EA;&#x5B58;&#x50A8;&#x64CD;&#x4F5C;&#x7B26;&#xFF09;&#xFF1A;</p>
+<ul>
+<li>&#x4ECE;&#x5DE6;&#x5230;&#x53F3;&#x8FDB;&#x884C;&#x904D;&#x5386;&#x3002;</li>
+<li>&#x9047;&#x5230;&#x64CD;&#x4F5C;&#x6570;&#xFF0C;&#x76F4;&#x63A5;&#x52A0;&#x5165;&#x5230;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x5F53;&#x4E2D;&#x3002;</li>
+<li>&#x9047;&#x5230;&#x754C;&#x9650;&#x7B26;&#x3002;&#x9047;&#x5230;&#x201C;(&#x201D;&#x76F4;&#x63A5;&#x5165;&#x6808;&#xFF0C;&#x9047;&#x5230;&#x201C;)&#x201D;&#x5219;&#x4F9D;&#x6B21;&#x5F39;&#x51FA;&#x6808;&#x5185;&#x8FD0;&#x7B97;&#x7B26;&#x5E76;&#x52A0;&#x5165;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;&#x76F4;&#x5230;&#x5F39;&#x51FA;&#x201C;(&#x201D; &#x4E3A;&#x6B62;&#xFF0C;&#x6CE8;&#x610F;:&#x201C;(&#x201D; &#x4E0D;&#x52A0;&#x5165;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x3002;</li>
+<li>&#x9047;&#x5230;&#x8FD0;&#x7B97;&#x7B26;&#x3002;&#x4F9D;&#x6B21;&#x5F39;&#x51FA;&#x6808;&#x4E2D;&#x4F18;&#x5148;&#x7EA7;&#x9AD8;&#x4E8E;&#x6216;&#x7B49;&#x4E8E;&#x5F53;&#x524D;&#x8FD0;&#x7B97;&#x7B26;&#x7684;&#x6240;&#x6709;&#x8FD0;&#x7B97;&#x7B26;&#xFF0C;&#x5E76;&#x52A0;&#x5165;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;&#x82E5;&#x78B0;&#x5230;&#x201C;(&#x201D;&#x6216;&#x6808;&#x7A7A;&#x5219;&#x505C;&#x6B62;&#x3002;&#x4E4B;&#x540E;&#x518D;&#x628A;&#x5F53;&#x524D;&#x8FD0;&#x7B97;&#x7B26;&#x5165;&#x6808;&#x3002;</li>
+</ul>
+<p>&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x6839;&#x636E;&#x4E0A;&#x9762;&#x7684;&#x89C4;&#x5219;&#x6765;&#x5C06;&#x4E0A;&#x6587;&#x5F53;&#x4E2D;&#x7684;&#x4E2D;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x8F6C;&#x5316;&#x6210;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x3002;</p>
+<ul>
+<li>&#x904D;&#x5386;&#x5230;$A$&#xFF0C;&#x6839;&#x636E;&#x7B2C;&#x4E8C;&#x6761;&#x89C4;&#x5219;&#xFF0C;&#x5C06;$A$&#x52A0;&#x5165;&#x5230;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x5F53;&#x4E2D;&#xFF0C;&#x5F53;&#x524D;&#x7684;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x4E3A;&#xFF1A;$A$&#x3002;</li>
+</ul>
+<p><img src="../images/expression/09.png" alt="01" style="zoom:80%;"></p>
+<ul>
+<li>&#x73B0;&#x5728;&#x904D;&#x5386;&#x5230;&#x52A0;&#x53F7;&#xFF0C;&#x6839;&#x636E;&#x524D;&#x9762;&#x7684;&#x89C4;&#x5219;&#x9700;&#x8981;&#x5F39;&#x51FA;&#x6808;&#x91CC;&#x9762;&#x4F18;&#x5148;&#x7EA7;&#x5927;&#x7684;&#x8FD0;&#x7B97;&#x7B26;&#xFF0C;&#x518D;&#x5C06;&#x52A0;&#x53F7;&#x52A0;&#x5165;&#x5230;&#x6808;&#x4E2D;&#xFF0C;&#x5F53;&#x524D;&#x7684;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x4E3A;$A$&#x3002;</li>
+</ul>
+<p><img src="../images/expression/11.png" alt="01" style="zoom:80%;"></p>
+<ul>
+<li>&#x904D;&#x5386;&#x5230;$B$&#xFF0C;&#x76F4;&#x63A5;&#x52A0;&#x5165;&#x5230;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x5F53;&#x4E2D;&#xFF0C;&#x76EE;&#x524D;&#x7684;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x4E3A;$AB$&#x3002;</li>
+</ul>
+<p><img src="../images/expression/12.png" alt="01" style="zoom:80%;"></p>
+<ul>
+<li>&#x904D;&#x5386;&#x5230;$*$&#xFF0C;&#x6839;&#x636E;&#x89C4;&#x5219;&#x76F4;&#x63A5;&#x5C06;&#x5176;&#x52A0;&#x5165;&#x5230;&#x6808;&#x4E2D;&#xFF0C;&#x5F53;&#x524D;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x4E3A;$AB$&#x3002;</li>
+</ul>
+<p><img src="../images/expression/13.png" alt="01" style="zoom:80%;"></p>
+<ul>
+<li>&#x904D;&#x5386;&#x5230;$($&#xFF0C;&#x6839;&#x636E;&#x89C4;&#x5219;&#x76F4;&#x63A5;&#x5C06;&#x5176;&#x52A0;&#x5165;&#x5230;&#x6808;&#x4E2D;&#xFF0C;&#x5F53;&#x524D;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x4E3A;$AB$&#x3002;</li>
+</ul>
+<p><img src="../images/expression/14.png" alt="01" style="zoom:80%;"></p>
+<ul>
+<li><p>&#x904D;&#x5386;&#x5230;$C$&#xFF0C;&#x5219;&#x76F4;&#x63A5;&#x5C06;&#x5176;&#x52A0;&#x5165;&#x5230;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x5F53;&#x4E2D;&#xFF0C;&#x5F53;&#x524D;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x4E3A;$ABC$&#x3002;</p>
+</li>
+<li><p>&#x904D;&#x5386;&#x5230;$-$&#xFF0C;&#x6839;&#x636E;&#x89C4;&#x5219;&#x5C06;&#x5176;&#x52A0;&#x5165;&#x5230;&#x6808;&#x4E2D;&#xFF0C;&#x5F53;&#x524D;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x4E3A;$ABC$&#x3002;</p>
+</li>
+</ul>
+<p><img src="../images/expression/15.png" alt="01" style="zoom:80%;"></p>
+<ul>
+<li><p>&#x904D;&#x5386;&#x5230;$D$&#xFF0C;&#x5219;&#x5C06;&#x5176;&#x76F4;&#x63A5;&#x52A0;&#x5165;&#x5230;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x5F53;&#x4E2D;&#xFF0C;&#x5F53;&#x524D;&#x7684;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x4E3A;$ABCD$&#x3002;</p>
+</li>
+<li><p>&#x904D;&#x5386;&#x5230;$)$&#xFF0C;&#x5219;&#x9700;&#x8981;&#x5C06;&#x6808;&#x4E2D;&#x7684;&#x7B26;&#x53F7;&#x5F39;&#x51FA;&#xFF0C;&#x76F4;&#x5230;&#x9047;&#x5230;$($&#xFF0C;&#x5F53;&#x524D;&#x7684;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x4E3A;$ABCD-$&#x3002;</p>
+</li>
+</ul>
+<p><img src="../images/expression/16.png" alt="01" style="zoom:80%;"></p>
+<ul>
+<li>&#x904D;&#x5386;&#x5230;$-$&#xFF0C;&#x9700;&#x8981;&#x5C06;&#x6808;&#x4E2D;&#x4F18;&#x5148;&#x7EA7;&#x5927;&#x4E8E;&#x7B49;&#x4E8E;$-$&#x7684;&#x8FD0;&#x7B97;&#x7B26;&#x5F39;&#x51FA;&#xFF0C;&#x5219;&#x5F53;&#x524D;&#x7684;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x4E3A;$ABCD-*+$&#xFF0C;&#x518D;&#x5C06;$-$&#x538B;&#x5165;&#x6808;&#x4E2D;&#x3002;</li>
+</ul>
+<p><img src="../images/expression/17.png" alt="01" style="zoom:80%;"></p>
+<ul>
+<li><p>&#x904D;&#x5386;&#x5230;$E$&#xFF0C;&#x76F4;&#x63A5;&#x5C06;&#x6570;&#x5B57;&#x52A0;&#x5165;&#x5230;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x5F53;&#x4E2D;&#xFF0C;&#x5219;&#x5F53;&#x524D;&#x7684;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x4E3A;$ABCD-*+E$&#x3002;</p>
+</li>
+<li><p>&#x904D;&#x5386;&#x5230;$/$&#xFF0C;&#x5C06;&#x6808;&#x4E2D;&#x4F18;&#x5148;&#x7EA7;&#x5927;&#x4E8E;&#x7B49;&#x4E8E;$/$&#x7684;&#x8FD0;&#x7B97;&#x7B26;&#xFF0C;&#x518D;&#x5C06;$/$&#x538B;&#x5165;&#x5230;&#x6808;&#x4E2D;&#xFF0C;&#x5F53;&#x524D;&#x7684;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x4E3A;$ABCD-*+E$&#x3002;</p>
+</li>
+</ul>
+<p><img src="../images/expression/19.png" alt="01" style="zoom:80%;"></p>
+<ul>
+<li>&#x904D;&#x5386;&#x5230;$F$&#xFF0C;&#x76F4;&#x63A5;&#x5C06;&#x5176;&#x52A0;&#x5165;&#x5230;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x5F53;&#x4E2D;&#xFF0C;&#x5219;&#x5F53;&#x524D;&#x7684;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x4E3A;$ABCD-*+EF$&#x3002;</li>
+<li>&#x6700;&#x7EC8;&#x5C06;&#x6808;&#x4E2D;&#x6240;&#x6709;&#x7684;&#x8FD0;&#x7B97;&#x7B26;&#x90FD;&#x5F39;&#x51FA;&#xFF0C;&#x5F97;&#x5230;&#x7684;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x4E3A;$ABCD-*+EF/-$&#x3002;</li>
+</ul>
+<p>&#x7ECF;&#x8FC7;&#x4E0A;&#x9762;&#x7684;&#x8FC7;&#x7A0B;&#x5C31;&#x53EF;&#x4EE5;&#x5C06;&#x4E00;&#x4E2A;&#x4E2D;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x8F6C;&#x6210;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x4E86;&#xFF0C;&#x5927;&#x5BB6;&#x5982;&#x679C;&#x60F3;&#x8981;&#x4EE3;&#x7801;&#x5B9E;&#x73B0;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x5728;&#x904D;&#x5386;&#x6570;&#x636E;&#x7684;&#x65F6;&#x5019;&#x6839;&#x636E;&#x4E0A;&#x9762;&#x56DB;&#x4E2A;&#x89C4;&#x5219;&#x4E00;&#x4E2A;&#x4E2A;&#x8FDB;&#x884C;&#x5224;&#x65AD;&#x5373;&#x53EF;&#xFF0C;&#x7A0B;&#x5E8F;&#x5E76;&#x4E0D;&#x56F0;&#x96BE;&#xFF0C;&#x5C31;&#x662F;&#x903B;&#x8F91;&#x7A0D;&#x5FAE;&#x6709;&#x70B9;&#x591A;&#xFF0C;&#x9700;&#x8981;&#x8003;&#x8651;&#x66F4;&#x591A;&#x7684;&#x95EE;&#x9898;&#xFF0C;&#x5728;&#x5199;&#x4EE3;&#x7801;&#x7684;&#x65F6;&#x5019;&#x9700;&#x8981;&#x7EC6;&#x81F4;&#x4E00;&#x70B9;&#x3002;</p>
+<h2 id="&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;">&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;</h2>
+<p>&#x5728;&#x524D;&#x6587;&#x5F53;&#x4E2D;&#x6211;&#x4EEC;&#x5DF2;&#x7ECF;&#x5F97;&#x5230;&#x4E86;&#x8868;&#x8FBE;&#x5F0F;$A + B <em> (C - D) - E / F$&#x7684;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x4E3A;$ABCD-</em>+EF/-$&#x3002;&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5C06;&#x8FD9;&#x4E2A;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x8FDB;&#x884C;&#x6C42;&#x503C;&#x3002;&#x6839;&#x636E;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;&#x4E3B;&#x8981;&#x6709;&#x4EE5;&#x4E0B;&#x4E24;&#x6761;&#x89C4;&#x5219;&#xFF1A;</p>
+<ul>
+<li>&#x5982;&#x679C;&#x9047;&#x5230;&#x6570;&#x5B57;&#x76F4;&#x63A5;&#x5C06;&#x5176;&#x52A0;&#x5165;&#x5230;&#x6570;&#x5B57;&#x6808;&#x3002;</li>
+<li>&#x5982;&#x679C;&#x9047;&#x5230;&#x64CD;&#x4F5C;&#x7B26;&#x76F4;&#x63A5;&#x4ECE;&#x64CD;&#x4F5C;&#x6570;&#x6808;&#x5F39;&#x51FA;&#x4E24;&#x4E2A;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x5BF9;&#x5E94;&#x7684;&#x8FD0;&#x7B97;&#xFF0C;&#x518D;&#x5C06;&#x8FD0;&#x7B97;&#x7ED3;&#x679C;&#x52A0;&#x5165;&#x5230;&#x6808;&#x4E2D;&#x3002;</li>
+</ul>
+<p>&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x8FDB;&#x884C;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x6C42;&#x503C;&#x8FC7;&#x7A0B;;</p>
+<ul>
+<li>&#x9996;&#x5148;&#x524D;&#x9762;&#x56DB;&#x4E2A;$ABCD$&#x90FD;&#x662F;&#x6570;&#x5B57;&#xFF0C;&#x6839;&#x636E;&#x4E0A;&#x9762;&#x63D0;&#x5230;&#x7684;&#x7B2C;&#x4E00;&#x6761;&#x89C4;&#x5219;&#xFF0C;&#x6211;&#x4EEC;&#x90FD;&#x9700;&#x8981;&#x5C06;&#x6570;&#x5B57;&#x538B;&#x5165;&#x5230;&#x6808;&#x5F53;&#x4E2D;&#xFF0C;&#x56E0;&#x6B64;&#x904D;&#x5386;&#x56DB;&#x4E2A;&#x6570;&#x5B57;&#x4E4B;&#x540E;&#xFF0C;&#x60C5;&#x51B5;&#x5982;&#x4E0B;&#xFF1A;</li>
+</ul>
+<p><img src="../images/expression/21.png" alt="01" style="zoom:80%;"></p>
+<ul>
+<li>&#x73B0;&#x5728;&#x904D;&#x5386;&#x5230;$-$&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5C06;$D$&#x548C;$C$&#x5F39;&#x51FA;&#xFF0C;&#x7136;&#x540E;&#x8FDB;&#x884C;$-$&#x64CD;&#x4F5C;&#x7684;&#x8FD0;&#x7B97;&#xFF0C;&#x518D;&#x5C06;&#x7ED3;&#x679C;&#x538B;&#x5165;&#x6808;&#x4E2D;&#x3002;</li>
+</ul>
+<p><img src="../images/expression/23.png" alt="01" style="zoom:80%;"></p>
+<ul>
+<li>&#x73B0;&#x5728;&#x904D;&#x5386;&#x5230;$*$&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5C06;$C-D=M$&#x548C;$B$&#x5F39;&#x51FA;&#xFF0C;&#x8FDB;&#x884C;&#x4E58;&#x6CD5;&#x8FD0;&#x7B97;&#xFF0C;&#x7136;&#x540E;&#x5C06;&#x7ED3;&#x679C;&#x538B;&#x5165;&#x6808;&#x4E2D;&#x3002;</li>
+</ul>
+<p><img src="../images/expression/25.png" alt="01" style="zoom:80%;"></p>
+<ul>
+<li>&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x904D;&#x5386;&#x5230;$+$&#xFF0C;&#x9700;&#x8981;&#x5C06;&#x6808;&#x4E2D;&#x5269;&#x4F59;&#x7684;&#x4E24;&#x4E2A;&#x6570;&#x5F39;&#x51FA;&#xFF0C;&#x8FDB;&#x884C;&#x52A0;&#x6CD5;&#x8FD0;&#x7B97;&#xFF0C;&#x5728;&#x5C06;&#x7ED3;&#x679C;&#x538B;&#x6808;&#x3002;</li>
+</ul>
+<p><img src="../images/expression/26.png" alt="01" style="zoom:80%;"></p>
+<ul>
+<li>&#x904D;&#x5386;$EF$&#x90FD;&#x9700;&#x8981;&#x5C06;&#x8FD9;&#x4E24;&#x4E2A;&#x6570;&#x538B;&#x5165;&#x5230;&#x6808;&#x5F53;&#x4E2D;&#x3002;</li>
+</ul>
+<p><img src="../images/expression/27.png" alt="01" style="zoom:80%;"></p>
+<ul>
+<li>&#x73B0;&#x5728;&#x904D;&#x5386;&#x5230;$/$&#xFF0C;&#x9700;&#x8981;&#x8FDB;&#x884C;&#x9664;&#x6CD5;&#x8FD0;&#x7B97;&#xFF0C;&#x5728;&#x5C06;&#x5F97;&#x5230;&#x7684;&#x7ED3;&#x679C;&#x538B;&#x5165;&#x5230;&#x6808;&#x4E2D;&#x3002;</li>
+</ul>
+<p><img src="../images/expression/28.png" alt="01" style="zoom:80%;"></p>
+<ul>
+<li>&#x6700;&#x540E;&#x904D;&#x5386;&#x5230;$-$&#xFF0C;&#x5C06;&#x6808;&#x4E2D;&#x7684;&#x4E24;&#x4E2A;&#x6570;&#x5F39;&#x51FA;&#x6808;&#xFF0C;&#x8FDB;&#x884C;&#x51CF;&#x6CD5;&#x8FD0;&#x7B97;&#x5F97;&#x5230;&#x6700;&#x540E;&#x7684;&#x7ED3;&#x679C;&#x3002;</li>
+</ul>
+<p><img src="../images/expression/29.png" alt="01" style="zoom:80%;"></p>
+<p>&#x76F8;&#x4FE1;&#x7ECF;&#x8FC7;&#x4E0A;&#x9762;&#x8FC7;&#x7A0B;&#x4F60;&#x5BF9;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;&#x7684;&#x8FC7;&#x7A0B;&#x5DF2;&#x7ECF;&#x975E;&#x5E38;&#x6E05;&#x695A;&#x4E86;&#x3002;</p>
+<h2 id="&#x4EE3;&#x7801;&#x5B9E;&#x73B0;">&#x4EE3;&#x7801;&#x5B9E;&#x73B0;</h2>
+<p>&#x5728;<strong>LeetCode</strong>&#x4E2D;&#x6709;&#x4E00;&#x9053;&#x9898;&#x5C31;&#x662F;&#x6839;&#x636E;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;&#x2014;&#x2014;<a href="https://leetcode.cn/problems/8Zf90G/" target="_blank">&#x5251;&#x6307; Offer II 036. &#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;</a></p>
+<blockquote>
+<p>&#x6839;&#x636E;<a href="https://baike.baidu.com/item/&#x9006;&#x6CE2;&#x5170;&#x5F0F;/128437" target="_blank"> &#x9006;&#x6CE2;&#x5170;&#x8868;&#x793A;&#x6CD5;</a>&#xFF0C;&#x6C42;&#x8BE5;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x8BA1;&#x7B97;&#x7ED3;&#x679C;&#x3002;</p>
+<p>&#x6709;&#x6548;&#x7684;&#x7B97;&#x7B26;&#x5305;&#x62EC; <code>+</code>&#x3001;<code>-</code>&#x3001;<code>*</code>&#x3001;<code>/</code> &#x3002;&#x6BCF;&#x4E2A;&#x8FD0;&#x7B97;&#x5BF9;&#x8C61;&#x53EF;&#x4EE5;&#x662F;&#x6574;&#x6570;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x662F;&#x53E6;&#x4E00;&#x4E2A;&#x9006;&#x6CE2;&#x5170;&#x8868;&#x8FBE;&#x5F0F;&#x3002;</p>
+<p><strong>&#x8BF4;&#x660E;&#xFF1A;</strong></p>
+<ul>
+<li>&#x6574;&#x6570;&#x9664;&#x6CD5;&#x53EA;&#x4FDD;&#x7559;&#x6574;&#x6570;&#x90E8;&#x5206;&#x3002;</li>
+<li>&#x7ED9;&#x5B9A;&#x9006;&#x6CE2;&#x5170;&#x8868;&#x8FBE;&#x5F0F;&#x603B;&#x662F;&#x6709;&#x6548;&#x7684;&#x3002;&#x6362;&#x53E5;&#x8BDD;&#x8BF4;&#xFF0C;&#x8868;&#x8FBE;&#x5F0F;&#x603B;&#x4F1A;&#x5F97;&#x51FA;&#x6709;&#x6548;&#x6570;&#x503C;&#x4E14;&#x4E0D;&#x5B58;&#x5728;&#x9664;&#x6570;&#x4E3A; 0 &#x7684;&#x60C5;&#x51B5;&#x3002;</li>
+</ul>
+<p>&#x793A;&#x4F8B; 1&#xFF1A;</p>
+<p>&#x8F93;&#x5165;&#xFF1A;tokens = [&quot;2&quot;,&quot;1&quot;,&quot;+&quot;,&quot;3&quot;,&quot;<em>&quot;]
+&#x8F93;&#x51FA;&#xFF1A;9
+&#x89E3;&#x91CA;&#xFF1A;&#x8BE5;&#x7B97;&#x5F0F;&#x8F6C;&#x5316;&#x4E3A;&#x5E38;&#x89C1;&#x7684;&#x4E2D;&#x7F00;&#x7B97;&#x672F;&#x8868;&#x8FBE;&#x5F0F;&#x4E3A;&#xFF1A;((2 + 1) </em> 3) = 9</p>
+<p>&#x793A;&#x4F8B; 2&#xFF1A;</p>
+<p>&#x8F93;&#x5165;&#xFF1A;tokens = [&quot;4&quot;,&quot;13&quot;,&quot;5&quot;,&quot;/&quot;,&quot;+&quot;]
+&#x8F93;&#x51FA;&#xFF1A;6
+&#x89E3;&#x91CA;&#xFF1A;&#x8BE5;&#x7B97;&#x5F0F;&#x8F6C;&#x5316;&#x4E3A;&#x5E38;&#x89C1;&#x7684;&#x4E2D;&#x7F00;&#x7B97;&#x672F;&#x8868;&#x8FBE;&#x5F0F;&#x4E3A;&#xFF1A;(4 + (13 / 5)) = 6</p>
+</blockquote>
+<p>&#x4E0A;&#x9762;&#x95EE;&#x9898;&#x7684;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> </span>{
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">evalRPN</span><span class="hljs-params">(String[] tokens)</span> </span>{
+    Stack&lt;Integer&gt; stack = <span class="hljs-keyword">new</span> Stack&lt;&gt;();
+    <span class="hljs-keyword">for</span> (String token : tokens) {
+      <span class="hljs-keyword">switch</span> (token) {
+        <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;+&quot;</span>: {
+          <span class="hljs-keyword">int</span> a = stack.pop();
+          <span class="hljs-keyword">int</span> b = stack.pop();
+          stack.push(b + a);
+          <span class="hljs-keyword">break</span>;
+        }
+        <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;-&quot;</span>: {
+          <span class="hljs-keyword">int</span> a = stack.pop();
+          <span class="hljs-keyword">int</span> b = stack.pop();
+          stack.push(b - a);
+          <span class="hljs-keyword">break</span>;
+        }
+        <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;*&quot;</span>: {
+          <span class="hljs-keyword">int</span> a = stack.pop();
+          <span class="hljs-keyword">int</span> b = stack.pop();
+          stack.push(b * a);
+          <span class="hljs-keyword">break</span>;
+        }
+        <span class="hljs-keyword">case</span> <span class="hljs-string">&quot;/&quot;</span>: {
+          <span class="hljs-keyword">int</span> a = stack.pop();
+          <span class="hljs-keyword">int</span> b = stack.pop();
+          stack.push(b / a);
+          <span class="hljs-keyword">break</span>;
+        }
+        <span class="hljs-keyword">default</span>:
+          stack.push(Integer.parseInt(token));
+          <span class="hljs-keyword">break</span>;
+      }
+    }
+    <span class="hljs-keyword">return</span> stack.pop();
+  }
+}
+</code></pre>
+<h2 id="&#x603B;&#x7ED3;">&#x603B;&#x7ED3;</h2>
+<p>&#x672C;&#x6587;&#x4E3B;&#x8981;&#x7ED9;&#x5927;&#x5BB6;&#x4ECB;&#x7ECD;&#x4E86;&#x5982;&#x4F55;&#x5C06;&#x4E2D;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x8F6C;&#x5316;&#x6210;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#xFF0C;&#x4EE5;&#x53CA;&#x4EE3;&#x7801;&#x6839;&#x636E;&#x540E;&#x7F00;&#x8868;&#x8FBE;&#x5F0F;&#x6C42;&#x503C;&#x3002;&#x672C;&#x6587;&#x6240;&#x8C08;&#x5230;&#x7684;&#x95EE;&#x9898;&#x53EF;&#x80FD;&#x76F8;&#x5BF9;&#x4E8E;&#x5176;&#x4ED6;&#x95EE;&#x9898;&#x6765;&#x8BF4;&#x903B;&#x8F91;&#x4E0A;&#x53EF;&#x80FD;&#x66F4;&#x52A0;&#x590D;&#x6742;&#xFF0C;&#x9700;&#x8981;&#x5927;&#x5BB6;&#x81EA;&#x5DF1;&#x9605;&#x8BFB;&#x548C;&#x6839;&#x636E;&#x6587;&#x5B57;&#x548C;&#x56FE;&#x8FDB;&#x884C;&#x7406;&#x89E3;&#x3002;</p>
+<p>&#x4EE5;&#x4E0A;&#x5C31;&#x662F;&#x672C;&#x6587;&#x6240;&#x6709;&#x7684;&#x5185;&#x5BB9;&#x4E86;&#xFF0C;&#x5E0C;&#x671B;&#x5927;&#x5BB6;&#x6709;&#x6240;&#x6536;&#x83B7;&#xFF0C;&#x6211;&#x662F;<strong>LeHung</strong>&#xFF0C;&#x6211;&#x4EEC;&#x4E0B;&#x671F;&#x518D;&#x89C1;&#xFF01;&#xFF01;&#xFF01;&#xFF08;&#x8BB0;&#x5F97;<strong>&#x70B9;&#x8D5E;</strong>&#x6536;&#x85CF;&#x54E6;&#xFF01;&#xFF09;</p>
+<hr>
+<p>&#x66F4;&#x591A;&#x7CBE;&#x5F69;&#x5185;&#x5BB9;&#x5408;&#x96C6;&#x53EF;&#x8BBF;&#x95EE;&#x9879;&#x76EE;&#xFF1A;<a href="https://github.com/Chang-LeHung/CSCore" target="_blank">https://github.com/Chang-LeHung/CSCore</a></p>
+<p>&#x5173;&#x6CE8;&#x516C;&#x4F17;&#x53F7;&#xFF1A;<strong>&#x4E00;&#x65E0;&#x662F;&#x5904;&#x7684;&#x7814;&#x7A76;&#x50E7;</strong>&#xFF0C;&#x4E86;&#x89E3;&#x66F4;&#x591A;&#x8BA1;&#x7B97;&#x673A;&#xFF08;Java&#x3001;Python&#x3001;&#x8BA1;&#x7B97;&#x673A;&#x7CFB;&#x7EDF;&#x57FA;&#x7840;&#x3001;&#x7B97;&#x6CD5;&#x4E0E;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF09;&#x77E5;&#x8BC6;&#x3002;</p>
+<p><img src="https://img2022.cnblogs.com/blog/2519003/202207/2519003-20220703200459566-1837431658.jpg" alt=""></p>
+
+<script>console.log("plugin-popup....");document.onclick = function(e){ e.target.tagName === "IMG" && window.open(e.target.src,e.target.src)}</script><style>img{cursor:pointer}</style>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"深入剖析前缀、中缀、后缀表达式以及表达式求值","level":"1.7.1","depth":2,"next":{"title":"并发","level":"1.8","depth":1,"ref":"","articles":[{"title":"并发开篇——带你从0到1建立并发知识体系的基石","level":"1.8.1","depth":2,"path":"concurrency/java/01初始java并发.md","ref":"./concurrency/java/01初始java并发.md","articles":[]},{"title":"并发程序的噩梦——数据竞争","level":"1.8.2","depth":2,"path":"concurrency/java/02并发的噩梦.md","ref":"./concurrency/java/02并发的噩梦.md","articles":[]},{"title":"30行自己写并发工具类(Semaphore, CyclicBarrier, CountDownLatch)是什么体验?","level":"1.8.3","depth":2,"path":"concurrency/java/03自己动手写并发工具类.md","ref":"./concurrency/java/03自己动手写并发工具类.md","articles":[]},{"title":"万字长文：从计算机本源深入探寻volatile和Java内存模型","level":"1.8.4","depth":2,"path":"concurrency/java/04volatile.md","ref":"./concurrency/java/04volatile.md","articles":[]},{"title":"并发刺客（False Sharing）——并发程序的隐藏杀手","level":"1.8.5","depth":2,"path":"concurrency/java/05falsesharing.md","ref":"./concurrency/java/05falsesharing.md","articles":[]},{"title":"60行从零开始自己动手写FutureTask是什么体验？","level":"1.8.6","depth":2,"path":"concurrency/java/06futuretask.md","ref":"./concurrency/java/06futuretask.md","articles":[]},{"title":"FutureTask源码深度剖析","level":"1.8.7","depth":2,"path":"concurrency/java/07futuretasksrc.md","ref":"concurrency/java/07futuretasksrc.md","articles":[]},{"title":"深入学习Synchronized各种使用方法","level":"1.8.8","depth":2,"path":"concurrency/java/08synchronizedusage.md","ref":"concurrency/java/08synchronizedusage.md","articles":[]},{"title":"Synchronized锁升级原理与过程深入剖析","level":"1.8.9","depth":2,"path":"concurrency/java/09synchronized.md","ref":"concurrency/java/09synchronized.md","articles":[]},{"title":"从零开始自己动手写自旋锁","level":"1.8.10","depth":2,"path":"concurrency/java/10spinlock.md","ref":"concurrency/java/10spinlock.md","articles":[]},{"title":"60行自己动手写LockSupport是什么体验？","level":"1.8.11","depth":2,"path":"concurrency/java/13locksupport.md","ref":"concurrency/java/13locksupport.md","articles":[]},{"title":"彻底了解线程池的原理——40行从零开始自己写线程池","level":"1.8.12","depth":2,"path":"concurrency/java/14threadpool.md","ref":"concurrency/java/14threadpool.md","articles":[]},{"title":"再谈线程池——深入剖析线程池的前世今生","level":"1.8.13","depth":2,"path":"concurrency/java/16retalkingthreadpool.md","ref":"concurrency/java/16retalkingthreadpool.md","articles":[]},{"title":"自己动手写乞丐版线程池","level":"1.8.14","depth":2,"path":"concurrency/java/17threadpoolimplementation.md","ref":"concurrency/java/17threadpoolimplementation.md","articles":[]},{"title":"自己动手写线程池——向JDK线程池进发","level":"1.8.15","depth":2,"path":"concurrency/java/18threadpoolmorecloseJDK.md","ref":"concurrency/java/18threadpoolmorecloseJDK.md","articles":[]},{"title":"从零开始自己动手写阻塞队列","level":"1.8.16","depth":2,"path":"concurrency/java/11blockingqueue.md","ref":"concurrency/java/11blockingqueue.md","articles":[]},{"title":"JDK数组阻塞队列源码深入剖析","level":"1.8.17","depth":2,"path":"concurrency/java/12blockingqueuesrc.md","ref":"concurrency/java/12blockingqueuesrc.md","articles":[]}]},"previous":{"title":"数据结构","level":"1.7","depth":1,"ref":"","articles":[{"title":"深入剖析前缀、中缀、后缀表达式以及表达式求值","level":"1.7.1","depth":2,"path":"da/07表达式求值.md","ref":"./da/07表达式求值.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["popup","fontsettings","-sharing","-livereload"],"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @Chang-LeHung","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"copyright":"Copyright &#169; aleen42","minHeaderCount":"2","minHeaderDeep":"2"},"search":{},"popup":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"highlight":{},"anchor-navigation-ex":{"showLevelIcon":false,"showLevel":false,"tocLevel1Icon":"fa fa-hand-o-right","tocLevel2Icon":"fa fa-hand-o-right","tocLevel3Icon":"fa fa-hand-o-right","multipleH1":false,"multipleH2":false,"multipleH3":false,"multipleH4":false},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"da/07表达式求值.md","mtime":"2025-10-03T17:39:52.024Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2025-10-03T18:28:09.654Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+
+    </body>
+</html>
+

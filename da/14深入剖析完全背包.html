@@ -1,0 +1,1644 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>完全背包转化为多重背包 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="13零钱兑换.html" />
+    
+    
+    <link rel="prev" href="04多重背包v2.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    基础容器
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../container/01-链表设计与实现.html">
+            
+                <a href="../container/01-链表设计与实现.html">
+            
+                    
+                    链表设计与Java实现——自己动手写LinkedList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../container/02-linkedlist源码剖析.html">
+            
+                <a href="../container/02-linkedlist源码剖析.html">
+            
+                    
+                    LinekdList源码深度剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../container/03-array容器设计与实现.html">
+            
+                <a href="../container/03-array容器设计与实现.html">
+            
+                    
+                    数组容器(ArrayList)设计与Java实现——自己动手写ArrayList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../container/04-arraylist源码剖析.html">
+            
+                <a href="../container/04-arraylist源码剖析.html">
+            
+                    
+                    ArrayList源码剖析，从扩容原理，到迭代器和fast-fail机制，你想要的这都有！！！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../container/05-hashmap设计与实现.html">
+            
+                <a href="../container/05-hashmap设计与实现.html">
+            
+                    
+                    HashMap设计原理与实现（上篇）——哈希表的原理，如何从0到1设计一个HashMap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../container/06-hashmap设计与实现.html">
+            
+                <a href="../container/06-hashmap设计与实现.html">
+            
+                    
+                    HashMap设计原理与实现（下篇）200行代码带你写自己的HashMap！！！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../container/07-hashmap源码剖析.html">
+            
+                <a href="../container/07-hashmap源码剖析.html">
+            
+                    
+                    HashMap源码深度剖析，手把手带你分析每一行代码，包会！！！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="../container/08-arraydeque源码剖析.html">
+            
+                <a href="../container/08-arraydeque源码剖析.html">
+            
+                    
+                    ArrayDeque（JDK双端队列）源码深度剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="../container/09-arrayqueue源码剖析.html">
+            
+                <a href="../container/09-arrayqueue源码剖析.html">
+            
+                    
+                    深入剖析（JDK）ArrayQueue 源码
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    高级容器
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../concurrency/java/11blockingqueue.html">
+            
+                <a href="../concurrency/java/11blockingqueue.html">
+            
+                    
+                    从零开始自己动手写阻塞队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../concurrency/java/12blockingqueuesrc.html">
+            
+                <a href="../concurrency/java/12blockingqueuesrc.html">
+            
+                    
+                    JDK数组阻塞队列源码深入剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    动态规划
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="01-动态规划.html">
+            
+                <a href="01-动态规划.html">
+            
+                    
+                    庖丁解牛斐波拉契数列和背包问题——详细解析两个问题优化过程（超多问题优化干货，不看血亏），带你从最基本最核心的问题看懂动态规划！！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="02-01背包问题.html">
+            
+                <a href="02-01背包问题.html">
+            
+                    
+                    你真的懂01背包问题吗？01背包的这几问你能答出来吗？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="03完全背包.html">
+            
+                <a href="03完全背包.html">
+            
+                    
+                    面试官：完全背包都不会，是你自己走还是我送你？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="04多重背包v1.html">
+            
+                <a href="04多重背包v1.html">
+            
+                    
+                    深入剖析多重背包问题（上篇）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="04多重背包v2.html">
+            
+                <a href="04多重背包v2.html">
+            
+                    
+                    深入剖析多重背包问题（下篇）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.4.6" data-path="14深入剖析完全背包.html">
+            
+                <a href="14深入剖析完全背包.html">
+            
+                    
+                    完全背包转化为多重背包
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="13零钱兑换.html">
+            
+                <a href="13零钱兑换.html">
+            
+                    
+                    深入浅出零钱兑换问题——背包问题的套壳
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="05深入剖析斐波拉契数列.html">
+            
+                <a href="05深入剖析斐波拉契数列.html">
+            
+                    
+                    深入剖析斐波拉契数列
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    股票问题
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="09状态机动态规划.html">
+            
+                <a href="09状态机动态规划.html">
+            
+                    
+                    这种动态规划你见过吗——状态机动态规划之股票问题(上)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="10状态机动态规划02.html">
+            
+                <a href="10状态机动态规划02.html">
+            
+                    
+                    这种动态规划你见过吗——状态机动态规划之股票问题(中)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="11状态机动态规划03.html">
+            
+                <a href="11状态机动态规划03.html">
+            
+                    
+                    这种动态规划你见过吗——状态机动态规划之股票问题(下)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="12状态机动态规划总结.html">
+            
+                <a href="12状态机动态规划总结.html">
+            
+                    
+                    状态机动态规划之股票问题总结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                    回溯
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="backtrace/01combinations.html">
+            
+                <a href="backtrace/01combinations.html">
+            
+                    
+                    通过组合问题看透回溯法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" >
+            
+                <span>
+            
+                    
+                    数据结构
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="07表达式求值.html">
+            
+                <a href="07表达式求值.html">
+            
+                    
+                    深入剖析前缀、中缀、后缀表达式以及表达式求值
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    并发
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../concurrency/java/01初始java并发.html">
+            
+                <a href="../concurrency/java/01初始java并发.html">
+            
+                    
+                    并发开篇——带你从0到1建立并发知识体系的基石
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../concurrency/java/02并发的噩梦.html">
+            
+                <a href="../concurrency/java/02并发的噩梦.html">
+            
+                    
+                    并发程序的噩梦——数据竞争
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" data-path="../concurrency/java/03自己动手写并发工具类.html">
+            
+                <a href="../concurrency/java/03自己动手写并发工具类.html">
+            
+                    
+                    30行自己写并发工具类(Semaphore, CyclicBarrier, CountDownLatch)是什么体验?
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="../concurrency/java/04volatile.html">
+            
+                <a href="../concurrency/java/04volatile.html">
+            
+                    
+                    万字长文：从计算机本源深入探寻volatile和Java内存模型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5" data-path="../concurrency/java/05falsesharing.html">
+            
+                <a href="../concurrency/java/05falsesharing.html">
+            
+                    
+                    并发刺客（False Sharing）——并发程序的隐藏杀手
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.6" data-path="../concurrency/java/06futuretask.html">
+            
+                <a href="../concurrency/java/06futuretask.html">
+            
+                    
+                    60行从零开始自己动手写FutureTask是什么体验？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.7" data-path="../concurrency/java/07futuretasksrc.html">
+            
+                <a href="../concurrency/java/07futuretasksrc.html">
+            
+                    
+                    FutureTask源码深度剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.8" data-path="../concurrency/java/08synchronizedusage.html">
+            
+                <a href="../concurrency/java/08synchronizedusage.html">
+            
+                    
+                    深入学习Synchronized各种使用方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.9" data-path="../concurrency/java/09synchronized.html">
+            
+                <a href="../concurrency/java/09synchronized.html">
+            
+                    
+                    Synchronized锁升级原理与过程深入剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.10" data-path="../concurrency/java/10spinlock.html">
+            
+                <a href="../concurrency/java/10spinlock.html">
+            
+                    
+                    从零开始自己动手写自旋锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.11" data-path="../concurrency/java/13locksupport.html">
+            
+                <a href="../concurrency/java/13locksupport.html">
+            
+                    
+                    60行自己动手写LockSupport是什么体验？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.12" data-path="../concurrency/java/14threadpool.html">
+            
+                <a href="../concurrency/java/14threadpool.html">
+            
+                    
+                    彻底了解线程池的原理——40行从零开始自己写线程池
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.13" data-path="../concurrency/java/16retalkingthreadpool.html">
+            
+                <a href="../concurrency/java/16retalkingthreadpool.html">
+            
+                    
+                    再谈线程池——深入剖析线程池的前世今生
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.14" data-path="../concurrency/java/17threadpoolimplementation.html">
+            
+                <a href="../concurrency/java/17threadpoolimplementation.html">
+            
+                    
+                    自己动手写乞丐版线程池
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.15" data-path="../concurrency/java/18threadpoolmorecloseJDK.html">
+            
+                <a href="../concurrency/java/18threadpoolmorecloseJDK.html">
+            
+                    
+                    自己动手写线程池——向JDK线程池进发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.16" data-path="../concurrency/java/11blockingqueue.html">
+            
+                <a href="../concurrency/java/11blockingqueue.html">
+            
+                    
+                    从零开始自己动手写阻塞队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.17" data-path="../concurrency/java/12blockingqueuesrc.html">
+            
+                <a href="../concurrency/java/12blockingqueuesrc.html">
+            
+                    
+                    JDK数组阻塞队列源码深入剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" >
+            
+                <span>
+            
+                    
+                    OpenMP
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../concurrency/openmp/01introduction.html">
+            
+                <a href="../concurrency/openmp/01introduction.html">
+            
+                    
+                    OpenMP 入门
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../concurrency/openmp/02openmp.html">
+            
+                <a href="../concurrency/openmp/02openmp.html">
+            
+                    
+                    OpenMP 教程（一）——OpenMP 当中的 reduction 子句
+
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../concurrency/openmp/03runtime1.html">
+            
+                <a href="../concurrency/openmp/03runtime1.html">
+            
+                    
+                    OpenMP 常见的动态库函数使用（上）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../concurrency/openmp/04runtime2.html">
+            
+                <a href="../concurrency/openmp/04runtime2.html">
+            
+                    
+                    Openmp 常见的动态库函数使用（下）——深入剖析锁🔒原理与实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../concurrency/openmp/05environment.html">
+            
+                <a href="../concurrency/openmp/05environment.html">
+            
+                    
+                    Openmp 环境变量使用总结
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6" data-path="../concurrency/openmp/06sync.html">
+            
+                <a href="../concurrency/openmp/06sync.html">
+            
+                    
+                    深入理解 OpenMP 线程同步机制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.7" data-path="../concurrency/openmp/07atomic.html">
+            
+                <a href="../concurrency/openmp/07atomic.html">
+            
+                    
+                    OpenMP 原子指令设计与实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.8" data-path="../concurrency/openmp/08parallel.html">
+            
+                <a href="../concurrency/openmp/08parallel.html">
+            
+                    
+                    Parallel Construct 实现原理与源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.9" data-path="../concurrency/openmp/09sync.html">
+            
+                <a href="../concurrency/openmp/09sync.html">
+            
+                    
+                    OpenMP 线程同步 Construct 实现原理以及源码分析（上）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.10" data-path="../concurrency/openmp/10sync.html">
+            
+                <a href="../concurrency/openmp/10sync.html">
+            
+                    
+                    OpenMP 线程同步 Construct 实现原理以及源码分析（下）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.11" data-path="../concurrency/openmp/11for_dynamic.html">
+            
+                <a href="../concurrency/openmp/11for_dynamic.html">
+            
+                    
+                    OpenMP For Construct dynamic 调度方式实现原理和源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.12" data-path="../concurrency/openmp/12guided.html">
+            
+                <a href="../concurrency/openmp/12guided.html">
+            
+                    
+                    OpenMP For Construct guided 调度方式实现原理和源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.13" data-path="../concurrency/openmp/13seciton.html">
+            
+                <a href="../concurrency/openmp/13seciton.html">
+            
+                    
+                    OpenMP Sections Construct 实现原理以及源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.14" data-path="../concurrency/openmp/14task.html">
+            
+                <a href="../concurrency/openmp/14task.html">
+            
+                    
+                    OpenMP task construct 实现原理以及源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" >
+            
+                <span>
+            
+                    
+                    Pthread
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../concurrency/pthread/01pthread.html">
+            
+                <a href="../concurrency/pthread/01pthread.html">
+            
+                    
+                    Pthread 并发编程（一）——深入剖析线程基本元素和状态
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../concurrency/pthread/02pthread.html">
+            
+                <a href="../concurrency/pthread/02pthread.html">
+            
+                    
+                    Pthread 并发编程（二）——自底向上深入理解线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../concurrency/pthread/03pthread.html">
+            
+                <a href="../concurrency/pthread/03pthread.html">
+            
+                    
+                    Pthread 并发编程（三）——深入理解线程取消机制
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    Makefile
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../tools/makefile/01.html">
+            
+                <a href="../tools/makefile/01.html">
+            
+                    
+                    彻底掌握Makefile（一）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../tools/makefile/02.html">
+            
+                <a href="../tools/makefile/02.html">
+            
+                    
+                    彻底掌握Makefile（二）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.3" data-path="../tools/makefile/03.html">
+            
+                <a href="../tools/makefile/03.html">
+            
+                    
+                    彻底掌握Makefile（三）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" >
+            
+                <span>
+            
+                    
+                    DES
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../des/des.html">
+            
+                <a href="../des/des.html">
+            
+                    
+                    DES加密算法从入门到入坟
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" >
+            
+                <span>
+            
+                    
+                    命令行&系统编程&SHELL
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.13.1" data-path="../linux/command/01top.html">
+            
+                <a href="../linux/command/01top.html">
+            
+                    
+                    Linux命令系列之top——里面藏着很多鲜为人知的宝藏知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.2" data-path="../linux/command/02ls.html">
+            
+                <a href="../linux/command/02ls.html">
+            
+                    
+                    Linux命令系列之ls——原来最简单的ls这么复杂
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.3" data-path="../linux/command/03mkls.html">
+            
+                <a href="../linux/command/03mkls.html">
+            
+                    
+                    自己动手写ls命令——Java版
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.4" data-path="../linux/command/05ps.html">
+            
+                <a href="../linux/command/05ps.html">
+            
+                    
+                    这才是使用ps命令的正确姿势
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.5" data-path="../linux/command/06kill.html">
+            
+                <a href="../linux/command/06kill.html">
+            
+                    
+                    如何优雅的杀掉一个进程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.6" data-path="../linux/programming/01exit.html">
+            
+                <a href="../linux/programming/01exit.html">
+            
+                    
+                    C语言中这么骚的退出程序的方式你知道几个？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.7" data-path="../linux/programming/02sgementation.html">
+            
+                <a href="../linux/programming/02sgementation.html">
+            
+                    
+                    你的哪些骚操作会导致Segmentation Fault😂
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.8" data-path="../linux/programming/03segprincinple.html">
+            
+                <a href="../linux/programming/03segprincinple.html">
+            
+                    
+                    深入剖析Sgementation fault原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.9" data-path="../linux/programming/04processdie.html">
+            
+                <a href="../linux/programming/04processdie.html">
+            
+                    
+                    进程最后的遗言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.10" data-path="../linux/command/04exitstatus.html">
+            
+                <a href="../linux/command/04exitstatus.html">
+            
+                    
+                    Shell揭秘——程序退出状态码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.11" data-path="../linux/shell/01jobcontrol.html">
+            
+                <a href="../linux/shell/01jobcontrol.html">
+            
+                    
+                    你在终端启动的进程，最后都是什么下场？（上）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.12" data-path="../linux/shell/02jobcontrol.html">
+            
+                <a href="../linux/shell/02jobcontrol.html">
+            
+                    
+                    你在终端启动的进程，最后都是什么下场？（下）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" >
+            
+                <span>
+            
+                    
+                    计算机系统基础
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.14.1" data-path="../pl/c_cpp/01builtin.html">
+            
+                <a href="../pl/c_cpp/01builtin.html">
+            
+                    
+                    gcc 好玩的 builtin 函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" >
+            
+                <span>
+            
+                    
+                    python
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../pl/python/misc/01copy.html">
+            
+                <a href="../pl/python/misc/01copy.html">
+            
+                    
+                    深入理解 python 对象拷贝和内存布局
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >完全背包转化为多重背包</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="&#x5B8C;&#x5168;&#x80CC;&#x5305;&#x8F6C;&#x5316;&#x4E3A;&#x591A;&#x91CD;&#x80CC;&#x5305;">&#x5B8C;&#x5168;&#x80CC;&#x5305;&#x8F6C;&#x5316;&#x4E3A;&#x591A;&#x91CD;&#x80CC;&#x5305;</h1>
+<h2 id="&#x524D;&#x8A00;">&#x524D;&#x8A00;</h2>
+<p>&#x5728;&#x672C;&#x7BC7;&#x6587;&#x7AE0;&#x5F53;&#x4E2D;&#x4E3B;&#x8981;&#x7ED9;&#x5927;&#x5BB6;&#x4ECB;&#x7ECD;&#x5982;&#x4F55;&#x5C06;&#x5B8C;&#x5168;&#x80CC;&#x5305;&#x95EE;&#x9898;&#x8F6C;&#x5316;&#x6210;&#x591A;&#x91CD;&#x80CC;&#x5305;&#x95EE;&#x9898;&#xFF0C;&#x5728;&#x524D;&#x9762;&#x7684;&#x6587;&#x7AE0;<a href="https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&amp;mid=2247484544&amp;idx=1&amp;sn=c4de17583010430fa519ecd1703bedea&amp;chksm=cf0c9889f87b119fe5621bacf417b163020dcd8a7c0ed63df94de20ba67ae742b4d86e22ae16&amp;token=883596793&amp;lang=zh_CN#rd" target="_blank">&#x5B8C;&#x5168;&#x80CC;&#x5305;</a>&#x5F53;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x4ED4;&#x7EC6;&#x7684;&#x4ECB;&#x7ECD;&#x4E86;&#x5B8C;&#x5168;&#x80CC;&#x5305;&#x7684;&#x72B6;&#x6001;&#x8F6C;&#x79FB;&#x65B9;&#x7A0B;&#x3001;&#x6839;&#x636E;&#x72B6;&#x6001;&#x8F6C;&#x79FB;&#x65B9;&#x7A0B;&#x5982;&#x4F55;&#x5B8C;&#x6210;&#x4EE3;&#x7801;&#x4EE5;&#x53CA;&#x591A;&#x91CD;&#x80CC;&#x5305;&#x7684;&#x6570;&#x7EC4;&#x4F18;&#x5316;&#x7684;&#x539F;&#x7406;&#xFF0C;&#x4E3A;&#x4EC0;&#x4E48;&#x8FD9;&#x79CD;&#x4F18;&#x5316;&#x80FD;&#x591F;&#x6709;&#x6548;&#xFF01;&#x672C;&#x7BC7;&#x6587;&#x7AE0;&#x4E3B;&#x8981;&#x4E13;&#x6CE8;&#x4E8E;&#x5982;&#x4F55;&#x5C06;&#x5B8C;&#x5168;&#x80CC;&#x5305;&#x8F6C;&#x5316;&#x6210;&#x591A;&#x91CD;&#x80CC;&#x5305;&#x3002;&#x5982;&#x679C;&#x4F60;&#x8FD8;&#x4E0D;&#x4E86;&#x89E3;&#x591A;&#x91CD;&#x80CC;&#x5305;&#x53EF;&#x4EE5;&#x5148;&#x9605;&#x8BFB;<a href="https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&amp;mid=2247484627&amp;idx=1&amp;sn=ac975cb31ba1af89425558cfe4442258&amp;chksm=cf0c98daf87b11cc4178c55864ba8eeecd741aaa49bde712aca1c5999f7dbbbbd0997beb6cc2&amp;token=1311889589&amp;lang=zh_CN#rd" target="_blank">&#x6DF1;&#x5165;&#x5256;&#x6790;&#x591A;&#x91CD;&#x80CC;&#x5305;&#x95EE;&#x9898;&#xFF08;&#x4E0A;&#x7BC7;&#xFF09;</a>&#x548C;<a href="https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&amp;mid=2247484703&amp;idx=1&amp;sn=d0fb3c949b99a803a30a5dd1452d7bce&amp;chksm=cf0c9916f87b10002e32bf8acfa298c1201d33793c80beb538ac099024868373e4c7a5b35a53&amp;token=1311889589&amp;lang=zh_CN#rd" target="_blank">&#x6DF1;&#x5165;&#x5256;&#x6790;&#x591A;&#x91CD;&#x80CC;&#x5305;&#x95EE;&#x9898;&#xFF08;&#x4E0B;&#x7BC7;&#xFF09;</a>&#x3002;</p>
+<h2 id="&#x5B8C;&#x5168;&#x80CC;&#x5305;&#x95EE;&#x9898;">&#x5B8C;&#x5168;&#x80CC;&#x5305;&#x95EE;&#x9898;</h2>
+<blockquote>
+<p>&#x6709;$N$&#x79CD;&#x7269;&#x54C1;&#x548C;&#x4E00;&#x4E2A;&#x5BB9;&#x91CF;&#x662F; $V$&#x7684;&#x80CC;&#x5305;&#xFF0C;&#x6BCF;&#x79CD;&#x7269;&#x54C1;&#x90FD;&#x6709;<strong>&#x65E0;&#x9650;&#x4EF6;&#x53EF;&#x7528;</strong>&#x3002;&#x7B2C;$i$ &#x79CD;&#x7269;&#x54C1;&#x7684;&#x4F53;&#x79EF;&#x662F; $v_i$&#xFF0C;&#x4EF7;&#x503C;&#x662F;$w_i$&#x3002;&#x6C42;&#x89E3;&#x5C06;&#x54EA;&#x4E9B;&#x7269;&#x54C1;&#x88C5;&#x5165;&#x80CC;&#x5305;&#xFF0C;&#x53EF;&#x4F7F;&#x8FD9;&#x4E9B;&#x7269;&#x54C1;&#x7684;&#x603B;&#x4F53;&#x79EF;&#x4E0D;&#x8D85;&#x8FC7;&#x80CC;&#x5305;&#x5BB9;&#x91CF;&#xFF0C;&#x4E14;&#x603B;&#x4EF7;&#x503C;&#x6700;&#x5927;&#x3002;</p>
+</blockquote>
+<p>&#x5B8C;&#x5168;&#x80CC;&#x5305;&#x95EE;&#x9898;&#x548C;01&#x80CC;&#x5305;&#x7684;&#x552F;&#x4E00;&#x533A;&#x522B;&#x5C31;&#x5728;&#x4E8E;&#x7269;&#x54C1;&#x7684;&#x4E2A;&#x6570;&#xFF0C;&#x5728;01&#x80CC;&#x5305;&#x5F53;&#x4E2D;&#x6240;&#x6709;&#x7684;&#x7269;&#x54C1;&#x53EA;&#x6709;&#x4E00;&#x4EF6;&#xFF0C;&#x4E5F;&#x5C31;&#x53EA;&#x80FD;&#x4F7F;&#x7528;&#x4E00;&#x6B21;&#x3002;&#x800C;&#x5728;&#x5B8C;&#x5168;&#x80CC;&#x5305;&#x5F53;&#x4E2D;&#x7269;&#x54C1;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x65E0;&#x9650;&#x591A;&#x6B21;&#x3002;</p>
+<p>&#x6BD4;&#x5982;&#x4E0B;&#x9762;&#x7684;4&#x4E2A;&#x7269;&#x54C1;&#xFF0C;&#x80CC;&#x5305;&#x80FD;&#x591F;&#x627F;&#x53D7;&#x7684;&#x6700;&#x5927;&#x91CD;&#x91CF;&#x4E3A;5&#xFF0C;&#x6211;&#x4EEC;&#x5E94;&#x8BE5;&#x5982;&#x4F55;&#x9009;&#x62E9;&#xFF0C;&#x4F7F;&#x5F97;&#x6211;&#x4EEC;&#x83B7;&#x5F97;&#x7684;&#x603B;&#x4EF7;&#x503C;&#x6700;&#x5927;&#xFF1A;</p>
+<table>
+<thead>
+<tr>
+<th>&#x7269;&#x54C1;</th>
+<th>&#x91CD;&#x91CF;</th>
+<th>&#x4EF7;&#x503C;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>B</td>
+<td>2</td>
+<td>4</td>
+</tr>
+<tr>
+<td>C</td>
+<td>3</td>
+<td>4</td>
+</tr>
+<tr>
+<td>D</td>
+<td>4</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<p>&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x8FD8;&#x662F;&#x6BD4;&#x8F83;&#x7B80;&#x5355;&#xFF0C;&#x6211;&#x4EEC;&#x76F4;&#x63A5;&#x4ECE;&#x56FE;&#x4E2D;&#x770B;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x9009;&#x62E9;&#x4E94;&#x4E2A;<code>A</code>&#x6216;&#x8005;&#x4E24;&#x4E2A;<code>B</code>&#x4E00;&#x4E2A;<code>A</code>&#xFF0C;&#x53EF;&#x4EE5;&#x4EA7;&#x751F;&#x6700;&#x5927;&#x7684;&#x6536;&#x76CA;&#xFF0C;&#x6700;&#x5927;&#x6536;&#x76CA;&#x4E3A;10&#x3002;</p>
+<h2 id="&#x52A8;&#x6001;&#x8F6C;&#x79FB;&#x65B9;&#x7A0B;">&#x52A8;&#x6001;&#x8F6C;&#x79FB;&#x65B9;&#x7A0B;</h2>
+<p>&#x5728;&#x524D;&#x9762;&#x7684;&#x6587;&#x7AE0;<a href="https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&amp;mid=2247484544&amp;idx=1&amp;sn=c4de17583010430fa519ecd1703bedea&amp;chksm=cf0c9889f87b119fe5621bacf417b163020dcd8a7c0ed63df94de20ba67ae742b4d86e22ae16&amp;token=883596793&amp;lang=zh_CN#rd" target="_blank">&#x5B8C;&#x5168;&#x80CC;&#x5305;</a>&#x5F53;&#x4E2D;&#x6211;&#x4EEC;&#x4ED4;&#x7EC6;&#x4ECB;&#x7ECD;&#x4E86;&#x5B8C;&#x5168;&#x80CC;&#x5305;&#x7684;&#x52A8;&#x6001;&#x8F6C;&#x79FB;&#x65B9;&#x7A0B;&#x3002;&#x6211;&#x4EEC;&#x7528;&#x4E00;&#x4E2A;&#x4E8C;&#x4F4D;&#x6570;&#x7EC4;<code>dp[i][j]</code>&#x8868;&#x793A;&#x5F53;&#x53EA;&#x4F7F;&#x7528;&#x524D;<code>i</code>&#x4E2A;&#x7269;&#x54C1;&#x4E14;&#x80CC;&#x5305;&#x5BB9;&#x91CF;&#x4E3A;<code>j</code>&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6211;&#x4EEC;&#x80FD;&#x591F;&#x83B7;&#x53D6;&#x7684;&#x6700;&#x5927;&#x7684;&#x6536;&#x76CA;&#x3002;</p>
+<p>&#x548C;01&#x80CC;&#x5305;&#x95EE;&#x9898;&#x4E00;&#x6837;&#x9996;&#x5148;&#x5BF9;&#x4E8E;&#x7B2C;<code>i</code>&#x4E2A;&#x7269;&#x54C1;&#xFF0C;&#x9996;&#x5148;&#x9700;&#x8981;&#x5224;&#x65AD;&#x80CC;&#x5305;&#x662F;&#x5426;&#x80FD;&#x591F;&#x5BB9;&#x7EB3;&#xFF08;<code>v[i]</code>&#x8868;&#x793A;&#x7B2C;<code>i</code>&#x4EF6;&#x7269;&#x54C1;&#x7684;&#x4F53;&#x79EF;&#xFF0C;<code>w[i]</code>&#x8868;&#x793A;&#x7B2C;<code>i</code>&#x4EF6;&#x7269;&#x54C1;&#x7684;&#x4EF7;&#x503C;&#xFF09;&#xFF1A;</p>
+<ul>
+<li>&#x5982;&#x679C;&#x80CC;&#x5305;&#x7684;&#x5BB9;&#x91CF;&#x5927;&#x4E8E;&#x7B49;&#x4E8E;&#x7B2C;<code>i</code>&#x4E2A;&#x7269;&#x54C1;&#x7684;&#x4F53;&#x79EF;&#xFF0C;&#x90A3;&#x6211;&#x4EEC;&#x5C31;&#x6709;&#x4E24;&#x79CD;&#x9009;&#x62E9;&#xFF1A;<ul>
+<li>&#x5C06;&#x7B2C;<code>i</code>&#x4E2A;&#x7269;&#x54C1;&#x653E;&#x5165;&#x80CC;&#x5305;&#x5F53;&#x4E2D;&#xFF0C;&#x4F46;&#x662F;&#x5728;&#x8FD9;&#x91CC;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x4E00;&#x70B9;&#x662F;&#x5B8C;&#x5168;&#x80CC;&#x5305;&#x7684;&#x7269;&#x54C1;&#x6709;&#x65E0;&#x6570;&#x4EF6;&#xFF0C;&#x56E0;&#x6B64;&#x5F53;&#x6211;&#x4EEC;&#x9009;&#x62E9;&#x4E4B;&#x540E;&#x6211;&#x4EEC;&#x7684;&#x8F6C;&#x79FB;&#x65B9;&#x7A0B;&#x4E3A;<code>dp[i][j - v[i]] + w[i]</code>&#xFF0C;&#x8FD9;&#x91CC;&#x4E0D;&#x662F;<code>i-1</code>&#x800C;&#x662F;<code>i</code>&#xFF0C;&#x56E0;&#x4E3A;&#x7B2C;<code>i</code>&#x4EF6;&#x7269;&#x54C1;&#x6709;&#x65E0;&#x6570;&#x4EF6;&#x3002;</li>
+<li>&#x4E0D;&#x5C06;&#x7B2C;<code>i</code>&#x4E2A;&#x7269;&#x54C1;&#x653E;&#x5165;&#x80CC;&#x5305;&#x5F53;&#x4E2D;&#xFF0C;&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x5C31;&#x80FD;&#x591F;&#x4F7F;&#x7528;&#x5BB9;&#x91CF;&#x4E3A;<code>j</code>&#x7684;&#x80CC;&#x5305;&#x53BB;&#x9009;&#x62E9;&#x524D;<code>i - 1</code>&#x4E2A;&#x7269;&#x54C1;&#xFF0C;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#x6211;&#x4EEC;&#x7684;&#x6700;&#x5927;&#x6536;&#x76CA;&#x4E3A;<code>dp[i - 1][j]</code>&#x3002;</li>
+</ul>
+</li>
+<li>&#x5982;&#x679C;&#x80CC;&#x5305;&#x5BB9;&#x91CF;&#x5C0F;&#x4E8E;&#x7B2C;<code>i</code>&#x4EF6;&#x7269;&#x54C1;&#x7684;&#x4F53;&#x79EF;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x4E0D;&#x80FD;&#x591F;&#x9009;&#x62E9;&#x7B2C;<code>i</code>&#x4EF6;&#x7269;&#x54C1;&#x4E86;&#xFF0C;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#x6211;&#x4EEC;&#x7684;&#x6700;&#x5927;&#x6536;&#x76CA;&#x4E3A;<code>dp[i - 1][j]</code>&#x3002;</li>
+</ul>
+<p>&#x57FA;&#x4E8E;&#x4E0A;&#x9762;&#x7684;&#x5206;&#x6790;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x77E5;&#x9053;&#x5B8C;&#x5168;&#x80CC;&#x5305;&#x95EE;&#x9898;&#x7684;&#x52A8;&#x6001;&#x8F6C;&#x79FB;&#x65B9;&#x7A0B;&#x4E3A;&#xFF1A;</p>
+<p>$$
+dp[i][j] = \begin{cases}
+max(dp[i][j - v[i]] + w[i], dp[i - 1][j]), j \ge v[i]\
+dp[i - 1][j] , j \lt v[i]
+\end{cases}</p>
+<p>$$
+&#x6839;&#x636E;&#x4E0A;&#x9762;&#x7684;&#x72B6;&#x6001;&#x8F6C;&#x79FB;&#x65B9;&#x7A0B;&#xFF0C;&#x6211;&#x4EEC;&#x7684;&#x6838;&#x5FC3;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF08;&#x5176;&#x4E2D;N&#x8868;&#x793A;&#x7269;&#x54C1;&#x7684;&#x4E2A;&#x6570;&#xFF0C;V&#x8868;&#x793A;&#x80CC;&#x5305;&#x7684;&#x5BB9;&#x91CF;&#xFF0C;w[i]&#x8868;&#x793A;&#x7B2C;i&#x4E2A;&#x7269;&#x54C1;&#x7684;&#x4EF7;&#x503C;&#xFF0C;v[i]&#x8868;&#x793A;&#x7B2C;i&#x4E2A;&#x7269;&#x54C1;&#x6240;&#x5360;&#x7684;&#x4F53;&#x79EF;&#xFF09;&#xFF1A;</p>
+<pre><code class="lang-c++"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">backpack</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; N; ++i) {
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt;= V; ++j) {
+        <span class="hljs-keyword">if</span> (j &gt;= v[i]) {
+            dp[i][j] = max(dp[i - <span class="hljs-number">1</span>][j], dp[i][j - v[i]] + w[i]);
+        }
+        <span class="hljs-keyword">else</span> {
+            dp[i][j] = dp[i - <span class="hljs-number">1</span>][j];
+        }
+    }
+    }
+  <span class="hljs-keyword">return</span> dp[V];
+}
+</code></pre>
+<p>&#x4F46;&#x662F;&#x4E0A;&#x9762;&#x7684;&#x4EE3;&#x7801;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x8FDB;&#x884C;&#x6570;&#x7EC4;&#x4F18;&#x5316;&#xFF0C;&#x4F18;&#x5316;&#x4E4B;&#x540E;&#x7684;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF08;&#x5982;&#x679C;&#x4F60;&#x8FD8;&#x4E0D;&#x662F;&#x5F88;&#x6E05;&#x695A;&#x4F18;&#x5316;&#x539F;&#x7406;&#x7684;&#x8BDD;&#xFF0C;&#x4F60;&#x53EF;&#x4EE5;&#x9605;&#x8BFB;<a href="https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&amp;mid=2247484544&amp;idx=1&amp;sn=c4de17583010430fa519ecd1703bedea&amp;chksm=cf0c9889f87b119fe5621bacf417b163020dcd8a7c0ed63df94de20ba67ae742b4d86e22ae16&amp;token=883596793&amp;lang=zh_CN#rd" target="_blank">&#x5B8C;&#x5168;&#x80CC;&#x5305;</a>&#x5F53;&#x4E2D;&#x7684;&#x6570;&#x7EC4;&#x4F18;&#x5316;&#x5C0F;&#x8282;&#xFF09;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">backpack</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; N; ++i) {
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = v[i]; j &lt;= V; ++j) {
+            dp[j] = max(dp[j], dp[j - v[i]] + w[i]);
+        }
+    }
+    <span class="hljs-keyword">return</span> dp[V];
+}
+</code></pre>
+<h2 id="&#x95EE;&#x9898;&#x8F6C;&#x5316;">&#x95EE;&#x9898;&#x8F6C;&#x5316;</h2>
+<p>&#x6211;&#x4EEC;&#x77E5;&#x9053;&#x5B8C;&#x5168;&#x80CC;&#x5305;&#x95EE;&#x9898;&#x5F53;&#x4E2D;&#x7684;&#x7269;&#x54C1;&#x662F;&#x53EF;&#x4EE5;&#x65E0;&#x9650;&#x6B21;&#x4F7F;&#x7528;&#x7684;&#xFF0C;&#x4F46;&#x662F;&#x5B9E;&#x8D28;&#x4E0A;&#x6211;&#x4EEC;&#x4E0D;&#x53EF;&#x80FD;&#x62FF;&#x65E0;&#x9650;&#x4E2A;&#x7269;&#x54C1;&#xFF0C;&#x56E0;&#x4E3A;&#x6211;&#x4EEC;&#x7684;&#x80CC;&#x5305;&#x5BB9;&#x91CF;&#x662F;&#x6709;&#x9650;&#x7684;&#xFF0C;&#x5047;&#x5982;&#x6211;&#x4EEC;&#x7684;&#x80CC;&#x5305;&#x5BB9;&#x91CF;&#x4E3A;<code>V</code>&#x7269;&#x54C1;&#x7684;&#x4F53;&#x79EF;&#x4E3A;<code>v</code>&#xFF0C;&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x80FD;&#x591F;&#x62FF;&#x7684;&#x6700;&#x5927;&#x7684;&#x4E2A;&#x6570;&#x5C31;&#x662F;&#xFF1A;</p>
+<p>$$
+\lfloor \frac{V}{v} \rfloor</p>
+<p>$$
+&#x56E0;&#x6B64;&#x6211;&#x4EEC;&#x8FD9;&#x6837;&#x5C31;&#x5C06;&#x4E00;&#x4E2A;&#x5B8C;&#x5168;&#x80CC;&#x5305;&#x95EE;&#x9898;&#x8F6C;&#x5316;&#x6210;&#x4E86;&#x591A;&#x91CD;&#x80CC;&#x5305;&#x95EE;&#x9898;&#xFF0C;&#x6BCF;&#x4E00;&#x4E2A;&#x7269;&#x54C1;&#x7684;&#x6700;&#x5927;&#x6570;&#x91CF;&#x5C31;&#x662F;&#xFF1A;</p>
+<p>$$
+\lfloor\frac{V}{v_i}\rfloor</p>
+<p>$$
+&#x4E0A;&#x9762;&#x7684;&#x516C;&#x5F0F;&#x7B80;&#x5355;&#x7684;&#x8BF4;&#x6765;&#x5C31;&#x662F;&#x62FF;&#x7684;&#x6240;&#x6709;&#x7684;&#x7269;&#x54C1;&#x6240;&#x5360;&#x7684;&#x4F53;&#x79EF;&#x4E0D;&#x80FD;&#x8D85;&#x8FC7;&#x80CC;&#x5305;&#x7684;&#x5BB9;&#x91CF;&#x3002;&#x56E0;&#x6B64;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x91CD;&#x5199;&#x5B8C;&#x5168;&#x80CC;&#x5305;&#x7684;&#x72B6;&#x6001;&#x8F6C;&#x79FB;&#x65B9;&#x7A0B;&#xFF1A;</p>
+<p>$$
+dp[i][j] = 
+max\
+{ \
+dp[i - 1][j], \
+dp[i - 1][j - v[i]] + w[i],\
+dp[i - 1][j - v[i] <em> 2] + w[i] </em> 2, \
+..., \
+dp[i - 1][j - v[i] <em> T_i] + w[i] </em> T_i\
+}</p>
+<p>$$
+&#x5176;&#x4E2D; $T_i = \lfloor\frac{V}{v_i}\rfloor$&#x3002;</p>
+<p>&#x56E0;&#x6B64;&#x5B8C;&#x5168;&#x80CC;&#x5305;&#x8F6C;&#x591A;&#x91CD;&#x80CC;&#x5305;&#x7684;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF08;&#x8FDB;&#x884C;&#x6570;&#x7EC4;&#x4F18;&#x5316;&#x4E4B;&#x540E;&#x7684;&#x4EE3;&#x7801;&#xFF0C;&#x5982;&#x679C;&#x4F60;&#x8FD8;&#x4E0D;&#x4E86;&#x89E3;&#x6570;&#x7EC4;&#x7684;&#x4F18;&#x5316;&#xFF0C;&#x53EF;&#x4EE5;&#x5148;&#x9605;&#x8BFB;<a href="https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&amp;mid=2247484544&amp;idx=1&amp;sn=c4de17583010430fa519ecd1703bedea&amp;chksm=cf0c9889f87b119fe5621bacf417b163020dcd8a7c0ed63df94de20ba67ae742b4d86e22ae16&amp;token=883596793&amp;lang=zh_CN#rd" target="_blank">&#x5B8C;&#x5168;&#x80CC;&#x5305;</a>&#x3001;<a href="https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&amp;mid=2247484627&amp;idx=1&amp;sn=ac975cb31ba1af89425558cfe4442258&amp;chksm=cf0c98daf87b11cc4178c55864ba8eeecd741aaa49bde712aca1c5999f7dbbbbd0997beb6cc2&amp;token=1311889589&amp;lang=zh_CN#rd" target="_blank">&#x6DF1;&#x5165;&#x5256;&#x6790;&#x591A;&#x91CD;&#x80CC;&#x5305;&#x95EE;&#x9898;&#xFF08;&#x4E0A;&#x7BC7;&#xFF09;</a>&#x548C;<a href="https://mp.weixin.qq.com/s?__biz=Mzg3ODgyNDgwNg==&amp;mid=2247484703&amp;idx=1&amp;sn=d0fb3c949b99a803a30a5dd1452d7bce&amp;chksm=cf0c9916f87b10002e32bf8acfa298c1201d33793c80beb538ac099024868373e4c7a5b35a53&amp;token=1311889589&amp;lang=zh_CN#rd" target="_blank">&#x6DF1;&#x5165;&#x5256;&#x6790;&#x591A;&#x91CD;&#x80CC;&#x5305;&#x95EE;&#x9898;&#xFF08;&#x4E0B;&#x7BC7;&#xFF09;</a>&#x5F53;&#x4E2D;&#x6570;&#x7EC4;&#x4F18;&#x5316;&#x7684;&#x5C0F;&#x8282;&#xFF09;&#xFF1A;</p>
+<pre><code class="lang-C++">
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> MAX_LENGTH 2000</span>
+
+<span class="hljs-keyword">int</span> N, V;
+
+<span class="hljs-keyword">int</span> values[MAX_LENGTH];
+<span class="hljs-keyword">int</span> volumes[MAX_LENGTH];
+<span class="hljs-keyword">int</span> dp[MAX_LENGTH];
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">complete_backpack</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-comment">// &#x524D;&#x9762;&#x4E24;&#x4FA7;&#x5FAA;&#x73AF;&#x548C;&#x6B63;&#x5E38;&#x7684; dp &#x5FAA;&#x73AF;&#x4E00;&#x6837;</span>
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; N; ++i) {
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = V; j &gt;= volumes[i]; j--) {
+      <span class="hljs-comment">// &#x8FD9;&#x91CC;&#x5C31;&#x662F;&#x6839;&#x636E;&#x80CC;&#x5305;&#x5BB9;&#x91CF;&#x8FDB;&#x884C;&#x9650;&#x5236;&#x4E86; j &#x80AF;&#x5B9A;&#x8981;&#x5927;&#x4E8E;&#x7B49;&#x4E8E;&#x62FF;&#x7684;&#x6240;&#x6709;&#x7269;&#x54C1;&#x7684;&#x5BB9;&#x91CF;</span>
+      <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> k = <span class="hljs-number">1</span>; j &gt;= volumes[i] * k; k++) {
+        dp[j] = max(dp[j], dp[j - volumes[i] * k] + values[i] * k);
+      }
+    }
+  }
+}
+
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+  <span class="hljs-built_in">cin</span> &gt;&gt; N &gt;&gt; V;
+  <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; N; i++) {
+    <span class="hljs-built_in">cin</span> &gt;&gt; volumes[i] &gt;&gt; values[i];
+  }
+  complete_backpack();
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d&quot;</span>, dp[V]);
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<h2 id="&#x603B;&#x7ED3;">&#x603B;&#x7ED3;</h2>
+<p>&#x5728;&#x672C;&#x7BC7;&#x6587;&#x7AE0;&#x5F53;&#x4E2D;&#x4E3B;&#x8981;&#x4ECB;&#x7ECD;&#x4E86;&#x5165;&#x548C;&#x5C06;&#x5B8C;&#x5168;&#x80CC;&#x5305;&#x8F6C;&#x5316;&#x6210;&#x591A;&#x91CD;&#x80CC;&#x5305;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x77E5;&#x9053;&#x5B8C;&#x5168;&#x80CC;&#x5305;&#x7684;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x4E3A;$O(NV)$&#xFF0C;&#x4F46;&#x662F;&#x5982;&#x679C;&#x5C06;&#x5B8C;&#x5168;&#x80CC;&#x5305;&#x8F6C;&#x5316;&#x6210;&#x591A;&#x91CD;&#x80CC;&#x5305;&#x4E4B;&#x540E;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x4E3A;$O(NVM)$&#xFF0C;&#x5176;&#x4E2D;M&#x8868;&#x793A;&#x5E73;&#x5747;&#x6BCF;&#x4E2A;&#x7269;&#x54C1;&#x80FD;&#x62FF;&#x7684;&#x6700;&#x5927;&#x7684;&#x4E2A;&#x6570;&#xFF0C;&#x56E0;&#x6B64;&#x53EF;&#x4EE5;&#x77E5;&#x9053;&#x5176;&#x5B9E;&#x4E0D;&#x5FC5;&#x5C06;&#x5B8C;&#x5168;&#x80CC;&#x5305;&#x8F6C;&#x5316;&#x6210;&#x591A;&#x91CD;&#x80CC;&#x5305;&#xFF0C;&#x4F46;&#x662F;&#x53EF;&#x4EE5;&#x6269;&#x5C55;&#x6211;&#x4EEC;&#x7684;&#x601D;&#x7EF4;&#x3002;</p>
+<p>&#x5C06;&#x5B8C;&#x5168;&#x80CC;&#x5305;&#x8F6C;&#x5316;&#x6210;&#x591A;&#x91CD;&#x80CC;&#x5305;&#x7684;&#x6700;&#x6838;&#x5FC3;&#x7684;&#x5C31;&#x662F;&#x80CC;&#x5305;&#x5BB9;&#x91CF;&#x7684;&#x9650;&#x5236;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x80CC;&#x5305;&#x5BB9;&#x91CF;&#x6709;&#x9650;&#x5236;&#x8FD9;&#x4E00;&#x6761;&#x4EF6;&#xFF0C;&#x77E5;&#x9053;&#x6211;&#x4EEC;&#x80FD;&#x591F;&#x62FF;&#x7684;&#x6700;&#x5927;&#x7684;&#x7269;&#x54C1;&#x6570;&#x91CF;&#xFF0C;&#x4ECE;&#x800C;&#x5C06;&#x5B8C;&#x5168;&#x80CC;&#x5305;&#x8F6C;&#x5316;&#x6210;&#x591A;&#x91CD;&#x80CC;&#x5305;&#x95EE;&#x9898;&#x3002;</p>
+<hr>
+<p>&#x4EE5;&#x4E0A;&#x5C31;&#x662F;&#x672C;&#x7BC7;&#x6587;&#x7AE0;&#x7684;&#x6240;&#x6709;&#x5185;&#x5BB9;&#x4E86;&#xFF0C;&#x6211;&#x662F;<strong>LeHung</strong>&#xFF0C;&#x6211;&#x4EEC;&#x4E0B;&#x671F;&#x518D;&#x89C1;&#xFF01;&#xFF01;&#xFF01;&#x66F4;&#x591A;&#x7CBE;&#x5F69;&#x5185;&#x5BB9;&#x5408;&#x96C6;&#x53EF;&#x8BBF;&#x95EE;&#x9879;&#x76EE;&#xFF1A;<a href="https://github.com/Chang-LeHung/CSCore" target="_blank">https://github.com/Chang-LeHung/CSCore</a></p>
+<p>&#x5173;&#x6CE8;&#x516C;&#x4F17;&#x53F7;&#xFF1A;<strong>&#x4E00;&#x65E0;&#x662F;&#x5904;&#x7684;&#x7814;&#x7A76;&#x50E7;</strong>&#xFF0C;&#x4E86;&#x89E3;&#x66F4;&#x591A;&#x8BA1;&#x7B97;&#x673A;&#xFF08;Java&#x3001;Python&#x3001;&#x8BA1;&#x7B97;&#x673A;&#x7CFB;&#x7EDF;&#x57FA;&#x7840;&#x3001;&#x7B97;&#x6CD5;&#x4E0E;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF09;&#x77E5;&#x8BC6;&#x3002;</p>
+<p><img src="https://img2022.cnblogs.com/blog/2519003/202207/2519003-20220703200459566-1837431658.jpg" alt=""></p>
+
+<script>console.log("plugin-popup....");document.onclick = function(e){ e.target.tagName === "IMG" && window.open(e.target.src,e.target.src)}</script><style>img{cursor:pointer}</style>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="04多重背包v2.html" class="navigation navigation-prev " aria-label="Previous page: 深入剖析多重背包问题（下篇）">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="13零钱兑换.html" class="navigation navigation-next " aria-label="Next page: 深入浅出零钱兑换问题——背包问题的套壳">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"完全背包转化为多重背包","level":"1.4.6","depth":2,"next":{"title":"深入浅出零钱兑换问题——背包问题的套壳","level":"1.4.7","depth":2,"path":"da/13零钱兑换.md","ref":"./da/13零钱兑换.md","articles":[]},"previous":{"title":"深入剖析多重背包问题（下篇）","level":"1.4.5","depth":2,"path":"da/04多重背包v2.md","ref":"./da/04多重背包v2.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["popup","fontsettings","-sharing","-livereload"],"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @Chang-LeHung","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"copyright":"Copyright &#169; aleen42","minHeaderCount":"2","minHeaderDeep":"2"},"search":{},"popup":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"highlight":{},"anchor-navigation-ex":{"showLevelIcon":false,"showLevel":false,"tocLevel1Icon":"fa fa-hand-o-right","tocLevel2Icon":"fa fa-hand-o-right","tocLevel3Icon":"fa fa-hand-o-right","multipleH1":false,"multipleH2":false,"multipleH3":false,"multipleH4":false},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"da/14深入剖析完全背包.md","mtime":"2025-10-03T17:39:52.024Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2025-10-03T18:28:09.654Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+
+    </body>
+</html>
+

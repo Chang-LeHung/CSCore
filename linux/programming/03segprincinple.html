@@ -1,0 +1,1673 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>深入剖析Sgementation fault原理 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="04processdie.html" />
+    
+    
+    <link rel="prev" href="02sgementation.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    基础容器
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../../container/01-链表设计与实现.html">
+            
+                <a href="../../container/01-链表设计与实现.html">
+            
+                    
+                    链表设计与Java实现——自己动手写LinkedList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../../container/02-linkedlist源码剖析.html">
+            
+                <a href="../../container/02-linkedlist源码剖析.html">
+            
+                    
+                    LinekdList源码深度剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../../container/03-array容器设计与实现.html">
+            
+                <a href="../../container/03-array容器设计与实现.html">
+            
+                    
+                    数组容器(ArrayList)设计与Java实现——自己动手写ArrayList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../../container/04-arraylist源码剖析.html">
+            
+                <a href="../../container/04-arraylist源码剖析.html">
+            
+                    
+                    ArrayList源码剖析，从扩容原理，到迭代器和fast-fail机制，你想要的这都有！！！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../../container/05-hashmap设计与实现.html">
+            
+                <a href="../../container/05-hashmap设计与实现.html">
+            
+                    
+                    HashMap设计原理与实现（上篇）——哈希表的原理，如何从0到1设计一个HashMap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../../container/06-hashmap设计与实现.html">
+            
+                <a href="../../container/06-hashmap设计与实现.html">
+            
+                    
+                    HashMap设计原理与实现（下篇）200行代码带你写自己的HashMap！！！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../../container/07-hashmap源码剖析.html">
+            
+                <a href="../../container/07-hashmap源码剖析.html">
+            
+                    
+                    HashMap源码深度剖析，手把手带你分析每一行代码，包会！！！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="../../container/08-arraydeque源码剖析.html">
+            
+                <a href="../../container/08-arraydeque源码剖析.html">
+            
+                    
+                    ArrayDeque（JDK双端队列）源码深度剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="../../container/09-arrayqueue源码剖析.html">
+            
+                <a href="../../container/09-arrayqueue源码剖析.html">
+            
+                    
+                    深入剖析（JDK）ArrayQueue 源码
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    高级容器
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../../concurrency/java/11blockingqueue.html">
+            
+                <a href="../../concurrency/java/11blockingqueue.html">
+            
+                    
+                    从零开始自己动手写阻塞队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../../concurrency/java/12blockingqueuesrc.html">
+            
+                <a href="../../concurrency/java/12blockingqueuesrc.html">
+            
+                    
+                    JDK数组阻塞队列源码深入剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    动态规划
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../../da/01-动态规划.html">
+            
+                <a href="../../da/01-动态规划.html">
+            
+                    
+                    庖丁解牛斐波拉契数列和背包问题——详细解析两个问题优化过程（超多问题优化干货，不看血亏），带你从最基本最核心的问题看懂动态规划！！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../../da/02-01背包问题.html">
+            
+                <a href="../../da/02-01背包问题.html">
+            
+                    
+                    你真的懂01背包问题吗？01背包的这几问你能答出来吗？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../../da/03完全背包.html">
+            
+                <a href="../../da/03完全背包.html">
+            
+                    
+                    面试官：完全背包都不会，是你自己走还是我送你？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../../da/04多重背包v1.html">
+            
+                <a href="../../da/04多重背包v1.html">
+            
+                    
+                    深入剖析多重背包问题（上篇）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../../da/04多重背包v2.html">
+            
+                <a href="../../da/04多重背包v2.html">
+            
+                    
+                    深入剖析多重背包问题（下篇）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../../da/14深入剖析完全背包.html">
+            
+                <a href="../../da/14深入剖析完全背包.html">
+            
+                    
+                    完全背包转化为多重背包
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../../da/13零钱兑换.html">
+            
+                <a href="../../da/13零钱兑换.html">
+            
+                    
+                    深入浅出零钱兑换问题——背包问题的套壳
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../../da/05深入剖析斐波拉契数列.html">
+            
+                <a href="../../da/05深入剖析斐波拉契数列.html">
+            
+                    
+                    深入剖析斐波拉契数列
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    股票问题
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../../da/09状态机动态规划.html">
+            
+                <a href="../../da/09状态机动态规划.html">
+            
+                    
+                    这种动态规划你见过吗——状态机动态规划之股票问题(上)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../../da/10状态机动态规划02.html">
+            
+                <a href="../../da/10状态机动态规划02.html">
+            
+                    
+                    这种动态规划你见过吗——状态机动态规划之股票问题(中)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../../da/11状态机动态规划03.html">
+            
+                <a href="../../da/11状态机动态规划03.html">
+            
+                    
+                    这种动态规划你见过吗——状态机动态规划之股票问题(下)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../../da/12状态机动态规划总结.html">
+            
+                <a href="../../da/12状态机动态规划总结.html">
+            
+                    
+                    状态机动态规划之股票问题总结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                    回溯
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../../da/backtrace/01combinations.html">
+            
+                <a href="../../da/backtrace/01combinations.html">
+            
+                    
+                    通过组合问题看透回溯法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" >
+            
+                <span>
+            
+                    
+                    数据结构
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../../da/07表达式求值.html">
+            
+                <a href="../../da/07表达式求值.html">
+            
+                    
+                    深入剖析前缀、中缀、后缀表达式以及表达式求值
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    并发
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../../concurrency/java/01初始java并发.html">
+            
+                <a href="../../concurrency/java/01初始java并发.html">
+            
+                    
+                    并发开篇——带你从0到1建立并发知识体系的基石
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../../concurrency/java/02并发的噩梦.html">
+            
+                <a href="../../concurrency/java/02并发的噩梦.html">
+            
+                    
+                    并发程序的噩梦——数据竞争
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" data-path="../../concurrency/java/03自己动手写并发工具类.html">
+            
+                <a href="../../concurrency/java/03自己动手写并发工具类.html">
+            
+                    
+                    30行自己写并发工具类(Semaphore, CyclicBarrier, CountDownLatch)是什么体验?
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="../../concurrency/java/04volatile.html">
+            
+                <a href="../../concurrency/java/04volatile.html">
+            
+                    
+                    万字长文：从计算机本源深入探寻volatile和Java内存模型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5" data-path="../../concurrency/java/05falsesharing.html">
+            
+                <a href="../../concurrency/java/05falsesharing.html">
+            
+                    
+                    并发刺客（False Sharing）——并发程序的隐藏杀手
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.6" data-path="../../concurrency/java/06futuretask.html">
+            
+                <a href="../../concurrency/java/06futuretask.html">
+            
+                    
+                    60行从零开始自己动手写FutureTask是什么体验？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.7" data-path="../../concurrency/java/07futuretasksrc.html">
+            
+                <a href="../../concurrency/java/07futuretasksrc.html">
+            
+                    
+                    FutureTask源码深度剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.8" data-path="../../concurrency/java/08synchronizedusage.html">
+            
+                <a href="../../concurrency/java/08synchronizedusage.html">
+            
+                    
+                    深入学习Synchronized各种使用方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.9" data-path="../../concurrency/java/09synchronized.html">
+            
+                <a href="../../concurrency/java/09synchronized.html">
+            
+                    
+                    Synchronized锁升级原理与过程深入剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.10" data-path="../../concurrency/java/10spinlock.html">
+            
+                <a href="../../concurrency/java/10spinlock.html">
+            
+                    
+                    从零开始自己动手写自旋锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.11" data-path="../../concurrency/java/13locksupport.html">
+            
+                <a href="../../concurrency/java/13locksupport.html">
+            
+                    
+                    60行自己动手写LockSupport是什么体验？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.12" data-path="../../concurrency/java/14threadpool.html">
+            
+                <a href="../../concurrency/java/14threadpool.html">
+            
+                    
+                    彻底了解线程池的原理——40行从零开始自己写线程池
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.13" data-path="../../concurrency/java/16retalkingthreadpool.html">
+            
+                <a href="../../concurrency/java/16retalkingthreadpool.html">
+            
+                    
+                    再谈线程池——深入剖析线程池的前世今生
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.14" data-path="../../concurrency/java/17threadpoolimplementation.html">
+            
+                <a href="../../concurrency/java/17threadpoolimplementation.html">
+            
+                    
+                    自己动手写乞丐版线程池
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.15" data-path="../../concurrency/java/18threadpoolmorecloseJDK.html">
+            
+                <a href="../../concurrency/java/18threadpoolmorecloseJDK.html">
+            
+                    
+                    自己动手写线程池——向JDK线程池进发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.16" data-path="../../concurrency/java/11blockingqueue.html">
+            
+                <a href="../../concurrency/java/11blockingqueue.html">
+            
+                    
+                    从零开始自己动手写阻塞队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.17" data-path="../../concurrency/java/12blockingqueuesrc.html">
+            
+                <a href="../../concurrency/java/12blockingqueuesrc.html">
+            
+                    
+                    JDK数组阻塞队列源码深入剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" >
+            
+                <span>
+            
+                    
+                    OpenMP
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../../concurrency/openmp/01introduction.html">
+            
+                <a href="../../concurrency/openmp/01introduction.html">
+            
+                    
+                    OpenMP 入门
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../../concurrency/openmp/02openmp.html">
+            
+                <a href="../../concurrency/openmp/02openmp.html">
+            
+                    
+                    OpenMP 教程（一）——OpenMP 当中的 reduction 子句
+
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../../concurrency/openmp/03runtime1.html">
+            
+                <a href="../../concurrency/openmp/03runtime1.html">
+            
+                    
+                    OpenMP 常见的动态库函数使用（上）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../../concurrency/openmp/04runtime2.html">
+            
+                <a href="../../concurrency/openmp/04runtime2.html">
+            
+                    
+                    Openmp 常见的动态库函数使用（下）——深入剖析锁🔒原理与实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../../concurrency/openmp/05environment.html">
+            
+                <a href="../../concurrency/openmp/05environment.html">
+            
+                    
+                    Openmp 环境变量使用总结
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6" data-path="../../concurrency/openmp/06sync.html">
+            
+                <a href="../../concurrency/openmp/06sync.html">
+            
+                    
+                    深入理解 OpenMP 线程同步机制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.7" data-path="../../concurrency/openmp/07atomic.html">
+            
+                <a href="../../concurrency/openmp/07atomic.html">
+            
+                    
+                    OpenMP 原子指令设计与实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.8" data-path="../../concurrency/openmp/08parallel.html">
+            
+                <a href="../../concurrency/openmp/08parallel.html">
+            
+                    
+                    Parallel Construct 实现原理与源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.9" data-path="../../concurrency/openmp/09sync.html">
+            
+                <a href="../../concurrency/openmp/09sync.html">
+            
+                    
+                    OpenMP 线程同步 Construct 实现原理以及源码分析（上）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.10" data-path="../../concurrency/openmp/10sync.html">
+            
+                <a href="../../concurrency/openmp/10sync.html">
+            
+                    
+                    OpenMP 线程同步 Construct 实现原理以及源码分析（下）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.11" data-path="../../concurrency/openmp/11for_dynamic.html">
+            
+                <a href="../../concurrency/openmp/11for_dynamic.html">
+            
+                    
+                    OpenMP For Construct dynamic 调度方式实现原理和源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.12" data-path="../../concurrency/openmp/12guided.html">
+            
+                <a href="../../concurrency/openmp/12guided.html">
+            
+                    
+                    OpenMP For Construct guided 调度方式实现原理和源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.13" data-path="../../concurrency/openmp/13seciton.html">
+            
+                <a href="../../concurrency/openmp/13seciton.html">
+            
+                    
+                    OpenMP Sections Construct 实现原理以及源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.14" data-path="../../concurrency/openmp/14task.html">
+            
+                <a href="../../concurrency/openmp/14task.html">
+            
+                    
+                    OpenMP task construct 实现原理以及源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" >
+            
+                <span>
+            
+                    
+                    Pthread
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../../concurrency/pthread/01pthread.html">
+            
+                <a href="../../concurrency/pthread/01pthread.html">
+            
+                    
+                    Pthread 并发编程（一）——深入剖析线程基本元素和状态
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../../concurrency/pthread/02pthread.html">
+            
+                <a href="../../concurrency/pthread/02pthread.html">
+            
+                    
+                    Pthread 并发编程（二）——自底向上深入理解线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../../concurrency/pthread/03pthread.html">
+            
+                <a href="../../concurrency/pthread/03pthread.html">
+            
+                    
+                    Pthread 并发编程（三）——深入理解线程取消机制
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    Makefile
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../../tools/makefile/01.html">
+            
+                <a href="../../tools/makefile/01.html">
+            
+                    
+                    彻底掌握Makefile（一）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../../tools/makefile/02.html">
+            
+                <a href="../../tools/makefile/02.html">
+            
+                    
+                    彻底掌握Makefile（二）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.3" data-path="../../tools/makefile/03.html">
+            
+                <a href="../../tools/makefile/03.html">
+            
+                    
+                    彻底掌握Makefile（三）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" >
+            
+                <span>
+            
+                    
+                    DES
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../../des/des.html">
+            
+                <a href="../../des/des.html">
+            
+                    
+                    DES加密算法从入门到入坟
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" >
+            
+                <span>
+            
+                    
+                    命令行&系统编程&SHELL
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.13.1" data-path="../command/01top.html">
+            
+                <a href="../command/01top.html">
+            
+                    
+                    Linux命令系列之top——里面藏着很多鲜为人知的宝藏知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.2" data-path="../command/02ls.html">
+            
+                <a href="../command/02ls.html">
+            
+                    
+                    Linux命令系列之ls——原来最简单的ls这么复杂
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.3" data-path="../command/03mkls.html">
+            
+                <a href="../command/03mkls.html">
+            
+                    
+                    自己动手写ls命令——Java版
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.4" data-path="../command/05ps.html">
+            
+                <a href="../command/05ps.html">
+            
+                    
+                    这才是使用ps命令的正确姿势
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.5" data-path="../command/06kill.html">
+            
+                <a href="../command/06kill.html">
+            
+                    
+                    如何优雅的杀掉一个进程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.6" data-path="01exit.html">
+            
+                <a href="01exit.html">
+            
+                    
+                    C语言中这么骚的退出程序的方式你知道几个？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.7" data-path="02sgementation.html">
+            
+                <a href="02sgementation.html">
+            
+                    
+                    你的哪些骚操作会导致Segmentation Fault😂
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.13.8" data-path="03segprincinple.html">
+            
+                <a href="03segprincinple.html">
+            
+                    
+                    深入剖析Sgementation fault原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.9" data-path="04processdie.html">
+            
+                <a href="04processdie.html">
+            
+                    
+                    进程最后的遗言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.10" data-path="../command/04exitstatus.html">
+            
+                <a href="../command/04exitstatus.html">
+            
+                    
+                    Shell揭秘——程序退出状态码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.11" data-path="../shell/01jobcontrol.html">
+            
+                <a href="../shell/01jobcontrol.html">
+            
+                    
+                    你在终端启动的进程，最后都是什么下场？（上）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.12" data-path="../shell/02jobcontrol.html">
+            
+                <a href="../shell/02jobcontrol.html">
+            
+                    
+                    你在终端启动的进程，最后都是什么下场？（下）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" >
+            
+                <span>
+            
+                    
+                    计算机系统基础
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.14.1" data-path="../../pl/c_cpp/01builtin.html">
+            
+                <a href="../../pl/c_cpp/01builtin.html">
+            
+                    
+                    gcc 好玩的 builtin 函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" >
+            
+                <span>
+            
+                    
+                    python
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../../pl/python/misc/01copy.html">
+            
+                <a href="../../pl/python/misc/01copy.html">
+            
+                    
+                    深入理解 python 对象拷贝和内存布局
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >深入剖析Sgementation fault原理</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="&#x6DF1;&#x5165;&#x5256;&#x6790;sgementation-fault&#x539F;&#x7406;">&#x6DF1;&#x5165;&#x5256;&#x6790;Sgementation fault&#x539F;&#x7406;</h1>
+<h2 id="&#x524D;&#x8A00;">&#x524D;&#x8A00;</h2>
+<p>&#x6211;&#x4EEC;&#x5728;&#x65E5;&#x5E38;&#x7684;&#x7F16;&#x7A0B;&#x5F53;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x5F88;&#x5BB9;&#x6613;&#x9047;&#x5230;&#x7684;&#x4E00;&#x4E2A;&#x7A0B;&#x5E8F;&#x5D29;&#x6E83;&#x7684;&#x9519;&#x8BEF;&#x5C31;&#x662F;<code>segmentation fault</code>&#xFF0C;&#x5728;&#x672C;&#x7BC7;&#x6587;&#x7AE0;&#x5F53;&#x4E2D;&#x5C06;&#x4E3B;&#x8981;&#x5206;&#x6790;&#x6BB5;&#x9519;&#x8BEF;&#x53D1;&#x751F;&#x7684;&#x539F;&#x56E0;&#xFF01;</p>
+<h2 id="sgementation-fault&#x53D1;&#x751F;&#x7684;&#x539F;&#x56E0;">Sgementation fault&#x53D1;&#x751F;&#x7684;&#x539F;&#x56E0;</h2>
+<p>&#x53D1;&#x751F;Sgementation fault&#x7684;&#x76F4;&#x63A5;&#x539F;&#x56E0;&#x662F;&#xFF0C;&#x7A0B;&#x5E8F;&#x6536;&#x5230;&#x4E00;&#x4E2A;&#x6765;&#x81EA;&#x5185;&#x6838;&#x7684;SIGSEGV&#x4FE1;&#x53F7;&#xFF0C;&#x5982;&#x679C;&#x662F;&#x4F60;&#x7684;&#x7A0B;&#x5E8F;&#x5BFC;&#x81F4;&#x7684;&#x5185;&#x6838;&#x7ED9;&#x8FDB;&#x7A0B;&#x53D1;&#x9001;&#x8FD9;&#x4E2A;&#x4FE1;&#x53F7;&#x7684;&#x8BDD;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x662F;&#x4F60;&#x7684;&#x7A0B;&#x5E8F;&#x6B63;&#x5728;&#x8BFB;&#x6216;&#x8005;&#x5199;&#x4E00;&#x4E2A;&#x6CA1;&#x6709;&#x5206;&#x914D;&#x7684;&#x9875;&#x9762;&#x6216;&#x8005;&#x4F60;&#x6CA1;&#x6709;&#x8BFB;&#x6216;&#x8005;&#x5199;&#x7684;&#x6743;&#x9650;&#x3002;&#x8FD9;&#x4E2A;&#x4FE1;&#x53F7;&#x7684;&#x6765;&#x6E90;&#x6709;&#x4E24;&#x4E2A;&#xFF1A;</p>
+<ul>
+<li>&#x7A0B;&#x5E8F;&#x7684;&#x975E;&#x6CD5;&#x8BBF;&#x95EE;&#xFF0C;&#x81EA;&#x8EAB;&#x7A0B;&#x5E8F;&#x7684;&#x6307;&#x4EE4;&#x5BFC;&#x81F4;&#x7684;Sgementation fault&#x3002;</li>
+<li>&#x53E6;&#x5916;&#x4E00;&#x79CD;&#x662F;&#x7531;&#x522B;&#x7684;&#x7A0B;&#x5E8F;&#x76F4;&#x63A5;&#x53D1;&#x9001;SIGSEGV&#x4FE1;&#x53F7;&#x7ED9;&#x8FD9;&#x4E2A;&#x8FDB;&#x7A0B;&#x3002;</li>
+</ul>
+<p>&#x5728;&#x7C7B;Linux&#x7CFB;&#x7EDF;&#x4E2D;&#xFF0C;&#x5185;&#x6838;&#x7ED9;&#x8FDB;&#x7A0B;&#x53D1;&#x9001;&#x7684;&#x4FE1;&#x53F7;&#x4E3A;SIGGEV&#xFF0C;&#x4FE1;&#x53F7;&#x5BF9;&#x5E94;&#x6570;&#x5B57;&#x4E3A;11&#xFF0C;&#x5728;Linux&#x5F53;&#x4E2D;&#x4FE1;&#x53F7;&#x5BF9;&#x5E94;&#x7684;&#x6570;&#x5B57;&#x60C5;&#x51B5;&#x5927;&#x81F4;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre><code class="lang-shell"> 1) SIGHUP     2) SIGINT     3) SIGQUIT     4) SIGILL     5) SIGTRAP
+ 6) SIGABRT     7) SIGBUS     8) SIGFPE     9) SIGKILL    10) SIGUSR1
+11) SIGSEGV    12) SIGUSR2    13) SIGPIPE    14) SIGALRM    15) SIGTERM
+16) SIGSTKFLT    17) SIGCHLD    18) SIGCONT    19) SIGSTOP    20) SIGTSTP
+21) SIGTTIN    22) SIGTTOU    23) SIGURG    24) SIGXCPU    25) SIGXFSZ
+26) SIGVTALRM    27) SIGPROF    28) SIGWINCH    29) SIGIO    30) SIGPWR
+31) SIGSYS    34) SIGRTMIN    35) SIGRTMIN+1    36) SIGRTMIN+2    37) SIGRTMIN+3
+38) SIGRTMIN+4    39) SIGRTMIN+5    40) SIGRTMIN+6    41) SIGRTMIN+7    42) SIGRTMIN+8
+43) SIGRTMIN+9    44) SIGRTMIN+10    45) SIGRTMIN+11    46) SIGRTMIN+12    47) SIGRTMIN+13
+48) SIGRTMIN+14    49) SIGRTMIN+15    50) SIGRTMAX-14    51) SIGRTMAX-13    52) SIGRTMAX-12
+53) SIGRTMAX-11    54) SIGRTMAX-10    55) SIGRTMAX-9    56) SIGRTMAX-8    57) SIGRTMAX-7
+58) SIGRTMAX-6    59) SIGRTMAX-5    60) SIGRTMAX-4    61) SIGRTMAX-3    62) SIGRTMAX-2
+63) SIGRTMAX-1    64) SIGRTMAX
+</code></pre>
+<p>&#x5F53;&#x4E00;&#x4E2A;&#x7A0B;&#x5E8F;&#x53D1;&#x751F; segmentation fault &#x7684;&#x65F6;&#x5019;&#xFF0C;&#x8FD9;&#x4E2A;&#x7A0B;&#x5E8F;&#x7684;&#x9000;&#x51FA;&#x7801; exitcode &#x7B49;&#x4E8E; 139&#xFF01;</p>
+<p><img src="../../images/programming/05.png" alt="05"></p>
+<p>&#x53D1;&#x751F; segmentation fault &#x7684;&#x4E00;&#x4E2A;&#x4E3B;&#x8981;&#x7684;&#x539F;&#x56E0;&#x662F;&#x6211;&#x4EEC;&#x81EA;&#x5DF1;&#x7684;&#x7A0B;&#x5E8F;&#x53D1;&#x751F;&#x975E;&#x6CD5;&#x8BBF;&#x95EE;&#x5185;&#x5B58;&#xFF0C;&#x540C;&#x65F6;&#x522B;&#x7684;&#x7A0B;&#x5E8F;&#x7ED9;&#x8FD9;&#x4E2A;&#x8FDB;&#x7A0B;&#x53D1;&#x9001; SIGSGEV &#x4FE1;&#x53F7;&#x4E5F;&#x4F1A;&#x5BFC;&#x81F4;&#x6211;&#x4EEC;&#x7684;&#x7A0B;&#x5E8F;&#x53D1;&#x751F; segmentation fault &#x9519;&#x8BEF;&#x3002;</p>
+<p>&#x6BD4;&#x5982;&#x4E0B;&#x9762;&#x7684;&#x7A0B;&#x5E8F;&#x5C31;&#x662F;&#x81EA;&#x5DF1;&#x53D1;&#x751F;&#x7684;&#x6BB5;&#x9519;&#x8BEF;&#xFF08;&#x53D1;&#x751F;&#x4E86;&#x8D8A;&#x754C;&#x8BBF;&#x95EE;&#xFF09;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+
+  <span class="hljs-keyword">int</span> arr[<span class="hljs-number">10</span>];
+  arr[<span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">20</span>] = <span class="hljs-number">100</span>; <span class="hljs-comment">// &#x4F1A;&#x5BFC;&#x81F4; segmentation fault</span>
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;arr[12] = %d\n&quot;</span>, arr[<span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">20</span>]); <span class="hljs-comment">// &#x4F1A;&#x5BFC;&#x81F4; segmentation fault</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x4E0B;&#x9762;&#x662F;&#x4E00;&#x4E2A;&#x522B;&#x7684;&#x7A0B;&#x5E8F;&#x7ED9;&#x5176;&#x4ED6;&#x7A0B;&#x5E8F;&#x53D1;&#x9001;SIGSGEV&#x4FE1;&#x53F7;&#x4F1A;&#x5BFC;&#x81F4;&#x5176;&#x4ED6;&#x8FDB;&#x7A0B;&#x51FA;&#x73B0;&#x6BB5;&#x9519;&#x8BEF;&#xFF08;&#x4E0B;&#x9762;&#x7684;&#x7EC8;&#x7AEF;&#x7ED9;&#x4E0A;&#x9762;&#x7EC8;&#x7AEF;&#x7684;&#x8FDB;&#x7A0B;&#x53F7;&#x7B49;&#x4E8E;504092&#x7684;&#x7A0B;&#x5E8F;&#x53D1;&#x9001;&#x4E86;&#x4E00;&#x4E2A;&#x4FE1;&#x53F7;&#x503C;&#x7B49;&#x4E8E;11&#xFF08;&#x5C31;&#x662F;SIGGSGEV&#xFF09;&#x4FE1;&#x53F7;&#xFF0C;&#x8BA9;&#x4ED6;&#x53D1;&#x751F;&#x6BB5;&#x9519;&#x8BEF;&#xFF09;&#xFF1A;</p>
+<p><img src="../../images/programming/06.png" alt="06"></p>
+<h2 id="&#x81EA;&#x5B9A;&#x4E49;&#x4FE1;&#x53F7;&#x5904;&#x7406;&#x51FD;&#x6570;">&#x81EA;&#x5B9A;&#x4E49;&#x4FE1;&#x53F7;&#x5904;&#x7406;&#x51FD;&#x6570;</h2>
+<p>&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x5141;&#x8BB8;&#x6211;&#x4EEC;&#x81EA;&#x5DF1;&#x5B9A;&#x4E49;&#x51FD;&#x6570;&#xFF0C;&#x5F53;&#x67D0;&#x4E9B;&#x4FE1;&#x53F7;&#x88AB;&#x53D1;&#x9001;&#x5230;&#x8FDB;&#x7A0B;&#x4E4B;&#x540E;&#xFF0C;&#x8FDB;&#x7A0B;&#x5C31;&#x4F1A;&#x53BB;&#x6267;&#x884C;&#x8FD9;&#x4E9B;&#x51FD;&#x6570;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x7CFB;&#x7EDF;&#x9ED8;&#x8BA4;&#x7684;&#x7A0B;&#x5E8F;&#xFF08;&#x6BD4;&#x5982;&#x8BF4;SIGSEGV&#x9ED8;&#x8BA4;&#x51FD;&#x6570;&#x662F;&#x9000;&#x51FA;&#x7A0B;&#x5E8F;&#xFF09;&#x3002;&#x4E0B;&#x9762;&#x6765;&#x770B;&#x6211;&#x4EEC;&#x91CD;&#x5199;SIGINT&#x4FE1;&#x53F7;&#x7684;&#x5904;&#x7406;&#x51FD;&#x6570;&#xFF0C;&#x5F53;&#x4E00;&#x4E2A;&#x7A0B;&#x5E8F;&#x5728;&#x7EC8;&#x7AEF;&#x6267;&#x884C;&#x7684;&#x65F6;&#x5019;&#x6211;&#x4EEC;&#x6309;&#x4E0B;ctrl+c&#xFF0C;&#x8FD9;&#x4E2A;&#x6B63;&#x5728;&#x6267;&#x884C;&#x7684;&#x7A0B;&#x5E8F;&#x5C31;&#x4F1A;&#x6536;&#x5230;&#x4E00;&#x4E2A;&#x6765;&#x81EA;&#x5185;&#x6838;&#x7684;SIGINT&#x4FE1;&#x53F7;&#xFF1A;</p>
+<pre><code class="lang-c">
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unistd.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;signal.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">sig</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{ <span class="hljs-comment">// &#x53C2;&#x6570; n &#x8868;&#x793A;&#x4EE3;&#x8868;&#x4FE1;&#x53F7;&#x7684;&#x6570;&#x503C;</span>
+  <span class="hljs-keyword">char</span>* str = <span class="hljs-string">&quot;signal number = %d\n&quot;</span>;
+  <span class="hljs-keyword">char</span>* out = <span class="hljs-built_in">malloc</span>(<span class="hljs-number">128</span>);
+  <span class="hljs-built_in">sprintf</span>(out, str, n);
+  write(STDOUT_FILENO, out, <span class="hljs-built_in">strlen</span>(out));
+  <span class="hljs-built_in">free</span>(out);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+  signal(SIGINT, sig); <span class="hljs-comment">// &#x8FD9;&#x884C;&#x4EE3;&#x7801;&#x5C31;&#x662F;&#x6CE8;&#x518C;&#x51FD;&#x6570; &#x5F53;&#x8FDB;&#x7A0B;&#x6536;&#x5230; SIGINT &#x4FE1;&#x53F7;&#x7684;&#x65F6;&#x5019;&#x5C31;&#x6267;&#x884C; sig &#x51FD;&#x6570;</span>
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;pid = %d\n&quot;</span>, getpid());
+  <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>)
+  {
+    sleep(<span class="hljs-number">1</span>);
+  }
+
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p><img src="../../images/programming/07.png" alt="05"></p>
+<p>&#x9996;&#x5148;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x77E5;&#x9053;&#xFF0C;&#x5F53;&#x6211;&#x4EEC;&#x5728;&#x7EC8;&#x7AEF;&#x542F;&#x52A8;&#x4E00;&#x4E2A;&#x7A0B;&#x5E8F;&#x4E4B;&#x540E;&#xFF0C;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x5728;&#x7EC8;&#x7AEF;&#x6309;&#x4E0B;ctrl+c&#x7EC8;&#x7AEF;&#x4F1A;&#x7ED9;&#x5F53;&#x524D;&#x6B63;&#x5728;&#x8FD0;&#x884C;&#x7684;&#x8FDB;&#x7A0B;&#x4EE5;&#x53CA;&#x4ED6;&#x7684;&#x5B50;&#x8FDB;&#x7A0B;&#x53D1;&#x9001;SIGINT&#x4FE1;&#x53F7;&#xFF0C;SIGINT&#x4FE1;&#x53F7;&#x7684;&#x9ED8;&#x8BA4;&#x5904;&#x7406;&#x51FD;&#x6570;&#x5C31;&#x662F;&#x9000;&#x51FA;&#x7A0B;&#x5E8F;&#xFF0C;&#x4F46;&#x662F;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x6355;&#x83B7;&#x8FD9;&#x4E2A;&#x4FE1;&#x53F7;&#xFF0C;&#x91CD;&#x5199;&#x5904;&#x7406;&#x51FD;&#x6570;&#x3002;&#x5728;&#x4E0A;&#x9762;&#x7684;&#x7A0B;&#x5E8F;&#x5F53;&#x4E2D;&#x6211;&#x4EEC;&#x5C31;&#x81EA;&#x5DF1;&#x91CD;&#x5199;&#x4E86;SIGINT&#x7684;&#x5904;&#x7406;&#x51FD;&#x6570;&#xFF0C;&#x5F53;&#x8FDB;&#x7A0B;&#x63A5;&#x6536;&#x5230; SIGINT &#x4FE1;&#x53F7;&#x7684;&#x65F6;&#x5019;&#x5C31;&#x4F1A;&#x89E6;&#x53D1;&#x51FD;&#x6570; sig &#x3002;&#x4E0A;&#x9762;&#x7A0B;&#x5E8F;&#x7684;&#x8F93;&#x51FA;&#x5370;&#x8BC1;&#x4E86;&#x6211;&#x4EEC;&#x7684;&#x7ED3;&#x679C;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x5728;&#x7EC8;&#x7AEF;&#x5F53;&#x4E2D;&#x6700;&#x5E38;&#x7528;&#x7684;&#x5C31;&#x662F;ctrl+c &#x548C; ctrl + z &#x53BB;&#x4E2D;&#x65AD;&#x5F53;&#x524D;&#x7EC8;&#x7AEF;&#x6B63;&#x5728;&#x6267;&#x884C;&#x7684;&#x7A0B;&#x5E8F;&#xFF0C;&#x5176;&#x5B9E;&#x8FD9;&#x4E9B;&#x4E5F;&#x662F;&#x7ED9;&#x6211;&#x4EEC;&#x7684;&#x7A0B;&#x5E8F;&#x53D1;&#x9001;&#x4FE1;&#x53F7;&#xFF0C;ctrl+c&#x53D1;&#x9001;SIGINT&#x4FE1;&#x53F7;ctrl+z&#x53D1;&#x9001;SIGTSTP&#x4FE1;&#x53F7;&#x3002;&#x56E0;&#x6B64;&#x548C;&#x4E0A;&#x9762;&#x7684;&#x673A;&#x5236;&#x7C7B;&#x4F3C;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x5904;&#x7406;&#x51FD;&#x6570;&#x91CD;&#x5199;&#x7684;&#x65B9;&#x5F0F;&#xFF0C;&#x8986;&#x76D6;&#x5BF9;&#x5E94;&#x7684;&#x4FE1;&#x53F7;&#x7684;&#x884C;&#x4E3A;&#xFF0C;&#x6BD4;&#x5982;&#x4E0B;&#x9762;&#x7684;&#x7A0B;&#x5E8F;&#x5C31;&#x662F;&#x4F7F;&#x7528;&#x5904;&#x7406;&#x51FD;&#x6570;&#x91CD;&#x5199;&#x7684;&#x65B9;&#x5F0F;&#x8FDB;&#x884C;&#x4FE1;&#x53F7;&#x5904;&#x7406;&#xFF1A;</p>
+<pre><code class="lang-c">
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;signal.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;fcntl.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unistd.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">sig</span><span class="hljs-params">(<span class="hljs-keyword">int</span> no)</span> </span>{
+  <span class="hljs-keyword">char</span> out[<span class="hljs-number">128</span>];
+  <span class="hljs-keyword">switch</span>(no) {
+    <span class="hljs-keyword">case</span> SIGINT:
+      <span class="hljs-built_in">sprintf</span>(out, <span class="hljs-string">&quot;received SIGINT signal\n&quot;</span>);
+      <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">case</span> SIGTSTP:
+      <span class="hljs-built_in">sprintf</span>(out, <span class="hljs-string">&quot;received SIGSTOP signal\n&quot;</span>);
+      <span class="hljs-keyword">break</span>;
+  }
+  write(STDOUT_FILENO, out, <span class="hljs-built_in">strlen</span>(out));
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+  signal(SIGINT, sig);
+  signal(SIGTSTP, sig);
+  <span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>) {sleep(<span class="hljs-number">1</span>);}
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x6267;&#x884C;&#x8FD9;&#x4E2A;&#x7A0B;&#x5E8F;&#x7136;&#x540E;&#x770B;&#x770B;&#x5F53;&#x6211;&#x4EEC;&#x8F93;&#x5165;ctrl+z&#x548C;ctrl+c&#x4F1A;&#x51FA;&#x73B0;&#x6709;&#x4EC0;&#x4E48;&#x8F93;&#x51FA;&#x3002;</p>
+<p><img src="../../images/programming/09.png" alt="05"></p>
+<p>&#x4ECE;&#x4E0A;&#x9762;&#x7684;&#x8F93;&#x51FA;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5B9E;&#x73B0;&#x4E86;&#x6211;&#x4EEC;&#x60F3;&#x8981;&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#xFF0C;&#x8BF4;&#x660E;&#x6211;&#x4EEC;&#x7684;&#x51FD;&#x6570;&#x91CD;&#x5199;&#x751F;&#x6548;&#x4E86;&#x3002;</p>
+<h2 id="&#x6BB5;&#x9519;&#x8BEF;&#x7684;&#x9B54;&#x5E7B;">&#x6BB5;&#x9519;&#x8BEF;&#x7684;&#x9B54;&#x5E7B;</h2>
+<p>&#x8FD9;&#x91CC;&#x6709;&#x53E6;&#x5916;&#x4E00;&#x4E2A;&#x4F1A;&#x4EA7;&#x751F;SIGSEGV&#x4FE1;&#x53F7;&#x7684;&#x7A0B;&#x5E8F;&#xFF0C;&#x6211;&#x4EEC;&#x770B;&#x770B;&#x8FD9;&#x4E2A;&#x7A0B;&#x5E8F;&#x7684;&#x8F93;&#x51FA;&#x662F;&#x4EC0;&#x4E48;&#xFF1A;</p>
+<pre><code class="lang-c">
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unistd.h&gt;</span> </span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;signal.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">sig</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+  write(STDOUT_FILENO, <span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-number">1</span>); <span class="hljs-comment">// &#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x5C31;&#x662F;&#x5411;&#x6807;&#x51C6;&#x8F93;&#x51FA;&#x8F93;&#x51FA;&#x4E00;&#x4E2A;&#x5B57;&#x7B26; a </span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+  signal(SIGSEGV, sig); <span class="hljs-comment">// &#x8FD9;&#x4E2A;&#x662F;&#x6CE8;&#x518C;&#x4E00;&#x4E2A; SIGSEGV &#x9519;&#x8BEF;&#x7684;&#x5904;&#x7406;&#x51FD;&#x6570; &#x5F53;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x7ED9;&#x8FDB;&#x7A0B;&#x53D1;&#x9001;&#x4E00;&#x4E2A; SIGSEGV &#x4FE1;&#x53F7;&#x4E4B;&#x540E;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x5C31;&#x4F1A;&#x88AB;&#x6267;&#x884C;</span>
+  <span class="hljs-keyword">int</span>* p; 
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, *p); <span class="hljs-comment">// &#x89E3;&#x5F15;&#x7528;&#x4E00;&#x4E2A;&#x6CA1;&#x6709;&#x5B9A;&#x4E49;&#x7684;&#x6307;&#x9488; &#x9020;&#x6210; segementation fault</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x77E5;&#x9053;&#x4E0A;&#x9762;&#x7684;&#x7A0B;&#x5E8F;&#x80AF;&#x5B9A;&#x4F1A;&#x4EA7;&#x751F; segmentation fault &#x9519;&#x8BEF;&#xFF0C;&#x4F1A;&#x6536;&#x5230; SIGSGEV &#x4FE1;&#x53F7;&#xFF0C;&#x80AF;&#x5B9A;&#x4F1A;&#x6267;&#x884C;&#x5230;&#x51FD;&#x6570;<code>sig</code>&#x3002;&#x4F46;&#x662F;&#x4E0A;&#x9762;&#x7684;&#x7A0B;&#x5E8F;&#x4F1A;&#x4E0D;&#x65AD;&#x7684;&#x8F93;&#x51FA;<code>a</code>&#x4EA7;&#x751F;&#x6B7B;&#x5FAA;&#x73AF;&#x3002;</p>
+<p><img src="../../images/programming/08.png" alt="05"></p>
+<p>&#x4E0A;&#x9762;&#x7A0B;&#x5E8F;&#x7684;&#x7ED3;&#x679C;&#x662F;&#x4E0D;&#x662F;&#x6709;&#x70B9;&#x96BE;&#x4EE5;&#x7406;&#x89E3;&#xFF0C;&#x5982;&#x679C;&#x60F3;&#x8981;&#x4E86;&#x89E3;&#x8FD9;&#x4E2A;&#x7A0B;&#x5E8F;&#x7684;&#x884C;&#x4E3A;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x9700;&#x8981;&#x4E86;&#x89E3;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x662F;&#x5982;&#x4F55;&#x5904;&#x7406; segmentation fault &#x7684;&#xFF0C;&#x4E86;&#x89E3;&#x8FD9;&#x4E2A;&#x5904;&#x7406;&#x8FC7;&#x7A0B;&#x4E4B;&#x540E;&#x5BF9;&#x4E0A;&#x9762;&#x7A0B;&#x5E8F;&#x7684;&#x8F93;&#x51FA;&#x5C31;&#x5F88;&#x5BB9;&#x6613;&#x7406;&#x89E3;&#x4E86;&#x3002;</p>
+<h2 id="&#x4FE1;&#x53F7;&#x5904;&#x7406;&#x51FD;&#x6570;&#x7684;&#x6267;&#x884C;&#x8FC7;&#x7A0B;">&#x4FE1;&#x53F7;&#x5904;&#x7406;&#x51FD;&#x6570;&#x7684;&#x6267;&#x884C;&#x8FC7;&#x7A0B;</h2>
+<p>&#x5F53;&#x6211;&#x4EEC;&#x7684;&#x8FDB;&#x7A0B;&#x63A5;&#x6536;&#x5230;&#x4FE1;&#x53F7;&#x4F1A;&#x53BB;&#x6267;&#x884C;&#x6211;&#x4EEC;&#x91CD;&#x5199;&#x7684;&#x4FE1;&#x53F7;&#x5904;&#x7406;&#x51FD;&#x6570;&#xFF0C;&#x5982;&#x679C;&#x5728;&#x6211;&#x4EEC;&#x7684;&#x4FE1;&#x53F7;&#x5904;&#x7406;&#x51FD;&#x6570;&#x5F53;&#x4E2D;&#x6CA1;&#x6709;&#x9000;&#x51FA;&#x7A0B;&#x5E8F;&#x6216;&#x8005;&#x8F6C;&#x79FB;&#x7A0B;&#x5E8F;&#x7684;&#x6267;&#x884C;&#x6D41;(&#x53EF;&#x4EE5;&#x4F7F;&#x7528;setjmp&#x548C;longjmp&#x5B9E;&#x73B0;)&#xFF0C;&#x5373;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x6B63;&#x5E38;&#x8FD4;&#x56DE;&#x3002;&#x4FE1;&#x53F7;&#x5904;&#x7406;&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x4E4B;&#x540E;&#x4F1A;&#x91CD;&#x65B0;&#x6267;&#x884C;&#x4FE1;&#x53F7;&#x53D1;&#x751F;&#x4F4D;&#x7F6E;&#x7684;&#x6307;&#x4EE4;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x8BF4;&#x54EA;&#x6761;&#x6307;&#x4EE4;&#x5BFC;&#x81F4;&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x7ED9;&#x8FDB;&#x7A0B;&#x53D1;&#x9001;&#x4FE1;&#x53F7;&#xFF0C;&#x90A3;&#x6761;&#x6761;&#x6307;&#x4EE4;&#x5728;&#x4FE1;&#x53F7;&#x5904;&#x7406;&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x7684;&#x65F6;&#x5019;&#x4ECD;&#x7136;&#x4F1A;&#x88AB;&#x6267;&#x884C;&#xFF0C;&#x56E0;&#x6B64;&#x6211;&#x4EEC;&#x624D;&#x770B;&#x5230;&#x4E86;&#x4E0A;&#x9762;&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#xFF0C;&#x56E0;&#x4E3A;&#x7CFB;&#x7EDF;&#x4F1A;&#x4E0D;&#x65AD;&#x7684;&#x6267;&#x884C;&#x90A3;&#x6761;&#x53D1;&#x751F;&#x4E86; segmentation fault &#x7684;&#x6307;&#x4EE4;&#x3002;</p>
+<p>&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x5982;&#x4F55;&#x4FEE;&#x6B63;&#x6211;&#x4EEC;&#x7684;&#x4EE3;&#x7801;&#xFF0C;&#x8BA9;&#x7A0B;&#x5E8F;&#x4E0D;&#x8FDB;&#x5165;&#x6B7B;&#x5FAA;&#x73AF;&#xFF0C;&#x8BA9;&#x7A0B;&#x5E8F;&#x80FD;&#x591F;&#x5F97;&#x5230;&#x6211;&#x4EEC;&#x7684;&#x63A5;&#x7BA1;&#x5462;&#x3002;&#x6709;&#x4E24;&#x79CD;&#x529E;&#x6CD5;&#xFF1A;</p>
+<ul>
+<li>&#x4E00;&#x79CD;&#x662F;&#x5728;&#x4FE1;&#x53F7;&#x5904;&#x7406;&#x51FD;&#x6570;&#x5F53;&#x4E2D;&#x8FDB;&#x884C;&#x4E00;&#x4E9B;&#x903B;&#x8F91;&#x5904;&#x7406;&#x4E4B;&#x540E;&#x7136;&#x540E;&#xFF0C;&#x4F7F;&#x7528;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;_exit&#x76F4;&#x63A5;&#x9000;&#x51FA;&#x3002;</li>
+<li>&#x53E6;&#x5916;&#x4E00;&#x79CD;&#x4F7F;&#x7528;setjmp&#x548C;longjmp&#x8FDB;&#x884C;&#x6267;&#x884C;&#x6D41;&#x7684;&#x8DF3;&#x8F6C;&#x3002;</li>
+</ul>
+<h3 id="&#x76F4;&#x63A5;&#x4F7F;&#x7528;exit&#x9000;&#x51FA;">&#x76F4;&#x63A5;&#x4F7F;&#x7528;_exit&#x9000;&#x51FA;</h3>
+<pre><code class="lang-c">
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;signal.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;unistd.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">sig</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;&#x76F4;&#x63A5;&#x5728;&#x8FD9;&#x91CC;&#x9000;&#x51FA;\n&quot;</span>);
+  _exit(<span class="hljs-number">1</span>); <span class="hljs-comment">// &#x4F7F;&#x7528;&#x7CFB;&#x7EDF;&#x8C03;&#x7528;&#x76F4;&#x63A5;&#x9000;&#x51FA;</span>
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+  signal(SIGSEGV, sig);
+  *(<span class="hljs-keyword">int</span>*) <span class="hljs-literal">NULL</span> = <span class="hljs-number">0</span>;
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;&#x7ED3;&#x675F;\n&quot;</span>); <span class="hljs-comment">// &#x8FD9;&#x4E2A;&#x6253;&#x5370;&#x4E0D;&#x4F1A;&#x8F93;&#x51FA;</span>
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p><img src="../../images/programming/12.png" alt="05"></p>
+<h3 id="&#x4F7F;&#x7528;&#x63A7;&#x5236;&#x6D41;&#x8DF3;&#x8F6C;">&#x4F7F;&#x7528;&#x63A7;&#x5236;&#x6D41;&#x8DF3;&#x8F6C;</h3>
+<pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;signal.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;setjmp.h&gt;</span></span>
+
+jmp_buf env;
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">sig</span><span class="hljs-params">(<span class="hljs-keyword">int</span> n)</span> </span>{
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;&#x51C6;&#x5907;&#x56DE;&#x5230;&#x4E3B;&#x51FD;&#x6570;\n&quot;</span>);
+  longjmp(env, <span class="hljs-number">1</span>);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>{
+  signal(SIGSEGV, sig);
+  <span class="hljs-keyword">if</span>(!setjmp(env)) {
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;&#x4EA7;&#x751F;&#x6BB5;&#x9519;&#x8BEF;\n&quot;</span>);
+    *(<span class="hljs-keyword">int</span>*) <span class="hljs-literal">NULL</span> = <span class="hljs-number">0</span>;
+  }<span class="hljs-keyword">else</span> {
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;&#x56DE;&#x5230;&#x4E86;&#x4E3B;&#x51FD;&#x6570;\n&quot;</span>);
+  }
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p><img src="../../images/programming/11.png" alt="05"></p>
+<h2 id="&#x603B;&#x7ED3;">&#x603B;&#x7ED3;</h2>
+<p>&#x5728;&#x672C;&#x7BC7;&#x6587;&#x7AE0;&#x5F53;&#x4E2D;&#x4E3B;&#x8981;&#x7ED9;&#x5927;&#x5BB6;&#x4ECB;&#x7ECD;&#x4E86;Sgementation fault &#x7684;&#x539F;&#x7406;&#xFF0C;&#x5E76;&#x4E14;&#x81EA;&#x5DF1;&#x52A8;&#x624B;&#x5199;&#x4E86;&#x4ED6;&#x7684;&#x4FE1;&#x53F7;&#x5904;&#x7406;&#x51FD;&#x6570;&#xFF0C;&#x5728;&#x4FE1;&#x53F7;&#x5904;&#x7406;&#x51FD;&#x6570;&#x5F53;&#x4E2D;&#x53D1;&#x73B0;&#x5982;&#x679C;&#x4FE1;&#x53F7;&#x5904;&#x7406;&#x51FD;&#x6570;&#x6B63;&#x5E38;&#x9000;&#x51FA;&#x7684;&#x8BDD;&#xFF0C;&#x90A3;&#x4E48;&#x7A0B;&#x5E8F;&#x4F1A;&#x8FDB;&#x5165;&#x4E00;&#x4E2A;&#x6B7B;&#x5FAA;&#x73AF;&#xFF0C;&#x6C38;&#x8FDC;&#x4E0D;&#x4F1A;&#x505C;&#x6B62;&#xFF0C;&#x4F1A;&#x4E0D;&#x65AD;&#x7684;&#x4EA7;&#x751F;Sgementation fault&#xFF0C;&#x56E0;&#x6B64;&#x6211;&#x4EEC;&#x4F7F;&#x7528;&#x4E86;&#x4E24;&#x79CD;&#x65B9;&#x5F0F;&#x8BA9;&#x7A0B;&#x5E8F;&#x7ED3;&#x675F;&#xFF0C;&#x4E00;&#x79CD;&#x662F;&#x5728;&#x4FE1;&#x53F7;&#x5904;&#x7406;&#x51FD;&#x6570;&#x5F53;&#x4E2D;&#x4E0D;&#x8FDB;&#x884C;&#x8FD4;&#x56DE;&#x76F4;&#x63A5;&#x9000;&#x51FA;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4F1A;&#x6709;&#x4E00;&#x4E2A;&#x5F0A;&#x7AEF;&#xFF0C;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x539F;&#x6765;&#x7684;&#x7A0B;&#x5E8F;&#x5728;&#x540E;&#x9762;&#x8FD8;&#x6709;&#x4E00;&#x4E9B;&#x64CD;&#x4F5C;&#x7684;&#x8BDD;&#x5C31;&#x4E0D;&#x80FD;&#x591F;&#x6267;&#x884C;&#x4E86;&#xFF0C;&#x5982;&#x679C;&#x6709;&#x4E9B;&#x7A0B;&#x5E8F;&#x5F88;&#x91CD;&#x8981;&#x7684;&#xFF0C;&#x8FD9;&#x5C31;&#x53EF;&#x80FD;&#x4F1A;&#x9020;&#x6210;&#x5F88;&#x591A;&#x9519;&#x8BEF;&#x3002;&#x7B2C;&#x4E8C;&#x79CD;&#x65B9;&#x5F0F;&#x662F;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;setjmp&#x548C;longjmp&#x8F6C;&#x79FB;&#x63A7;&#x5236;&#x6D41;&#xFF0C;&#x518D;&#x6B21;&#x56DE;&#x5230;&#x4E3B;&#x51FD;&#x6570;&#x6267;&#x884C;&#x3002;</p>
+<p>&#x4EE5;&#x4E0A;&#x5C31;&#x662F;&#x672C;&#x7BC7;&#x6587;&#x7AE0;&#x7684;&#x6240;&#x6709;&#x5185;&#x5BB9;&#x4E86;&#xFF0C;&#x6211;&#x662F;<strong>LeHung</strong>&#xFF0C;&#x6211;&#x4EEC;&#x4E0B;&#x671F;&#x518D;&#x89C1;&#xFF01;&#xFF01;&#xFF01;&#x66F4;&#x591A;&#x7CBE;&#x5F69;&#x5185;&#x5BB9;&#x5408;&#x96C6;&#x53EF;&#x8BBF;&#x95EE;&#x9879;&#x76EE;&#xFF1A;<a href="https://github.com/Chang-LeHung/CSCore" target="_blank">https://github.com/Chang-LeHung/CSCore</a></p>
+<p>&#x5173;&#x6CE8;&#x516C;&#x4F17;&#x53F7;&#xFF1A;<strong>&#x4E00;&#x65E0;&#x662F;&#x5904;&#x7684;&#x7814;&#x7A76;&#x50E7;</strong>&#xFF0C;&#x4E86;&#x89E3;&#x66F4;&#x591A;&#x8BA1;&#x7B97;&#x673A;&#xFF08;Java&#x3001;Python&#x3001;&#x8BA1;&#x7B97;&#x673A;&#x7CFB;&#x7EDF;&#x57FA;&#x7840;&#x3001;&#x7B97;&#x6CD5;&#x4E0E;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF09;&#x77E5;&#x8BC6;&#x3002;</p>
+<p><img src="../../qrcode2.jpg" alt=""></p>
+
+<script>console.log("plugin-popup....");document.onclick = function(e){ e.target.tagName === "IMG" && window.open(e.target.src,e.target.src)}</script><style>img{cursor:pointer}</style>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="02sgementation.html" class="navigation navigation-prev " aria-label="Previous page: 你的哪些骚操作会导致Segmentation Fault😂">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="04processdie.html" class="navigation navigation-next " aria-label="Next page: 进程最后的遗言">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"深入剖析Sgementation fault原理","level":"1.13.8","depth":2,"next":{"title":"进程最后的遗言","level":"1.13.9","depth":2,"path":"linux/programming/04processdie.md","ref":"linux/programming/04processdie.md","articles":[]},"previous":{"title":"你的哪些骚操作会导致Segmentation Fault😂","level":"1.13.7","depth":2,"path":"linux/programming/02sgementation.md","ref":"linux/programming/02sgementation.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["popup","fontsettings","-sharing","-livereload"],"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @Chang-LeHung","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"copyright":"Copyright &#169; aleen42","minHeaderCount":"2","minHeaderDeep":"2"},"search":{},"popup":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"highlight":{},"anchor-navigation-ex":{"showLevelIcon":false,"showLevel":false,"tocLevel1Icon":"fa fa-hand-o-right","tocLevel2Icon":"fa fa-hand-o-right","tocLevel3Icon":"fa fa-hand-o-right","multipleH1":false,"multipleH2":false,"multipleH3":false,"multipleH4":false},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"linux/programming/03segprincinple.md","mtime":"2025-10-03T17:39:52.152Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2025-10-03T18:28:09.654Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+
+    </body>
+</html>
+

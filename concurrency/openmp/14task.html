@@ -1,0 +1,1957 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>OpenMP task construct 实现原理以及源码分析 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+    <link rel="prev" href="13seciton.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    基础容器
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../../container/01-链表设计与实现.html">
+            
+                <a href="../../container/01-链表设计与实现.html">
+            
+                    
+                    链表设计与Java实现——自己动手写LinkedList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../../container/02-linkedlist源码剖析.html">
+            
+                <a href="../../container/02-linkedlist源码剖析.html">
+            
+                    
+                    LinekdList源码深度剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../../container/03-array容器设计与实现.html">
+            
+                <a href="../../container/03-array容器设计与实现.html">
+            
+                    
+                    数组容器(ArrayList)设计与Java实现——自己动手写ArrayList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../../container/04-arraylist源码剖析.html">
+            
+                <a href="../../container/04-arraylist源码剖析.html">
+            
+                    
+                    ArrayList源码剖析，从扩容原理，到迭代器和fast-fail机制，你想要的这都有！！！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../../container/05-hashmap设计与实现.html">
+            
+                <a href="../../container/05-hashmap设计与实现.html">
+            
+                    
+                    HashMap设计原理与实现（上篇）——哈希表的原理，如何从0到1设计一个HashMap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../../container/06-hashmap设计与实现.html">
+            
+                <a href="../../container/06-hashmap设计与实现.html">
+            
+                    
+                    HashMap设计原理与实现（下篇）200行代码带你写自己的HashMap！！！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../../container/07-hashmap源码剖析.html">
+            
+                <a href="../../container/07-hashmap源码剖析.html">
+            
+                    
+                    HashMap源码深度剖析，手把手带你分析每一行代码，包会！！！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="../../container/08-arraydeque源码剖析.html">
+            
+                <a href="../../container/08-arraydeque源码剖析.html">
+            
+                    
+                    ArrayDeque（JDK双端队列）源码深度剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="../../container/09-arrayqueue源码剖析.html">
+            
+                <a href="../../container/09-arrayqueue源码剖析.html">
+            
+                    
+                    深入剖析（JDK）ArrayQueue 源码
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    高级容器
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../java/11blockingqueue.html">
+            
+                <a href="../java/11blockingqueue.html">
+            
+                    
+                    从零开始自己动手写阻塞队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../java/12blockingqueuesrc.html">
+            
+                <a href="../java/12blockingqueuesrc.html">
+            
+                    
+                    JDK数组阻塞队列源码深入剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    动态规划
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../../da/01-动态规划.html">
+            
+                <a href="../../da/01-动态规划.html">
+            
+                    
+                    庖丁解牛斐波拉契数列和背包问题——详细解析两个问题优化过程（超多问题优化干货，不看血亏），带你从最基本最核心的问题看懂动态规划！！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../../da/02-01背包问题.html">
+            
+                <a href="../../da/02-01背包问题.html">
+            
+                    
+                    你真的懂01背包问题吗？01背包的这几问你能答出来吗？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../../da/03完全背包.html">
+            
+                <a href="../../da/03完全背包.html">
+            
+                    
+                    面试官：完全背包都不会，是你自己走还是我送你？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../../da/04多重背包v1.html">
+            
+                <a href="../../da/04多重背包v1.html">
+            
+                    
+                    深入剖析多重背包问题（上篇）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../../da/04多重背包v2.html">
+            
+                <a href="../../da/04多重背包v2.html">
+            
+                    
+                    深入剖析多重背包问题（下篇）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../../da/14深入剖析完全背包.html">
+            
+                <a href="../../da/14深入剖析完全背包.html">
+            
+                    
+                    完全背包转化为多重背包
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../../da/13零钱兑换.html">
+            
+                <a href="../../da/13零钱兑换.html">
+            
+                    
+                    深入浅出零钱兑换问题——背包问题的套壳
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../../da/05深入剖析斐波拉契数列.html">
+            
+                <a href="../../da/05深入剖析斐波拉契数列.html">
+            
+                    
+                    深入剖析斐波拉契数列
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    股票问题
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../../da/09状态机动态规划.html">
+            
+                <a href="../../da/09状态机动态规划.html">
+            
+                    
+                    这种动态规划你见过吗——状态机动态规划之股票问题(上)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../../da/10状态机动态规划02.html">
+            
+                <a href="../../da/10状态机动态规划02.html">
+            
+                    
+                    这种动态规划你见过吗——状态机动态规划之股票问题(中)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../../da/11状态机动态规划03.html">
+            
+                <a href="../../da/11状态机动态规划03.html">
+            
+                    
+                    这种动态规划你见过吗——状态机动态规划之股票问题(下)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../../da/12状态机动态规划总结.html">
+            
+                <a href="../../da/12状态机动态规划总结.html">
+            
+                    
+                    状态机动态规划之股票问题总结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                    回溯
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../../da/backtrace/01combinations.html">
+            
+                <a href="../../da/backtrace/01combinations.html">
+            
+                    
+                    通过组合问题看透回溯法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" >
+            
+                <span>
+            
+                    
+                    数据结构
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../../da/07表达式求值.html">
+            
+                <a href="../../da/07表达式求值.html">
+            
+                    
+                    深入剖析前缀、中缀、后缀表达式以及表达式求值
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    并发
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../java/01初始java并发.html">
+            
+                <a href="../java/01初始java并发.html">
+            
+                    
+                    并发开篇——带你从0到1建立并发知识体系的基石
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../java/02并发的噩梦.html">
+            
+                <a href="../java/02并发的噩梦.html">
+            
+                    
+                    并发程序的噩梦——数据竞争
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" data-path="../java/03自己动手写并发工具类.html">
+            
+                <a href="../java/03自己动手写并发工具类.html">
+            
+                    
+                    30行自己写并发工具类(Semaphore, CyclicBarrier, CountDownLatch)是什么体验?
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="../java/04volatile.html">
+            
+                <a href="../java/04volatile.html">
+            
+                    
+                    万字长文：从计算机本源深入探寻volatile和Java内存模型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5" data-path="../java/05falsesharing.html">
+            
+                <a href="../java/05falsesharing.html">
+            
+                    
+                    并发刺客（False Sharing）——并发程序的隐藏杀手
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.6" data-path="../java/06futuretask.html">
+            
+                <a href="../java/06futuretask.html">
+            
+                    
+                    60行从零开始自己动手写FutureTask是什么体验？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.7" data-path="../java/07futuretasksrc.html">
+            
+                <a href="../java/07futuretasksrc.html">
+            
+                    
+                    FutureTask源码深度剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.8" data-path="../java/08synchronizedusage.html">
+            
+                <a href="../java/08synchronizedusage.html">
+            
+                    
+                    深入学习Synchronized各种使用方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.9" data-path="../java/09synchronized.html">
+            
+                <a href="../java/09synchronized.html">
+            
+                    
+                    Synchronized锁升级原理与过程深入剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.10" data-path="../java/10spinlock.html">
+            
+                <a href="../java/10spinlock.html">
+            
+                    
+                    从零开始自己动手写自旋锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.11" data-path="../java/13locksupport.html">
+            
+                <a href="../java/13locksupport.html">
+            
+                    
+                    60行自己动手写LockSupport是什么体验？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.12" data-path="../java/14threadpool.html">
+            
+                <a href="../java/14threadpool.html">
+            
+                    
+                    彻底了解线程池的原理——40行从零开始自己写线程池
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.13" data-path="../java/16retalkingthreadpool.html">
+            
+                <a href="../java/16retalkingthreadpool.html">
+            
+                    
+                    再谈线程池——深入剖析线程池的前世今生
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.14" data-path="../java/17threadpoolimplementation.html">
+            
+                <a href="../java/17threadpoolimplementation.html">
+            
+                    
+                    自己动手写乞丐版线程池
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.15" data-path="../java/18threadpoolmorecloseJDK.html">
+            
+                <a href="../java/18threadpoolmorecloseJDK.html">
+            
+                    
+                    自己动手写线程池——向JDK线程池进发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.16" data-path="../java/11blockingqueue.html">
+            
+                <a href="../java/11blockingqueue.html">
+            
+                    
+                    从零开始自己动手写阻塞队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.17" data-path="../java/12blockingqueuesrc.html">
+            
+                <a href="../java/12blockingqueuesrc.html">
+            
+                    
+                    JDK数组阻塞队列源码深入剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" >
+            
+                <span>
+            
+                    
+                    OpenMP
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="01introduction.html">
+            
+                <a href="01introduction.html">
+            
+                    
+                    OpenMP 入门
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="02openmp.html">
+            
+                <a href="02openmp.html">
+            
+                    
+                    OpenMP 教程（一）——OpenMP 当中的 reduction 子句
+
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="03runtime1.html">
+            
+                <a href="03runtime1.html">
+            
+                    
+                    OpenMP 常见的动态库函数使用（上）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="04runtime2.html">
+            
+                <a href="04runtime2.html">
+            
+                    
+                    Openmp 常见的动态库函数使用（下）——深入剖析锁🔒原理与实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="05environment.html">
+            
+                <a href="05environment.html">
+            
+                    
+                    Openmp 环境变量使用总结
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6" data-path="06sync.html">
+            
+                <a href="06sync.html">
+            
+                    
+                    深入理解 OpenMP 线程同步机制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.7" data-path="07atomic.html">
+            
+                <a href="07atomic.html">
+            
+                    
+                    OpenMP 原子指令设计与实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.8" data-path="08parallel.html">
+            
+                <a href="08parallel.html">
+            
+                    
+                    Parallel Construct 实现原理与源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.9" data-path="09sync.html">
+            
+                <a href="09sync.html">
+            
+                    
+                    OpenMP 线程同步 Construct 实现原理以及源码分析（上）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.10" data-path="10sync.html">
+            
+                <a href="10sync.html">
+            
+                    
+                    OpenMP 线程同步 Construct 实现原理以及源码分析（下）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.11" data-path="11for_dynamic.html">
+            
+                <a href="11for_dynamic.html">
+            
+                    
+                    OpenMP For Construct dynamic 调度方式实现原理和源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.12" data-path="12guided.html">
+            
+                <a href="12guided.html">
+            
+                    
+                    OpenMP For Construct guided 调度方式实现原理和源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.13" data-path="13seciton.html">
+            
+                <a href="13seciton.html">
+            
+                    
+                    OpenMP Sections Construct 实现原理以及源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.9.14" data-path="14task.html">
+            
+                <a href="14task.html">
+            
+                    
+                    OpenMP task construct 实现原理以及源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" >
+            
+                <span>
+            
+                    
+                    Pthread
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../pthread/01pthread.html">
+            
+                <a href="../pthread/01pthread.html">
+            
+                    
+                    Pthread 并发编程（一）——深入剖析线程基本元素和状态
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../pthread/02pthread.html">
+            
+                <a href="../pthread/02pthread.html">
+            
+                    
+                    Pthread 并发编程（二）——自底向上深入理解线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../pthread/03pthread.html">
+            
+                <a href="../pthread/03pthread.html">
+            
+                    
+                    Pthread 并发编程（三）——深入理解线程取消机制
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    Makefile
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../../tools/makefile/01.html">
+            
+                <a href="../../tools/makefile/01.html">
+            
+                    
+                    彻底掌握Makefile（一）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../../tools/makefile/02.html">
+            
+                <a href="../../tools/makefile/02.html">
+            
+                    
+                    彻底掌握Makefile（二）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.3" data-path="../../tools/makefile/03.html">
+            
+                <a href="../../tools/makefile/03.html">
+            
+                    
+                    彻底掌握Makefile（三）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" >
+            
+                <span>
+            
+                    
+                    DES
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../../des/des.html">
+            
+                <a href="../../des/des.html">
+            
+                    
+                    DES加密算法从入门到入坟
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" >
+            
+                <span>
+            
+                    
+                    命令行&系统编程&SHELL
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.13.1" data-path="../../linux/command/01top.html">
+            
+                <a href="../../linux/command/01top.html">
+            
+                    
+                    Linux命令系列之top——里面藏着很多鲜为人知的宝藏知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.2" data-path="../../linux/command/02ls.html">
+            
+                <a href="../../linux/command/02ls.html">
+            
+                    
+                    Linux命令系列之ls——原来最简单的ls这么复杂
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.3" data-path="../../linux/command/03mkls.html">
+            
+                <a href="../../linux/command/03mkls.html">
+            
+                    
+                    自己动手写ls命令——Java版
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.4" data-path="../../linux/command/05ps.html">
+            
+                <a href="../../linux/command/05ps.html">
+            
+                    
+                    这才是使用ps命令的正确姿势
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.5" data-path="../../linux/command/06kill.html">
+            
+                <a href="../../linux/command/06kill.html">
+            
+                    
+                    如何优雅的杀掉一个进程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.6" data-path="../../linux/programming/01exit.html">
+            
+                <a href="../../linux/programming/01exit.html">
+            
+                    
+                    C语言中这么骚的退出程序的方式你知道几个？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.7" data-path="../../linux/programming/02sgementation.html">
+            
+                <a href="../../linux/programming/02sgementation.html">
+            
+                    
+                    你的哪些骚操作会导致Segmentation Fault😂
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.8" data-path="../../linux/programming/03segprincinple.html">
+            
+                <a href="../../linux/programming/03segprincinple.html">
+            
+                    
+                    深入剖析Sgementation fault原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.9" data-path="../../linux/programming/04processdie.html">
+            
+                <a href="../../linux/programming/04processdie.html">
+            
+                    
+                    进程最后的遗言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.10" data-path="../../linux/command/04exitstatus.html">
+            
+                <a href="../../linux/command/04exitstatus.html">
+            
+                    
+                    Shell揭秘——程序退出状态码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.11" data-path="../../linux/shell/01jobcontrol.html">
+            
+                <a href="../../linux/shell/01jobcontrol.html">
+            
+                    
+                    你在终端启动的进程，最后都是什么下场？（上）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.12" data-path="../../linux/shell/02jobcontrol.html">
+            
+                <a href="../../linux/shell/02jobcontrol.html">
+            
+                    
+                    你在终端启动的进程，最后都是什么下场？（下）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" >
+            
+                <span>
+            
+                    
+                    计算机系统基础
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.14.1" data-path="../../pl/c_cpp/01builtin.html">
+            
+                <a href="../../pl/c_cpp/01builtin.html">
+            
+                    
+                    gcc 好玩的 builtin 函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" >
+            
+                <span>
+            
+                    
+                    python
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../../pl/python/misc/01copy.html">
+            
+                <a href="../../pl/python/misc/01copy.html">
+            
+                    
+                    深入理解 python 对象拷贝和内存布局
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >OpenMP task construct 实现原理以及源码分析</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="openmp-task-construct-&#x5B9E;&#x73B0;&#x539F;&#x7406;&#x4EE5;&#x53CA;&#x6E90;&#x7801;&#x5206;&#x6790;">OpenMP task construct &#x5B9E;&#x73B0;&#x539F;&#x7406;&#x4EE5;&#x53CA;&#x6E90;&#x7801;&#x5206;&#x6790;</h1>
+<h2 id="&#x524D;&#x8A00;">&#x524D;&#x8A00;</h2>
+<p>&#x5728;&#x672C;&#x7BC7;&#x6587;&#x7AE0;&#x5F53;&#x4E2D;&#x4E3B;&#x8981;&#x7ED9;&#x5927;&#x5BB6;&#x4ECB;&#x7ECD;&#x5728; OpenMP &#x5F53;&#x4E2D; task &#x7684;&#x5B9E;&#x73B0;&#x539F;&#x7406;&#xFF0C;&#x4EE5;&#x53CA;&#x4ED6;&#x8C03;&#x7528;&#x7684;&#x76F8;&#x5173;&#x7684;&#x5E93;&#x51FD;&#x6570;&#x7684;&#x5177;&#x4F53;&#x5B9E;&#x73B0;&#x3002;&#x5728;&#x672C;&#x7BC7;&#x6587;&#x7AE0;&#x5F53;&#x4E2D;&#x6700;&#x91CD;&#x8981;&#x7684;&#x5C31;&#x662F;&#x7406;&#x89E3;&#x6574;&#x4E2A; OpenMP &#x7684;&#x8FD0;&#x884C;&#x673A;&#x5236;&#x3002;</p>
+<h2 id="&#x4ECE;&#x7F16;&#x8BD1;&#x5668;&#x89D2;&#x5EA6;&#x770B;-task-construct">&#x4ECE;&#x7F16;&#x8BD1;&#x5668;&#x89D2;&#x5EA6;&#x770B; task construct</h2>
+<p>&#x5728;&#x672C;&#x5C0F;&#x8282;&#x5F53;&#x4E2D;&#x4E3B;&#x8981;&#x7ED9;&#x5927;&#x5BB6;&#x5206;&#x6790;&#x4E00;&#x4E0B;&#x7F16;&#x8BD1;&#x5668;&#x5C06; openmp &#x7684; task construct &#x7F16;&#x8BD1;&#x6210;&#x4EC0;&#x4E48;&#x6837;&#x5B50;&#xFF0C;&#x4E0B;&#x9762;&#x662F;&#x4E00;&#x4E2A; OpenMP &#x7684; task &#x7A0B;&#x5E8F;&#x4F8B;&#x5B50;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;omp.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> omp parallel num_threads(4) default(none)</span>
+  {
+<span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> omp task default(none)</span>
+    {
+       <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Hello World from tid = %d\n&quot;</span>, omp_get_thread_num());
+    }
+  }
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x9996;&#x5148;&#x5148;&#x634B;&#x4E00;&#x4E0B;&#x6574;&#x4E2A;&#x7A0B;&#x5E8F;&#x88AB;&#x7F16;&#x8BD1;&#x4E4B;&#x540E;&#x7684;&#x6267;&#x884C;&#x6D41;&#x7A0B;&#xFF0C;&#x7ECF;&#x8FC7;&#x524D;&#x9762;&#x7684;&#x6587;&#x7AE0;&#x7684;&#x5B66;&#x4E60;&#xFF0C;&#x6211;&#x4EEC;&#x5DF2;&#x7ECF;&#x77E5;&#x9053;&#x4E86;&#x5E76;&#x884C;&#x57DF;&#x5F53;&#x4E2D;&#x7684;&#x4EE3;&#x7801;&#x4F1A;&#x88AB;&#x7F16;&#x8BD1;&#x5668;&#x7F16;&#x8BD1;&#x6210;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#xFF0C;&#x5173;&#x4E8E;&#x8FD9;&#x4E00;&#x70B9;&#x6211;&#x4EEC;&#x5DF2;&#x7ECF;&#x5728;&#x524D;&#x9762;&#x7684;&#x5F88;&#x591A;&#x6587;&#x7AE0;&#x5F53;&#x4E2D;&#x5DF2;&#x7ECF;&#x8BA8;&#x8BBA;&#x8FC7;&#x4E86;&#xFF0C;&#x5C31;&#x4E0D;&#x518D;&#x8FDB;&#x884C;&#x590D;&#x8FF0;&#x3002;&#x4E8B;&#x5B9E;&#x4E0A; task construct &#x548C; parallel construct &#x4E00;&#x6837;&#xFF0C;task construct &#x4E5F;&#x4F1A;&#x88AB;&#x7F16;&#x8BD1;&#x6210;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#xFF0C;&#x540C;&#x6837;&#x7684;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x4E5F;&#x4F1A;&#x88AB;&#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#x4F20;&#x9012;&#x7ED9; OpenMP &#x5185;&#x90E8;&#xFF0C;&#x88AB;&#x4F20;&#x9012;&#x7684;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x53EF;&#x80FD;&#x88AB;&#x7ACB;&#x5373;&#x6267;&#x884C;&#xFF0C;&#x4E5F;&#x53EF;&#x80FD;&#x5728;&#x51FD;&#x6570; GOMP_parallel_end &#x88AB;&#x8C03;&#x7528;&#x540E;&#xFF0C;&#x5728;&#x5230;&#x8FBE;&#x540C;&#x6B65;&#x70B9;&#x4E4B;&#x524D;&#x6267;&#x884C;&#x88AB;&#x6267;&#x884C;&#xFF08;&#x7EBF;&#x7A0B;&#x5728;&#x5230;&#x8FBE;&#x5E76;&#x884C;&#x57DF;&#x7684;&#x540C;&#x6B65;&#x70B9;&#x4E4B;&#x524D;&#x9700;&#x8981;&#x4FDD;&#x8BC1;&#x6240;&#x6709;&#x7684;&#x4EFB;&#x52A1;&#x90FD;&#x88AB;&#x6267;&#x884C;&#x5B8C;&#x6210;&#xFF09;&#x3002;&#x6574;&#x4E2A;&#x8FC7;&#x7A0B;&#x5927;&#x81F4;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="../../images/openmp/17.png" alt="openmp"></p>
+<p>&#x4E0A;&#x9762;&#x7684; OpenMP task &#x7A0B;&#x5E8F;&#x5BF9;&#x5E94;&#x7684;&#x53CD;&#x6C47;&#x7F16;&#x7A0B;&#x5E8F;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre><code class="lang-asm">00000000004008ad &lt;main&gt;:
+  4008ad:       55                      push   %rbp
+  4008ae:       48 89 e5                mov    %rsp,%rbp
+  4008b1:       ba 04 00 00 00          mov    $0x4,%edx
+  4008b6:       be 00 00 00 00          mov    $0x0,%esi
+  4008bb:       bf db 08 40 00          mov    $0x4008db,%edi
+  4008c0:       e8 8b fe ff ff          callq  400750 &lt;GOMP_parallel_start@plt&gt;
+  4008c5:       bf 00 00 00 00          mov    $0x0,%edi
+  4008ca:       e8 0c 00 00 00          callq  4008db &lt;main._omp_fn.0&gt;
+  4008cf:       e8 8c fe ff ff          callq  400760 &lt;GOMP_parallel_end@plt&gt;
+  4008d4:       b8 00 00 00 00          mov    $0x0,%eax
+  4008d9:       5d                      pop    %rbp
+  4008da:       c3                      retq
+
+00000000004008db &lt;main._omp_fn.0&gt;:
+  4008db:       55                      push   %rbp
+  4008dc:       48 89 e5                mov    %rsp,%rbp
+  4008df:       48 83 ec 10             sub    $0x10,%rsp
+  4008e3:       48 89 7d f8             mov    %rdi,-0x8(%rbp)
+  4008e7:       c7 04 24 00 00 00 00    movl   $0x0,(%rsp)        # &#x53C2;&#x6570; flags
+  4008ee:       41 b9 01 00 00 00       mov    $0x1,%r9d            # &#x53C2;&#x6570; if_clause
+  4008f4:       41 b8 01 00 00 00       mov    $0x1,%r8d            # &#x53C2;&#x6570; arg_align
+  4008fa:       b9 00 00 00 00          mov    $0x0,%ecx            # &#x53C2;&#x6570; arg_size
+  4008ff:       ba 00 00 00 00          mov    $0x0,%edx            # &#x53C2;&#x6570; cpyfn
+  400904:       be 00 00 00 00          mov    $0x0,%esi            # &#x53C2;&#x6570; data
+  400909:       bf 15 09 40 00          mov    $0x400915,%edi # &#x8FD9;&#x91CC;&#x5C31;&#x662F;&#x8C03;&#x7528;&#x51FD;&#x6570; main._omp_fn.1
+  40090e:       e8 9d fe ff ff          callq  4007b0 &lt;GOMP_task@plt&gt;
+  400913:       c9                      leaveq
+  400914:       c3                      retq
+
+0000000000400915 &lt;main._omp_fn.1&gt;:
+  400915:       55                      push   %rbp
+  400916:       48 89 e5                mov    %rsp,%rbp
+  400919:       48 83 ec 10             sub    $0x10,%rsp
+  40091d:       48 89 7d f8             mov    %rdi,-0x8(%rbp)
+  400921:       e8 4a fe ff ff          callq  400770 &lt;omp_get_thread_num@plt&gt;
+  400926:       89 c6                   mov    %eax,%esi
+  400928:       bf d0 09 40 00          mov    $0x4009d0,%edi
+  40092d:       b8 00 00 00 00          mov    $0x0,%eax
+  400932:       e8 49 fe ff ff          callq  400780 &lt;printf@plt&gt;
+  400937:       c9                      leaveq
+  400938:       c3                      retq
+  400939:       0f 1f 80 00 00 00 00    nopl   0x0(%rax)
+</code></pre>
+<p>&#x4ECE;&#x4E0A;&#x9762;&#x7A0B;&#x5E8F;&#x53CD;&#x6C47;&#x7F16;&#x7684;&#x7ED3;&#x679C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x77E5;&#x9053;&#xFF0C;&#x5728;&#x4E3B;&#x51FD;&#x6570;&#x5F53;&#x4E2D;&#x4ECD;&#x7136;&#x548C;&#x4E4B;&#x524D;&#x4E00;&#x6837;&#x5728;&#x5E76;&#x884C;&#x57DF;&#x524D;&#x540E;&#x5206;&#x522B;&#x8C03;&#x7528;&#x4E86; GOMP_parallel_start &#x548C; GOMP_parallel_end&#xFF0C;&#x7136;&#x540E;&#x5728;&#x4E24;&#x4E2A;&#x51FD;&#x6570;&#x4E4B;&#x95F4;&#x8C03;&#x7528;&#x5E76;&#x884C;&#x57DF;&#x7684;&#x4EE3;&#x7801; main._omp_fn.0 &#xFF0C;&#x5E76;&#x884C;&#x57DF;&#x5F53;&#x4E2D;&#x7684;&#x4EE3;&#x7801;&#x88AB;&#x7F16;&#x8BD1;&#x6210;&#x51FD;&#x6570; main._omp_fn.0 &#xFF0C;&#x4ECE;&#x4E0A;&#x9762;&#x7684;&#x6C47;&#x7F16;&#x4EE3;&#x7801;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5728;&#x51FD;&#x6570; main._omp_fn.0 &#x8C03;&#x7528;&#x4E86;&#x51FD;&#x6570; GOMP_task &#xFF0C;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x7684;&#x51FD;&#x6570;&#x58F0;&#x660E;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre><code class="lang-c">void
+GOMP_task (void (*fn) (void *), void *data, void (*cpyfn) (void *, void *),
+       long arg_size, long arg_align, bool if_clause, unsigned flags);
+</code></pre>
+<p>&#x5728;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x91CD;&#x8981;&#x89E3;&#x91CA;&#x4E00;&#x4E0B;&#x90E8;&#x5206;&#x53C2;&#x6570;&#xFF0C;&#x9996;&#x5148;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x4E86;&#x89E3;&#x7684;&#x662F;&#x5728; x86 &#x5F53;&#x4E2D;&#x7684;&#x51FD;&#x6570;&#x8C03;&#x7528;&#x89C4;&#x7EA6;&#xFF0C;&#x8FD9;&#x4E00;&#x70B9;&#x6211;&#x4EEC;&#x5728;&#x524D;&#x9762;&#x7684;&#x6587;&#x7AE0;&#x5F53;&#x4E2D;&#x5DF2;&#x7ECF;&#x8BA8;&#x8BBA;&#x8FC7;&#x4E86;&#xFF0C;&#x8FD9;&#x91CC;&#x53EA;&#x662F;&#x8BF4;&#x660E;&#x4E00;&#x4E0B;&#xFF1A;</p>
+<table>
+<thead>
+<tr>
+<th>&#x5BC4;&#x5B58;&#x5668;</th>
+<th>&#x542B;&#x4E49;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>rdi</td>
+<td>&#x7B2C;&#x4E00;&#x4E2A;&#x53C2;&#x6570;</td>
+</tr>
+<tr>
+<td>rsi</td>
+<td>&#x7B2C;&#x4E8C;&#x4E2A;&#x53C2;&#x6570;</td>
+</tr>
+<tr>
+<td>rdx</td>
+<td>&#x7B2C;&#x4E09;&#x4E2A;&#x53C2;&#x6570;</td>
+</tr>
+<tr>
+<td>rcx</td>
+<td>&#x7B2C;&#x56DB;&#x4E2A;&#x53C2;&#x6570;</td>
+</tr>
+<tr>
+<td>r8</td>
+<td>&#x7B2C;&#x4E94;&#x4E2A;&#x53C2;&#x6570;</td>
+</tr>
+<tr>
+<td>r9</td>
+<td>&#x7B2C;&#x516D;&#x4E2A;&#x53C2;&#x6570;</td>
+</tr>
+</tbody>
+</table>
+<p>&#x6839;&#x636E;&#x4E0A;&#x9762;&#x7684;&#x5BC4;&#x5B58;&#x5668;&#x548C;&#x53C2;&#x6570;&#x7684;&#x5BF9;&#x5E94;&#x5173;&#x7CFB;&#xFF0C;&#x5728;&#x4E0A;&#x9762;&#x7684;&#x6C47;&#x7F16;&#x4EE3;&#x7801;&#x5F53;&#x4E2D;&#x5DF2;&#x7ECF;&#x6807;&#x6CE8;&#x4E86;&#x5BF9;&#x5E94;&#x7684;&#x53C2;&#x6570;&#x3002;&#x5728;&#x8FD9;&#x4E9B;&#x53C2;&#x6570;&#x5F53;&#x4E2D;&#x6700;&#x91CD;&#x8981;&#x7684;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#x5C31;&#x662F;&#x7B2C;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x6307;&#x9488;&#xFF0C;&#x5BF9;&#x5E94;&#x7684;&#x6C47;&#x7F16;&#x8BED;&#x53E5;&#x4E3A; mov $0x400915,%edi&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x7684;&#x662F;&#x4F20;&#x5165;&#x7684;&#x51FD;&#x6570;&#x7684;&#x5730;&#x5740;&#x4E3A; 0x400915&#xFF0C;&#x6839;&#x636E;&#x4E0A;&#x9762;&#x7684;&#x6C47;&#x7F16;&#x7A0B;&#x5E8F;&#x53EF;&#x4EE5;&#x77E5;&#x9053;&#x8FD9;&#x4E2A;&#x5730;&#x5740;&#x5BF9;&#x5E94;&#x7684;&#x51FD;&#x6570;&#x5C31;&#x662F; main._omp_fn.1&#xFF0C;&#x8FD9;&#x5176;&#x5B9E;&#x5C31;&#x662F; task &#x533A;&#x57DF;&#x4E4B;&#x95F4;&#x88AB;&#x7F16;&#x8BD1;&#x4E4B;&#x540E;&#x7684;&#x5BF9;&#x5E94;&#x7684;&#x51FD;&#x6570;&#xFF0C;&#x4ECE;&#x4E0A;&#x9762;&#x7684; main._omp_fn.1 &#x6C47;&#x7F16;&#x7A0B;&#x5E8F;&#x5F53;&#x4E2D;&#x4E5F;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#x6765;&#x8C03;&#x7528;&#x4E86;&#x51FD;&#x6570; omp_get_thread_num&#xFF0C;&#x8FD9;&#x548C;&#x524D;&#x9762;&#x7684; task &#x533A;&#x57DF;&#x5F53;&#x4E2D;&#x4EE3;&#x7801;&#x662F;&#x76F8;&#x5BF9;&#x5E94;&#x7684;&#x3002;</p>
+<p>&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x6765;&#x89E3;&#x91CA;&#x4E00;&#x4E0B;&#x5176;&#x4ED6;&#x7684;&#x51E0;&#x4E2A;&#x53C2;&#x6570;&#xFF1A;</p>
+<ul>
+<li>fn&#xFF0C;task &#x533A;&#x57DF;&#x88AB;&#x7F16;&#x8BD1;&#x4E4B;&#x540E;&#x7684;&#x51FD;&#x6570;&#x5730;&#x5740;&#x3002;</li>
+<li>data&#xFF0C;&#x51FD;&#x6570; fn &#x7684;&#x53C2;&#x6570;&#x3002;</li>
+<li>cpyfn&#xFF0C;&#x53C2;&#x6570;&#x62F7;&#x8D1D;&#x51FD;&#x6570;&#xFF0C;&#x4E00;&#x822C;&#x662F; NULL&#xFF0C;&#x6709;&#x65F6;&#x5019;&#x9700;&#x8981; task &#x5F53;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x4E0D;&#x80FD;&#x662F;&#x5171;&#x4EAB;&#x7684;&#xFF0C;&#x9700;&#x8981;&#x65F6;&#x79C1;&#x6709;&#x7684;&#xFF0C;&#x8FD9;&#x4E2A;&#x65F6;&#x5019;&#x53EF;&#x80FD;&#x5C31;&#x9700;&#x8981;&#x6570;&#x636E;&#x62F7;&#x8D1D;&#x51FD;&#x6570;&#xFF0C;&#x5982;&#x679C;&#x6709;&#x6570;&#x636E;&#x9700;&#x8981;&#x53CA;&#x8FDB;&#x884C;&#x62F7;&#x8D1D;&#x800C;&#x4E14;&#x8FD9;&#x4E2A;&#x53C2;&#x6570;&#x8FD8;&#x4E3A; NULL &#x7684;&#x8BDD;&#xFF0C;&#x90A3;&#x4E48;&#x5728; OpenMP &#x5185;&#x90E8;&#x5C31;&#x4F1A;&#x4F7F;&#x7528; memcpy &#x8FDB;&#x884C;&#x5185;&#x5B58;&#x62F7;&#x8D1D;&#x3002;</li>
+<li>arg_size&#xFF0C;&#x53C2;&#x6570;&#x7684;&#x5927;&#x5C0F;&#x3002;</li>
+<li>arg_align&#xFF0C;&#x53C2;&#x6570;&#x591A;&#x5C11;&#x5B57;&#x8282;&#x5BF9;&#x9F50;&#x3002;</li>
+<li>if_clause&#xFF0C;if &#x5B50;&#x53E5;&#x5F53;&#x4E2D;&#x7684;&#x6BD4;&#x8F83;&#x7ED3;&#x679C;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709; if &#x5B57;&#x53E5;&#x7684;&#x8BDD;&#x5C31;&#x662F; true &#x3002;</li>
+<li>flags&#xFF0C;&#x7528;&#x4E8E;&#x8868;&#x793A; task construct &#x7684;&#x7279;&#x5F81;&#x6216;&#x8005;&#x5C5E;&#x6027;&#xFF0C;&#x6BD4;&#x5982;&#x662F;&#x5426;&#x662F;&#x6700;&#x7EC8;&#x4EFB;&#x52A1;&#x3002;</li>
+</ul>
+<p>&#x6211;&#x4EEC;&#x73B0;&#x5728;&#x4F7F;&#x7528;&#x53E6;&#x5916;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#xFF0C;&#x6765;&#x770B;&#x770B;&#x53C2;&#x6570;&#x4F20;&#x9012;&#x7684;&#x53D8;&#x5316;&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;omp.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> omp parallel num_threads(4) default(none)</span>
+  {
+     <span class="hljs-keyword">int</span> data = omp_get_thread_num();
+<span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> omp task default(none) firstprivate(data) <span class="hljs-meta-keyword">if</span>(data &gt; 100)</span>
+    {
+       data = omp_get_thread_num();
+       <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;data = %d Hello World from tid = %d\n&quot;</span>, data, omp_get_thread_num());
+    }
+  }
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x4E0A;&#x9762;&#x7684;&#x7A0B;&#x5E8F;&#x88AB;&#x7F16;&#x8BD1;&#x4E4B;&#x540E;&#x5BF9;&#x5E94;&#x7684;&#x6C47;&#x7F16;&#x7A0B;&#x5E8F;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre><code class="lang-asm">00000000004008ad &lt;main&gt;:
+  4008ad:       55                      push   %rbp
+  4008ae:       48 89 e5                mov    %rsp,%rbp
+  4008b1:       48 83 ec 10             sub    $0x10,%rsp
+  4008b5:       ba 04 00 00 00          mov    $0x4,%edx
+  4008ba:       be 00 00 00 00          mov    $0x0,%esi
+  4008bf:       bf df 08 40 00          mov    $0x4008df,%edi
+  4008c4:       e8 87 fe ff ff          callq  400750 &lt;GOMP_parallel_start@plt&gt;
+  4008c9:       bf 00 00 00 00          mov    $0x0,%edi
+  4008ce:       e8 0c 00 00 00          callq  4008df &lt;main._omp_fn.0&gt;
+  4008d3:       e8 88 fe ff ff          callq  400760 &lt;GOMP_parallel_end@plt&gt;
+  4008d8:       b8 00 00 00 00          mov    $0x0,%eax
+  4008dd:       c9                      leaveq
+  4008de:       c3                      retq
+00000000004008df &lt;main._omp_fn.0&gt;:
+  4008df:       55                      push   %rbp
+  4008e0:       48 89 e5                mov    %rsp,%rbp
+  4008e3:       48 83 ec 20             sub    $0x20,%rsp
+  4008e7:       48 89 7d e8             mov    %rdi,-0x18(%rbp)
+  4008eb:       e8 80 fe ff ff          callq  400770 &lt;omp_get_thread_num@plt&gt;
+  4008f0:       89 45 fc                mov    %eax,-0x4(%rbp)
+  4008f3:       83 7d fc 64             cmpl   $0x64,-0x4(%rbp)
+  4008f7:       0f 9f c2                setg   %dl
+  4008fa:       8b 45 fc                mov    -0x4(%rbp),%eax
+  4008fd:       89 45 f0                mov    %eax,-0x10(%rbp)
+  400900:       48 8d 45 f0             lea    -0x10(%rbp),%rax
+  400904:       c7 04 24 00 00 00 00    movl   $0x0,(%rsp)    # &#x53C2;&#x6570; flags
+  40090b:       41 89 d1                mov    %edx,%r9d    # &#x53C2;&#x6570; if_clause
+  40090e:       41 b8 04 00 00 00       mov    $0x4,%r8d    # &#x53C2;&#x6570; arg_align
+  400914:       b9 04 00 00 00          mov    $0x4,%ecx    # &#x53C2;&#x6570; arg_size
+  400919:       ba 00 00 00 00          mov    $0x0,%edx    # &#x53C2;&#x6570; cpyfn
+  40091e:       48 89 c6                mov    %rax,%rsi    # &#x53C2;&#x6570; data
+  400921:       bf 2d 09 40 00          mov    $0x40092d,%edi    # &#x8FD9;&#x91CC;&#x5C31;&#x662F;&#x8C03;&#x7528;&#x51FD;&#x6570; main._omp_fn.1
+  400926:       e8 85 fe ff ff          callq  4007b0 &lt;GOMP_task@plt&gt;
+  40092b:       c9                      leaveq
+  40092c:       c3                      retq
+000000000040092d &lt;main._omp_fn.1&gt;:
+  40092d:       55                      push   %rbp
+  40092e:       48 89 e5                mov    %rsp,%rbp
+  400931:       48 83 ec 20             sub    $0x20,%rsp
+  400935:       48 89 7d e8             mov    %rdi,-0x18(%rbp)
+  400939:       48 8b 45 e8             mov    -0x18(%rbp),%rax
+  40093d:       8b 00                   mov    (%rax),%eax
+  40093f:       89 45 fc                mov    %eax,-0x4(%rbp)
+  400942:       e8 29 fe ff ff          callq  400770 &lt;omp_get_thread_num@plt&gt;
+  400947:       89 c2                   mov    %eax,%edx
+  400949:       8b 45 fc                mov    -0x4(%rbp),%eax
+  40094c:       89 c6                   mov    %eax,%esi
+  40094e:       bf f0 09 40 00          mov    $0x4009f0,%edi
+  400953:       b8 00 00 00 00          mov    $0x0,%eax
+  400958:       e8 23 fe ff ff          callq  400780 &lt;printf@plt&gt;
+  40095d:       c9                      leaveq
+  40095e:       c3                      retq
+  40095f:       90                      nop
+</code></pre>
+<p>&#x5728;&#x4E0A;&#x9762;&#x7684;&#x51FD;&#x6570;&#x5F53;&#x4E2D;&#x6211;&#x4EEC;&#x5C06; data &#x4E00;&#x4E2A; 4 &#x5B57;&#x8282;&#x7684;&#x6570;&#x636E;&#x4F5C;&#x4E3A;&#x7EBF;&#x7A0B;&#x79C1;&#x6709;&#x6570;&#x636E;&#xFF0C;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x7ED9;&#x51FD;&#x6570; GOMP_task &#x4F20;&#x9012;&#x7684;&#x53C2;&#x6570;&#x53C2;&#x6570;&#x7684;&#x5927;&#x5C0F;&#x4EE5;&#x53CA;&#x53C2;&#x6570;&#x7684;&#x5185;&#x5B58;&#x5BF9;&#x9F50;&#x5927;&#x5C0F;&#x90FD;&#x53D1;&#x751F;&#x6765;&#x53D8;&#x5316;&#xFF0C;&#x4ECE;&#x539F;&#x6765;&#x7684; 0 &#x53D8;&#x6210;&#x4E86; 4&#xFF0C;&#x8FD9;&#x56E0;&#x4E3A; int &#x7C7B;&#x578B;&#x6570;&#x636E;&#x5360; 4 &#x4E2A;&#x5B57;&#x8282;&#x3002;</p>
+<h2 id="task-construct-&#x6E90;&#x7801;&#x5206;&#x6790;">Task Construct &#x6E90;&#x7801;&#x5206;&#x6790;</h2>
+<p>&#x5728;&#x672C;&#x5C0F;&#x8282;&#x5F53;&#x4E2D;&#x4E3B;&#x8981;&#x8C08;&#x8BBA;&#x5728; OpenMP &#x5185;&#x90E8;&#x662F;&#x5982;&#x4F55;&#x5B9E;&#x73B0; task &#x7684;&#xFF0C;&#x5173;&#x4E8E;&#x8FD9;&#x4E00;&#x90E8;&#x5206;&#x5185;&#x5BB9;&#x8BBE;&#x8BA1;&#x7684;&#x5185;&#x5BB9;&#x8FD8;&#x662F;&#x6BD4;&#x8F83;&#x5E9E;&#x6742;&#xFF0C;&#x9996;&#x5148;&#x9700;&#x8981;&#x4E86;&#x89E3;&#x7684;&#x662F;&#x5728; OpenMP &#x5F53;&#x4E2D;&#x4F7F;&#x7528; task construct &#x7684;&#x88AB;&#x79F0;&#x4F5C;&#x663E;&#x793A;&#x4EFB;&#x52A1;&#xFF08;explicit task&#xFF09;&#xFF0C;&#x8FD9;&#x79CD;&#x4EFB;&#x52A1;&#x5728; OpenMP &#x5F53;&#x4E2D;&#x4F1A;&#x6709;&#x4E24;&#x4E2A;&#x4EFB;&#x52A1;&#x961F;&#x5217;&#xFF08;&#x53CC;&#x5411;&#x5FAA;&#x73AF;&#x961F;&#x5217;&#xFF09;&#xFF0C;&#x5C06;&#x6240;&#x6709;&#x7684;&#x4EFB;&#x52A1;&#x90FD;&#x4FDD;&#x5B58;&#x5728;&#x8FD9;&#x6837;&#x4E00;&#x5F20;&#x5217;&#x8868;&#x5F53;&#x4E2D;&#xFF0C;&#x6574;&#x4F53;&#x7ED3;&#x6784;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="../../images/openmp/18.png" alt="openmp"></p>
+<p>&#x5728;&#x4E0A;&#x56FE;&#x5F53;&#x4E2D;&#x7531;&#x540C;&#x4E00;&#x4E2A;&#x7EBF;&#x7A0B;&#x521B;&#x5EFA;&#x7684;&#x4EFB;&#x52A1;&#x4E3A; child_task&#xFF0C;&#x4ED6;&#x4EEC;&#x4E4B;&#x95F4;&#x4F7F;&#x7528; next_child &#x548C; prev_child &#x4E24;&#x4E2A;&#x6307;&#x9488;&#x8FDB;&#x884C;&#x8FDE;&#x63A5;&#xFF0C;&#x4E0D;&#x540C;&#x7EBF;&#x7A0B;&#x521B;&#x5EFA;&#x7684;&#x4EFB;&#x52A1;&#x4E4B;&#x95F4;&#x53EF;&#x4EE5;&#x4F7F;&#x7528; next_queue &#x548C; prev_queue &#x4E24;&#x4E2A;&#x6307;&#x9488;&#x8FDB;&#x884C;&#x8FDE;&#x63A5;&#x3002;</p>
+<p>&#x4EFB;&#x52A1;&#x7684;&#x7ED3;&#x6784;&#x4F53;&#x63CF;&#x8FF0;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-keyword">struct</span> gomp_task
+{
+  <span class="hljs-keyword">struct</span> gomp_task *parent;    <span class="hljs-comment">// &#x4EFB;&#x52A1;&#x7684;&#x7236;&#x4EB2;&#x4EFB;&#x52A1;</span>
+  <span class="hljs-keyword">struct</span> gomp_task *children;    <span class="hljs-comment">// &#x5B50;&#x4EFB;&#x52A1;</span>
+  <span class="hljs-keyword">struct</span> gomp_task *next_child;    <span class="hljs-comment">// &#x4E0B;&#x4E00;&#x4E2A;&#x5B50;&#x4EFB;&#x52A1;</span>
+  <span class="hljs-keyword">struct</span> gomp_task *prev_child;    <span class="hljs-comment">// &#x4E0A;&#x4E00;&#x4E2A;&#x5B50;&#x4EFB;&#x52A1;</span>
+  <span class="hljs-keyword">struct</span> gomp_task *next_queue;    <span class="hljs-comment">// &#x4E0B;&#x4E00;&#x4E2A;&#x4EFB;&#x52A1; &#xFF08;&#x4E0D;&#x4E00;&#x5B9A;&#x662F;&#x540C;&#x4E00;&#x4E2A;&#x7EBF;&#x7A0B;&#x521B;&#x5EFA;&#x7684;&#x5B50;&#x4EFB;&#x52A1;&#xFF09;</span>
+  <span class="hljs-keyword">struct</span> gomp_task *prev_queue;    <span class="hljs-comment">// &#x4E0A;&#x4E00;&#x4E2A;&#x4EFB;&#x52A1; &#xFF08;&#x4E0D;&#x4E00;&#x5B9A;&#x662F;&#x540C;&#x4E00;&#x4E2A;&#x7EBF;&#x7A0B;&#x521B;&#x5EFA;&#x7684;&#x5B50;&#x4EFB;&#x52A1;&#xFF09;</span>
+  <span class="hljs-keyword">struct</span> gomp_task_icv icv; <span class="hljs-comment">// openmp &#x5F53;&#x4E2D;&#x5185;&#x90E8;&#x5168;&#x5C40;&#x8BBE;&#x7F6E;&#x4F7F;&#x7528;&#x53D8;&#x91CF;&#x7684;&#x503C;&#xFF08;internal control variable&#xFF09;</span>
+  <span class="hljs-keyword">void</span> (*fn) (<span class="hljs-keyword">void</span> *);    <span class="hljs-comment">// task construct &#x88AB;&#x7F16;&#x8BD1;&#x4E4B;&#x540E;&#x7684;&#x51FD;&#x6570;</span>
+  <span class="hljs-keyword">void</span> *fn_data;    <span class="hljs-comment">// &#x51FD;&#x6570;&#x53C2;&#x6570;</span>
+  <span class="hljs-keyword">enum</span> gomp_task_kind kind; <span class="hljs-comment">// &#x4EFB;&#x52A1;&#x7C7B;&#x578B; &#x5177;&#x4F53;&#x7C7B;&#x578B;&#x5982;&#x4E0B;&#x9762;&#x7684;&#x679A;&#x4E3E;&#x7C7B;&#x578B;</span>
+  <span class="hljs-keyword">bool</span> in_taskwait;    <span class="hljs-comment">// &#x662F;&#x5426;&#x5904;&#x4E8E; taskwait &#x72B6;&#x6001;</span>
+  <span class="hljs-keyword">bool</span> in_tied_task; <span class="hljs-comment">// &#x662F;&#x4E0D;&#x662F;&#x5728;&#x7ED1;&#x5B9A;&#x4EFB;&#x52A1;&#x5F53;&#x4E2D;</span>
+  <span class="hljs-keyword">bool</span> final_task; <span class="hljs-comment">// &#x662F;&#x4E0D;&#x662F;&#x6700;&#x7EC8;&#x4EFB;&#x52A1;</span>
+  <span class="hljs-keyword">gomp_sem_t</span> taskwait_sem; <span class="hljs-comment">// &#x5BF9;&#x8C61;&#x9501; &#x7528;&#x4E8E;&#x4FDD;&#x8BC1;&#x7EBF;&#x7A0B;&#x64CD;&#x4F5C;&#x8FD9;&#x4E2A;&#x6570;&#x636E;&#x7684;&#x65F6;&#x5019;&#x7684;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;</span>
+};
+
+<span class="hljs-comment">// openmp &#x5F53;&#x4E2D;&#x7684;&#x4EFB;&#x52A1;&#x7684;&#x72B6;&#x6001;</span>
+<span class="hljs-keyword">enum</span> gomp_task_kind
+{
+  GOMP_TASK_IMPLICIT,
+  GOMP_TASK_IFFALSE,
+  GOMP_TASK_WAITING,
+  GOMP_TASK_TIED
+};
+</code></pre>
+<p>&#x5728;&#x4E86;&#x89E3;&#x5B8C;&#x4E0A;&#x9762;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x4E4B;&#x540E;&#x6211;&#x4EEC;&#x6765;&#x770B;&#x4E00;&#x4E0B;&#x524D;&#x9762;&#x7684;&#x7ED9; OpenMP &#x5185;&#x90E8;&#x63D0;&#x4EA4;&#x4EFB;&#x52A1;&#x7684;&#x51FD;&#x6570; GOMP_task&#xFF0C;&#x5176;&#x6E90;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre><code class="lang-c">
+/* Called when encountering an explicit task directive.  If IF_CLAUSE is
+   false, then we must not delay in executing the task.  If UNTIED is true,
+   then the task may be executed by any member of the team.  */
+
+void
+GOMP_task (void (*fn) (void *), void *data, void (*cpyfn) (void *, void *),
+       long arg_size, long arg_align, bool if_clause, unsigned flags)
+{
+  struct gomp_thread *thr = gomp_thread ();
+  // team &#x662F; OpenMP &#x4E00;&#x4E2A;&#x7EBF;&#x7A0B;&#x7EC4;&#x5F53;&#x4E2D;&#x5171;&#x4EAB;&#x7684;&#x6570;&#x636E;
+  struct gomp_team *team = thr-&gt;ts.team;
+
+#ifdef HAVE_BROKEN_POSIX_SEMAPHORES
+  /* If pthread_mutex_* is used for omp_*lock*, then each task must be
+     tied to one thread all the time.  This means UNTIED tasks must be
+     tied and if CPYFN is non-NULL IF(0) must be forced, as CPYFN
+     might be running on different thread than FN.  */
+  if (cpyfn)
+    if_clause = false;
+  if (flags &amp; 1)
+    flags &amp;= ~1;
+#endif
+
+  // &#x8FD9;&#x91CC;&#x8868;&#x793A;&#x5982;&#x679C;&#x662F; if &#x5B50;&#x53E5;&#x7684;&#x6761;&#x4EF6;&#x4E3A;&#x771F;&#x7684;&#x65F6;&#x5019;&#x6216;&#x8005;&#x662F;&#x5B64;&#x7ACB;&#x4EFB;&#x52A1;(team == NULL )&#x6216;&#x8005;&#x662F;&#x6700;&#x7EC8;&#x4EFB;&#x52A1;&#x7684;&#x65F6;&#x5019;&#x6216;&#x8005;&#x4EFB;&#x52A1;&#x961F;&#x5217;&#x5F53;&#x4E2D;&#x7684;&#x4EFB;&#x52A1;&#x5DF2;&#x7ECF;&#x5F88;&#x591A;&#x7684;&#x65F6;&#x5019;
+  // &#x63D0;&#x4EA4;&#x7684;&#x4EFB;&#x52A1;&#x9700;&#x8981;&#x7ACB;&#x5373;&#x6267;&#x884C;&#x800C;&#x4E0D;&#x80FD;&#x591F;&#x653E;&#x5165;&#x4EFB;&#x52A1;&#x961F;&#x5217;&#x5F53;&#x4E2D;&#x7136;&#x540E;&#x5728; GOMP_parallel_end &#x51FD;&#x6570;&#x5F53;&#x4E2D;&#x8FDB;&#x884C;&#x4EFB;&#x52A1;&#x7684;&#x53D6;&#x51FA;
+  // &#x518D;&#x6267;&#x884C;
+  if (!if_clause || team == NULL
+      || (thr-&gt;task &amp;&amp; thr-&gt;task-&gt;final_task)
+      || team-&gt;task_count &gt; 64 * team-&gt;nthreads)
+    {
+      struct gomp_task task;
+
+      gomp_init_task (&amp;task, thr-&gt;task, gomp_icv (false));
+      task.kind = GOMP_TASK_IFFALSE;
+      task.final_task = (thr-&gt;task &amp;&amp; thr-&gt;task-&gt;final_task) || (flags &amp; 2);
+      if (thr-&gt;task)
+    task.in_tied_task = thr-&gt;task-&gt;in_tied_task;
+      thr-&gt;task = &amp;task;
+      if (__builtin_expect (cpyfn != NULL, 0))
+    {
+        // &#x8FD9;&#x91CC;&#x662F;&#x8FDB;&#x884C;&#x6570;&#x636E;&#x7684;&#x62F7;&#x8D1D;
+      char buf[arg_size + arg_align - 1];
+      char *arg = (char *) (((uintptr_t) buf + arg_align - 1)
+                &amp; ~(uintptr_t) (arg_align - 1));
+      cpyfn (arg, data);
+      fn (arg);
+    }
+      else
+        // &#x5982;&#x679C;&#x4E0D;&#x9700;&#x8981;&#x8FDB;&#x884C;&#x6570;&#x636E;&#x62F7;&#x8D1D;&#x5219;&#x76F4;&#x63A5;&#x6267;&#x884C;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;
+    fn (data);
+      /* Access to &quot;children&quot; is normally done inside a task_lock
+     mutex region, but the only way this particular task.children
+     can be set is if this thread&apos;s task work function (fn)
+     creates children.  So since the setter is *this* thread, we
+     need no barriers here when testing for non-NULL.  We can have
+     task.children set by the current thread then changed by a
+     child thread, but seeing a stale non-NULL value is not a
+     problem.  Once past the task_lock acquisition, this thread
+     will see the real value of task.children.  */
+      if (task.children != NULL)
+    {
+      gomp_mutex_lock (&amp;team-&gt;task_lock);
+      gomp_clear_parent (task.children);
+      gomp_mutex_unlock (&amp;team-&gt;task_lock);
+    }
+      gomp_end_task ();
+    }
+  else
+    {
+    // &#x4E0B;&#x9762;&#x5C31;&#x662F;&#x5C06;&#x4EFB;&#x52A1;&#x5148;&#x63D0;&#x4EA4;&#x5230;&#x4EFB;&#x52A1;&#x961F;&#x5217;&#x5F53;&#x4E2D;&#x7136;&#x540E;&#x518D;&#x53D6;&#x51FA;&#x6267;&#x884C;
+      struct gomp_task *task;
+      struct gomp_task *parent = thr-&gt;task;
+      char *arg;
+      bool do_wake;
+
+      task = gomp_malloc (sizeof (*task) + arg_size + arg_align - 1);
+      arg = (char *) (((uintptr_t) (task + 1) + arg_align - 1)
+              &amp; ~(uintptr_t) (arg_align - 1));
+      gomp_init_task (task, parent, gomp_icv (false));
+      task-&gt;kind = GOMP_TASK_IFFALSE;
+      task-&gt;in_tied_task = parent-&gt;in_tied_task;
+      thr-&gt;task = task;
+    // &#x8FD9;&#x91CC;&#x5C31;&#x662F;&#x53C2;&#x6570;&#x62F7;&#x8D1D;&#x903B;&#x8F91; &#x5982;&#x679C;&#x5B58;&#x5728;&#x62F7;&#x8D1D;&#x51FD;&#x6570;&#x5C31;&#x901A;&#x8FC7;&#x62F7;&#x8D1D;&#x51FD;&#x6570;&#x8FDB;&#x884C;&#x53C2;&#x6570;&#x8D4B;&#x503C; &#x5426;&#x5219;&#x4F7F;&#x7528; memcpy &#x8FDB;&#x884C;
+    // &#x53C2;&#x6570;&#x7684;&#x62F7;&#x8D1D;
+      if (cpyfn)
+    cpyfn (arg, data);
+      else
+    memcpy (arg, data, arg_size);
+      thr-&gt;task = parent;
+      task-&gt;kind = GOMP_TASK_WAITING;
+      task-&gt;fn = fn;
+      task-&gt;fn_data = arg;
+      task-&gt;in_tied_task = true;
+      task-&gt;final_task = (flags &amp; 2) &gt;&gt; 1;
+    // &#x5728;&#x8FD9;&#x91CC;&#x83B7;&#x53D6;&#x5168;&#x5C40;&#x961F;&#x5217;&#x9501; &#x4FDD;&#x8BC1;&#x4E0B;&#x9762;&#x7684;&#x4EE3;&#x7801;&#x5728;&#x591A;&#x7EBF;&#x7A0B;&#x6761;&#x4EF6;&#x4E0B;&#x7684;&#x7EBF;&#x7A0B;&#x5B89;&#x5168;
+    // &#x56E0;&#x4E3A;&#x5728;&#x4E0B;&#x9762;&#x7684;&#x4EE3;&#x7801;&#x5F53;&#x4E2D;&#x4F1A;&#x5BF9;&#x5168;&#x5C40;&#x7684;&#x961F;&#x5217;&#x8FDB;&#x884C;&#x4FEE;&#x6539;&#x64CD;&#x4F5C; &#x4E0B;&#x9762;&#x7684;&#x64CD;&#x4F5C;&#x5C31;&#x662F;&#x961F;&#x5217;&#x7684;&#x4E00;&#x4E9B;&#x57FA;&#x672C;&#x64CD;&#x4F5C;&#x5566;
+      gomp_mutex_lock (&amp;team-&gt;task_lock);
+      if (parent-&gt;children)
+    {
+      task-&gt;next_child = parent-&gt;children;
+      task-&gt;prev_child = parent-&gt;children-&gt;prev_child;
+      task-&gt;next_child-&gt;prev_child = task;
+      task-&gt;prev_child-&gt;next_child = task;
+    }
+      else
+    {
+      task-&gt;next_child = task;
+      task-&gt;prev_child = task;
+    }
+      parent-&gt;children = task;
+      if (team-&gt;task_queue)
+    {
+      task-&gt;next_queue = team-&gt;task_queue;
+      task-&gt;prev_queue = team-&gt;task_queue-&gt;prev_queue;
+      task-&gt;next_queue-&gt;prev_queue = task;
+      task-&gt;prev_queue-&gt;next_queue = task;
+    }
+      else
+    {
+      task-&gt;next_queue = task;
+      task-&gt;prev_queue = task;
+      team-&gt;task_queue = task;
+    }
+      ++team-&gt;task_count;
+      gomp_team_barrier_set_task_pending (&amp;team-&gt;barrier);
+      do_wake = team-&gt;task_running_count + !parent-&gt;in_tied_task
+        &lt; team-&gt;nthreads;
+      gomp_mutex_unlock (&amp;team-&gt;task_lock);
+      if (do_wake)
+    gomp_team_barrier_wake (&amp;team-&gt;barrier, 1);
+    }
+}
+</code></pre>
+<p>&#x5BF9;&#x4E8E;&#x4E0A;&#x8FF0;&#x6240;&#x8BA8;&#x8BBA;&#x7684;&#x5185;&#x5BB9;&#x5927;&#x5BB6;&#x53EA;&#x9700;&#x8981;&#x4E86;&#x89E3;&#x76F8;&#x5173;&#x7684;&#x6574;&#x4F53;&#x6D41;&#x7A0B;&#x5373;&#x53EF;&#xFF0C;&#x7EC6;&#x8282;&#x9664;&#x975E;&#x4F60;&#x662F; openmp &#x7684;&#x5F00;&#x53D1;&#x4EBA;&#x5458;&#xFF0C;&#x5426;&#x5219;&#x4E8B;&#x5B9E;&#x4E0A;&#x6CA1;&#x6709;&#x591A;&#x5927;&#x7528;&#xFF0C;&#x5927;&#x5BB6;&#x53EA;&#x9700;&#x8981;&#x4E86;&#x89E3;&#x5927;&#x81F4;&#x8FC7;&#x7A0B;&#x5373;&#x53EF;&#xFF0C;&#x5E2E;&#x52A9;&#x4F60;&#x8FDB;&#x4E00;&#x6B65;&#x6DF1;&#x5165;&#x7406;&#x89E3; OpenMP &#x5185;&#x90E8;&#x7684;&#x8FD0;&#x884C;&#x673A;&#x5236;&#x3002;</p>
+<p>&#x4F46;&#x662F;&#x9700;&#x8981;&#x4E86;&#x89E3;&#x7684;&#x662F;&#x4E0A;&#x9762;&#x7684;&#x6574;&#x4E2A;&#x8FC7;&#x7A0B;&#x8FD8;&#x53EA;&#x662F;&#x5C06;&#x4EFB;&#x52A1;&#x63D0;&#x4EA4;&#x5230; OpenMP &#x5185;&#x90E8;&#x7684;&#x4EFB;&#x52A1;&#x961F;&#x5217;&#x5F53;&#x4E2D;&#xFF0C;&#x8FD8;&#x6CA1;&#x6709;&#x6267;&#x884C;&#xFF0C;&#x6211;&#x4EEC;&#x5728;&#x524D;&#x9762;&#x8C08;&#x5230;&#x8FC7;&#x5728;&#x7EBF;&#x7A0B;&#x6267;&#x884C;&#x5B8C;&#x5E76;&#x884C;&#x57DF;&#x7684;&#x4EE3;&#x7801;&#x4F1A;&#x6267;&#x884C;&#x51FD;&#x6570; GOMP_parallel_end &#x5728;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x5185;&#x90E8;&#x8FD8;&#x4F1A;&#x8C03;&#x7528;&#x5176;&#x4ED6;&#x51FD;&#x6570;&#xFF0C;&#x6700;&#x7EC8;&#x4F1A;&#x8C03;&#x7528;&#x51FD;&#x6570; gomp_barrier_handle_tasks  &#x5C06;&#x5185;&#x90E8;&#x7684;&#x6240;&#x6709;&#x7684;&#x4EFB;&#x52A1;&#x6267;&#x884C;&#x5B8C;&#x6210;&#x3002;</p>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">void</span>
+<span class="hljs-title">gomp_barrier_handle_tasks</span> <span class="hljs-params">(gomp_barrier_state_t state)</span>
+</span>{
+  <span class="hljs-keyword">struct</span> gomp_thread *thr = gomp_thread ();
+  <span class="hljs-keyword">struct</span> gomp_team *team = thr-&gt;ts.team;
+  <span class="hljs-keyword">struct</span> gomp_task *task = thr-&gt;task;
+  <span class="hljs-keyword">struct</span> gomp_task *child_task = <span class="hljs-literal">NULL</span>;
+  <span class="hljs-keyword">struct</span> gomp_task *to_free = <span class="hljs-literal">NULL</span>;
+
+  <span class="hljs-comment">// &#x9996;&#x5148;&#x5BF9;&#x5168;&#x5C40;&#x7684;&#x961F;&#x5217;&#x7ED3;&#x6784;&#x8FDB;&#x884C;&#x52A0;&#x9501;&#x64CD;&#x4F5C;</span>
+  gomp_mutex_lock (&amp;team-&gt;task_lock);
+  <span class="hljs-keyword">if</span> (gomp_barrier_last_thread (state))
+    {
+      <span class="hljs-keyword">if</span> (team-&gt;task_count == <span class="hljs-number">0</span>)
+    {
+      gomp_team_barrier_done (&amp;team-&gt;barrier, state);
+      gomp_mutex_unlock (&amp;team-&gt;task_lock);
+      gomp_team_barrier_wake (&amp;team-&gt;barrier, <span class="hljs-number">0</span>);
+      <span class="hljs-keyword">return</span>;
+    }
+      gomp_team_barrier_set_waiting_for_tasks (&amp;team-&gt;barrier);
+    }
+
+  <span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>)
+    {
+      <span class="hljs-keyword">if</span> (team-&gt;task_queue != <span class="hljs-literal">NULL</span>)
+    {
+      <span class="hljs-keyword">struct</span> gomp_task *parent;
+    <span class="hljs-comment">// &#x4ECE;&#x4EFB;&#x52A1;&#x961F;&#x5217;&#x5F53;&#x4E2D;&#x62FF;&#x51FA;&#x4E00;&#x4E2A;&#x4EFB;&#x52A1;</span>
+      child_task = team-&gt;task_queue;
+      parent = child_task-&gt;parent;
+      <span class="hljs-keyword">if</span> (parent &amp;&amp; parent-&gt;children == child_task)
+        parent-&gt;children = child_task-&gt;next_child;
+      child_task-&gt;prev_queue-&gt;next_queue = child_task-&gt;next_queue;
+      child_task-&gt;next_queue-&gt;prev_queue = child_task-&gt;prev_queue;
+      <span class="hljs-keyword">if</span> (child_task-&gt;next_queue != child_task)
+        team-&gt;task_queue = child_task-&gt;next_queue;
+      <span class="hljs-keyword">else</span>
+        team-&gt;task_queue = <span class="hljs-literal">NULL</span>;
+      child_task-&gt;kind = GOMP_TASK_TIED;
+      team-&gt;task_running_count++;
+      <span class="hljs-keyword">if</span> (team-&gt;task_count == team-&gt;task_running_count)
+        gomp_team_barrier_clear_task_pending (&amp;team-&gt;barrier);
+    }
+      gomp_mutex_unlock (&amp;team-&gt;task_lock);
+      <span class="hljs-keyword">if</span> (to_free) <span class="hljs-comment">// &#x91CA;&#x653E;&#x4EFB;&#x52A1;&#x7684;&#x5185;&#x5B58;&#x7A7A;&#x95F4; to_free &#x5728;&#x540E;&#x9762;&#x4F1A;&#x88AB;&#x8D4B;&#x503C;&#x6210; child_task</span>
+    {
+      gomp_finish_task (to_free);
+      <span class="hljs-built_in">free</span> (to_free);
+      to_free = <span class="hljs-literal">NULL</span>;
+    }
+      <span class="hljs-keyword">if</span> (child_task) <span class="hljs-comment">// &#x8C03;&#x7528;&#x4EFB;&#x52A1;&#x5BF9;&#x5E94;&#x7684;&#x51FD;&#x6570;</span>
+    {
+      thr-&gt;task = child_task;
+      child_task-&gt;fn (child_task-&gt;fn_data);
+      thr-&gt;task = task;
+    }
+      <span class="hljs-keyword">else</span>
+    <span class="hljs-keyword">return</span>; <span class="hljs-comment">// &#x9000;&#x51FA; while &#x5FAA;&#x73AF;</span>
+      gomp_mutex_lock (&amp;team-&gt;task_lock);
+      <span class="hljs-keyword">if</span> (child_task)
+    {
+      <span class="hljs-keyword">struct</span> gomp_task *parent = child_task-&gt;parent;
+      <span class="hljs-keyword">if</span> (parent)
+        {
+          child_task-&gt;prev_child-&gt;next_child = child_task-&gt;next_child;
+          child_task-&gt;next_child-&gt;prev_child = child_task-&gt;prev_child;
+          <span class="hljs-keyword">if</span> (parent-&gt;children == child_task)
+        {
+          <span class="hljs-keyword">if</span> (child_task-&gt;next_child != child_task)
+            parent-&gt;children = child_task-&gt;next_child;
+          <span class="hljs-keyword">else</span>
+            {
+              <span class="hljs-comment">/* We access task-&gt;children in GOMP_taskwait
+             outside of the task lock mutex region, so
+             need a release barrier here to ensure memory
+             written by child_task-&gt;fn above is flushed
+             before the NULL is written.  */</span>
+              __atomic_store_n (&amp;parent-&gt;children, <span class="hljs-literal">NULL</span>,
+                    MEMMODEL_RELEASE);
+              <span class="hljs-keyword">if</span> (parent-&gt;in_taskwait)
+            gomp_sem_post (&amp;parent-&gt;taskwait_sem);
+            }
+        }
+        }
+      gomp_clear_parent (child_task-&gt;children);
+      to_free = child_task;
+      child_task = <span class="hljs-literal">NULL</span>;
+      team-&gt;task_running_count--;
+      <span class="hljs-keyword">if</span> (--team-&gt;task_count == <span class="hljs-number">0</span>
+          &amp;&amp; gomp_team_barrier_waiting_for_tasks (&amp;team-&gt;barrier))
+        {
+          gomp_team_barrier_done (&amp;team-&gt;barrier, state);
+          gomp_mutex_unlock (&amp;team-&gt;task_lock);
+          gomp_team_barrier_wake (&amp;team-&gt;barrier, <span class="hljs-number">0</span>);
+          gomp_mutex_lock (&amp;team-&gt;task_lock);
+        }
+    }
+    }
+}
+</code></pre>
+<h2 id="&#x603B;&#x7ED3;">&#x603B;&#x7ED3;</h2>
+<p>&#x5728;&#x672C;&#x7BC7;&#x6587;&#x7AE0;&#x5F53;&#x4E2D;&#x4E3B;&#x8981;&#x7ED9;&#x5927;&#x5BB6;&#x4ECB;&#x7ECD;&#x4E86;&#xFF0C;OpenMP &#x5185;&#x90E8;&#x5BF9;&#x4E8E;&#x4EFB;&#x52A1;&#x7684;&#x5904;&#x7406;&#x6D41;&#x7A0B;&#xFF0C;&#x8FD9;&#x5176;&#x4E2D;&#x7684;&#x7EC6;&#x8282;&#x975E;&#x5E38;&#x590D;&#x6742;&#xFF0C;&#x5927;&#x5BB6;&#x53EA;&#x9700;&#x8981;&#x4E86;&#x89E3;&#x5B83;&#x7684;&#x6574;&#x4E2A;&#x5DE5;&#x4F5C;&#x6D41;&#x7A0B;&#x5373;&#x53EF;&#xFF0C;&#x8FD9;&#x5DF2;&#x7ECF;&#x80FD;&#x591F;&#x5E2E;&#x52A9;&#x5927;&#x5BB6;&#x7406;&#x6E05;&#x695A;&#x6574;&#x4E2A; OpenMP &#x5185;&#x90E8;&#x662F;&#x5982;&#x4F55;&#x5BF9;&#x4EFB;&#x52A1;&#x8FDB;&#x884C;&#x5904;&#x7406;&#x7684;&#xFF0C;&#x5982;&#x679C;&#x5927;&#x5BB6;&#x611F;&#x5174;&#x8DA3;&#x53EF;&#x4EE5;&#x81EA;&#x884C;&#x7814;&#x8BFB;&#x6E90;&#x7A0B;&#x5E8F;&#x3002;</p>
+<p>&#x66F4;&#x591A;&#x7CBE;&#x5F69;&#x5185;&#x5BB9;&#x5408;&#x96C6;&#x53EF;&#x8BBF;&#x95EE;&#x9879;&#x76EE;&#xFF1A;<a href="https://github.com/Chang-LeHung/CSCore" target="_blank">https://github.com/Chang-LeHung/CSCore</a></p>
+<p>&#x5173;&#x6CE8;&#x516C;&#x4F17;&#x53F7;&#xFF1A;&#x4E00;&#x65E0;&#x662F;&#x5904;&#x7684;&#x7814;&#x7A76;&#x50E7;&#xFF0C;&#x4E86;&#x89E3;&#x66F4;&#x591A;&#x8BA1;&#x7B97;&#x673A;&#xFF08;Java&#x3001;Python&#x3001;&#x8BA1;&#x7B97;&#x673A;&#x7CFB;&#x7EDF;&#x57FA;&#x7840;&#x3001;&#x7B97;&#x6CD5;&#x4E0E;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF09;&#x77E5;&#x8BC6;&#x3002;</p>
+
+<script>console.log("plugin-popup....");document.onclick = function(e){ e.target.tagName === "IMG" && window.open(e.target.src,e.target.src)}</script><style>img{cursor:pointer}</style>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="13seciton.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page: OpenMP Sections Construct 实现原理以及源码分析">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"OpenMP task construct 实现原理以及源码分析","level":"1.9.14","depth":2,"next":{"title":"Pthread","level":"1.10","depth":1,"ref":"","articles":[{"title":"Pthread 并发编程（一）——深入剖析线程基本元素和状态","level":"1.10.1","depth":2,"path":"concurrency/pthread/01pthread.md","ref":"concurrency/pthread/01pthread.md","articles":[]},{"title":"Pthread 并发编程（二）——自底向上深入理解线程","level":"1.10.2","depth":2,"path":"concurrency/pthread/02pthread.md","ref":"concurrency/pthread/02pthread.md","articles":[]},{"title":"Pthread 并发编程（三）——深入理解线程取消机制","level":"1.10.3","depth":2,"path":"concurrency/pthread/03pthread.md","ref":"concurrency/pthread/03pthread.md","articles":[]}]},"previous":{"title":"OpenMP Sections Construct 实现原理以及源码分析","level":"1.9.13","depth":2,"path":"concurrency/openmp/13seciton.md","ref":"concurrency/openmp/13seciton.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["popup","fontsettings","-sharing","-livereload"],"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @Chang-LeHung","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"copyright":"Copyright &#169; aleen42","minHeaderCount":"2","minHeaderDeep":"2"},"search":{},"popup":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"highlight":{},"anchor-navigation-ex":{"showLevelIcon":false,"showLevel":false,"tocLevel1Icon":"fa fa-hand-o-right","tocLevel2Icon":"fa fa-hand-o-right","tocLevel3Icon":"fa fa-hand-o-right","multipleH1":false,"multipleH2":false,"multipleH3":false,"multipleH4":false},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"concurrency/openmp/14task.md","mtime":"2025-10-03T17:39:52.022Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2025-10-03T18:28:09.654Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+
+    </body>
+</html>
+

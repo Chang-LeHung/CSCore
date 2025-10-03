@@ -1,0 +1,1743 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>这种动态规划你见过吗——状态机动态规划之股票问题(上) · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="10状态机动态规划02.html" />
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    基础容器
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../container/01-链表设计与实现.html">
+            
+                <a href="../container/01-链表设计与实现.html">
+            
+                    
+                    链表设计与Java实现——自己动手写LinkedList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../container/02-linkedlist源码剖析.html">
+            
+                <a href="../container/02-linkedlist源码剖析.html">
+            
+                    
+                    LinekdList源码深度剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../container/03-array容器设计与实现.html">
+            
+                <a href="../container/03-array容器设计与实现.html">
+            
+                    
+                    数组容器(ArrayList)设计与Java实现——自己动手写ArrayList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../container/04-arraylist源码剖析.html">
+            
+                <a href="../container/04-arraylist源码剖析.html">
+            
+                    
+                    ArrayList源码剖析，从扩容原理，到迭代器和fast-fail机制，你想要的这都有！！！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../container/05-hashmap设计与实现.html">
+            
+                <a href="../container/05-hashmap设计与实现.html">
+            
+                    
+                    HashMap设计原理与实现（上篇）——哈希表的原理，如何从0到1设计一个HashMap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../container/06-hashmap设计与实现.html">
+            
+                <a href="../container/06-hashmap设计与实现.html">
+            
+                    
+                    HashMap设计原理与实现（下篇）200行代码带你写自己的HashMap！！！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../container/07-hashmap源码剖析.html">
+            
+                <a href="../container/07-hashmap源码剖析.html">
+            
+                    
+                    HashMap源码深度剖析，手把手带你分析每一行代码，包会！！！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="../container/08-arraydeque源码剖析.html">
+            
+                <a href="../container/08-arraydeque源码剖析.html">
+            
+                    
+                    ArrayDeque（JDK双端队列）源码深度剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="../container/09-arrayqueue源码剖析.html">
+            
+                <a href="../container/09-arrayqueue源码剖析.html">
+            
+                    
+                    深入剖析（JDK）ArrayQueue 源码
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    高级容器
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../concurrency/java/11blockingqueue.html">
+            
+                <a href="../concurrency/java/11blockingqueue.html">
+            
+                    
+                    从零开始自己动手写阻塞队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../concurrency/java/12blockingqueuesrc.html">
+            
+                <a href="../concurrency/java/12blockingqueuesrc.html">
+            
+                    
+                    JDK数组阻塞队列源码深入剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    动态规划
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="01-动态规划.html">
+            
+                <a href="01-动态规划.html">
+            
+                    
+                    庖丁解牛斐波拉契数列和背包问题——详细解析两个问题优化过程（超多问题优化干货，不看血亏），带你从最基本最核心的问题看懂动态规划！！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="02-01背包问题.html">
+            
+                <a href="02-01背包问题.html">
+            
+                    
+                    你真的懂01背包问题吗？01背包的这几问你能答出来吗？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="03完全背包.html">
+            
+                <a href="03完全背包.html">
+            
+                    
+                    面试官：完全背包都不会，是你自己走还是我送你？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="04多重背包v1.html">
+            
+                <a href="04多重背包v1.html">
+            
+                    
+                    深入剖析多重背包问题（上篇）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="04多重背包v2.html">
+            
+                <a href="04多重背包v2.html">
+            
+                    
+                    深入剖析多重背包问题（下篇）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="14深入剖析完全背包.html">
+            
+                <a href="14深入剖析完全背包.html">
+            
+                    
+                    完全背包转化为多重背包
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="13零钱兑换.html">
+            
+                <a href="13零钱兑换.html">
+            
+                    
+                    深入浅出零钱兑换问题——背包问题的套壳
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="05深入剖析斐波拉契数列.html">
+            
+                <a href="05深入剖析斐波拉契数列.html">
+            
+                    
+                    深入剖析斐波拉契数列
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    股票问题
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.5.1" data-path="09状态机动态规划.html">
+            
+                <a href="09状态机动态规划.html">
+            
+                    
+                    这种动态规划你见过吗——状态机动态规划之股票问题(上)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="10状态机动态规划02.html">
+            
+                <a href="10状态机动态规划02.html">
+            
+                    
+                    这种动态规划你见过吗——状态机动态规划之股票问题(中)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="11状态机动态规划03.html">
+            
+                <a href="11状态机动态规划03.html">
+            
+                    
+                    这种动态规划你见过吗——状态机动态规划之股票问题(下)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="12状态机动态规划总结.html">
+            
+                <a href="12状态机动态规划总结.html">
+            
+                    
+                    状态机动态规划之股票问题总结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                    回溯
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="backtrace/01combinations.html">
+            
+                <a href="backtrace/01combinations.html">
+            
+                    
+                    通过组合问题看透回溯法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" >
+            
+                <span>
+            
+                    
+                    数据结构
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="07表达式求值.html">
+            
+                <a href="07表达式求值.html">
+            
+                    
+                    深入剖析前缀、中缀、后缀表达式以及表达式求值
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    并发
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../concurrency/java/01初始java并发.html">
+            
+                <a href="../concurrency/java/01初始java并发.html">
+            
+                    
+                    并发开篇——带你从0到1建立并发知识体系的基石
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../concurrency/java/02并发的噩梦.html">
+            
+                <a href="../concurrency/java/02并发的噩梦.html">
+            
+                    
+                    并发程序的噩梦——数据竞争
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" data-path="../concurrency/java/03自己动手写并发工具类.html">
+            
+                <a href="../concurrency/java/03自己动手写并发工具类.html">
+            
+                    
+                    30行自己写并发工具类(Semaphore, CyclicBarrier, CountDownLatch)是什么体验?
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="../concurrency/java/04volatile.html">
+            
+                <a href="../concurrency/java/04volatile.html">
+            
+                    
+                    万字长文：从计算机本源深入探寻volatile和Java内存模型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5" data-path="../concurrency/java/05falsesharing.html">
+            
+                <a href="../concurrency/java/05falsesharing.html">
+            
+                    
+                    并发刺客（False Sharing）——并发程序的隐藏杀手
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.6" data-path="../concurrency/java/06futuretask.html">
+            
+                <a href="../concurrency/java/06futuretask.html">
+            
+                    
+                    60行从零开始自己动手写FutureTask是什么体验？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.7" data-path="../concurrency/java/07futuretasksrc.html">
+            
+                <a href="../concurrency/java/07futuretasksrc.html">
+            
+                    
+                    FutureTask源码深度剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.8" data-path="../concurrency/java/08synchronizedusage.html">
+            
+                <a href="../concurrency/java/08synchronizedusage.html">
+            
+                    
+                    深入学习Synchronized各种使用方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.9" data-path="../concurrency/java/09synchronized.html">
+            
+                <a href="../concurrency/java/09synchronized.html">
+            
+                    
+                    Synchronized锁升级原理与过程深入剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.10" data-path="../concurrency/java/10spinlock.html">
+            
+                <a href="../concurrency/java/10spinlock.html">
+            
+                    
+                    从零开始自己动手写自旋锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.11" data-path="../concurrency/java/13locksupport.html">
+            
+                <a href="../concurrency/java/13locksupport.html">
+            
+                    
+                    60行自己动手写LockSupport是什么体验？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.12" data-path="../concurrency/java/14threadpool.html">
+            
+                <a href="../concurrency/java/14threadpool.html">
+            
+                    
+                    彻底了解线程池的原理——40行从零开始自己写线程池
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.13" data-path="../concurrency/java/16retalkingthreadpool.html">
+            
+                <a href="../concurrency/java/16retalkingthreadpool.html">
+            
+                    
+                    再谈线程池——深入剖析线程池的前世今生
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.14" data-path="../concurrency/java/17threadpoolimplementation.html">
+            
+                <a href="../concurrency/java/17threadpoolimplementation.html">
+            
+                    
+                    自己动手写乞丐版线程池
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.15" data-path="../concurrency/java/18threadpoolmorecloseJDK.html">
+            
+                <a href="../concurrency/java/18threadpoolmorecloseJDK.html">
+            
+                    
+                    自己动手写线程池——向JDK线程池进发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.16" data-path="../concurrency/java/11blockingqueue.html">
+            
+                <a href="../concurrency/java/11blockingqueue.html">
+            
+                    
+                    从零开始自己动手写阻塞队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.17" data-path="../concurrency/java/12blockingqueuesrc.html">
+            
+                <a href="../concurrency/java/12blockingqueuesrc.html">
+            
+                    
+                    JDK数组阻塞队列源码深入剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" >
+            
+                <span>
+            
+                    
+                    OpenMP
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../concurrency/openmp/01introduction.html">
+            
+                <a href="../concurrency/openmp/01introduction.html">
+            
+                    
+                    OpenMP 入门
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../concurrency/openmp/02openmp.html">
+            
+                <a href="../concurrency/openmp/02openmp.html">
+            
+                    
+                    OpenMP 教程（一）——OpenMP 当中的 reduction 子句
+
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../concurrency/openmp/03runtime1.html">
+            
+                <a href="../concurrency/openmp/03runtime1.html">
+            
+                    
+                    OpenMP 常见的动态库函数使用（上）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../concurrency/openmp/04runtime2.html">
+            
+                <a href="../concurrency/openmp/04runtime2.html">
+            
+                    
+                    Openmp 常见的动态库函数使用（下）——深入剖析锁🔒原理与实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../concurrency/openmp/05environment.html">
+            
+                <a href="../concurrency/openmp/05environment.html">
+            
+                    
+                    Openmp 环境变量使用总结
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6" data-path="../concurrency/openmp/06sync.html">
+            
+                <a href="../concurrency/openmp/06sync.html">
+            
+                    
+                    深入理解 OpenMP 线程同步机制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.7" data-path="../concurrency/openmp/07atomic.html">
+            
+                <a href="../concurrency/openmp/07atomic.html">
+            
+                    
+                    OpenMP 原子指令设计与实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.8" data-path="../concurrency/openmp/08parallel.html">
+            
+                <a href="../concurrency/openmp/08parallel.html">
+            
+                    
+                    Parallel Construct 实现原理与源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.9" data-path="../concurrency/openmp/09sync.html">
+            
+                <a href="../concurrency/openmp/09sync.html">
+            
+                    
+                    OpenMP 线程同步 Construct 实现原理以及源码分析（上）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.10" data-path="../concurrency/openmp/10sync.html">
+            
+                <a href="../concurrency/openmp/10sync.html">
+            
+                    
+                    OpenMP 线程同步 Construct 实现原理以及源码分析（下）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.11" data-path="../concurrency/openmp/11for_dynamic.html">
+            
+                <a href="../concurrency/openmp/11for_dynamic.html">
+            
+                    
+                    OpenMP For Construct dynamic 调度方式实现原理和源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.12" data-path="../concurrency/openmp/12guided.html">
+            
+                <a href="../concurrency/openmp/12guided.html">
+            
+                    
+                    OpenMP For Construct guided 调度方式实现原理和源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.13" data-path="../concurrency/openmp/13seciton.html">
+            
+                <a href="../concurrency/openmp/13seciton.html">
+            
+                    
+                    OpenMP Sections Construct 实现原理以及源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.14" data-path="../concurrency/openmp/14task.html">
+            
+                <a href="../concurrency/openmp/14task.html">
+            
+                    
+                    OpenMP task construct 实现原理以及源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" >
+            
+                <span>
+            
+                    
+                    Pthread
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../concurrency/pthread/01pthread.html">
+            
+                <a href="../concurrency/pthread/01pthread.html">
+            
+                    
+                    Pthread 并发编程（一）——深入剖析线程基本元素和状态
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../concurrency/pthread/02pthread.html">
+            
+                <a href="../concurrency/pthread/02pthread.html">
+            
+                    
+                    Pthread 并发编程（二）——自底向上深入理解线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../concurrency/pthread/03pthread.html">
+            
+                <a href="../concurrency/pthread/03pthread.html">
+            
+                    
+                    Pthread 并发编程（三）——深入理解线程取消机制
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    Makefile
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../tools/makefile/01.html">
+            
+                <a href="../tools/makefile/01.html">
+            
+                    
+                    彻底掌握Makefile（一）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../tools/makefile/02.html">
+            
+                <a href="../tools/makefile/02.html">
+            
+                    
+                    彻底掌握Makefile（二）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.3" data-path="../tools/makefile/03.html">
+            
+                <a href="../tools/makefile/03.html">
+            
+                    
+                    彻底掌握Makefile（三）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" >
+            
+                <span>
+            
+                    
+                    DES
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../des/des.html">
+            
+                <a href="../des/des.html">
+            
+                    
+                    DES加密算法从入门到入坟
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" >
+            
+                <span>
+            
+                    
+                    命令行&系统编程&SHELL
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.13.1" data-path="../linux/command/01top.html">
+            
+                <a href="../linux/command/01top.html">
+            
+                    
+                    Linux命令系列之top——里面藏着很多鲜为人知的宝藏知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.2" data-path="../linux/command/02ls.html">
+            
+                <a href="../linux/command/02ls.html">
+            
+                    
+                    Linux命令系列之ls——原来最简单的ls这么复杂
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.3" data-path="../linux/command/03mkls.html">
+            
+                <a href="../linux/command/03mkls.html">
+            
+                    
+                    自己动手写ls命令——Java版
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.4" data-path="../linux/command/05ps.html">
+            
+                <a href="../linux/command/05ps.html">
+            
+                    
+                    这才是使用ps命令的正确姿势
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.5" data-path="../linux/command/06kill.html">
+            
+                <a href="../linux/command/06kill.html">
+            
+                    
+                    如何优雅的杀掉一个进程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.6" data-path="../linux/programming/01exit.html">
+            
+                <a href="../linux/programming/01exit.html">
+            
+                    
+                    C语言中这么骚的退出程序的方式你知道几个？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.7" data-path="../linux/programming/02sgementation.html">
+            
+                <a href="../linux/programming/02sgementation.html">
+            
+                    
+                    你的哪些骚操作会导致Segmentation Fault😂
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.8" data-path="../linux/programming/03segprincinple.html">
+            
+                <a href="../linux/programming/03segprincinple.html">
+            
+                    
+                    深入剖析Sgementation fault原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.9" data-path="../linux/programming/04processdie.html">
+            
+                <a href="../linux/programming/04processdie.html">
+            
+                    
+                    进程最后的遗言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.10" data-path="../linux/command/04exitstatus.html">
+            
+                <a href="../linux/command/04exitstatus.html">
+            
+                    
+                    Shell揭秘——程序退出状态码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.11" data-path="../linux/shell/01jobcontrol.html">
+            
+                <a href="../linux/shell/01jobcontrol.html">
+            
+                    
+                    你在终端启动的进程，最后都是什么下场？（上）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.12" data-path="../linux/shell/02jobcontrol.html">
+            
+                <a href="../linux/shell/02jobcontrol.html">
+            
+                    
+                    你在终端启动的进程，最后都是什么下场？（下）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" >
+            
+                <span>
+            
+                    
+                    计算机系统基础
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.14.1" data-path="../pl/c_cpp/01builtin.html">
+            
+                <a href="../pl/c_cpp/01builtin.html">
+            
+                    
+                    gcc 好玩的 builtin 函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" >
+            
+                <span>
+            
+                    
+                    python
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../pl/python/misc/01copy.html">
+            
+                <a href="../pl/python/misc/01copy.html">
+            
+                    
+                    深入理解 python 对象拷贝和内存布局
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >这种动态规划你见过吗——状态机动态规划之股票问题(上)</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="&#x8FD9;&#x79CD;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x4F60;&#x89C1;&#x8FC7;&#x5417;&#x2014;&#x2014;&#x72B6;&#x6001;&#x673A;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x4E4B;&#x80A1;&#x7968;&#x95EE;&#x9898;&#x4E0A;">&#x8FD9;&#x79CD;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x4F60;&#x89C1;&#x8FC7;&#x5417;&#x2014;&#x2014;&#x72B6;&#x6001;&#x673A;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x4E4B;&#x80A1;&#x7968;&#x95EE;&#x9898;(&#x4E0A;)</h1>
+<h2 id="&#x524D;&#x8A00;">&#x524D;&#x8A00;</h2>
+<p>&#x5728;&#x672C;&#x7BC7;&#x6587;&#x7AE0;&#x5F53;&#x4E2D;&#x4E3B;&#x8981;&#x901A;&#x8FC7;&#x4ECB;&#x7ECD;&#x5404;&#x79CD;<strong>&#x80A1;&#x7968;&#x95EE;&#x9898;</strong>&#x8DDF;&#x5927;&#x5BB6;&#x4ECB;&#x7ECD;<strong>&#x72B6;&#x6001;&#x673A;&#x52A8;&#x6001;&#x89C4;&#x5212;</strong>&#xFF0C;&#x4E3B;&#x8981;&#x4E86;&#x89E3;&#x5728;<strong>&#x80A1;&#x7968;&#x95EE;&#x9898;</strong>&#x5F53;&#x4E2D;&#x662F;&#x5982;&#x4F55;&#x5728;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x5F53;&#x4E2D;&#x8FDB;&#x884C;&#x72B6;&#x6001;&#x8F6C;&#x79FB;&#x7684;&#xFF0C;&#x901A;&#x8FC7;&#x4ED4;&#x7EC6;&#x5256;&#x6790;&#x72B6;&#x6001;&#x8F6C;&#x79FB;&#x8FC7;&#x7A0B;&#x7ED9;&#x5927;&#x5BB6;&#x4ECB;&#x7ECD;<strong>&#x72B6;&#x6001;&#x673A;&#x52A8;&#x6001;&#x89C4;&#x5212;</strong>&#x3002;&#x6240;&#x8C13;&#x72B6;&#x6001;&#x673A;&#xFF0C;&#x5C31;&#x662F;&#x6709;&#x5F88;&#x591A;&#x72B6;&#x6001;&#x548C;&#x4ED6;&#x4EEC;&#x4E4B;&#x95F4;&#x7684;&#x8F6C;&#x79FB;&#x5173;&#x7CFB;&#x7EC4;&#x6210;&#x8D77;&#x6765;&#x5F62;&#x6210;&#x7CFB;&#x7EDF;&#xFF0C;&#x8FD9;&#x4E2A;&#x8BF4;&#x6CD5;&#x770B;&#x8D77;&#x6765;&#x6709;&#x70B9;&#x9AD8;&#x5927;&#x4E0A;&#xFF0C;&#x5176;&#x5B9E;&#x5F88;&#x7B80;&#x5355;&#xFF0C;&#x5728;&#x540E;&#x9762;&#x8BB2;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x89E3;&#x6CD5;&#x7684;&#x65F6;&#x5019;&#x5927;&#x5BB6;&#x5C31;&#x660E;&#x767D;&#x4E86;&#x3002;</p>
+<h2 id="&#x4E70;&#x5356;&#x80A1;&#x7968;&#x7684;&#x6700;&#x4F73;&#x65F6;&#x673A;i"><a href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/" target="_blank">&#x4E70;&#x5356;&#x80A1;&#x7968;&#x7684;&#x6700;&#x4F73;&#x65F6;&#x673A;I</a></h2>
+<blockquote>
+<p>&#x7ED9;&#x5B9A;&#x4E00;&#x4E2A;&#x6570;&#x7EC4; prices &#xFF0C;&#x5B83;&#x7684;&#x7B2C; i &#x4E2A;&#x5143;&#x7D20; prices[i] &#x8868;&#x793A;&#x4E00;&#x652F;&#x7ED9;&#x5B9A;&#x80A1;&#x7968;&#x7B2C; i &#x5929;&#x7684;&#x4EF7;&#x683C;&#x3002;&#x4F60;&#x53EA;&#x80FD;&#x9009;&#x62E9; &#x67D0;&#x4E00;&#x5929; &#x4E70;&#x5165;&#x8FD9;&#x53EA;&#x80A1;&#x7968;&#xFF0C;&#x5E76;&#x9009;&#x62E9;&#x5728;&#x672A;&#x6765;&#x7684;&#x67D0;&#x4E00;&#x4E2A;&#x4E0D;&#x540C;&#x7684;&#x65E5;&#x5B50;&#x5356;&#x51FA;&#x8BE5;&#x80A1;&#x7968;&#x3002;&#x8BBE;&#x8BA1;&#x4E00;&#x4E2A;&#x7B97;&#x6CD5;&#x6765;&#x8BA1;&#x7B97;&#x4F60;&#x6240;&#x80FD;&#x83B7;&#x53D6;&#x7684;&#x6700;&#x5927;&#x5229;&#x6DA6;&#x3002;&#x8FD4;&#x56DE;&#x4F60;&#x53EF;&#x4EE5;&#x4ECE;&#x8FD9;&#x7B14;&#x4EA4;&#x6613;&#x4E2D;&#x83B7;&#x53D6;&#x7684;&#x6700;&#x5927;&#x5229;&#x6DA6;&#x3002;&#x5982;&#x679C;&#x4F60;&#x4E0D;&#x80FD;&#x83B7;&#x53D6;&#x4EFB;&#x4F55;&#x5229;&#x6DA6;&#xFF0C;&#x8FD4;&#x56DE; 0 &#x3002;</p>
+<p>&#x793A;&#x4F8B; 1&#xFF1A;</p>
+<p>&#x8F93;&#x5165;&#xFF1A;[7,1,5,3,6,4]</p>
+<p>&#x8F93;&#x51FA;&#xFF1A;5</p>
+<p>&#x89E3;&#x91CA;&#xFF1A;&#x5728;&#x7B2C; 2 &#x5929;&#xFF08;&#x80A1;&#x7968;&#x4EF7;&#x683C; = 1&#xFF09;&#x7684;&#x65F6;&#x5019;&#x4E70;&#x5165;&#xFF0C;&#x5728;&#x7B2C; 5 &#x5929;&#xFF08;&#x80A1;&#x7968;&#x4EF7;&#x683C; = 6&#xFF09;&#x7684;&#x65F6;&#x5019;&#x5356;&#x51FA;&#xFF0C;&#x6700;&#x5927;&#x5229;&#x6DA6; = 6-1 = 5 &#x3002;&#x6CE8;&#x610F;&#x5229;&#x6DA6;&#x4E0D;&#x80FD;&#x662F; 7-1 = 6, &#x56E0;&#x4E3A;&#x5356;&#x51FA;&#x4EF7;&#x683C;&#x9700;&#x8981;&#x5927;&#x4E8E;&#x4E70;&#x5165;&#x4EF7;&#x683C;&#xFF1B;&#x540C;&#x65F6;&#xFF0C;&#x4F60;&#x4E0D;&#x80FD;&#x5728;&#x4E70;&#x5165;&#x524D;&#x5356;&#x51FA;&#x80A1;&#x7968;&#x3002;</p>
+<p>&#x793A;&#x4F8B; 2&#xFF1A;</p>
+<p>&#x8F93;&#x5165;&#xFF1A;prices = [7,6,4,3,1]</p>
+<p>&#x8F93;&#x51FA;&#xFF1A;0</p>
+<p>&#x89E3;&#x91CA;&#xFF1A;&#x5728;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;, &#x6CA1;&#x6709;&#x4EA4;&#x6613;&#x5B8C;&#x6210;, &#x6240;&#x4EE5;&#x6700;&#x5927;&#x5229;&#x6DA6;&#x4E3A; 0&#x3002;</p>
+</blockquote>
+<h3 id="&#x66B4;&#x529B;&#x89E3;&#x6CD5;">&#x66B4;&#x529B;&#x89E3;&#x6CD5;</h3>
+<p>&#x5728;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x5F53;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x7684;&#x4EFB;&#x52A1;&#x662F;&#x5728;&#x67D0;&#x4E00;&#x5929;&#x4E70;&#x5165;&#x80A1;&#x7968;&#xFF0C;&#x7136;&#x540E;&#x5728;&#x672A;&#x6765;&#x67D0;&#x5929;&#x518D;&#x5C06;&#x80A1;&#x7968;&#x5356;&#x51FA;&#x53BB;&#xFF0C;&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x7528;&#x4E00;&#x4E2A;&#x4E8C;&#x91CD;&#x5FAA;&#x73AF;&#xFF0C;&#x7B2C;&#x4E00;&#x5C42;&#x5FAA;&#x73AF;&#x904D;&#x5386;&#x6BCF;&#x4E00;&#x5929;&#x7684;&#x80A1;&#x7968;&#xFF0C;&#x7B2C;&#x4E8C;&#x5C42;&#x5FAA;&#x73AF;&#x904D;&#x5386;&#x8BE5;&#x5929;&#x4E4B;&#x540E;&#x7684;&#x80A1;&#x7968;&#xFF0C;&#x7136;&#x540E;&#x627E;&#x5230;&#x5DEE;&#x503C;&#x6700;&#x5927;&#x7684;&#x90A3;&#x4E00;&#x5929;&#x5373;&#x53EF;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x5BFB;&#x627E;&#x67D0;&#x5929;&#x540E;&#x9762;&#x4EF7;&#x503C;&#x6700;&#x9AD8;&#x7684;&#x80A1;&#x7968;&#xFF01;&#x901A;&#x8FC7;&#x505A;&#x5DEE;&#x5F97;&#x5230;&#x5DEE;&#x503C;&#xFF0C;&#x5C06;&#x5DEE;&#x503C;&#x6700;&#x5927;&#x7684;&#x8FD4;&#x56DE;&#x5373;&#x53EF;&#xFF01;</p>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> </span>{
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">maxProfit</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] prices)</span></span>{
+    <span class="hljs-keyword">int</span> ans = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; prices.length - <span class="hljs-number">1</span>; i++) {
+      <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = i + <span class="hljs-number">1</span>; j &lt; prices.length; j++) {
+        ans = Math.max(ans, prices[j] - prices[i]);
+      }
+    }
+    <span class="hljs-keyword">return</span> ans;
+  }
+
+}
+</code></pre>
+<p>&#x4E0A;&#x9762;&#x7684;&#x4EE3;&#x7801;&#x7684;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x4E3A;$O(n^2)$&#xFF0C;&#x7A7A;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x4E3A;$O(1)$&#xFF0C;&#x7531;&#x4E8E;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x8FC7;&#x9AD8;&#xFF0C;&#x4E0A;&#x9762;&#x7684;&#x4EE3;&#x7801;&#x5728;<strong>Leetcode</strong>&#x4E0A;&#x9762;&#x63D0;&#x4EA4;&#x4F1A;&#x8D85;&#x65F6;&#x3002;</p>
+<h3 id="&#x8D2A;&#x5FC3;&#x89E3;&#x6CD5;">&#x8D2A;&#x5FC3;&#x89E3;&#x6CD5;</h3>
+<p>&#x5728;&#x66B4;&#x529B;&#x89E3;&#x6CD5;&#x5F53;&#x4E2D;&#x6211;&#x4EEC;&#x601D;&#x8003;&#x7684;&#x662F;&#x5BFB;&#x627E;&#x67D0;&#x5929;&#x540E;&#x9762;&#x7684;&#x6700;&#x5927;&#x503C;&#xFF0C;&#x5728;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x5F53;&#x4E2D;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x6362;&#x4E00;&#x4E2A;&#x89D2;&#x5EA6;&#xFF0C;&#x5C31;&#x662F;&#x5BFB;&#x627E;&#x67D0;&#x5929;&#x524D;&#x9762;&#x80A1;&#x7968;&#x4EF7;&#x503C;&#x6700;&#x4F4E;&#x7684;&#x90A3;&#x4E00;&#x5929;&#xFF0C;&#x7136;&#x540E;&#x5728;&#x90A3;&#x4E00;&#x5929;&#x4E70;&#x8FDB;&#xFF0C;&#x5728;&#x5F53;&#x5929;&#x5356;&#x51FA;&#x5373;&#x53EF;&#xFF0C;&#x8FD9;&#x4E2A;&#x6548;&#x679C;&#x548C;&#x4E0A;&#x9762;&#x66B4;&#x529B;&#x89E3;&#x6CD5;&#x662F;&#x4E00;&#x6837;&#x7684;&#x3002;&#x8FD9;&#x6837;&#x7684;&#x8BDD;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x7528;&#x4E00;&#x4E2A;&#x6570;&#x7EC4;<code>mins</code>&#x53BB;&#x5B58;&#x67D0;&#x4E00;&#x5929;&#x524D;&#x9762;&#x4EF7;&#x503C;&#x6700;&#x5C0F;&#x7684;&#x80A1;&#x7968;&#xFF0C;&#x7136;&#x540E;&#x505A;&#x4E00;&#x4E2A;&#x51CF;&#x6CD5;&#x5373;&#x53EF;&#xFF0C;&#x5373;<code>prices[i] - mins[i]</code>&#xFF0C;&#x8FD9;&#x6837;&#x6211;&#x4EEC;&#x5C31;&#x5F97;&#x5230;&#x4E86;&#x5728;&#x7B2C;<code>i</code>&#x4E2A;&#x4F4D;&#x7F6E;&#x5356;&#x51FA;&#x80FD;&#x591F;&#x5F97;&#x5230;&#x7684;&#x6700;&#x5927;&#x7684;&#x4EF7;&#x503C;&#xFF0C;&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x518D;&#x6BD4;&#x8F83;&#x6240;&#x6709;&#x7684;&#x8FD9;&#x4E9B;&#x503C;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x627E;&#x5230;&#x6700;&#x540E;&#x7684;&#x7B54;&#x6848;&#x4E86;&#xFF01;&#x8FD9;&#x6837;&#x7684;&#x8BDD;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5C06;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x964D;&#x4F4E;&#x5230;$O(n)$&#x3002;</p>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> </span>{
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">maxProfit</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] prices)</span> </span>{
+    <span class="hljs-keyword">int</span> ans = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span>[] mins = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[prices.length];
+    <span class="hljs-keyword">int</span> min = Integer.MAX_VALUE;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; prices.length; i++) {
+      min = Math.min(min, prices[i]);
+      mins[i] = min;
+    }
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; prices.length; i++) {
+      ans = Math.max(ans, prices[i] - mins[i]);
+    }
+    <span class="hljs-keyword">return</span> ans;
+  }
+}
+</code></pre>
+<p>&#x4E0A;&#x9762;&#x7684;&#x4EE3;&#x7801;&#x7684;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x4E3A;$O(n)$&#xFF0C;&#x7A7A;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x4E5F;&#x662F;$O(n)$&#xFF0C;&#x5176;&#x5B9E;&#x4ED4;&#x7EC6;&#x601D;&#x8003;&#x4E00;&#x4E0B;&#x6211;&#x4EEC;&#x8FD8;&#x53EF;&#x4EE5;&#x964D;&#x4F4E;&#x7A7A;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> </span>{
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">maxProfit</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] prices)</span> </span>{
+    <span class="hljs-keyword">int</span> low = Integer.MAX_VALUE;
+    <span class="hljs-keyword">int</span> ans = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; prices.length; i++) {
+      low = Math.min(prices[i], low);
+      ans = Math.max(ans, prices[i] - low);
+    }
+    <span class="hljs-keyword">return</span> ans;
+  }
+}
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x5728;&#x7B2C;&#x4E00;&#x6B21;&#x904D;&#x5386;&#x7684;&#x65F6;&#x5019;&#x53EF;&#x4EE5;&#x7528;&#x4E00;&#x4E2A;&#x503C;<code>low</code>&#x4FDD;&#x5B58;&#x7B2C;<code>i</code>&#x4E2A;&#x4F4D;&#x7F6E;&#x5DE6;&#x8FB9;&#x6700;&#x5C0F;&#x7684;&#x503C;&#x5373;&#x53EF;&#xFF0C;&#x5E76;&#x4E14;&#x5728;&#x904D;&#x5386;&#x7684;&#x8FC7;&#x7A0B;&#x5F53;&#x4E2D;&#x4E0D;&#x65AD;&#x66F4;&#x65B0;<code>low</code>&#x503C;&#xFF0C;&#x800C;&#x4E14;&#x6211;&#x4EEC;&#x5728;&#x904D;&#x5386;&#x7684;&#x65F6;&#x5019;&#x53EF;&#x4EE5;&#x987A;&#x4FBF;&#x6C42;&#x51FA;&#x5BF9;&#x5E94;&#x4F4D;&#x7F6E;&#x7684;&#x80FD;&#x591F;&#x83B7;&#x53D6;&#x7684;&#x6700;&#x5927;&#x4EF7;&#x503C;&#xFF0C;&#x53EF;&#x4EE5;&#x907F;&#x514D;&#x7B2C;&#x4E8C;&#x6B21;&#x904D;&#x5386;&#x3002;&#x5728;&#x8FD9;&#x4E2A;&#x60C5;&#x51B5;&#x4E0B;&#x6211;&#x4EEC;&#x7684;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x4E3A;$O(n)$&#xFF0C;&#x7A7A;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x4E3A;$O(1)$&#x3002;</p>
+<h3 id="&#x52A8;&#x6001;&#x89C4;&#x5212;&#x89E3;&#x6CD5;">&#x52A8;&#x6001;&#x89C4;&#x5212;&#x89E3;&#x6CD5;</h3>
+<p>&#x5728;&#x6C42;&#x89E3;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x95EE;&#x9898;&#x7684;&#x65F6;&#x5019;&#x901A;&#x5E38;&#x7684;&#x6B65;&#x9AA4;&#x6709;&#x4EE5;&#x4E0B;&#x51E0;&#x4E2A;&#xFF1A;</p>
+<ul>
+<li>&#x5BFB;&#x627E;&#x80FD;&#x591F;&#x8868;&#x793A;&#x72B6;&#x6001;&#x7684;&#x6570;&#x7EC4;<code>dp</code>&#xFF0C;&#x5373;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5BFB;&#x627E;<code>dp</code>&#x7684;&#x542B;&#x4E49;&#xFF0C;&#x5206;&#x6790;&#x9700;&#x8981;&#x7528;&#x51E0;&#x7EAC;&#x6570;&#x7EC4;&#x8868;&#x793A;&#x5177;&#x4F53;&#x7684;&#x72B6;&#x6001;&#x3002;</li>
+<li>&#x901A;&#x8FC7;&#x5206;&#x6790;&#x95EE;&#x9898;&#xFF0C;&#x5BFB;&#x627E;&#x52A8;&#x6001;&#x8F6C;&#x79FB;&#x516C;&#x5F0F;&#x3002;</li>
+<li>&#x521D;&#x59CB;&#x5316;&#x72B6;&#x6001;&#x6570;&#x7EC4;&#x3002;</li>
+<li>&#x901A;&#x8FC7;&#x5206;&#x6790;&#x52A8;&#x6001;&#x8F6C;&#x79FB;&#x65B9;&#x7A0B;&#xFF0C;&#x786E;&#x5B9A;&#x6570;&#x7EC4;&#x7684;&#x904D;&#x5386;&#x987A;&#x5E8F;&#x3002;</li>
+</ul>
+<h4 id="&#x72B6;&#x6001;&#x8868;&#x793A;&#x6570;&#x7EC4;">&#x72B6;&#x6001;&#x8868;&#x793A;&#x6570;&#x7EC4;</h4>
+<p>&#x5728;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x5F53;&#x4E2D;&#x6211;&#x4EEC;&#x7528;&#x4E00;&#x4E2A;&#x4E8C;&#x7EF4;&#x6570;&#x7EC4;&#x53BB;&#x8868;&#x793A;&#x6211;&#x4EEC;&#x7684;&#x72B6;&#x6001;&#xFF0C;&#x5728;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x5F53;&#x4E2D;&#x4E3B;&#x8981;&#x6709;&#x4E24;&#x4E2A;&#x72B6;&#x6001;&#xFF0C;&#x4E00;&#x4E2A;&#x662F;&#x624B;&#x4E0A;&#x6709;&#x80A1;&#x7968;&#xFF0C;&#x53E6;&#x4E00;&#x662F;&#x624B;&#x4E0A;&#x6CA1;&#x6709;&#x80A1;&#x7968;&#xFF1A;</p>
+<ul>
+<li><p><code>dp[i][0]</code>&#x8868;&#x793A;&#x5728;&#x7B2C;<code>i</code>&#x5929;&#x624B;&#x4E0A;&#x6CA1;&#x6709;&#x80A1;&#x7968;&#x80FD;&#x591F;&#x83B7;&#x5F97;&#x7684;&#x6700;&#x5927;&#x7684;&#x6536;&#x76CA;&#xFF0C;&#x6BD4;&#x5982;&#x6211;&#x4EEC;&#x5728;&#x7B2C;&#x4E00;&#x5929;&#x7684;&#x6CA1;&#x6709;&#x80A1;&#x7968;&#x7684;&#x6536;&#x76CA;&#x4E3A;0&#x5143;&#x3002;</p>
+</li>
+<li><p><code>dp[i][1]</code>&#x8868;&#x793A;&#x5728;&#x7B2C;<code>i</code>&#x5929;&#x624B;&#x4E0A;&#x5B58;&#x5728;&#x80A1;&#x7968;&#x80FD;&#x591F;&#x83B7;&#x5F97;&#x7684;&#x6700;&#x5927;&#x7684;&#x6536;&#x76CA;&#xFF0C;&#x6BD4;&#x5982;&#x6211;&#x4EEC;&#x5728;&#x7B2C;&#x4E00;&#x5929;&#x4E70;&#x5165;&#x80A1;&#x7968;&#x4E4B;&#x540E;&#x6536;&#x76CA;&#x4E3A;<code>-prices[0]</code>&#x3002;</p>
+</li>
+</ul>
+<p>&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x6700;&#x540E;&#x7684;&#x7B54;&#x6848;&#x662F;<code>dp[N][0]</code>&#xFF0C;&#x8FD9;&#x4E2A;&#x8868;&#x793A;&#x5728;&#x6700;&#x540E;&#x4E00;&#x5929;&#xFF0C;&#x6211;&#x4EEC;&#x7684;&#x624B;&#x4E2D;&#x4E0D;&#x5B58;&#x5728;&#x80A1;&#x7968;&#xFF0C;&#x5373;&#x6211;&#x4EEC;&#x5C06;&#x80A1;&#x7968;&#x5356;&#x51FA;&#x53BB;&#x80FD;&#x591F;&#x83B7;&#x53D6;&#x7684;&#x6700;&#x5927;&#x7684;&#x6536;&#x76CA;&#x3002;</p>
+<h4 id="&#x72B6;&#x6001;&#x8F6C;&#x79FB;&#x65B9;&#x7A0B;">&#x72B6;&#x6001;&#x8F6C;&#x79FB;&#x65B9;&#x7A0B;</h4>
+<p>&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x6765;&#x5206;&#x6790;&#x4E00;&#x4E0B;&#x5982;&#x4F55;&#x8FDB;&#x884C;&#x72B6;&#x6001;&#x7684;&#x8F6C;&#x79FB;&#xFF1A;</p>
+<ul>
+<li><p><code>dp[i][0]</code>&#x7684;&#x72B6;&#x6001;&#x5982;&#x4F55;&#x4ECE;&#x7B2C;<code>i-1</code>&#x7684;&#x72B6;&#x6001;&#x8F6C;&#x79FB;&#x8FC7;&#x6765;&#xFF1A;</p>
+<ul>
+<li>&#x5982;&#x679C;&#x7B2C;<code>i-1</code>&#x4E2A;&#x72B6;&#x6001;&#x662F;&#x624B;&#x4E2D;&#x4E0D;&#x5B58;&#x5728;&#x80A1;&#x7968;&#xFF0C;&#x5373;<code>dp[i-1][0]</code>&#xFF0C;&#x90A3;&#x4E48;&#x7B2C;<code>i</code>&#x4E2A;&#x72B6;&#x6001;&#x4E5F;&#x6CA1;&#x6709;&#x80A1;&#x7968;&#xFF0C;&#x90A3;&#x4E48;&#x76F4;&#x63A5;&#x662F;<code>dp[i][0] = dp[i - 1][0]</code>&#xFF0C;&#x56E0;&#x4E3A;&#x6CA1;&#x6709;&#x8FDB;&#x884C;&#x4EA4;&#x6613;&#x3002;</li>
+<li>&#x5982;&#x679C;&#x7B2C;<code>i-1</code>&#x4E2A;&#x72B6;&#x6001;&#x624B;&#x4E2D;&#x5B58;&#x5728;&#x80A1;&#x7968;&#xFF0C;&#x5373;<code>dp[i-1][1]</code>&#xFF0C;&#x90A3;&#x4E48;&#x5982;&#x679C;&#x60F3;&#x5728;&#x7B2C;<code>i</code>&#x4E2A;&#x72B6;&#x6001;&#x6CA1;&#x6709;&#x80A1;&#x7968;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x9700;&#x8981;&#x5C06;&#x80A1;&#x7968;&#x5356;&#x51FA;&#xFF0C;&#x90A3;&#x4E48;&#x6536;&#x76CA;&#x5C31;&#x4E3A;<code>dp[i-1][1] +prices[i]</code>&#xFF0C;&#x5373;<code>dp[i][0] = dp[i-1][1] +prices[i]</code>&#x3002;</li>
+<li>&#x7EFC;&#x5408;&#x4E0A;&#x9762;&#x7684;&#x4E24;&#x79CD;&#x8F6C;&#x79FB;&#x65B9;&#x5F0F;&#x53EF;&#x4EE5;&#x5F97;&#x5230;&#x4E0B;&#x9762;&#x7684;&#x8F6C;&#x79FB;&#x65B9;&#x7A0B;&#xFF1A;</li>
+</ul>
+<p>$$
+dp[i][0] = max(dp[i - 1][0], dp[i - 1][1] + prices[i])
+$$</p>
+</li>
+<li><p><code>dp[i][1]</code>&#x7684;&#x72B6;&#x6001;&#x5982;&#x4F55;&#x8FDB;&#x884C;&#x8F6C;&#x79FB;&#xFF1A;</p>
+<ul>
+<li>&#x5982;&#x679C;&#x7B2C;<code>i-1</code>&#x4E2A;&#x72B6;&#x6001;&#x662F;&#x624B;&#x4E2D;&#x4E0D;&#x5B58;&#x5728;&#x80A1;&#x7968;&#xFF0C;&#x5373;<code>dp[i-1][0]</code>&#xFF0C;&#x800C;&#x7B2C;<code>i</code>&#x4E2A;&#x72B6;&#x6001;&#x6709;&#x80A1;&#x7968;&#xFF0C;&#x90A3;&#x4E48;<code>dp[i][0] = -prices[i]</code>&#xFF0C;&#x56E0;&#x4E3A;&#x4E70;&#x5165;&#x80A1;&#x7968;&#xFF0C;&#x800C;&#x4E14;&#x53EA;&#x80FD;&#x591F;&#x4E70;&#x5165;&#x4E00;&#x6B21;&#xFF0C;&#x56E0;&#x6B64;&#x76F4;&#x63A5;&#x7B49;&#x4E8E;<code>-prices[i]</code>&#x5373;&#x53EF;&#xFF0C;&#x6CE8;&#x610F;&#x8FD9;&#x91CC;&#x4E0D;&#x80FD;&#x662F;<code>dp[i - 1][0] - prices[i]</code>&#xFF0C;&#x56E0;&#x4E3A;&#x5728;<code>dp[i-][0]</code>&#x5F53;&#x4E2D;&#x53EF;&#x80FD;&#x5B58;&#x5728;&#x5148;&#x4E70;&#x5165;&#x518D;&#x5356;&#x51FA;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x800C;&#x9898;&#x5E72;&#x8981;&#x6C42;&#x53EA;&#x80FD;&#x4E70;&#x5165;&#x5356;&#x51FA;&#x4E00;&#x6B21;&#x3002;</li>
+<li>&#x5982;&#x679C;&#x7B2C;<code>i-1</code>&#x4E2A;&#x72B6;&#x6001;&#x624B;&#x4E2D;&#x5B58;&#x5728;&#x80A1;&#x7968;&#xFF0C;&#x5373;<code>dp[i-1][1]</code>&#xFF0C;&#x800C;&#x7B2C;<code>i</code>&#x4E2A;&#x72B6;&#x6001;&#x6709;&#x80A1;&#x7968;&#xFF0C;&#x56E0;&#x6B64;&#x4E0D;&#x9700;&#x8981;&#x8FDB;&#x884C;&#x4EA4;&#x6613;&#xFF0C;&#x5373;<code>dp[i][1]=dp[i - 1][1]</code>&#x3002;</li>
+<li>&#x7EFC;&#x5408;&#x4E0A;&#x9762;&#x7684;&#x4E24;&#x79CD;&#x8F6C;&#x79FB;&#x65B9;&#x5F0F;&#x53EF;&#x4EE5;&#x5F97;&#x5230;&#x4E0B;&#x9762;&#x7684;&#x8F6C;&#x79FB;&#x65B9;&#x7A0B;&#xFF1A;</li>
+</ul>
+<p>$$
+dp[i][1] = max(dp[i - 1][1], -prices[i]);
+$$</p>
+<p>&#x6574;&#x4E2A;&#x72B6;&#x6001;&#x8F6C;&#x79FB;&#x8FC7;&#x7A0B;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="../images/dsal/dp/01-dp38.png" alt="01-dp38" style="zoom:80%;"></p>
+</li>
+</ul>
+<p>&#x4E0A;&#x9762;&#x6240;&#x8C08;&#x5230;&#x7684;&#x6709;&#x4E24;&#x79CD;&#x72B6;&#x6001;&#xFF0C;&#x4E00;&#x79CD;&#x662F;&#x6709;&#x80A1;&#x7968;&#xFF0C;&#x4E00;&#x79CD;&#x662F;&#x6CA1;&#x6709;&#x80A1;&#x7968;&#xFF0C;&#x8FD9;&#x4E24;&#x79CD;&#x72B6;&#x6001;&#x9700;&#x8981;&#x4ECE;&#x7B2C;<code>i-1</code>&#x884C;&#x8F6C;&#x79FB;&#x5230;&#x7B2C;<code>i</code>&#x884C;&#xFF0C;&#x5373;&#x4ECE;&#x7B2C;<code>i-1</code>&#x884C;&#x7684;&#x6709;&#x80A1;&#x7968;&#x548C;&#x65E0;&#x80A1;&#x7968;&#x72B6;&#x6001;&#x8F6C;&#x79FB;&#x5230;&#x7B2C;<code>i</code>&#x884C;&#x7684;&#x6709;&#x80A1;&#x7968;&#x548C;&#x65E0;&#x80A1;&#x7968;&#x72B6;&#x6001;&#xFF0C;&#x8FD9;&#x5C31;&#x662F;&#x6211;&#x4EEC;&#x5728;&#x524D;&#x6587;&#x8C08;&#x5230;&#x7684;&#x72B6;&#x6001;&#x673A;&#xFF0C;&#x6211;&#x4EEC;&#x5DF2;&#x7ECF;&#x6709;&#x4E86;&#x72B6;&#x6001;&#xFF08;&#x662F;&#x5426;&#x6301;&#x6709;&#x80A1;&#x7968;&#xFF09;&#xFF0C;&#x800C;&#x4E14;&#x4E5F;&#x6709;&#x4E86;&#x72B6;&#x6001;&#x4E4B;&#x95F4;&#x7684;&#x8F6C;&#x6362;&#xFF0C;&#x8FD9;&#x5C31;&#x662F;<strong>&#x72B6;&#x6001;&#x673A;&#x52A8;&#x6001;&#x89C4;&#x5212;</strong>&#x3002;&#x4F60;&#x53EF;&#x80FD;&#x4F1A;&#x95EE;&#x8FD9;&#x597D;&#x50CF;&#x8DDF;&#x4E4B;&#x524D;&#x4F20;&#x7EDF;&#x7684;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x533A;&#x522B;&#x4E5F;&#x4E0D;&#x662F;&#x592A;&#x5927;&#x554A;&#xFF0C;&#x8FD9;&#x662F;&#x56E0;&#x4E3A;&#x5728;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x5F53;&#x4E2D;&#x53EA;&#x6709;&#x4E24;&#x4E2A;&#x72B6;&#x6001;&#xFF0C;&#x6211;&#x4EEC;&#x5728;&#x4E0B;&#x7BC7;&#x5F53;&#x4E2D;&#x9047;&#x5230;&#x7684;&#x95EE;&#x9898;&#x5C31;&#x4F1A;&#x6709;&#x591A;&#x4E2A;&#x72B6;&#x6001;&#x4E86;&#xFF0C;&#x5728;&#x90A3;&#x4E2A;&#x65F6;&#x5019;&#x4F60;&#x53EF;&#x80FD;&#x5C31;&#x66F4;&#x52A0;&#x7406;&#x89E3;&#x4E3A;&#x4EC0;&#x4E48;&#x79F0;&#x8FD9;&#x79CD;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x53EB;&#x505A;<strong>&#x72B6;&#x6001;&#x673A;&#x52A8;&#x6001;&#x89C4;&#x5212;</strong>&#x4E86;&#x3002;</p>
+<ul>
+<li>&#x7EFC;&#x5408;&#x4E24;&#x79CD;&#x72B6;&#x6001;&#xFF0C;&#x6574;&#x4E2A;&#x8F6C;&#x79FB;&#x65B9;&#x5F0F;&#x5982;&#x4E0B;&#xFF1A;</li>
+</ul>
+<p>$$
+\begin{cases}dp[i][0] = max(dp[i - 1][0], dp[i - 1][1] + prices[i])\
+            dp[i][1] = max(dp[i - 1][1], -prices[i]);
+            \end{cases}</p>
+<p>$$</p>
+<p>&#x6574;&#x4E2A;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> </span>{
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">maxProfit</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] prices)</span> </span>{
+    <span class="hljs-keyword">int</span>[][] dp = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[prices.length][<span class="hljs-number">2</span>];
+    <span class="hljs-comment">// &#x521D;&#x59CB;&#x5316;&#x6570;&#x7EC4; dp[0][0] &#x9ED8;&#x8BA4;&#x7B49;&#x4E8E;0 &#x4E0D;&#x7528;</span>
+    <span class="hljs-comment">// &#x663E;&#x793A;&#x521D;&#x59CB;&#x5316;</span>
+    dp[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>] = -prices[<span class="hljs-number">0</span>];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; prices.length; i++) {
+      dp[i][<span class="hljs-number">0</span>] = Math.max(dp[i - <span class="hljs-number">1</span>][<span class="hljs-number">0</span>], dp[i - <span class="hljs-number">1</span>][<span class="hljs-number">1</span>] + prices[i]);
+      dp[i][<span class="hljs-number">1</span>] = Math.max(dp[i - <span class="hljs-number">1</span>][<span class="hljs-number">1</span>], -prices[i]);
+    }
+    <span class="hljs-keyword">return</span> dp[prices.length - <span class="hljs-number">1</span>][<span class="hljs-number">0</span>];
+  }
+}
+</code></pre>
+<h4 id="&#x6570;&#x7EC4;&#x4F18;&#x5316;&#xFF08;&#x6EDA;&#x52A8;&#x6570;&#x7EC4;&#x4F18;&#x5316;&#xFF09;">&#x6570;&#x7EC4;&#x4F18;&#x5316;&#xFF08;&#x6EDA;&#x52A8;&#x6570;&#x7EC4;&#x4F18;&#x5316;&#xFF09;</h4>
+<p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4ED4;&#x7EC6;&#x5206;&#x6790;&#x4E00;&#x4E0B;&#x4E0A;&#x9762;&#x7684;&#x72B6;&#x6001;&#x8F6C;&#x79FB;&#x65B9;&#x7A0B;&#xFF0C;&#x53EF;&#x4EE5;&#x53D1;&#x73B0;&#x7B2C;<code>i</code>&#x884C;&#xFF0C;&#x53EA;&#x4F9D;&#x8D56;&#x7B2C;<code>i-1</code>&#x884C;&#xFF0C;&#x56E0;&#x6B64;&#x6211;&#x4EEC;&#x53EA;&#x4F7F;&#x7528;&#x4E24;&#x884C;&#x6570;&#x7EC4;&#x5373;&#x53EF;&#xFF0C;&#x7B2C;&#x4E00;&#x884C;&#x63A8;&#x6D4B;&#x51FA;&#x7B2C;&#x4E8C;&#x884C;&#xFF0C;&#x7B2C;&#x4E8C;&#x884C;&#x63A8;&#x6D4B;&#x51FA;&#x6765;&#x7684;&#x7ED3;&#x679C;&#x518D;&#x5B58;&#x56DE;&#x7B2C;&#x4E00;&#x884C;.......</p>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> </span>{
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">maxProfit</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] prices)</span> </span>{
+    <span class="hljs-keyword">int</span>[][] dp = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[<span class="hljs-number">2</span>][<span class="hljs-number">2</span>];
+    dp[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>] = -prices[<span class="hljs-number">0</span>];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; prices.length; i++) {
+      dp[i % <span class="hljs-number">2</span>][<span class="hljs-number">0</span>] = Math.max(dp[(i - <span class="hljs-number">1</span>) % <span class="hljs-number">2</span>][<span class="hljs-number">0</span>], dp[(i - <span class="hljs-number">1</span>) % <span class="hljs-number">2</span>][<span class="hljs-number">1</span>] + prices[i]);
+      dp[i % <span class="hljs-number">2</span>][<span class="hljs-number">1</span>] = Math.max(dp[(i - <span class="hljs-number">1</span>) % <span class="hljs-number">2</span>][<span class="hljs-number">1</span>], -prices[i]);
+    }
+    <span class="hljs-keyword">return</span> dp[(prices.length - <span class="hljs-number">1</span>) % <span class="hljs-number">2</span>][<span class="hljs-number">0</span>];
+  }
+}
+</code></pre>
+<p>&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x4F4D;&#x8FD0;&#x7B97;&#x7A0D;&#x5FAE;&#x4F18;&#x5316;&#x4E00;&#x4E0B;&#xFF08;&#x4E0B;&#x9762;&#x4EE3;&#x7801;&#x4F18;&#x5316;&#x7684;&#x4F9D;&#x8D56;&#x539F;&#x7406;&#xFF1A;$a \&amp; (2^n - 1) = a \% 2^n$&#xFF09;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> </span>{
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">maxProfit</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] prices)</span> </span>{
+    <span class="hljs-keyword">int</span>[][] dp = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[<span class="hljs-number">2</span>][<span class="hljs-number">2</span>];
+    dp[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>] = -prices[<span class="hljs-number">0</span>];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; prices.length; i++) {
+      dp[i &amp; <span class="hljs-number">1</span>][<span class="hljs-number">0</span>] = Math.max(dp[(i - <span class="hljs-number">1</span>) &amp; <span class="hljs-number">1</span>][<span class="hljs-number">0</span>], dp[(i - <span class="hljs-number">1</span>) &amp; <span class="hljs-number">1</span>][<span class="hljs-number">1</span>] + prices[i]);
+      dp[i &amp; <span class="hljs-number">1</span>][<span class="hljs-number">1</span>] = Math.max(dp[(i - <span class="hljs-number">1</span>) &amp; <span class="hljs-number">1</span>][<span class="hljs-number">1</span>], -prices[i]);
+    }
+    <span class="hljs-keyword">return</span> dp[(prices.length - <span class="hljs-number">1</span>) &amp; <span class="hljs-number">1</span>][<span class="hljs-number">0</span>];
+  }
+}
+</code></pre>
+<p>&#x6700;&#x7EC8;&#x7ECF;&#x8FC7;&#x4E0A;&#x9762;&#x7684;&#x4F18;&#x5316;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x7684;&#x65F6;&#x95F4;&#x548C;&#x7A7A;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x53EF;&#x4EE5;&#x4F18;&#x5316;&#x5230;$O(n)$&#x548C;$O(1)$&#x3002;</p>
+<h3 id="&#x5C0F;&#x7ED3;">&#x5C0F;&#x7ED3;</h3>
+<p>&#x5728;&#x4E0A;&#x6587;&#x5F53;&#x4E2D;&#x4E3B;&#x8981;&#x4ECB;&#x7ECD;&#x4E86;<strong>&#x4E70;&#x5356;&#x80A1;&#x7968;&#x7684;&#x6700;&#x4F73;&#x65F6;&#x673A;I</strong>&#x5404;&#x79CD;&#x89E3;&#x51B3;&#x529E;&#x6CD5;&#xFF0C;&#x5176;&#x4E2D;&#x6700;&#x4E3B;&#x8981;&#x60F3;&#x4ECB;&#x7ECD;&#x7684;&#x5C31;&#x662F;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x7684;&#x65B9;&#x6CD5;&#x4E86;&#xFF0C;&#x800C;&#x5728;&#x52A8;&#x6001;&#x89C4;&#x5212;&#x5F53;&#x4E2D;&#x6700;&#x91CD;&#x8981;&#x7684;&#x5C31;&#x662F;&#x72B6;&#x6001;&#x4E4B;&#x95F4;&#x5982;&#x4F55;&#x8FDB;&#x884C;&#x8F6C;&#x6362;&#xFF0C;&#x8FD9;&#x4E2A;&#x9898;&#x4E2D;&#x5176;&#x5B9E;&#x5F88;&#x50CF;&#x72B6;&#x6001;&#x673A;&#x4E2D;&#x7684;&#x72B6;&#x6001;&#x8F6C;&#x6362;&#xFF0C;&#x5728;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x5F53;&#x4E2D;&#x53EA;&#x6709;&#x4E24;&#x79CD;&#x72B6;&#x6001;&#x4E4B;&#x95F4;&#x7684;&#x8F6C;&#x6362;&#x2014;&#x2014;&#x6709;&#x80A1;&#x7968;&#x548C;&#x6CA1;&#x80A1;&#x7968;&#xFF0C;&#x5927;&#x5BB6;&#x5982;&#x679C;&#x8981;&#x5F04;&#x660E;&#x767D;<strong>&#x72B6;&#x6001;&#x673A;&#x52A8;&#x6001;&#x89C4;&#x5212;</strong>&#x7B97;&#x6CD5;&#xFF0C;&#x90A3;&#x5C31;&#x9700;&#x8981;&#x6DF1;&#x523B;&#x7684;&#x53BB;&#x7406;&#x89E3;&#x4E0A;&#x9762;&#x72B6;&#x6001;&#x8F6C;&#x6362;&#x7684;&#x8FC7;&#x7A0B;&#x3002;</p>
+<h1 id="&#x4E70;&#x5356;&#x80A1;&#x7968;&#x7684;&#x6700;&#x4F73;&#x65F6;&#x673A;-ii"><a href="https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/" target="_blank">&#x4E70;&#x5356;&#x80A1;&#x7968;&#x7684;&#x6700;&#x4F73;&#x65F6;&#x673A; II</a></h1>
+<blockquote>
+<p>&#x7ED9;&#x4F60;&#x4E00;&#x4E2A;&#x6574;&#x6570;&#x6570;&#x7EC4; prices &#xFF0C;&#x5176;&#x4E2D; prices[i] &#x8868;&#x793A;&#x67D0;&#x652F;&#x80A1;&#x7968;&#x7B2C; i &#x5929;&#x7684;&#x4EF7;&#x683C;&#x3002;&#x5728;&#x6BCF;&#x4E00;&#x5929;&#xFF0C;&#x4F60;&#x53EF;&#x4EE5;&#x51B3;&#x5B9A;&#x662F;&#x5426;&#x8D2D;&#x4E70;&#x548C;/&#x6216;&#x51FA;&#x552E;&#x80A1;&#x7968;&#x3002;&#x4F60;&#x5728;&#x4EFB;&#x4F55;&#x65F6;&#x5019; &#x6700;&#x591A; &#x53EA;&#x80FD;&#x6301;&#x6709; &#x4E00;&#x80A1; &#x80A1;&#x7968;&#x3002;&#x4F60;&#x4E5F;&#x53EF;&#x4EE5;&#x5148;&#x8D2D;&#x4E70;&#xFF0C;&#x7136;&#x540E;&#x5728; &#x540C;&#x4E00;&#x5929; &#x51FA;&#x552E;&#x3002;&#x8FD4;&#x56DE;&#x4F60;&#x80FD;&#x83B7;&#x5F97;&#x7684;&#x6700;&#x5927; &#x5229;&#x6DA6;&#x3002;</p>
+<p>&#x793A;&#x4F8B;1:</p>
+<p>&#x8F93;&#x5165;&#xFF1A;prices = [7,1,5,3,6,4]</p>
+<p>&#x8F93;&#x51FA;&#xFF1A;7</p>
+<p>&#x89E3;&#x91CA;&#xFF1A;&#x5728;&#x7B2C; 2 &#x5929;&#xFF08;&#x80A1;&#x7968;&#x4EF7;&#x683C; = 1&#xFF09;&#x7684;&#x65F6;&#x5019;&#x4E70;&#x5165;&#xFF0C;&#x5728;&#x7B2C; 3 &#x5929;&#xFF08;&#x80A1;&#x7968;&#x4EF7;&#x683C; = 5&#xFF09;&#x7684;&#x65F6;&#x5019;&#x5356;&#x51FA;, &#x8FD9;&#x7B14;&#x4EA4;&#x6613;&#x6240;&#x80FD;&#x83B7;&#x5F97;&#x5229;&#x6DA6; = 5 - 1 = 4 &#x3002;
+    &#x968F;&#x540E;&#xFF0C;&#x5728;&#x7B2C; 4 &#x5929;&#xFF08;&#x80A1;&#x7968;&#x4EF7;&#x683C; = 3&#xFF09;&#x7684;&#x65F6;&#x5019;&#x4E70;&#x5165;&#xFF0C;&#x5728;&#x7B2C; 5 &#x5929;&#xFF08;&#x80A1;&#x7968;&#x4EF7;&#x683C; = 6&#xFF09;&#x7684;&#x65F6;&#x5019;&#x5356;&#x51FA;, &#x8FD9;&#x7B14;&#x4EA4;&#x6613;&#x6240;&#x80FD;&#x83B7;&#x5F97;&#x5229;&#x6DA6; = 6 - 3 = 3 &#x3002;
+    &#x603B;&#x5229;&#x6DA6;&#x4E3A; 4 + 3 = 7 &#x3002;</p>
+<p>&#x793A;&#x4F8B; 2&#xFF1A;</p>
+<p>&#x8F93;&#x5165;&#xFF1A;prices = [1,2,3,4,5]</p>
+<p>&#x8F93;&#x51FA;&#xFF1A;4</p>
+<p>&#x89E3;&#x91CA;&#xFF1A;&#x5728;&#x7B2C; 1 &#x5929;&#xFF08;&#x80A1;&#x7968;&#x4EF7;&#x683C; = 1&#xFF09;&#x7684;&#x65F6;&#x5019;&#x4E70;&#x5165;&#xFF0C;&#x5728;&#x7B2C; 5 &#x5929; &#xFF08;&#x80A1;&#x7968;&#x4EF7;&#x683C; = 5&#xFF09;&#x7684;&#x65F6;&#x5019;&#x5356;&#x51FA;, &#x8FD9;&#x7B14;&#x4EA4;&#x6613;&#x6240;&#x80FD;&#x83B7;&#x5F97;&#x5229;&#x6DA6; = 5 - 1 = 4 &#x3002;
+    &#x603B;&#x5229;&#x6DA6;&#x4E3A; 4 &#x3002;</p>
+</blockquote>
+<p>&#x8FD9;&#x9053;&#x9898;&#x548C;&#x7B2C;&#x4E00;&#x9898;&#x7684;&#x533A;&#x522B;&#x5C31;&#x662F;&#xFF0C;&#x5728;&#x8FD9;&#x9053;&#x9898;&#x5F53;&#x4E2D;&#x4F60;&#x53EF;&#x4EE5;&#x4E70;&#x5356;&#x80A1;&#x7968;&#x591A;&#x6B21;&#xFF0C;&#x4F46;&#x662F;&#x6700;&#x591A;&#x53EA;&#x80FD;&#x6301;&#x6709;&#x4E00;&#x53EA;&#x80A1;&#x7968;&#xFF0C;&#x56E0;&#x6B64;&#x8FD9;&#x9053;&#x9898;&#x548C;&#x7B2C;&#x4E00;&#x9898;&#x7684;&#x5927;&#x591A;&#x6570;&#x60C5;&#x51B5;&#x662F;&#x76F8;&#x540C;&#x7684;&#x3002;</p>
+<h4 id="&#x72B6;&#x6001;&#x8868;&#x793A;&#x6570;&#x7EC4;">&#x72B6;&#x6001;&#x8868;&#x793A;&#x6570;&#x7EC4;</h4>
+<p>&#x5728;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x5F53;&#x4E2D;&#x6211;&#x4EEC;&#x7528;&#x4E00;&#x4E2A;&#x4E8C;&#x7EF4;&#x6570;&#x7EC4;&#x53BB;&#x8868;&#x793A;&#x6211;&#x4EEC;&#x7684;&#x72B6;&#x6001;&#xFF0C;&#x5728;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x5F53;&#x4E2D;&#x4E3B;&#x8981;&#x6709;&#x4E24;&#x4E2A;&#x72B6;&#x6001;&#xFF0C;&#x4E00;&#x4E2A;&#x662F;&#x624B;&#x4E0A;&#x6709;&#x80A1;&#x7968;&#xFF0C;&#x53E6;&#x4E00;&#x662F;&#x624B;&#x4E0A;&#x6CA1;&#x6709;&#x80A1;&#x7968;&#xFF1A;</p>
+<ul>
+<li><p><code>dp[i][0]</code>&#x8868;&#x793A;&#x5728;&#x7B2C;<code>i</code>&#x5929;&#x624B;&#x4E0A;&#x6CA1;&#x6709;&#x80A1;&#x7968;&#x80FD;&#x591F;&#x83B7;&#x5F97;&#x7684;&#x6700;&#x5927;&#x7684;&#x6536;&#x76CA;&#xFF0C;&#x6BD4;&#x5982;&#x6211;&#x4EEC;&#x5728;&#x7B2C;&#x4E00;&#x5929;&#x7684;&#x6CA1;&#x6709;&#x80A1;&#x7968;&#x7684;&#x6536;&#x76CA;&#x4E3A;0&#x5143;&#x3002;</p>
+</li>
+<li><p><code>dp[i][1]</code>&#x8868;&#x793A;&#x5728;&#x7B2C;<code>i</code>&#x5929;&#x624B;&#x4E0A;&#x5B58;&#x5728;&#x80A1;&#x7968;&#x80FD;&#x591F;&#x83B7;&#x5F97;&#x7684;&#x6700;&#x5927;&#x7684;&#x6536;&#x76CA;&#xFF0C;&#x6BD4;&#x5982;&#x6211;&#x4EEC;&#x5728;&#x7B2C;&#x4E00;&#x5929;&#x4E70;&#x5165;&#x80A1;&#x7968;&#x4E4B;&#x540E;&#x6536;&#x76CA;&#x4E3A;<code>-prices[0]</code>&#x3002;</p>
+</li>
+</ul>
+<p>&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x6700;&#x540E;&#x7684;&#x7B54;&#x6848;&#x662F;<code>dp[N][0]</code>&#xFF0C;&#x8FD9;&#x4E2A;&#x8868;&#x793A;&#x5728;&#x6700;&#x540E;&#x4E00;&#x5929;&#xFF0C;&#x6211;&#x4EEC;&#x7684;&#x624B;&#x4E2D;&#x4E0D;&#x5B58;&#x5728;&#x80A1;&#x7968;&#xFF0C;&#x5373;&#x6211;&#x4EEC;&#x5C06;&#x80A1;&#x7968;&#x5356;&#x51FA;&#x53BB;&#x80FD;&#x591F;&#x83B7;&#x53D6;&#x7684;&#x6700;&#x5927;&#x7684;&#x6536;&#x76CA;&#x3002;</p>
+<h4 id="&#x72B6;&#x6001;&#x8F6C;&#x79FB;&#x65B9;&#x7A0B;">&#x72B6;&#x6001;&#x8F6C;&#x79FB;&#x65B9;&#x7A0B;</h4>
+<p>&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x6765;&#x5206;&#x6790;&#x4E00;&#x4E0B;&#x5982;&#x4F55;&#x8FDB;&#x884C;&#x72B6;&#x6001;&#x7684;&#x8F6C;&#x79FB;&#xFF1A;</p>
+<ul>
+<li><p><code>dp[i][0]</code>&#x7684;&#x72B6;&#x6001;&#x5982;&#x4F55;&#x4ECE;&#x7B2C;<code>i-1</code>&#x7684;&#x72B6;&#x6001;&#x8F6C;&#x79FB;&#x8FC7;&#x6765;&#xFF1A;</p>
+<ul>
+<li>&#x5982;&#x679C;&#x7B2C;<code>i-1</code>&#x4E2A;&#x72B6;&#x6001;&#x662F;&#x624B;&#x4E2D;&#x4E0D;&#x5B58;&#x5728;&#x80A1;&#x7968;&#xFF0C;&#x5373;<code>dp[i-1][0]</code>&#xFF0C;&#x90A3;&#x4E48;&#x7B2C;<code>i</code>&#x4E2A;&#x72B6;&#x6001;&#x4E5F;&#x6CA1;&#x6709;&#x80A1;&#x7968;&#xFF0C;&#x90A3;&#x4E48;&#x76F4;&#x63A5;&#x662F;<code>dp[i][0] = dp[i - 1][0]</code>&#xFF0C;&#x56E0;&#x4E3A;&#x6CA1;&#x6709;&#x8FDB;&#x884C;&#x4EA4;&#x6613;&#x3002;</li>
+<li>&#x5982;&#x679C;&#x7B2C;<code>i-1</code>&#x4E2A;&#x72B6;&#x6001;&#x624B;&#x4E2D;&#x5B58;&#x5728;&#x80A1;&#x7968;&#xFF0C;&#x5373;<code>dp[i-1][1]</code>&#xFF0C;&#x90A3;&#x4E48;&#x5982;&#x679C;&#x60F3;&#x5728;&#x7B2C;<code>i</code>&#x4E2A;&#x72B6;&#x6001;&#x6CA1;&#x6709;&#x80A1;&#x7968;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x9700;&#x8981;&#x5C06;&#x80A1;&#x7968;&#x5356;&#x51FA;&#xFF0C;&#x90A3;&#x4E48;&#x6536;&#x76CA;&#x5C31;&#x4E3A;<code>dp[i-1][1] +prices[i]</code>&#xFF0C;&#x5373;<code>dp[i][0] = dp[i-1][1] +prices[i]</code>&#x3002;</li>
+<li>&#x7EFC;&#x5408;&#x4E0A;&#x9762;&#x7684;&#x4E24;&#x79CD;&#x8F6C;&#x79FB;&#x65B9;&#x5F0F;&#x53EF;&#x4EE5;&#x5F97;&#x5230;&#x4E0B;&#x9762;&#x7684;&#x8F6C;&#x79FB;&#x65B9;&#x7A0B;&#xFF1A;</li>
+</ul>
+<p>$$
+dp[i][0] = max(dp[i - 1][0], dp[i - 1][1] + prices[i])
+$$</p>
+</li>
+</ul>
+<ul>
+<li><p><code>dp[i][1]</code>&#x7684;&#x72B6;&#x6001;&#x5982;&#x4F55;&#x8FDB;&#x884C;&#x8F6C;&#x79FB;&#xFF1A;</p>
+<ul>
+<li>&#x5982;&#x679C;&#x7B2C;<code>i-1</code>&#x4E2A;&#x72B6;&#x6001;&#x662F;&#x624B;&#x4E2D;&#x4E0D;&#x5B58;&#x5728;&#x80A1;&#x7968;&#xFF0C;&#x5373;<code>dp[i-1][0]</code>&#xFF0C;&#x800C;&#x7B2C;<code>i</code>&#x4E2A;&#x72B6;&#x6001;&#x6709;&#x80A1;&#x7968;&#xFF0C;&#x8FD9;&#x9053;&#x9898;&#x76EE;&#x548C;&#x4E0A;&#x4E00;&#x9053;&#x9898;&#x76EE;&#x53EA;&#x6709;&#x8FD9;&#x4E2A;&#x5730;&#x65B9;&#x662F;&#x4E0D;&#x4E00;&#x81F4;&#x7684;&#xFF0C;&#x5728;&#x4E0A;&#x4E00;&#x9053;&#x9898;&#x5F53;&#x4E2D;<code>dp[i][0] = -prices[i]</code>&#xFF0C;&#x8FD9;&#x662F;&#x56E0;&#x4E3A;&#x53EA;&#x80FD;&#x591F;&#x4E70;&#x5165;&#x80A1;&#x7968;&#x4E00;&#x6B21;&#xFF0C;&#x5177;&#x4F53;&#x539F;&#x56E0;&#x662F;&#x5728;<code>dp[i - 1][0]</code>&#x5F53;&#x4E2D;&#x53EF;&#x4EE5;&#x5B58;&#x5728;&#x80A1;&#x7968;&#x4E70;&#x5165;&#xFF0C;&#x800C;&#x4E14;&#x5DF2;&#x7ECF;&#x5356;&#x51FA;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#xFF0C;&#x800C;&#x7B2C;&#x4E00;&#x9898;&#x53EA;&#x80FD;&#x4E70;&#x5165;&#x5356;&#x51FA;&#x4E00;&#x6B21;&#xFF0C;&#x800C;&#x5728;&#x8FD9;&#x9053;&#x9898;&#x76EE;&#x5F53;&#x4E2D;&#xFF0C;&#x80FD;&#x591F;&#x4E70;&#x5356;&#x80A1;&#x7968;&#x591A;&#x6B21;&#xFF0C;&#x56E0;&#x6B64;<code>dp[i][0] = dp[i - 1][0] - prices[i]</code>&#x3002;</li>
+<li>&#x5982;&#x679C;&#x7B2C;<code>i-1</code>&#x4E2A;&#x72B6;&#x6001;&#x624B;&#x4E2D;&#x5B58;&#x5728;&#x80A1;&#x7968;&#xFF0C;&#x5373;<code>dp[i-1][1]</code>&#xFF0C;&#x800C;&#x7B2C;<code>i</code>&#x4E2A;&#x72B6;&#x6001;&#x6709;&#x80A1;&#x7968;&#xFF0C;&#x56E0;&#x6B64;&#x4E0D;&#x9700;&#x8981;&#x8FDB;&#x884C;&#x4EA4;&#x6613;&#xFF0C;&#x5373;<code>dp[i][1]=dp[i - 1][1]</code>&#x3002;</li>
+<li>&#x7EFC;&#x5408;&#x4E0A;&#x9762;&#x7684;&#x4E24;&#x79CD;&#x8F6C;&#x79FB;&#x65B9;&#x5F0F;&#x53EF;&#x4EE5;&#x5F97;&#x5230;&#x4E0B;&#x9762;&#x7684;&#x8F6C;&#x79FB;&#x65B9;&#x7A0B;&#xFF1A;</li>
+</ul>
+<p>$$
+dp[i][1] = max(dp[i - 1][1], dp[i - 1][0] - prices[i]);
+$$</p>
+</li>
+<li><p>&#x7EFC;&#x5408;&#x4E0A;&#x9762;&#x7684;&#x4E24;&#x4E2A;&#x72B6;&#x6001;&#xFF1A;</p>
+</li>
+</ul>
+<p>$$
+\begin{cases}dp[i][0] = max(dp[i - 1][0], dp[i - 1][1] + prices[i])\
+            dp[i][1] = max(dp[i - 1][1], dp[i - 1][0] - prices[i]);
+            \end{cases}</p>
+<p>$$</p>
+<p>&#x53C2;&#x8003;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> </span>{
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">maxProfit</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] prices)</span> </span>{
+    <span class="hljs-keyword">int</span>[][] dp = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>[<span class="hljs-number">2</span>][<span class="hljs-number">2</span>];
+    dp[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>] = -prices[<span class="hljs-number">0</span>];
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; prices.length; i++) {
+      dp[i &amp; <span class="hljs-number">1</span>][<span class="hljs-number">0</span>] = Math.max(dp[(i - <span class="hljs-number">1</span>) &amp; <span class="hljs-number">1</span>][<span class="hljs-number">0</span>], dp[(i - <span class="hljs-number">1</span>) &amp; <span class="hljs-number">1</span>][<span class="hljs-number">1</span>] + prices[i]);
+      dp[i &amp; <span class="hljs-number">1</span>][<span class="hljs-number">1</span>] = Math.max(dp[(i - <span class="hljs-number">1</span>) &amp; <span class="hljs-number">1</span>][<span class="hljs-number">1</span>], dp[(i - <span class="hljs-number">1</span>) &amp; <span class="hljs-number">1</span>][<span class="hljs-number">0</span>] - prices[i]);
+    }
+    <span class="hljs-keyword">return</span> dp[(prices.length - <span class="hljs-number">1</span>) &amp; <span class="hljs-number">1</span>][<span class="hljs-number">0</span>];
+  }
+}
+</code></pre>
+<h4 id="&#x8D2A;&#x5FC3;&#x89E3;&#x6CD5;">&#x8D2A;&#x5FC3;&#x89E3;&#x6CD5;</h4>
+<p>&#x56E0;&#x4E3A;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x65E0;&#x6570;&#x6B21;&#x4E70;&#x5165;&#x5356;&#x51FA;&#xFF0C;&#x56E0;&#x6B64;&#x53EA;&#x8981;&#x5B58;&#x5728;&#x524D;&#x4E00;&#x5929;&#x7684;&#x4EF7;&#x683C;&#x4F4E;&#x4E8E;&#x4ECA;&#x5929;&#x7684;&#x4EF7;&#x683C;&#xFF0C;&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x5728;&#x524D;&#x4E00;&#x5929;&#x4E70;&#x5165;&#xFF0C;&#x5728;&#x4ECA;&#x5929;&#x5356;&#x51FA;&#xFF0C;&#x5728;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#x4E0B;&#x6211;&#x4EEC;&#x7684;&#x6536;&#x76CA;&#x5C31;&#x662F;&#x6700;&#x5927;&#x7684;&#xFF0C;&#x56E0;&#x4E3A;&#x6211;&#x4EEC;&#x6293;&#x4F4F;&#x4E86;&#x201C;&#x6BCF;&#x4E00;&#x6B21;&#x8D5A;&#x94B1;&#x7684;&#x673A;&#x4F1A;&#x201D;&#x3002;</p>
+<ul>
+<li>&#x6BD4;&#x5982;<code>prices=[1, 2, 3]</code>&#xFF0C;&#x6211;&#x4EEC;&#x7684;&#x6536;&#x76CA;&#x5C31;&#x7B49;&#x4E8E;<code>(2 - 1) + (3 - 2) = 2</code>&#xFF0C;&#x8FD9;&#x4E2A;&#x8FC7;&#x7A0B;&#x76F8;&#x5F53;&#x4E8E;&#x5728;&#x7B2C;&#x4E00;&#x5929;&#x4E70;&#x5165;&#xFF0C;&#x7B2C;&#x4E8C;&#x5929;&#x5356;&#x51FA;&#xFF0C;&#x7B2C;&#x4E8C;&#x5929;&#x518D;&#x4E70;&#x5165;&#xFF08;&#x6CE8;&#x610F;&#x9898;&#x76EE;&#x5F53;&#x4E2D;&#x8BF4;&#x660E;&#x4E86;&#x4E00;&#x5929;&#x53EF;&#x4EE5;&#x540C;&#x65F6;&#x4E70;&#x5165;&#x548C;&#x5356;&#x51FA;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x4FDD;&#x8BC1;&#x624B;&#x4E0A;&#x7684;&#x80A1;&#x7968;&#x4E0D;&#x8D85;&#x8FC7;&#x4E24;&#x4E2A;&#xFF09;&#xFF0C;&#x7B2C;&#x4E09;&#x5929;&#x5356;&#x51FA;&#x3002;</li>
+<li>&#x53C8;&#x6BD4;&#x5982;<code>prices=[4, 5, 3, 6]</code>&#xFF0C;&#x6211;&#x4EEC;&#x7684;&#x6536;&#x76CA;&#x7B49;&#x4E8E;<code>(5 - 4) + 0 + (6 - 3) = 4</code>&#xFF0C;&#x8FD9;&#x4E2A;&#x8FC7;&#x7A0B;&#x76F8;&#x5F53;&#x4E8E;&#x7B2C;&#x4E00;&#x5929;&#x4E70;&#x5165;&#x7B2C;&#x4E8C;&#x5929;&#x5356;&#x51FA;&#xFF0C;&#x7B2C;&#x4E09;&#x5929;&#x518D;&#x4E70;&#x5165;&#x7B2C;&#x56DB;&#x5929;&#x5356;&#x51FA;&#x3002;</li>
+</ul>
+<p>&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> </span>{
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">maxProfit</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] prices)</span> </span>{
+    <span class="hljs-keyword">int</span> ans = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">int</span> n = prices.length;
+    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; n; ++i) {
+      ans += Math.max(<span class="hljs-number">0</span>, prices[i] - prices[i - <span class="hljs-number">1</span>]);
+    }
+    <span class="hljs-keyword">return</span> ans;
+  }
+}
+</code></pre>
+<h2 id="&#x603B;&#x7ED3;">&#x603B;&#x7ED3;</h2>
+<p>&#x5728;&#x672C;&#x7BC7;&#x6587;&#x7AE0;&#x5F53;&#x4E2D;&#x4E3B;&#x8981;&#x7ED9;&#x5927;&#x5BB6;&#x4ECB;&#x7ECD;&#x4E86;&#x4E24;&#x4E2A;&#x80A1;&#x7968;&#x95EE;&#x9898;&#xFF0C;&#x8FD9;&#x4E24;&#x4E2A;&#x95EE;&#x9898;&#x6BD4;&#x8F83;&#x4E2D;&#x89C4;&#x4E2D;&#x77E9;&#x7684;&#x65B9;&#x6CD5;&#x5C31;&#x662F;&#x4F7F;&#x7528;&#x52A8;&#x6001;&#x89C4;&#x5212;&#xFF0C;&#x4F46;&#x662F;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x8D2A;&#x5FC3;&#x6CD5;&#x5DE7;&#x5999;&#x6C42;&#x89E3;&#x3002;&#x5728;&#x672C;&#x6587;&#x5F53;&#x4E2D;&#x6700;&#x60F3;&#x8DDF;&#x5927;&#x5BB6;&#x4ECB;&#x7ECD;&#x7684;&#x8FD8;&#x662F;<strong>&#x72B6;&#x6001;&#x4E4B;&#x95F4;&#x7684;&#x8F6C;&#x6362;</strong>&#xFF0C;&#x4F46;&#x662F;&#x5728;&#x672C;&#x6587;&#x5F53;&#x4E2D;&#x7684;&#x4E24;&#x4E2A;&#x95EE;&#x9898;&#x5F53;&#x4E2D;&#x6D89;&#x53CA;&#x7684;&#x72B6;&#x6001;&#x8FD8;&#x662F;&#x6BD4;&#x8F83;&#x5C11;&#xFF0C;&#x53EA;&#x6709;&#x542B;&#x6709;&#x80A1;&#x7968;&#x548C;&#x4E0D;&#x542B;&#x6709;&#x80A1;&#x7968;&#x4E24;&#x79CD;&#x72B6;&#x6001;&#xFF0C;&#x4F46;&#x662F;&#x4E5F;&#x53EF;&#x4EE5;&#x770B;&#x4F5C;&#x72B6;&#x6001;&#x673A;&#x5F53;&#x4E2D;&#x72B6;&#x6001;&#x4E4B;&#x95F4;&#x7684;&#x8F6C;&#x6362;&#x3002;&#x4E0B;&#x7BC7;&#x5F53;&#x4E2D;&#x7684;&#x9898;&#x76EE;&#x72B6;&#x6001;&#x4F1A;&#x7A0D;&#x5FAE;&#x591A;&#x4E00;&#x70B9;&#xFF0C;&#x53EF;&#x80FD;&#x5927;&#x5BB6;&#x7406;&#x89E3;&#x8D77;&#x6765;&#x66F4;&#x52A0;&#x5BB9;&#x6613;&#x4E00;&#x70B9;&#xFF01;</p>
+<hr>
+<p>&#x66F4;&#x591A;&#x7CBE;&#x5F69;&#x5185;&#x5BB9;&#x5408;&#x96C6;&#x53EF;&#x8BBF;&#x95EE;&#x9879;&#x76EE;&#xFF1A;<a href="https://github.com/Chang-LeHung/CSCore" target="_blank">https://github.com/Chang-LeHung/CSCore</a></p>
+<p>&#x5173;&#x6CE8;&#x516C;&#x4F17;&#x53F7;&#xFF1A;<strong>&#x4E00;&#x65E0;&#x662F;&#x5904;&#x7684;&#x7814;&#x7A76;&#x50E7;</strong>&#xFF0C;&#x4E86;&#x89E3;&#x66F4;&#x591A;&#x8BA1;&#x7B97;&#x673A;&#xFF08;Java&#x3001;Python&#x3001;&#x8BA1;&#x7B97;&#x673A;&#x7CFB;&#x7EDF;&#x57FA;&#x7840;&#x3001;&#x7B97;&#x6CD5;&#x4E0E;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF09;&#x77E5;&#x8BC6;&#x3002;</p>
+<p><img src="https://img2022.cnblogs.com/blog/2519003/202207/2519003-20220703200459566-1837431658.jpg" alt=""></p>
+
+<script>console.log("plugin-popup....");document.onclick = function(e){ e.target.tagName === "IMG" && window.open(e.target.src,e.target.src)}</script><style>img{cursor:pointer}</style>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                
+                <a href="10状态机动态规划02.html" class="navigation navigation-next navigation-unique" aria-label="Next page: 这种动态规划你见过吗——状态机动态规划之股票问题(中)">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"这种动态规划你见过吗——状态机动态规划之股票问题(上)","level":"1.5.1","depth":2,"next":{"title":"这种动态规划你见过吗——状态机动态规划之股票问题(中)","level":"1.5.2","depth":2,"path":"da/10状态机动态规划02.md","ref":"./da/10状态机动态规划02.md","articles":[]},"previous":{"title":"股票问题","level":"1.5","depth":1,"ref":"","articles":[{"title":"这种动态规划你见过吗——状态机动态规划之股票问题(上)","level":"1.5.1","depth":2,"path":"da/09状态机动态规划.md","ref":"./da/09状态机动态规划.md","articles":[]},{"title":"这种动态规划你见过吗——状态机动态规划之股票问题(中)","level":"1.5.2","depth":2,"path":"da/10状态机动态规划02.md","ref":"./da/10状态机动态规划02.md","articles":[]},{"title":"这种动态规划你见过吗——状态机动态规划之股票问题(下)","level":"1.5.3","depth":2,"path":"da/11状态机动态规划03.md","ref":"./da/11状态机动态规划03.md","articles":[]},{"title":"状态机动态规划之股票问题总结","level":"1.5.4","depth":2,"path":"da/12状态机动态规划总结.md","ref":"./da/12状态机动态规划总结.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["popup","fontsettings","-sharing","-livereload"],"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @Chang-LeHung","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"copyright":"Copyright &#169; aleen42","minHeaderCount":"2","minHeaderDeep":"2"},"search":{},"popup":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"highlight":{},"anchor-navigation-ex":{"showLevelIcon":false,"showLevel":false,"tocLevel1Icon":"fa fa-hand-o-right","tocLevel2Icon":"fa fa-hand-o-right","tocLevel3Icon":"fa fa-hand-o-right","multipleH1":false,"multipleH2":false,"multipleH3":false,"multipleH4":false},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"da/09状态机动态规划.md","mtime":"2025-10-03T17:39:52.024Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2025-10-03T18:28:09.654Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+
+    </body>
+</html>
+

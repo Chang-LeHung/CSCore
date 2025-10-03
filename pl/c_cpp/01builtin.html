@@ -1,0 +1,1938 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>gcc 好玩的 builtin 函数 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.3">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../">
+            
+                <a href="../../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" >
+            
+                <span>
+            
+                    
+                    基础容器
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../../container/01-链表设计与实现.html">
+            
+                <a href="../../container/01-链表设计与实现.html">
+            
+                    
+                    链表设计与Java实现——自己动手写LinkedList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="../../container/02-linkedlist源码剖析.html">
+            
+                <a href="../../container/02-linkedlist源码剖析.html">
+            
+                    
+                    LinekdList源码深度剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.3" data-path="../../container/03-array容器设计与实现.html">
+            
+                <a href="../../container/03-array容器设计与实现.html">
+            
+                    
+                    数组容器(ArrayList)设计与Java实现——自己动手写ArrayList
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.4" data-path="../../container/04-arraylist源码剖析.html">
+            
+                <a href="../../container/04-arraylist源码剖析.html">
+            
+                    
+                    ArrayList源码剖析，从扩容原理，到迭代器和fast-fail机制，你想要的这都有！！！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.5" data-path="../../container/05-hashmap设计与实现.html">
+            
+                <a href="../../container/05-hashmap设计与实现.html">
+            
+                    
+                    HashMap设计原理与实现（上篇）——哈希表的原理，如何从0到1设计一个HashMap
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.6" data-path="../../container/06-hashmap设计与实现.html">
+            
+                <a href="../../container/06-hashmap设计与实现.html">
+            
+                    
+                    HashMap设计原理与实现（下篇）200行代码带你写自己的HashMap！！！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.7" data-path="../../container/07-hashmap源码剖析.html">
+            
+                <a href="../../container/07-hashmap源码剖析.html">
+            
+                    
+                    HashMap源码深度剖析，手把手带你分析每一行代码，包会！！！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.8" data-path="../../container/08-arraydeque源码剖析.html">
+            
+                <a href="../../container/08-arraydeque源码剖析.html">
+            
+                    
+                    ArrayDeque（JDK双端队列）源码深度剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.9" data-path="../../container/09-arrayqueue源码剖析.html">
+            
+                <a href="../../container/09-arrayqueue源码剖析.html">
+            
+                    
+                    深入剖析（JDK）ArrayQueue 源码
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" >
+            
+                <span>
+            
+                    
+                    高级容器
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../../concurrency/java/11blockingqueue.html">
+            
+                <a href="../../concurrency/java/11blockingqueue.html">
+            
+                    
+                    从零开始自己动手写阻塞队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../../concurrency/java/12blockingqueuesrc.html">
+            
+                <a href="../../concurrency/java/12blockingqueuesrc.html">
+            
+                    
+                    JDK数组阻塞队列源码深入剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" >
+            
+                <span>
+            
+                    
+                    动态规划
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.4.1" data-path="../../da/01-动态规划.html">
+            
+                <a href="../../da/01-动态规划.html">
+            
+                    
+                    庖丁解牛斐波拉契数列和背包问题——详细解析两个问题优化过程（超多问题优化干货，不看血亏），带你从最基本最核心的问题看懂动态规划！！
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.2" data-path="../../da/02-01背包问题.html">
+            
+                <a href="../../da/02-01背包问题.html">
+            
+                    
+                    你真的懂01背包问题吗？01背包的这几问你能答出来吗？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.3" data-path="../../da/03完全背包.html">
+            
+                <a href="../../da/03完全背包.html">
+            
+                    
+                    面试官：完全背包都不会，是你自己走还是我送你？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.4" data-path="../../da/04多重背包v1.html">
+            
+                <a href="../../da/04多重背包v1.html">
+            
+                    
+                    深入剖析多重背包问题（上篇）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.5" data-path="../../da/04多重背包v2.html">
+            
+                <a href="../../da/04多重背包v2.html">
+            
+                    
+                    深入剖析多重背包问题（下篇）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.6" data-path="../../da/14深入剖析完全背包.html">
+            
+                <a href="../../da/14深入剖析完全背包.html">
+            
+                    
+                    完全背包转化为多重背包
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.7" data-path="../../da/13零钱兑换.html">
+            
+                <a href="../../da/13零钱兑换.html">
+            
+                    
+                    深入浅出零钱兑换问题——背包问题的套壳
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4.8" data-path="../../da/05深入剖析斐波拉契数列.html">
+            
+                <a href="../../da/05深入剖析斐波拉契数列.html">
+            
+                    
+                    深入剖析斐波拉契数列
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" >
+            
+                <span>
+            
+                    
+                    股票问题
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.5.1" data-path="../../da/09状态机动态规划.html">
+            
+                <a href="../../da/09状态机动态规划.html">
+            
+                    
+                    这种动态规划你见过吗——状态机动态规划之股票问题(上)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.2" data-path="../../da/10状态机动态规划02.html">
+            
+                <a href="../../da/10状态机动态规划02.html">
+            
+                    
+                    这种动态规划你见过吗——状态机动态规划之股票问题(中)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.3" data-path="../../da/11状态机动态规划03.html">
+            
+                <a href="../../da/11状态机动态规划03.html">
+            
+                    
+                    这种动态规划你见过吗——状态机动态规划之股票问题(下)
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5.4" data-path="../../da/12状态机动态规划总结.html">
+            
+                <a href="../../da/12状态机动态规划总结.html">
+            
+                    
+                    状态机动态规划之股票问题总结
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" >
+            
+                <span>
+            
+                    
+                    回溯
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.6.1" data-path="../../da/backtrace/01combinations.html">
+            
+                <a href="../../da/backtrace/01combinations.html">
+            
+                    
+                    通过组合问题看透回溯法
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.7" >
+            
+                <span>
+            
+                    
+                    数据结构
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.7.1" data-path="../../da/07表达式求值.html">
+            
+                <a href="../../da/07表达式求值.html">
+            
+                    
+                    深入剖析前缀、中缀、后缀表达式以及表达式求值
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8" >
+            
+                <span>
+            
+                    
+                    并发
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.8.1" data-path="../../concurrency/java/01初始java并发.html">
+            
+                <a href="../../concurrency/java/01初始java并发.html">
+            
+                    
+                    并发开篇——带你从0到1建立并发知识体系的基石
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.2" data-path="../../concurrency/java/02并发的噩梦.html">
+            
+                <a href="../../concurrency/java/02并发的噩梦.html">
+            
+                    
+                    并发程序的噩梦——数据竞争
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.3" data-path="../../concurrency/java/03自己动手写并发工具类.html">
+            
+                <a href="../../concurrency/java/03自己动手写并发工具类.html">
+            
+                    
+                    30行自己写并发工具类(Semaphore, CyclicBarrier, CountDownLatch)是什么体验?
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.4" data-path="../../concurrency/java/04volatile.html">
+            
+                <a href="../../concurrency/java/04volatile.html">
+            
+                    
+                    万字长文：从计算机本源深入探寻volatile和Java内存模型
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.5" data-path="../../concurrency/java/05falsesharing.html">
+            
+                <a href="../../concurrency/java/05falsesharing.html">
+            
+                    
+                    并发刺客（False Sharing）——并发程序的隐藏杀手
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.6" data-path="../../concurrency/java/06futuretask.html">
+            
+                <a href="../../concurrency/java/06futuretask.html">
+            
+                    
+                    60行从零开始自己动手写FutureTask是什么体验？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.7" data-path="../../concurrency/java/07futuretasksrc.html">
+            
+                <a href="../../concurrency/java/07futuretasksrc.html">
+            
+                    
+                    FutureTask源码深度剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.8" data-path="../../concurrency/java/08synchronizedusage.html">
+            
+                <a href="../../concurrency/java/08synchronizedusage.html">
+            
+                    
+                    深入学习Synchronized各种使用方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.9" data-path="../../concurrency/java/09synchronized.html">
+            
+                <a href="../../concurrency/java/09synchronized.html">
+            
+                    
+                    Synchronized锁升级原理与过程深入剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.10" data-path="../../concurrency/java/10spinlock.html">
+            
+                <a href="../../concurrency/java/10spinlock.html">
+            
+                    
+                    从零开始自己动手写自旋锁
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.11" data-path="../../concurrency/java/13locksupport.html">
+            
+                <a href="../../concurrency/java/13locksupport.html">
+            
+                    
+                    60行自己动手写LockSupport是什么体验？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.12" data-path="../../concurrency/java/14threadpool.html">
+            
+                <a href="../../concurrency/java/14threadpool.html">
+            
+                    
+                    彻底了解线程池的原理——40行从零开始自己写线程池
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.13" data-path="../../concurrency/java/16retalkingthreadpool.html">
+            
+                <a href="../../concurrency/java/16retalkingthreadpool.html">
+            
+                    
+                    再谈线程池——深入剖析线程池的前世今生
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.14" data-path="../../concurrency/java/17threadpoolimplementation.html">
+            
+                <a href="../../concurrency/java/17threadpoolimplementation.html">
+            
+                    
+                    自己动手写乞丐版线程池
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.15" data-path="../../concurrency/java/18threadpoolmorecloseJDK.html">
+            
+                <a href="../../concurrency/java/18threadpoolmorecloseJDK.html">
+            
+                    
+                    自己动手写线程池——向JDK线程池进发
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.16" data-path="../../concurrency/java/11blockingqueue.html">
+            
+                <a href="../../concurrency/java/11blockingqueue.html">
+            
+                    
+                    从零开始自己动手写阻塞队列
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.8.17" data-path="../../concurrency/java/12blockingqueuesrc.html">
+            
+                <a href="../../concurrency/java/12blockingqueuesrc.html">
+            
+                    
+                    JDK数组阻塞队列源码深入剖析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9" >
+            
+                <span>
+            
+                    
+                    OpenMP
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.9.1" data-path="../../concurrency/openmp/01introduction.html">
+            
+                <a href="../../concurrency/openmp/01introduction.html">
+            
+                    
+                    OpenMP 入门
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.2" data-path="../../concurrency/openmp/02openmp.html">
+            
+                <a href="../../concurrency/openmp/02openmp.html">
+            
+                    
+                    OpenMP 教程（一）——OpenMP 当中的 reduction 子句
+
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.3" data-path="../../concurrency/openmp/03runtime1.html">
+            
+                <a href="../../concurrency/openmp/03runtime1.html">
+            
+                    
+                    OpenMP 常见的动态库函数使用（上）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.4" data-path="../../concurrency/openmp/04runtime2.html">
+            
+                <a href="../../concurrency/openmp/04runtime2.html">
+            
+                    
+                    Openmp 常见的动态库函数使用（下）——深入剖析锁🔒原理与实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.5" data-path="../../concurrency/openmp/05environment.html">
+            
+                <a href="../../concurrency/openmp/05environment.html">
+            
+                    
+                    Openmp 环境变量使用总结
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.6" data-path="../../concurrency/openmp/06sync.html">
+            
+                <a href="../../concurrency/openmp/06sync.html">
+            
+                    
+                    深入理解 OpenMP 线程同步机制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.7" data-path="../../concurrency/openmp/07atomic.html">
+            
+                <a href="../../concurrency/openmp/07atomic.html">
+            
+                    
+                    OpenMP 原子指令设计与实现
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.8" data-path="../../concurrency/openmp/08parallel.html">
+            
+                <a href="../../concurrency/openmp/08parallel.html">
+            
+                    
+                    Parallel Construct 实现原理与源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.9" data-path="../../concurrency/openmp/09sync.html">
+            
+                <a href="../../concurrency/openmp/09sync.html">
+            
+                    
+                    OpenMP 线程同步 Construct 实现原理以及源码分析（上）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.10" data-path="../../concurrency/openmp/10sync.html">
+            
+                <a href="../../concurrency/openmp/10sync.html">
+            
+                    
+                    OpenMP 线程同步 Construct 实现原理以及源码分析（下）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.11" data-path="../../concurrency/openmp/11for_dynamic.html">
+            
+                <a href="../../concurrency/openmp/11for_dynamic.html">
+            
+                    
+                    OpenMP For Construct dynamic 调度方式实现原理和源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.12" data-path="../../concurrency/openmp/12guided.html">
+            
+                <a href="../../concurrency/openmp/12guided.html">
+            
+                    
+                    OpenMP For Construct guided 调度方式实现原理和源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.13" data-path="../../concurrency/openmp/13seciton.html">
+            
+                <a href="../../concurrency/openmp/13seciton.html">
+            
+                    
+                    OpenMP Sections Construct 实现原理以及源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.9.14" data-path="../../concurrency/openmp/14task.html">
+            
+                <a href="../../concurrency/openmp/14task.html">
+            
+                    
+                    OpenMP task construct 实现原理以及源码分析
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10" >
+            
+                <span>
+            
+                    
+                    Pthread
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.10.1" data-path="../../concurrency/pthread/01pthread.html">
+            
+                <a href="../../concurrency/pthread/01pthread.html">
+            
+                    
+                    Pthread 并发编程（一）——深入剖析线程基本元素和状态
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.2" data-path="../../concurrency/pthread/02pthread.html">
+            
+                <a href="../../concurrency/pthread/02pthread.html">
+            
+                    
+                    Pthread 并发编程（二）——自底向上深入理解线程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.10.3" data-path="../../concurrency/pthread/03pthread.html">
+            
+                <a href="../../concurrency/pthread/03pthread.html">
+            
+                    
+                    Pthread 并发编程（三）——深入理解线程取消机制
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11" >
+            
+                <span>
+            
+                    
+                    Makefile
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.11.1" data-path="../../tools/makefile/01.html">
+            
+                <a href="../../tools/makefile/01.html">
+            
+                    
+                    彻底掌握Makefile（一）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.2" data-path="../../tools/makefile/02.html">
+            
+                <a href="../../tools/makefile/02.html">
+            
+                    
+                    彻底掌握Makefile（二）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.11.3" data-path="../../tools/makefile/03.html">
+            
+                <a href="../../tools/makefile/03.html">
+            
+                    
+                    彻底掌握Makefile（三）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.12" >
+            
+                <span>
+            
+                    
+                    DES
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.12.1" data-path="../../des/des.html">
+            
+                <a href="../../des/des.html">
+            
+                    
+                    DES加密算法从入门到入坟
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13" >
+            
+                <span>
+            
+                    
+                    命令行&系统编程&SHELL
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.13.1" data-path="../../linux/command/01top.html">
+            
+                <a href="../../linux/command/01top.html">
+            
+                    
+                    Linux命令系列之top——里面藏着很多鲜为人知的宝藏知识
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.2" data-path="../../linux/command/02ls.html">
+            
+                <a href="../../linux/command/02ls.html">
+            
+                    
+                    Linux命令系列之ls——原来最简单的ls这么复杂
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.3" data-path="../../linux/command/03mkls.html">
+            
+                <a href="../../linux/command/03mkls.html">
+            
+                    
+                    自己动手写ls命令——Java版
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.4" data-path="../../linux/command/05ps.html">
+            
+                <a href="../../linux/command/05ps.html">
+            
+                    
+                    这才是使用ps命令的正确姿势
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.5" data-path="../../linux/command/06kill.html">
+            
+                <a href="../../linux/command/06kill.html">
+            
+                    
+                    如何优雅的杀掉一个进程
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.6" data-path="../../linux/programming/01exit.html">
+            
+                <a href="../../linux/programming/01exit.html">
+            
+                    
+                    C语言中这么骚的退出程序的方式你知道几个？
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.7" data-path="../../linux/programming/02sgementation.html">
+            
+                <a href="../../linux/programming/02sgementation.html">
+            
+                    
+                    你的哪些骚操作会导致Segmentation Fault😂
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.8" data-path="../../linux/programming/03segprincinple.html">
+            
+                <a href="../../linux/programming/03segprincinple.html">
+            
+                    
+                    深入剖析Sgementation fault原理
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.9" data-path="../../linux/programming/04processdie.html">
+            
+                <a href="../../linux/programming/04processdie.html">
+            
+                    
+                    进程最后的遗言
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.10" data-path="../../linux/command/04exitstatus.html">
+            
+                <a href="../../linux/command/04exitstatus.html">
+            
+                    
+                    Shell揭秘——程序退出状态码
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.11" data-path="../../linux/shell/01jobcontrol.html">
+            
+                <a href="../../linux/shell/01jobcontrol.html">
+            
+                    
+                    你在终端启动的进程，最后都是什么下场？（上）
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.13.12" data-path="../../linux/shell/02jobcontrol.html">
+            
+                <a href="../../linux/shell/02jobcontrol.html">
+            
+                    
+                    你在终端启动的进程，最后都是什么下场？（下）
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.14" >
+            
+                <span>
+            
+                    
+                    计算机系统基础
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter active" data-level="1.14.1" data-path="01builtin.html">
+            
+                <a href="01builtin.html">
+            
+                    
+                    gcc 好玩的 builtin 函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.15" >
+            
+                <span>
+            
+                    
+                    python
+            
+                </span>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.15.1" data-path="../python/misc/01copy.html">
+            
+                <a href="../python/misc/01copy.html">
+            
+                    
+                    深入理解 python 对象拷贝和内存布局
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../.." >gcc 好玩的 builtin 函数</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h1 id="gcc-&#x597D;&#x73A9;&#x7684;-builtin-&#x51FD;&#x6570;">gcc &#x597D;&#x73A9;&#x7684; builtin &#x51FD;&#x6570;</h1>
+<h2 id="&#x524D;&#x8A00;">&#x524D;&#x8A00;</h2>
+<p>&#x5728;&#x672C;&#x7BC7;&#x6587;&#x7AE0;&#x5F53;&#x4E2D;&#x4E3B;&#x8981;&#x60F3;&#x7ED9;&#x5927;&#x5BB6;&#x4ECB;&#x7ECD;&#x4E00;&#x4E9B;&#x5728; gcc &#x7F16;&#x8BD1;&#x5668;&#x5F53;&#x4E2D;&#x7ED9;&#x6211;&#x4EEC;&#x63D0;&#x4F9B;&#x7684;&#x4E00;&#x4E9B;&#x597D;&#x73A9;&#x7684;&#x5185;&#x5D4C;&#x51FD;&#x6570; (builtin function)&#x1F923;&#x1F923;&#x1F923; &#x3002;</p>
+<h2 id="builtinframeaddress">__builtin_frame_address</h2>
+<h3 id="&#x4F7F;&#x7528;&#x5185;&#x5D4C;&#x51FD;&#x6570;&#x5B9E;&#x73B0;">&#x4F7F;&#x7528;&#x5185;&#x5D4C;&#x51FD;&#x6570;&#x5B9E;&#x73B0;</h3>
+<pre><code class="lang-c">__builtin_frame_address(x) <span class="hljs-comment">// &#x5176;&#x4E2D; x &#x4E00;&#x4E2A;&#x6574;&#x6570;</span>
+</code></pre>
+<p> &#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x4E3B;&#x8981;&#x662F;&#x7528;&#x4E8E;&#x5F97;&#x5230;&#x51FD;&#x6570;&#x7684;&#x6808;&#x5E27;&#x7684;&#xFF0C;&#x66F4;&#x5177;&#x4F53;&#x7684;&#x6765;&#x8BF4;&#x662F;&#x5F97;&#x5230;&#x51FD;&#x6570;&#x7684; rbp &#xFF08;&#x5982;&#x679C;&#x662F; x86_64 &#x7684;&#x673A;&#x5668;&#xFF0C;&#x5728; 32 &#x4F4D;&#x7CFB;&#x7EDF;&#x4E0A;&#x5C31;&#x662F; ebp&#xFF09;&#x7684;&#x503C;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x6808;&#x5E27;&#x7684;&#x6808;&#x5E95;&#x7684;&#x503C;&#x3002;</p>
+<p><img src="../../images/programming/03.png" alt="03"></p>
+<p>&#x6211;&#x4EEC;&#x73B0;&#x5728;&#x4F7F;&#x7528;&#x4E00;&#x4E2A;&#x4F8B;&#x5B50;&#x6765;&#x9A8C;&#x8BC1;&#x6D4B;&#x8BD5;&#x4E00;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-c">
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">func_a</span><span class="hljs-params">()</span>
+</span>{
+  <span class="hljs-keyword">void</span>* p = __builtin_frame_address(<span class="hljs-number">0</span>);
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;fun_a frame address = %p\n&quot;</span>, p);
+}
+
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+  <span class="hljs-keyword">void</span>* p = __builtin_frame_address(<span class="hljs-number">0</span>);
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;main frame address = %p\n&quot;</span>, p);
+  func_a();
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x4E0A;&#x9762;&#x7684;&#x7A0B;&#x5E8F;&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre><code>main frame address = 0x7ffcecdd7a00
+fun_a frame address = 0x7ffcecdd79d0
+</code></pre><p>&#x4E0A;&#x9762;&#x8F93;&#x51FA;&#x7684;&#x7ED3;&#x679C;&#x5C31;&#x662F;&#x6BCF;&#x4E2A;&#x51FD;&#x6570;&#x7684;&#x6808;&#x5E27;&#x4E2D;&#x6808;&#x5E95; rbp/ebp &#x5BC4;&#x5B58;&#x5668;&#x7684;&#x503C;&#xFF0C;&#x53EF;&#x80FD;&#x4F60;&#x4F1A;&#x6709;&#x7591;&#x95EE;&#xFF0C;&#x51ED;&#x4EC0;&#x4E48;&#x8BF4;&#x8FD9;&#x4E2A;&#x503C;&#x5C31;&#x662F; rbp &#x7684;&#x503C;&#x1F602;&#x1F602;&#x1F602;&#x3002;&#x6211;&#x4EEC;&#x73B0;&#x5728;&#x6765;&#x8BC1;&#x660E;&#x4E00;&#x4E0B;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x4EE3;&#x7801;&#x83B7;&#x53D6;&#x5F97;&#x5230; rbp &#x7684;&#x503C;&#x3002;</p>
+<h3 id="&#x4F7F;&#x7528;&#x5185;&#x655B;&#x6C47;&#x7F16;&#x5B9E;&#x73B0;">&#x4F7F;&#x7528;&#x5185;&#x655B;&#x6C47;&#x7F16;&#x5B9E;&#x73B0;</h3>
+<pre><code class="lang-c">
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sys/types.h&gt;</span></span>
+
+<span class="hljs-keyword">u_int64_t</span> rbp;
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> frame_address                   \
+        asm volatile(                   \
+          <span class="hljs-string">&quot;movq %%rbp, %0;&quot;</span>             \
+          :<span class="hljs-string">&quot;=m&quot;</span>(rbp)::                  \
+        );                              \
+        printf(<span class="hljs-string">&quot;rbp = %p from inline assembly\n&quot;</span>, (void*) rbp);</span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">bar</span><span class="hljs-params">()</span>
+</span>{
+  <span class="hljs-keyword">void</span>* rbp = __builtin_frame_address(<span class="hljs-number">0</span>);
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;rbp = %p\n&quot;</span>, rbp);
+  frame_address
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+  bar();
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x5728;&#x4E0A;&#x9762;&#x7684;&#x7A0B;&#x5E8F;&#x5F53;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x4F7F;&#x7528;&#x4E00;&#x6BB5;&#x5B8F;&#x53EF;&#x4EE5;&#x5F97;&#x5230;&#x5BC4;&#x5B58;&#x5668; rbp &#x7684;&#x503C;&#xFF08;&#x5728;&#x4E0A;&#x9762;&#x7684;&#x4EE3;&#x7801;&#x5F53;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x4F7F;&#x7528;&#x5185;&#x655B;&#x6C47;&#x7F16;&#x5F97;&#x5230; rbp &#x7684;&#x503C;&#xFF0C;&#x5E76;&#x4E14;&#x5C06;&#x8FD9;&#x4E2A;&#x503C;&#x5B58;&#x50A8;&#x5230;&#x53D8;&#x91CF; rbp &#x5F53;&#x4E2D;&#xFF09;&#xFF0C;&#x6211;&#x4EEC;&#x5C06;&#x8FD9;&#x4E2A;&#x503C;&#x548C; builtin &#x51FD;&#x6570;&#x7684;&#x8FD4;&#x56DE;&#x503C;&#x8FDB;&#x884C;&#x5BF9;&#x6BD4;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x77E5;&#x9053;&#x8FD4;&#x56DE;&#x7684;&#x662F;&#x4E0D;&#x662F;&#x5BC4;&#x5B58;&#x5668; rbp &#x7684;&#x503C;&#x4E86;&#xFF0C;&#x4E0A;&#x9762;&#x7684;&#x7A0B;&#x5E8F;&#x6267;&#x884C;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre><code>rbp = 0x7ffe9676ac00
+rbp = 0x7ffe9676ac00 from inline assembly
+</code></pre><p>&#x4ECE;&#x4E0A;&#x9762;&#x7684;&#x7ED3;&#x679C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x77E5;&#x9053;&#xFF0C;&#x5185;&#x7F6E;&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x7684;&#x786E;&#x5B9E;&#x662F;&#x5BC4;&#x5B58;&#x5668; rbp &#x7684;&#x503C;&#x3002;</p>
+<p>&#x4E8B;&#x5B9E;&#x4E0A;&#x6211;&#x4EEC;&#x9664;&#x4E86;&#x53EF;&#x4EE5;&#x83B7;&#x53D6;&#x5F53;&#x524D;&#x51FD;&#x6570;&#x7684;&#x6808;&#x5E27;&#x4E4B;&#x5916;&#xFF0C;&#x6211;&#x4EEC;&#x8FD8;&#x53EF;&#x4EE5;&#x83B7;&#x53D6;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x7684;&#x6808;&#x5E27;&#xFF0C;&#x5177;&#x4F53;&#x6839;&#x636E; x &#x7684;&#x503C;&#x8FDB;&#x884C;&#x786E;&#x5B9A;&#xFF1A;</p>
+<ul>
+<li>x = 0 : &#x83B7;&#x53D6;&#x5F53;&#x524D;&#x51FD;&#x6570;&#x7684;&#x6808;&#x5E27;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x6808;&#x5E95;&#x7684;&#x4F4D;&#x7F6E;&#x3002;</li>
+<li>x = 1 : &#x83B7;&#x53D6;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x7684;&#x6808;&#x5E27;&#x3002;</li>
+<li>x = 2 : &#x83B7;&#x53D6;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x7684;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x7684;&#x6808;&#x5E27;&#x3002;</li>
+<li>......</li>
+</ul>
+<p>&#x6BD4;&#x5982;&#x8BF4;&#x4E0B;&#x9762;&#x7684;&#x7A0B;&#x5E8F;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">func_a</span><span class="hljs-params">()</span>
+</span>{
+  <span class="hljs-keyword">void</span>* p = __builtin_frame_address(<span class="hljs-number">1</span>);
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;caller frame address = %p\n&quot;</span>, p);
+}
+
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+  <span class="hljs-keyword">void</span>* p = __builtin_frame_address(<span class="hljs-number">0</span>);
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;main frame address = %p\n&quot;</span>, p);
+  func_a();
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x4E0A;&#x9762;&#x7A0B;&#x5E8F;&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre><code>main frame address = 0x7ffda7a4b460
+caller frame address = 0x7ffda7a4b460
+</code></pre><p>&#x4ECE;&#x4E0A;&#x9762;&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x5F53;&#x53C2;&#x6570;&#x7684;&#x503C;&#x7B49;&#x4E8E; 1 &#x7684;&#x65F6;&#x5019;&#xFF0C;&#x8FD4;&#x56DE;&#x7684;&#x662F;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x7684;&#x6808;&#x5E27;&#x3002;</p>
+<pre><code class="lang-c">
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">func_a</span><span class="hljs-params">()</span>
+</span>{
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;In func_a\n&quot;</span>);
+  <span class="hljs-keyword">void</span>* p = __builtin_frame_address(<span class="hljs-number">2</span>);
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;caller frame address = %p\n&quot;</span>, p);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">func_b</span><span class="hljs-params">()</span>
+</span>{
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;In func_b\n&quot;</span>);
+  <span class="hljs-keyword">void</span>* p = __builtin_frame_address(<span class="hljs-number">1</span>);
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;caller frame address = %p\n&quot;</span>, p);
+
+  func_a();
+}
+
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+  <span class="hljs-keyword">void</span>* p = __builtin_frame_address(<span class="hljs-number">0</span>);
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;main frame address = %p\n&quot;</span>, p);
+  func_b();
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x4E0A;&#x9762;&#x7684;&#x7A0B;&#x5E8F;&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre><code>main frame address = 0x7ffdadbe6ff0
+In func_b
+caller frame address = 0x7ffdadbe6ff0
+In func_a
+caller frame address = 0x7ffdadbe6ff0
+</code></pre><p>&#x5728;&#x4E0A;&#x65B9;&#x7684;&#x7A0B;&#x5E8F;&#x5F53;&#x4E2D;&#x6211;&#x4EEC;&#x5728;&#x4E3B;&#x51FD;&#x6570;&#x8C03;&#x7528;&#x51FD;&#x6570; func_b &#xFF0C;&#x7136;&#x540E;&#x5728;&#x51FD;&#x6570; func_b &#x5F53;&#x4E2D;&#x8C03;&#x7528;&#x51FD;&#x6570; func_a &#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x6839;&#x636E;&#x53C2;&#x6570; x &#x7684;&#x4E0D;&#x540C;&#xFF0C;&#x8FD4;&#x56DE;&#x7684;&#x6808;&#x5E27;&#x7684;&#x5C42;&#x7EA7;&#x4E5F;&#x662F;&#x4E0D;&#x540C;&#x7684;&#xFF0C;&#x6839;&#x636E;&#x524D;&#x9762;&#x53C2;&#x6570; x &#x7684;&#x610F;&#x4E49;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x77E5;&#x9053;&#xFF0C;&#x4ED6;&#x4EEC;&#x5F97;&#x5230;&#x7684;&#x90FD;&#x662F;&#x4E3B;&#x51FD;&#x6570;&#x7684;&#x6808;&#x5E27;&#x3002;</p>
+<h2 id="builtinreturnaddress">__builtin_return_address</h2>
+<h3 id="&#x4F7F;&#x7528;&#x5185;&#x5D4C;&#x51FD;&#x6570;&#x5B9E;&#x73B0;">&#x4F7F;&#x7528;&#x5185;&#x5D4C;&#x51FD;&#x6570;&#x5B9E;&#x73B0;</h3>
+<p>&#x8FD9;&#x4E2A;&#x5185;&#x5D4C;&#x51FD;&#x6570;&#x7684;&#x4E3B;&#x8981;&#x4F5C;&#x7528;&#x5C31;&#x662F;&#x5F97;&#x5230;&#x51FD;&#x6570;&#x7684;&#x8FD4;&#x56DE;&#x5730;&#x5740;&#xFF0C;&#x9996;&#x5148;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x77E5;&#x9053;&#x7684;&#x662F;&#xFF0C;&#x5F53;&#x6211;&#x4EEC;&#x8FDB;&#x884C;&#x51FD;&#x6570;&#x8C03;&#x7528;&#x7684;&#x65F6;&#x5019;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x77E5;&#x9053;&#x5F53;&#x8FD9;&#x4E2A;&#x51FD;&#x6570;&#x6267;&#x884C;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#x8FD4;&#x56DE;&#x5230;&#x4EC0;&#x4E48;&#x5730;&#x65B9;&#xFF0C;&#x56E0;&#x4E3A; cpu &#x53EA;&#x4F1A;&#x4E00;&#x6761;&#x6307;&#x4EE4;&#x4E00;&#x6761;&#x6307;&#x4EE4;&#x7684;&#x6267;&#x884C;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x544A;&#x8BC9; cpu &#x4E0B;&#x4E00;&#x6761;&#x6307;&#x4EE4;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x56E0;&#x6B64;&#x5F53;&#x6211;&#x4EEC;&#x8FDB;&#x884C;&#x51FD;&#x6570;&#x8C03;&#x7528;&#x7684;&#x65F6;&#x5019;&#x9700;&#x8981;&#x4FDD;&#x5B58;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x7684; call &#x6307;&#x4EE4;&#x4E0B;&#x4E00;&#x6761;&#x6307;&#x4EE4;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x5E76;&#x4E14;&#x5C06;&#x5B83;&#x4FDD;&#x5B58;&#x5728;&#x6808;&#x4E0A;&#xFF0C;&#x5F53;&#x88AB;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x6267;&#x884C;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#x7EE7;&#x7EED;&#x56DE;&#x5230;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x7684;&#x4E0B;&#x4E00;&#x6761;&#x6307;&#x4EE4;&#x7684;&#x4F4D;&#x7F6E;&#x6267;&#x884C;&#xFF0C;&#x56E0;&#x4E3A;&#x6211;&#x4EEC;&#x5DF2;&#x7ECF;&#x5C06;&#x8FD9;&#x4E2A;&#x4E0B;&#x4E00;&#x6761;&#x6307;&#x4EE4;&#x7684;&#x5730;&#x5740;&#x653E;&#x5230;&#x6808;&#x4E0A;&#x4E86;&#xFF0C;&#x5F53;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x6267;&#x884C;&#x5B8C;&#x6210;&#x4E4B;&#x540E;&#x76F4;&#x63A5;&#x4ECE;&#x6808;&#x5F53;&#x4E2D;&#x53D6;&#x51FA;&#x8FD9;&#x4E2A;&#x503C;&#x5373;&#x53EF;&#x3002;</p>
+<p>__builtin_return_address &#x7684;&#x7B7E;&#x540D;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-c">__builtin_return_address(x) <span class="hljs-comment">// x &#x662F;&#x4E00;&#x4E2A;&#x6574;&#x6570;</span>
+</code></pre>
+<p>&#x5176;&#x4E2D; x &#x548C;&#x524D;&#x9762;&#x7684; __builtin_frame_address &#x542B;&#x4E49;&#x76F8;&#x4F3C;&#xFF1A;</p>
+<ul>
+<li>x = 0 : &#x8868;&#x793A;&#x5F53;&#x524D;&#x51FD;&#x6570;&#x7684;&#x8FD4;&#x56DE;&#x5730;&#x5740;&#x3002;</li>
+<li>x = 1 : &#x8868;&#x793A;&#x5F53;&#x524D;&#x51FD;&#x6570;&#x7684;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x7684;&#x8FD4;&#x56DE;&#x5730;&#x5740;&#xFF0C;&#x6BD4;&#x5982;&#x8BF4; main &#x51FD;&#x6570;&#x8C03;&#x7528; func_a &#x5982;&#x679C;&#x5728; func_a &#x91CC;&#x9762;&#x8C03;&#x7528;&#x8FD9;&#x4E2A;&#x5185;&#x5D4C;&#x65B9;&#x6CD5;&#xFF0C;&#x90A3;&#x4E48;&#x8FD4;&#x56DE;&#x7684;&#x5C31;&#x662F; main &#x51FD;&#x6570;&#x7684;&#x8FD4;&#x56DE;&#x503C;&#x3002;</li>
+<li>x = 2 : &#x8868;&#x793A;&#x5F53;&#x524D;&#x51FD;&#x6570;&#x7684;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x7684;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x7684;&#x8FD4;&#x56DE;&#x5730;&#x5740;&#x3002;</li>
+</ul>
+<pre><code class="lang-c">
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">func_a</span><span class="hljs-params">()</span>
+</span>{
+  <span class="hljs-keyword">void</span>* p = __builtin_return_address(<span class="hljs-number">0</span>);
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;fun_a return address = %p\n&quot;</span>, p);
+
+  p = __builtin_return_address(<span class="hljs-number">1</span>);
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;In func_a main return address = %p\n&quot;</span>, p);
+}
+
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+  <span class="hljs-keyword">void</span>* p = __builtin_return_address(<span class="hljs-number">0</span>);
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;main return address = %p\n&quot;</span>, p);
+  func_a();
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x4E0A;&#x9762;&#x7684;&#x7A0B;&#x5E8F;&#x8F93;&#x51FA;&#x7684;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code>main return address = 0x7fc5c57c90b3
+fun_a return address = 0x400592
+In func_a main return address = 0x7fc5c57c90b3
+</code></pre><p>&#x4ECE;&#x4E0A;&#x9762;&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x77E5;&#x9053;</p>
+<h3 id="&#x4F7F;&#x7528;&#x5185;&#x655B;&#x6C47;&#x7F16;&#x5B9E;&#x73B0;">&#x4F7F;&#x7528;&#x5185;&#x655B;&#x6C47;&#x7F16;&#x5B9E;&#x73B0;</h3>
+<p>&#x5982;&#x679C;&#x6211;&#x4EEC;&#x8C03;&#x7528;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x7684;&#x65F6;&#x5019;&#xFF08;&#x5728;x86&#x91CC;&#x9762;&#x6267;&#x884C; call &#x6307;&#x4EE4;&#xFF09;&#x9996;&#x5148;&#x4F1A;&#x5C06;&#x4E0B;&#x4E00;&#x6761;&#x6307;&#x4EE4;&#x7684;&#x5730;&#x5740;&#x538B;&#x6808;&#xFF08;&#x5728; 32 &#x4F4D;&#x7CFB;&#x7EDF;&#x4E0A;&#x5C31;&#x662F;&#x5C06; eip &#x538B;&#x6808;&#xFF0C;&#x5728; 64 &#x4F4D;&#x7CFB;&#x7EDF;&#x4E0A;&#x5C31;&#x662F;&#x5C06; rip &#x538B;&#x6808;&#xFF09;&#xFF0C;&#x7136;&#x540E;&#x5F62;&#x6210;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x7684;&#x6808;&#x5E27;&#x3002;&#x7136;&#x540E;&#x5C06; rbp &#x5BC4;&#x5B58;&#x5668;&#x7684;&#x503C;&#x6307;&#x5411;&#x4E0B;&#x56FE;&#x5F53;&#x4E2D;&#x7684;&#x4F4D;&#x7F6E;&#x3002;</p>
+<p><img src="../../images/pl/01.png" alt="01"></p>
+<pre><code class="lang-c">
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sys/types.h&gt;</span></span>
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> return_address            \
+    u_int64_t rbp;                \
+    asm volatile(                 \
+      <span class="hljs-string">&quot;movq %%rbp, %0&quot;</span>:<span class="hljs-string">&quot;=m&quot;</span>(rbp)::\
+    );                            \
+    printf(<span class="hljs-string">&quot;From inline assembly return address = %p\n&quot;</span>, (u_int64_t*)*(u_int64_t*)(rbp + 8));</span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">func_a</span><span class="hljs-params">()</span>
+</span>{
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;In func_a\n&quot;</span>);
+  <span class="hljs-keyword">void</span>* p = __builtin_return_address(<span class="hljs-number">0</span>);
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;fun_a return address = %p\n&quot;</span>, p);
+  return_address
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;In main function\n&quot;</span>);
+  <span class="hljs-keyword">void</span>* p = __builtin_return_address(<span class="hljs-number">0</span>);
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;main return address = %p\n&quot;</span>, p);
+  <span class="hljs-function">return_address
+  <span class="hljs-title">func_a</span><span class="hljs-params">()</span></span>;
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x4E0A;&#x9762;&#x7684;&#x7A0B;&#x5E8F;&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre><code class="lang-c">In main function
+main <span class="hljs-keyword">return</span> address = <span class="hljs-number">0x7fe6a7b050b3</span>
+From <span class="hljs-keyword">inline</span> assembly <span class="hljs-keyword">return</span> address = <span class="hljs-number">0x7fe6a7b050b3</span>
+In func_a
+fun_a <span class="hljs-keyword">return</span> address = <span class="hljs-number">0x4005d2</span>
+From <span class="hljs-keyword">inline</span> assembly <span class="hljs-keyword">return</span> address = <span class="hljs-number">0x4005d2</span>
+</code></pre>
+<p>&#x4ECE;&#x4E0A;&#x9762;&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#xFF0C;&#x6211;&#x4EEC;&#x81EA;&#x5DF1;&#x4F7F;&#x7528;&#x5185;&#x655B;&#x6C47;&#x7F16;&#x76F4;&#x63A5;&#x5F97;&#x5230;&#x5BC4;&#x5B58;&#x5668; rbp &#x7684;&#x548C;&#x5185;&#x5D4C;&#x51FD;&#x6570;&#x8FD4;&#x56DE;&#x7684;&#x503C;&#x662F;&#x4E00;&#x81F4;&#x7684;&#xFF0C;&#x8FD9;&#x4E5F;&#x4ECE;&#x4FA7;&#x9762;&#x53CD;&#x6620;&#x51FA;&#x6765;&#x4E86;&#x5185;&#x5D4C;&#x51FD;&#x6570;&#x7684;&#x4F5C;&#x7528;&#x3002;&#x5728;&#x4E0A;&#x9762;&#x7684;&#x4EE3;&#x7801;&#x5F53;&#x4E2D;&#x5B9A;&#x4E49;&#x5B9A;&#x4E49;&#x7684;&#x5B8F; return_address &#x7684;&#x4F5C;&#x7528;&#x5C31;&#x662F;&#x5C06;&#x5BC4;&#x5B58;&#x5668; rbp &#x7684;&#x503C;&#x4FDD;&#x5B58;&#x5230;&#x53D8;&#x91CF; rbp &#x5F53;&#x4E2D;&#x3002;</p>
+<p>&#x9664;&#x4E86;&#x5F97;&#x5230;&#x5F53;&#x524D;&#x6808;&#x5E27;&#x7684; rbp &#x7684;&#x503C;&#x4E4B;&#x5916;&#x6211;&#x4EEC;&#x8FD8;&#x53EF;&#x4EE5;&#xFF0C;&#x51FD;&#x6570;&#x7684;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x7684; rbp&#xFF0C;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x7684;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x7684; rbp&#xFF0C;&#x5F53;&#x7136;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x4F7F;&#x7528; builtin &#x51FD;&#x6570;&#x5B9E;&#x73B0;&#xFF0C;&#x9664;&#x6B64;&#x4E4B;&#x5916;&#x6211;&#x4EEC;&#x8FD8;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x5185;&#x655B;&#x6C47;&#x7F16;&#x53BB;&#x5B9E;&#x73B0;&#x8FD9;&#x4E00;&#x70B9;&#xFF1A;</p>
+<pre><code class="lang-c">
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;sys/types.h&gt;</span></span>
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> return_address            \
+    u_int64_t rbp;                \
+    asm volatile(                 \
+      <span class="hljs-string">&quot;movq %%rbp, %%rcx;&quot;</span>        \
+      <span class="hljs-string">&quot;movq (%%rcx), %%rcx;&quot;</span>      \
+      <span class="hljs-string">&quot;movq %%rcx, %0;&quot;</span>           \
+      :<span class="hljs-string">&quot;=m&quot;</span>(rbp)::<span class="hljs-string">&quot;rcx&quot;</span>           \
+    );                            \
+    printf(<span class="hljs-string">&quot;From inline assembly main return address = %p\n&quot;</span>, (u_int64_t*)*(u_int64_t*)(rbp + 8));</span>
+
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">func_a</span><span class="hljs-params">()</span>
+</span>{
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; In func_a\n&quot;</span>);
+  <span class="hljs-keyword">void</span>* p = __builtin_return_address(<span class="hljs-number">1</span>);
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;main return address = %p\n&quot;</span>, p);
+  <span class="hljs-function">return_address
+  <span class="hljs-title">printf</span><span class="hljs-params">(<span class="hljs-string">&quot;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Out func_a\n&quot;</span>)</span></span>;
+}
+
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+  func_a();
+  <span class="hljs-keyword">void</span>* p = __builtin_return_address(<span class="hljs-number">0</span>);
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;main function return address = %p\n&quot;</span>, p);
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x4E0A;&#x9762;&#x7684;&#x7A0B;&#x5E8F;&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#x6240;&#x793A;</p>
+<pre><code class="lang-c">&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; In func_a
+main <span class="hljs-keyword">return</span> address = <span class="hljs-number">0x7f9aec6c80b3</span>
+From <span class="hljs-keyword">inline</span> assembly main <span class="hljs-keyword">return</span> address = <span class="hljs-number">0x7f9aec6c80b3</span>
+&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; Out func_a
+main function <span class="hljs-keyword">return</span> address = <span class="hljs-number">0x7f9aec6c80b3</span>
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x4E0A;&#x9762;&#x7684;&#x8F93;&#x51FA;&#xFF0C;&#x6211;&#x4EEC;&#x81EA;&#x5DF1;&#x7528;&#x5185;&#x655B;&#x6C47;&#x7F16;&#x5B9E;&#x73B0;&#x7684;&#x7ED3;&#x679C;&#x548C; __builtin_return_address &#x7684;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#x662F;&#x4E00;&#x6837;&#x7684;&#xFF0C;&#x8FD9;&#x4E5F;&#x9A8C;&#x8BC1;&#x4E86;&#x6211;&#x4EEC;&#x5B9E;&#x73B0;&#x7684;&#x6B63;&#x786E;&#x6027;&#x3002;&#x8981;&#x60F3;&#x7406;&#x89E3;&#x4E0A;&#x9762;&#x7684;&#x4EE3;&#x7801;&#x9996;&#x5148;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x7406;&#x89E3;&#x51FD;&#x6570;&#x8C03;&#x7528;&#x7684;&#x65F6;&#x5019;&#x5F62;&#x6210;&#x7684;&#x6808;&#x5E27;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="../../images/pl/02.png" alt="01"></p>
+<p>&#x6839;&#x636E;&#x4E0A;&#x56FE;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x77E5;&#x9053;&#x5728; func_a &#x51FD;&#x6570;&#x5F53;&#x4E2D;&#xFF0C;rbp &#x6307;&#x5411;&#x7684;&#x5730;&#x5740;&#x5B58;&#x653E;&#x7684;&#x662F;&#x4E0A;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x7684; rbp &#x5BC4;&#x5B58;&#x5668;&#x7684;&#x503C;&#xFF0C;&#x56E0;&#x6B64;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x95F4;&#x63A5;&#x5BFB;&#x5740;&#xFF0C;&#x627E;&#x5230;&#x8C03;&#x7528; func_a &#x7684;&#x4E3B;&#x51FD;&#x6570;&#x7684; rbp &#x7684;&#x503C;&#xFF0C;&#x5373;&#x4EE5;&#x5728;&#x51FD;&#x6570; func_a &#x5F53;&#x4E2D; rbp &#x5BC4;&#x5B58;&#x5668;&#x7684;&#x503C;&#x4E3A;&#x5730;&#x5740;&#xFF0C;&#x627E;&#x5230;&#x8FD9;&#x4E2A;&#x5730;&#x5740;&#x7684;&#x503C;&#x5C31;&#x662F;&#x4E3B;&#x51FD;&#x6570;&#x7684; rbp &#x7684;&#x503C;&#x3002;</p>
+<p>&#x81F3;&#x6B64;&#x6211;&#x4EEC;&#x5DF2;&#x7ECF;&#x77E5;&#x9053;&#x4E86;&#xFF0C;__builtin_return_address &#x7684;&#x8FD4;&#x56DE;&#x7ED3;&#x679C;&#x662F;&#x5F53;&#x524D;&#x51FD;&#x6570;&#x7684;&#x8FD4;&#x56DE;&#x5730;&#x5740;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x5F53;&#x524D;&#x51FD;&#x6570;&#x6267;&#x884C;&#x5B8C;&#x6210;&#x8FD4;&#x56DE;&#x4E4B;&#x540E;&#x6267;&#x884C;&#x7684;&#x4E0B;&#x4E00;&#x6761;&#x6307;&#x4EE4;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5229;&#x7528;&#x8FD9;&#x4E00;&#x70B9;&#x505A;&#x51FA;&#x4E00;&#x4E2A;&#x975E;&#x5E38;&#x597D;&#x73A9;&#x7684;&#x4E1C;&#x897F;&#xFF0C;&#x76F4;&#x63A5;&#x8DF3;&#x8F6C;&#x5230;&#x8FD4;&#x56DE;&#x5730;&#x5740;&#x6267;&#x884C;&#x4E0D;&#x6267;&#x884C;&#x5F53;&#x524D;&#x51FD;&#x6570;&#x7684;&#x540E;&#x7EED;&#x4EE3;&#x7801;&#xFF1A;</p>
+<pre><code class="lang-c">
+#include &lt;stdio.h&gt;
+
+void func_a()
+{
+  void* p        = __builtin_return_address(0); // &#x5F97;&#x5230;&#x5F53;&#x524D;&#x51FD;&#x6570;&#x7684;&#x8FD4;&#x56DE;&#x5730;&#x5740;
+  void* rbp      = __builtin_frame_address(0);  // &#x5F97;&#x5230;&#x5F53;&#x524D;&#x51FD;&#x6570;&#x7684;&#x6808;&#x5E27;&#x7684;&#x6808;&#x5E95;
+  void* last_rbp = __builtin_frame_address(1);    // &#x5F97;&#x5230;&#x8C03;&#x7528;&#x51FD;&#x6570;&#x7684;&#x6808;&#x5E27;&#x7684;&#x6808;&#x5E95;
+  asm volatile(
+    &quot;leaq 16(%1), %%rsp;&quot; // &#x6062;&#x590D; rsp &#x5BC4;&#x5B58;&#x5668;&#x7684;&#x503C; &#x24F7;
+    &quot;movq %2, %%rbp;&quot;     // &#x6062;&#x590D; rbp &#x5BC4;&#x5B58;&#x5668;&#x7684;&#x503C; &#x24F8;
+    &quot;jmp *%0;&quot;            // &#x76F4;&#x63A5;&#x8DF3;&#x8F6C;                        &#x24F9;
+    ::&quot;r&quot;(p), &quot;r&quot;(rbp), &quot;r&quot;(last_rbp): 
+  );
+  printf(&quot;finished in func_a\n&quot;); // &#x2460;
+}
+
+
+int main()
+{
+  void* p = __builtin_return_address(0);
+  printf(&quot;main return address = %p\n&quot;, p);
+  func_a(); // &#x2461;
+  printf(&quot;finished in main function \n&quot;);
+  // &#x6253;&#x5370;&#x4E5D;&#x4E5D;&#x4E58;&#x6CD5;&#x8868;
+  int i, j;
+  for(i = 1; i &lt; 10; ++i) 
+  {
+    for(j = 1; j &lt;= i; ++j) {
+      printf(&quot;%d x %d = %d\t&quot;, i, j, i * j);
+    }
+    printf(&quot;\n&quot;);
+  }
+  return 0;
+}
+</code></pre>
+<p>&#x4E0A;&#x9762;&#x7684;&#x7A0B;&#x5E8F;&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre><code class="lang-c">main <span class="hljs-keyword">return</span> address = <span class="hljs-number">0x7f63e05c60b3</span>
+finished in main function 
+<span class="hljs-number">1</span> x <span class="hljs-number">1</span> = <span class="hljs-number">1</span>
+<span class="hljs-number">2</span> x <span class="hljs-number">1</span> = <span class="hljs-number">2</span>       <span class="hljs-number">2</span> x <span class="hljs-number">2</span> = <span class="hljs-number">4</span>
+<span class="hljs-number">3</span> x <span class="hljs-number">1</span> = <span class="hljs-number">3</span>       <span class="hljs-number">3</span> x <span class="hljs-number">2</span> = <span class="hljs-number">6</span>       <span class="hljs-number">3</span> x <span class="hljs-number">3</span> = <span class="hljs-number">9</span>
+<span class="hljs-number">4</span> x <span class="hljs-number">1</span> = <span class="hljs-number">4</span>       <span class="hljs-number">4</span> x <span class="hljs-number">2</span> = <span class="hljs-number">8</span>       <span class="hljs-number">4</span> x <span class="hljs-number">3</span> = <span class="hljs-number">12</span>      <span class="hljs-number">4</span> x <span class="hljs-number">4</span> = <span class="hljs-number">16</span>
+<span class="hljs-number">5</span> x <span class="hljs-number">1</span> = <span class="hljs-number">5</span>       <span class="hljs-number">5</span> x <span class="hljs-number">2</span> = <span class="hljs-number">10</span>      <span class="hljs-number">5</span> x <span class="hljs-number">3</span> = <span class="hljs-number">15</span>      <span class="hljs-number">5</span> x <span class="hljs-number">4</span> = <span class="hljs-number">20</span>      <span class="hljs-number">5</span> x <span class="hljs-number">5</span> = <span class="hljs-number">25</span>
+<span class="hljs-number">6</span> x <span class="hljs-number">1</span> = <span class="hljs-number">6</span>       <span class="hljs-number">6</span> x <span class="hljs-number">2</span> = <span class="hljs-number">12</span>      <span class="hljs-number">6</span> x <span class="hljs-number">3</span> = <span class="hljs-number">18</span>      <span class="hljs-number">6</span> x <span class="hljs-number">4</span> = <span class="hljs-number">24</span>      <span class="hljs-number">6</span> x <span class="hljs-number">5</span> = <span class="hljs-number">30</span>      <span class="hljs-number">6</span> x <span class="hljs-number">6</span> = <span class="hljs-number">36</span>
+<span class="hljs-number">7</span> x <span class="hljs-number">1</span> = <span class="hljs-number">7</span>       <span class="hljs-number">7</span> x <span class="hljs-number">2</span> = <span class="hljs-number">14</span>      <span class="hljs-number">7</span> x <span class="hljs-number">3</span> = <span class="hljs-number">21</span>      <span class="hljs-number">7</span> x <span class="hljs-number">4</span> = <span class="hljs-number">28</span>      <span class="hljs-number">7</span> x <span class="hljs-number">5</span> = <span class="hljs-number">35</span>      <span class="hljs-number">7</span> x <span class="hljs-number">6</span> = <span class="hljs-number">42</span>      <span class="hljs-number">7</span> x <span class="hljs-number">7</span> = <span class="hljs-number">49</span>
+<span class="hljs-number">8</span> x <span class="hljs-number">1</span> = <span class="hljs-number">8</span>       <span class="hljs-number">8</span> x <span class="hljs-number">2</span> = <span class="hljs-number">16</span>      <span class="hljs-number">8</span> x <span class="hljs-number">3</span> = <span class="hljs-number">24</span>      <span class="hljs-number">8</span> x <span class="hljs-number">4</span> = <span class="hljs-number">32</span>      <span class="hljs-number">8</span> x <span class="hljs-number">5</span> = <span class="hljs-number">40</span>      <span class="hljs-number">8</span> x <span class="hljs-number">6</span> = <span class="hljs-number">48</span>      <span class="hljs-number">8</span> x <span class="hljs-number">7</span> = <span class="hljs-number">56</span>      <span class="hljs-number">8</span> x <span class="hljs-number">8</span> = <span class="hljs-number">64</span>
+<span class="hljs-number">9</span> x <span class="hljs-number">1</span> = <span class="hljs-number">9</span>       <span class="hljs-number">9</span> x <span class="hljs-number">2</span> = <span class="hljs-number">18</span>      <span class="hljs-number">9</span> x <span class="hljs-number">3</span> = <span class="hljs-number">27</span>      <span class="hljs-number">9</span> x <span class="hljs-number">4</span> = <span class="hljs-number">36</span>      <span class="hljs-number">9</span> x <span class="hljs-number">5</span> = <span class="hljs-number">45</span>      <span class="hljs-number">9</span> x <span class="hljs-number">6</span> = <span class="hljs-number">54</span>      <span class="hljs-number">9</span> x <span class="hljs-number">7</span> = <span class="hljs-number">63</span>      <span class="hljs-number">9</span> x <span class="hljs-number">8</span> = <span class="hljs-number">72</span>      <span class="hljs-number">9</span> x <span class="hljs-number">9</span> = <span class="hljs-number">81</span>
+</code></pre>
+<p>&#x4ECE;&#x4E0A;&#x9762;&#x7A0B;&#x5E8F;&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x6765;&#x770B;&#xFF0C;&#x4E0A;&#x9762;&#x7684;&#x7A0B;&#x5E8F;&#x5E76;&#x6CA1;&#x6709;&#x6267;&#x884C;&#x8BED;&#x53E5; &#x2460; &#xFF0C;&#x4F46;&#x662F;&#x5374;&#x6267;&#x884C;&#x4E86;&#x4E3B;&#x51FD;&#x6570; &#x2461; &#x4E4B;&#x540E;&#x7684;&#x7A0B;&#x5E8F;&#xFF0C;&#x5E76;&#x4E14;&#x6B63;&#x786E;&#x8F93;&#x51FA;&#x5B57;&#x7B26;&#x4E32;&#x548C;&#x4E5D;&#x4E5D;&#x4E58;&#x6CD5;&#x8868;&#x3002;&#x8FD9;&#x5C31;&#x76F8;&#x5F53;&#x4E8E;&#x6211;&#x4EEC;&#x63D0;&#x524D;&#x8FDB;&#x884C;&#x4E86;&#x8DF3;&#x8F6C;&#x3002;&#x8981;&#x60F3;&#x5F97;&#x5230;&#x8FD9;&#x6837;&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x8981;&#x5728;&#x51FD;&#x6570; func_a &#x5185;&#x90E8;&#x6062;&#x590D;&#x4E0A;&#x4E00;&#x4E2A;&#x51FD;&#x6570;&#x7684;&#x6808;&#x5E27;&#xFF0C;&#x5E76;&#x4E14;&#x5C06; rip &#x6307;&#x5411;&#x51FD;&#x6570; func_a &#x7684;&#x8FD4;&#x56DE;&#x5730;&#x5740;&#x5373;&#x53EF;&#x3002;</p>
+<p>&#x4E0A;&#x65B9;&#x7684;&#x7A0B;&#x5E8F;&#x53D1;&#x751F;&#x8F6C;&#x79FB;&#x7684;&#x4EE3;&#x7801;&#x5C31;&#x662F;&#x90A3;&#x6BB5;&#x5185;&#x655B;&#x6C47;&#x7F16;&#x4EE3;&#x7801;&#xFF0C;&#x5728;&#x5185;&#x655B;&#x6C47;&#x7F16;&#x4EE3;&#x7801;&#x5F53;&#x4E2D;&#x6211;&#x4EEC;&#x9996;&#x5148;&#x6062;&#x590D; main &#x51FD;&#x6570;&#x7684;&#x6808;&#x5E27;&#xFF08;&#x4E3B;&#x8981;&#x662F;&#x6B63;&#x786E;&#x6062;&#x590D;&#x5BC4;&#x5B58;&#x5668; rbp &#x548C; rsp &#xFF09;&#x7684;&#x503C;&#xFF0C;&#x7136;&#x540E;&#x76F4;&#x63A5;&#x8DF3;&#x8F6C;&#x5230;&#x8FD4;&#x56DE;&#x5730;&#x5740;&#x7EE7;&#x7EED;&#x6267;&#x884C;&#xFF0C;&#x6240;&#x4EE5;&#x624D;&#x6B63;&#x786E;&#x6267;&#x884C;&#x4E86;&#x4E3B;&#x51FD;&#x6570;&#x540E;&#x7EED;&#x7684;&#x4EE3;&#x7801;&#x3002;</p>
+<p>&#x6062;&#x590D;&#x4E3B;&#x51FD;&#x6570;&#x7684; rbp &#x5BC4;&#x5B58;&#x5668;&#x7684;&#x503C;&#x5F88;&#x597D;&#x7406;&#x89E3;&#xFF0C;&#x56E0;&#x4E3A;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x8981;&#x901A;&#x8FC7;&#x5185;&#x5D4C;&#x51FD;&#x6570;&#x76F4;&#x63A5;&#x5F97;&#x5230;&#x5373;&#x53EF;&#xFF0C;&#x4F46;&#x662F;&#x4E3B;&#x51FD;&#x6570;&#x7684; rsp &#x5BC4;&#x5B58;&#x5668;&#x7684;&#x503C;&#x53EF;&#x80FD;&#x6709;&#x4E00;&#x70B9;&#x590D;&#x6742;&#xFF0C;s&#x9996;&#x5148;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x77E5;&#x9053;&#xFF0C;&#x4E3B;&#x51FD;&#x6570;&#x548C; func_a &#x7684;&#x4E24;&#x4E2A;&#x4E0E;&#x6808;&#x5E27;&#x6709;&#x5173;&#x7684;&#x5BC4;&#x5B58;&#x5668;&#x7684;&#x6307;&#x5411;&#xFF0C;&#x4ED6;&#x4EEC;&#x7684;&#x6307;&#x5411;&#x5982;&#x4E0B;&#x56FE;&#x6240;&#x793A;&#xFF1A;</p>
+<p><img src="../../images/pl/02.png" alt="01"></p>
+<ul>
+<li>&#x6839;&#x636E;&#x4E0A;&#x6587;&#x7684;&#x5206;&#x6790;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x901A;&#x8FC7;&#x5728;&#x51FD;&#x6570; func_a &#x5F53;&#x4E2D;&#x76F4;&#x63A5;&#x4F7F;&#x7528; __builtin_frame_address(1) &#x5F97;&#x5230;&#x4E3B;&#x51FD;&#x6570;&#x7684; rbp &#x503C;&#xFF0C;&#x7136;&#x540E;&#x5C06;&#x5176;&#x76F4;&#x63A5;&#x8D4B;&#x503C;&#x7ED9; rbp &#x5BC4;&#x5B58;&#x5668;&#x5C31;&#x53EF;&#x4EE5;&#x4E86;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x6062;&#x590D;&#x4E86;&#x4E3B;&#x51FD;&#x6570;&#x6808;&#x5E95;&#x7684;&#x503C;&#xFF0C;&#x5BF9;&#x5E94;&#x7684;&#x8BED;&#x53E5;&#x4F4D;&#x4E0A;&#x9762;&#x4EE3;&#x7801;&#x7684; &#x24F8;&#x3002;</li>
+<li>&#x6839;&#x636E;&#x4E0A;&#x6587;&#x7684;&#x5206;&#x6790;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x901A;&#x8FC7;&#x5728;&#x51FD;&#x6570; func_a &#x5F53;&#x4E2D;&#x76F4;&#x63A5;&#x4F7F;&#x7528; __builtin_return_address(0) &#x5F97;&#x5230; func_a &#x7684;&#x8FD4;&#x56DE;&#x5730;&#x5740;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x76F4;&#x63A5; jmp &#x5230;&#x8FD9;&#x6761;&#x6307;&#x4EE4;&#x6267;&#x884C;&#xFF0C;&#x4F46;&#x662F;&#x5728; jmp &#x4E4B;&#x524D;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5148;&#x6062;&#x590D;&#x4E3B;&#x51FD;&#x6570;&#x7684;&#x6808;&#x5E27;&#xFF0C;&#x5BF9;&#x5E94;&#x7684;&#x8BED;&#x53E5;&#x4F4D;&#x4E0A;&#x9762;&#x7684; &#x24F9;&#x3002;</li>
+<li>&#x6839;&#x636E;&#x4E0A;&#x56FE;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5206;&#x6790;&#x5230;&#x4E3B;&#x51FD;&#x6570; rsp &#x7684;&#x503C;&#x5C31;&#x662F;&#x51FD;&#x6570; func_a &#x4E2D; rbp &#x5BC4;&#x5B58;&#x5668;&#x7684;&#x503C;&#x52A0;&#x4E0A; 16&#xFF0C;&#x56E0;&#x4E3A; rip &#x548C; rbp &#x5206;&#x522B;&#x5360; 8 &#x4E2A;&#x5B57;&#x8282;&#xFF0C;&#x56E0;&#x6B64;&#x6211;&#x4EEC;&#x901A;&#x8FC7; &#x24F7; &#x6062;&#x590D;&#x4E3B;&#x51FD;&#x6570;&#x7684; rsp &#x7684;&#x503C;&#x3002;</li>
+</ul>
+<p>&#x6839;&#x636E;&#x4E0A;&#x9762;&#x7684;&#x5206;&#x6790;&#x6211;&#x5C31;&#x5927;&#x81F4;&#x5C31;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E86;&#x4E0A;&#x8FF0;&#x7684;&#x4EE3;&#x7801;&#x7684;&#x6D41;&#x7A0B;&#x4E86;&#x3002;</p>
+<h2 id="&#x4E0E;&#x4E8C;&#x8FDB;&#x5236;&#x76F8;&#x5173;&#x7684;&#x5185;&#x5D4C;&#x51FD;&#x6570;">&#x4E0E;&#x4E8C;&#x8FDB;&#x5236;&#x76F8;&#x5173;&#x7684;&#x5185;&#x5D4C;&#x51FD;&#x6570;</h2>
+<h3 id="builtinpopcount">__builtin_popcount</h3>
+<p>&#x5728; gcc &#x5185;&#x90E8;&#x7ED9;&#x6211;&#x4EEC;&#x63D0;&#x4F9B;&#x4E86;&#x5F88;&#x591A;&#x7528;&#x4E8E;&#x6BD4;&#x7279;&#x64CD;&#x4F5C;&#x7684;&#x5185;&#x5D4C;&#x51FD;&#x6570;&#xFF0C;&#x6BD4;&#x5982;&#x8BF4;&#x5982;&#x679C;&#x6211;&#x4EEC;&#x60F3;&#x7EDF;&#x8BA1;&#x4E00;&#x4E0B;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x4E8C;&#x8FDB;&#x5236;&#x8868;&#x793A;&#x6709;&#x591A;&#x5C11;&#x4E2A;&#x4E3A; 1 &#x7684;&#x6BD4;&#x7279;&#x4F4D;&#x3002;</p>
+<ul>
+<li>__builtin_popcount :  &#x7EDF;&#x8BA1;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x8868;&#x793A;&#x6709;&#x591A;&#x5C11;&#x4E2A;&#x4E3A; 1 &#x7684;&#x6BD4;&#x7279;&#x4F4D;&#x3002;</li>
+</ul>
+<pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+  <span class="hljs-keyword">int</span> i = <span class="hljs-number">-1</span>;
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;bits = %d\n&quot;</span>, __builtin_popcount(i));
+  i = <span class="hljs-number">15</span>;
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;bits = %d\n&quot;</span>, __builtin_popcount(i));
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x4E0A;&#x9762;&#x7A0B;&#x5E8F;&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre><code class="lang-c">bits = <span class="hljs-number">32</span>
+bits = <span class="hljs-number">4</span>
+</code></pre>
+<p>-1 &#x548C; 15 &#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x8868;&#x793A;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-number">-1</span> = <span class="hljs-number">1111</span>_1111_1111_1111_1111_1111_1111_1111
+<span class="hljs-number">15</span> = <span class="hljs-number">0000</span>_0000_0000_0000_0000_0000_0000_1111
+</code></pre>
+<p>&#x56E0;&#x6B64;&#x7EDF;&#x8BA1;&#x4E00;&#x4E0B;&#x5BF9;&#x5E94;&#x6570;&#x5B57;&#x7684;&#x6BD4;&#x7279;&#x4F4D;&#x7B49;&#x4E8E; 1 &#x7684;&#x4E2A;&#x6570;&#x53EF;&#x4EE5;&#x77E5;&#x9053;&#xFF0C;&#x5185;&#x5D4C;&#x51FD;&#x6570; __builtin_popcount &#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x662F;&#x6CA1;&#x9519;&#x7684;&#x3002;</p>
+<ul>
+<li>__builtin<em>popcountl &#x548C; \</em>_builtin_popcountl&#xFF0C;&#x8FD9;&#x4E24;&#x4E2A;&#x51FD;&#x6570;&#x7684;&#x4F5C;&#x7528;&#x548C; __builtin_popcount &#x7684;&#x4F5C;&#x7528;&#x662F;&#x4E00;&#x6837;&#x7684;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x4E24;&#x4E2A;&#x51FD;&#x6570;&#x662F;&#x7528;&#x4E8E; long &#x548C; long long &#x7C7B;&#x578B;&#x7684;&#x53C2;&#x6570;&#x3002;</li>
+</ul>
+<h3 id="builtinctz">__builtin_ctz</h3>
+<ul>
+<li>__builtin_ctz : &#x4ECE;&#x53F3;&#x5F80;&#x5DE6;&#x6570;&#xFF0C;&#x7EDF;&#x8BA1;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x5C3E;&#x90E8;&#x6BD4;&#x7279;&#x4F4D;&#x7B49;&#x4E8E; 0 &#x7684;&#x4E2A;&#x6570;&#xFF0C;&#x5177;&#x4F53;&#x662F;&#x5728;&#x9047;&#x5230;&#x7B2C;&#x4E00;&#x4E2A; 1 &#x4E4B;&#x524D;&#xFF0C;&#x5DF2;&#x7ECF;&#x9047;&#x5230;&#x4E86;&#x51E0;&#x4E2A; 1 &#x3002;</li>
+</ul>
+<pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, __builtin_ctz(<span class="hljs-number">1</span>)); <span class="hljs-comment">// ctz = count trailing zeros. </span>
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, __builtin_ctz(<span class="hljs-number">2</span>));
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, __builtin_ctz(<span class="hljs-number">3</span>));
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, __builtin_ctz(<span class="hljs-number">4</span>));
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x4E0A;&#x9762;&#x7684;&#x7A0B;&#x5E8F;&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre><code>0
+1
+0
+2
+</code></pre><p>1&#xFF0C;2&#xFF0C;3&#xFF0C;4 &#x5BF9;&#x5E94;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x8868;&#x793A;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-number">1</span> = <span class="hljs-number">0000</span>_0000_0000_0000_0000_0000_0000_0001 <span class="hljs-comment">// &#x5230;&#x7B2C;&#x4E00;&#x4E2A; 1 &#x4E4B;&#x524D; &#x6709; 0 &#x4E2A; 0</span>
+<span class="hljs-number">2</span> = <span class="hljs-number">0000</span>_0000_0000_0000_0000_0000_0000_0010 <span class="hljs-comment">// &#x5230;&#x7B2C;&#x4E00;&#x4E2A; 1 &#x4E4B;&#x524D; &#x6709; 0 &#x4E2A; 1</span>
+<span class="hljs-number">3</span> = <span class="hljs-number">0000</span>_0000_0000_0000_0000_0000_0000_0011 <span class="hljs-comment">// &#x5230;&#x7B2C;&#x4E00;&#x4E2A; 1 &#x4E4B;&#x524D; &#x6709; 0 &#x4E2A; 0</span>
+<span class="hljs-number">4</span> = <span class="hljs-number">0000</span>_0000_0000_0000_0000_0000_0000_0100 <span class="hljs-comment">// &#x5230;&#x7B2C;&#x4E00;&#x4E2A; 1 &#x4E4B;&#x524D; &#x6709; 0 &#x4E2A; 2</span>
+</code></pre>
+<p>&#x6839;&#x636E;&#x4E0A;&#x9762;&#x4E0D;&#x540C;&#x6570;&#x636E;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x8868;&#x793A;&#x4EE5;&#x53CA;&#x4E0A;&#x65B9;&#x7A0B;&#x5E8F;&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x53EF;&#x4EE5;&#x77E5;&#x9053; __builtin_ctz &#x7684;&#x8F93;&#x51FA;&#x5C31;&#x662F;&#x5C3E;&#x90E8;&#x7B49;&#x4E8E; 0 &#x7684;&#x4E2A;&#x6570;&#x3002;</p>
+<ul>
+<li>__builtin<em>ctzl &#x548C; \</em>_builtin_ctzll &#x4E0E; __builtin_ctz &#x7684;&#x4F5C;&#x7528;&#x662F;&#x4E00;&#x6837;&#x7684;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x4E24;&#x4E2A;&#x51FD;&#x6570;&#x662F;&#x7528;&#x4E8E; long &#x548C; long long &#x7C7B;&#x578B;&#x7684;&#x6570;&#x636E;&#x3002;</li>
+</ul>
+<p>&#x4E0A;&#x9762;&#x8C08;&#x5230;&#x7684; __builtin_ctz &#x8FD9;&#x4E2A;&#x5185;&#x5D4C;&#x51FD;&#x6570;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x7528;&#x4E8E;&#x6C42;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x7684; lowbit &#x7684;&#x503C;&#xFF0C;&#x6211;&#x4EEC;&#x77E5;&#x9053;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x7684; lowbit &#x5C31;&#x662F;&#x6700;&#x4F4E;&#x4F4D;&#x7684;&#x6BD4;&#x7279;&#x6240;&#x8868;&#x793A;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x4ED6;&#x7684;&#x6C42;&#x89E3;&#x51FD;&#x6570;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">lowbit</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span>
+</span>{
+  <span class="hljs-keyword">return</span> (x) &amp; (-x);
+}
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x4E0A;&#x9762;&#x7684;&#x5185;&#x5D4C;&#x51FD;&#x6570;&#x53BB;&#x5B9E;&#x73B0;&#xFF0C;&#x770B;&#x4E0B;&#x9762;&#x7684;&#x4EE3;&#x7801;&#xFF0C;&#x6211;&#x4EEC;&#x4F7F;&#x7528;&#x4E0A;&#x9762;&#x7684;&#x5185;&#x5D4C;&#x51FD;&#x6570;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x5B8F;&#x53BB;&#x5B9E;&#x73B0; lowbit&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> lowbit(x) (1 &lt;&lt; (__builtin_ctz(x)))</span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">lowbit</span><span class="hljs-params">(<span class="hljs-keyword">int</span> x)</span>
+</span>{
+  <span class="hljs-keyword">return</span> (x) &amp; (-x);
+}
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+  <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">16</span>; ++i)
+  {
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;macro = %d function = %d\n&quot;</span>, lowbit(i), lowbit2(i));
+  }
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x4E0A;&#x9762;&#x7684;&#x7A0B;&#x5E8F;&#x7684;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre><code class="lang-c">macro = <span class="hljs-number">1</span> function = <span class="hljs-number">0</span>
+macro = <span class="hljs-number">1</span> function = <span class="hljs-number">1</span>
+macro = <span class="hljs-number">2</span> function = <span class="hljs-number">2</span>
+macro = <span class="hljs-number">1</span> function = <span class="hljs-number">1</span>
+macro = <span class="hljs-number">4</span> function = <span class="hljs-number">4</span>
+macro = <span class="hljs-number">1</span> function = <span class="hljs-number">1</span>
+macro = <span class="hljs-number">2</span> function = <span class="hljs-number">2</span>
+macro = <span class="hljs-number">1</span> function = <span class="hljs-number">1</span>
+macro = <span class="hljs-number">8</span> function = <span class="hljs-number">8</span>
+macro = <span class="hljs-number">1</span> function = <span class="hljs-number">1</span>
+macro = <span class="hljs-number">2</span> function = <span class="hljs-number">2</span>
+macro = <span class="hljs-number">1</span> function = <span class="hljs-number">1</span>
+macro = <span class="hljs-number">4</span> function = <span class="hljs-number">4</span>
+macro = <span class="hljs-number">1</span> function = <span class="hljs-number">1</span>
+macro = <span class="hljs-number">2</span> function = <span class="hljs-number">2</span>
+macro = <span class="hljs-number">1</span> function = <span class="hljs-number">1</span>
+</code></pre>
+<p>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x6211;&#x4EEC;&#x4F7F;&#x7528;&#x5185;&#x5D4C;&#x51FD;&#x6570;&#x548C;&#x81EA;&#x5DF1;&#x5B9A;&#x4E49;&#x7684; lowbit &#x51FD;&#x6570;&#x5B9E;&#x73B0;&#x7684;&#x7ED3;&#x679C;&#x662F;&#x4E00;&#x6837;&#x7684;&#x3002;</p>
+<h3 id="builtinclz">__builtin_clz</h3>
+<p>&#x8FD9;&#x4E2A;&#x662F;&#x7528;&#x4E8E;&#x7EDF;&#x8BA1;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x8868;&#x793A;&#xFF0C;&#x4ECE;&#x5DE6;&#x5F80;&#x53F3;&#x6570;&#x9047;&#x5230;&#x7B2C;&#x4E00;&#x4E2A;&#x6BD4;&#x7279;&#x4F4D;&#x7B49;&#x4E8E; 1 &#x4E4B;&#x524D;&#x5DF2;&#x7ECF;&#x9047;&#x5230;&#x4E86;&#x591A;&#x5C11;&#x4E2A; 0&#x3002;</p>
+<pre><code class="lang-c">
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span>
+</span>{
+  <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i &lt; <span class="hljs-number">16</span>; ++i) 
+  {
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;i = %2d and result = %2d\n&quot;</span>, i, __builtin_clz(i));
+  }
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;i = %2d and result = %2d\n&quot;</span>, <span class="hljs-number">-1</span>, __builtin_clz(<span class="hljs-number">-1</span>));
+  <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>&#x4E0A;&#x9762;&#x7684;&#x7A0B;&#x5E8F;&#x8F93;&#x51FA;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre><code class="lang-c">i =  <span class="hljs-number">1</span> and result = <span class="hljs-number">31</span> <span class="hljs-comment">// &#x9AD8;&#x4F4D;&#x6709; 31 &#x4E2A; 0</span>
+i =  <span class="hljs-number">2</span> and result = <span class="hljs-number">30</span> <span class="hljs-comment">// &#x9AD8;&#x4F4D;&#x6709; 30 &#x4E2A; 0</span>
+i =  <span class="hljs-number">3</span> and result = <span class="hljs-number">30</span>
+i =  <span class="hljs-number">4</span> and result = <span class="hljs-number">29</span>
+i =  <span class="hljs-number">5</span> and result = <span class="hljs-number">29</span>
+i =  <span class="hljs-number">6</span> and result = <span class="hljs-number">29</span>
+i =  <span class="hljs-number">7</span> and result = <span class="hljs-number">29</span>
+i =  <span class="hljs-number">8</span> and result = <span class="hljs-number">28</span>
+i =  <span class="hljs-number">9</span> and result = <span class="hljs-number">28</span>
+i = <span class="hljs-number">10</span> and result = <span class="hljs-number">28</span>
+i = <span class="hljs-number">11</span> and result = <span class="hljs-number">28</span>
+i = <span class="hljs-number">12</span> and result = <span class="hljs-number">28</span>
+i = <span class="hljs-number">13</span> and result = <span class="hljs-number">28</span>
+i = <span class="hljs-number">14</span> and result = <span class="hljs-number">28</span>
+i = <span class="hljs-number">15</span> and result = <span class="hljs-number">28</span>
+i = <span class="hljs-number">-1</span> and result =  <span class="hljs-number">0</span> <span class="hljs-comment">// &#x9AD8;&#x4F4D;&#x6CA1;&#x6709; 0</span>
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5C06;&#x4E0A;&#x9762;&#x7684;&#x6570;&#x636E; i &#x5BF9;&#x5E94;&#x4ED6;&#x7684;&#x4E8C;&#x8FDB;&#x5236;&#x8868;&#x793A;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x77E5;&#x9053;&#x4ECE;&#x5DE6;&#x5F80;&#x53F3;&#x6570;&#x9047;&#x5230;&#x7B2C;&#x4E00;&#x4E2A;&#x7B49;&#x4E8E; 1 &#x7684;&#x6BD4;&#x7279;&#x4F4D;&#x4E4B;&#x524D;&#x4F1A;&#x6709;&#x591A;&#x5C11;&#x4E2A; 0 &#xFF0C;&#x6211;&#x4EEC;&#x62FF; -1 &#x8FDB;&#x884C;&#x5206;&#x6790;&#xFF0C;&#x56E0;&#x4E3A;&#x5728;&#x8BA1;&#x7B97;&#x673A;&#x5F53;&#x4E2D;&#x6570;&#x636E;&#x7684;&#x90FD;&#x662F;&#x4F7F;&#x7528;&#x8865;&#x7801;&#x8FDB;&#x884C;&#x8868;&#x793A;&#xFF0C;&#x800C; -1 &#x7684;&#x8865;&#x7801;&#x5982;&#x4E0B;&#x6240;&#x793A;&#xFF1A;</p>
+<pre><code class="lang-c"><span class="hljs-number">-1</span> = <span class="hljs-number">1111</span>_1111_1111_1111_1111_1111_1111_1111
+</code></pre>
+<p>&#x56E0;&#x6B64; &#x9AD8;&#x4F4D;&#x6CA1;&#x6709; 0&#xFF0C;&#x6240;&#x4EE5;&#x8FD4;&#x56DE;&#x7684;&#x7ED3;&#x679C;&#x7B49;&#x4E8E; 0&#x3002;</p>
+<h2 id="&#x603B;&#x7ED3;">&#x603B;&#x7ED3;</h2>
+<p>&#x5728;&#x672C;&#x7BC7;&#x6587;&#x7AE0;&#x5F53;&#x4E2D;&#x4E3B;&#x8981;&#x7ED9;&#x5927;&#x5BB6;&#x4ECB;&#x7ECD;&#x4E00;&#x4E9B;&#x5728; gcc &#x5F53;&#x4E2D;&#x6BD4;&#x8F83;&#x6709;&#x610F;&#x601D;&#x7684;&#x5185;&#x5D4C;&#x51FD;&#x6570;&#xFF0C;&#x5927;&#x5BB6;&#x53EF;&#x4EE5;&#x73A9;&#x4E00;&#x4E0B;&#xFF5E;&#xFF5E;&#xFF5E;&#xFF5E;&#x1F602;</p>
+<hr>
+<p>&#x66F4;&#x591A;&#x7CBE;&#x5F69;&#x5185;&#x5BB9;&#x5408;&#x96C6;&#x53EF;&#x8BBF;&#x95EE;&#x9879;&#x76EE;&#xFF1A;<a href="https://github.com/Chang-LeHung/CSCore" target="_blank">https://github.com/Chang-LeHung/CSCore</a></p>
+<p>&#x5173;&#x6CE8;&#x516C;&#x4F17;&#x53F7;&#xFF1A;&#x4E00;&#x65E0;&#x662F;&#x5904;&#x7684;&#x7814;&#x7A76;&#x50E7;&#xFF0C;&#x4E86;&#x89E3;&#x66F4;&#x591A;&#x8BA1;&#x7B97;&#x673A;&#xFF08;Java&#x3001;Python&#x3001;&#x8BA1;&#x7B97;&#x673A;&#x7CFB;&#x7EDF;&#x57FA;&#x7840;&#x3001;&#x7B97;&#x6CD5;&#x4E0E;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF09;&#x77E5;&#x8BC6;&#x3002;</p>
+<p><img src="../../qrcode2.jpg" alt=""></p>
+
+<script>console.log("plugin-popup....");document.onclick = function(e){ e.target.tagName === "IMG" && window.open(e.target.src,e.target.src)}</script><style>img{cursor:pointer}</style>
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"gcc 好玩的 builtin 函数","level":"1.14.1","depth":2,"next":{"title":"python","level":"1.15","depth":1,"ref":"","articles":[{"title":"深入理解 python 对象拷贝和内存布局","level":"1.15.1","depth":2,"path":"pl/python/misc/01copy.md","ref":"pl/python/misc/01copy.md","articles":[]}]},"previous":{"title":"计算机系统基础","level":"1.14","depth":1,"ref":"","articles":[{"title":"gcc 好玩的 builtin 函数","level":"1.14.1","depth":2,"path":"pl/c_cpp/01builtin.md","ref":"pl/c_cpp/01builtin.md","articles":[]}]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["popup","fontsettings","-sharing","-livereload"],"pluginsConfig":{"tbfed-pagefooter":{"copyright":"Copyright @Chang-LeHung","modify_label":"该文件修订时间：","modify_format":"YYYY-MM-DD HH:mm:ss"},"page-treeview":{"copyright":"Copyright &#169; aleen42","minHeaderCount":"2","minHeaderDeep":"2"},"search":{},"popup":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"family":"sans","size":2,"theme":"white"},"highlight":{},"anchor-navigation-ex":{"showLevelIcon":false,"showLevel":false,"tocLevel1Icon":"fa fa-hand-o-right","tocLevel2Icon":"fa fa-hand-o-right","tocLevel3Icon":"fa fa-hand-o-right","multipleH1":false,"multipleH2":false,"multipleH3":false,"multipleH4":false},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"pl/c_cpp/01builtin.md","mtime":"2025-10-03T17:39:52.153Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2025-10-03T18:28:09.654Z"},"basePath":"../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../../gitbook/gitbook.js"></script>
+    <script src="../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+
+    </body>
+</html>
+
